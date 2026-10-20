@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://dbub7bjgjk7cp"]
+
+[ext_resource type="Script" uid="uid://bsirrqwbw2oc5" path="res://Script/Csharp/UI/SettingPanel.cs" id="1_6uyim"]
+
+[node name="SettingPanel" type="Panel" unique_id=1258954474 node_paths=PackedStringArray("ExitButton")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6uyim")
+ExitButton = NodePath("Exit")
+
+[node name="TabContainer" type="TabContainer" parent="." unique_id=235895971]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 54.0
+grow_horizontal = 2
+grow_vertical = 2
+tab_alignment = 1
+current_tab = 0
+drag_to_rearrange_enabled = true
+tab_0/title = "常规"
+tab_1/title = "关于"
+
+[node name="Panel" type="Panel" parent="TabContainer" unique_id=1843721834]
+layout_mode = 2
+metadata/_tab_index = 0
+metadata/_tab_name = "常规"
+
+[node name="Label" type="Label" parent="TabContainer/Panel" unique_id=488610046]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 26.0
+offset_right = 253.0
+offset_bottom = 70.0
+text = "施工中..."
+
+[node name="About" type="RichTextLabel" parent="TabContainer" unique_id=217799052]
+visible = false
+layout_mode = 2
+text = "OursGalaxy 仅是一个出于个人学习Godot Engine而开发的项目。
+缓慢开发中..."
+metadata/_tab_index = 1
+metadata/_tab_name = "关于"
+
+[node name="Label" type="Label" parent="." unique_id=740593530]
+layout_mode = 0
+offset_left = 163.0
+offset_top = 7.0
+offset_right = 306.0
+offset_bottom = 40.0
+text = "设置"
+
+[node name="Exit" type="Button" parent="." unique_id=1303881288]
+layout_mode = 0
+offset_left = 78.0
+offset_top = 7.0
+offset_right = 131.0
+offset_bottom = 50.0
+text = "<"

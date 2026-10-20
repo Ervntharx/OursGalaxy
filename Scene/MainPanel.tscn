@@ -1,0 +1,187 @@
+[gd_scene format=3 uid="uid://nx08rwg57ket"]
+
+[ext_resource type="Script" uid="uid://cuh568h5a2p73" path="res://Script/Csharp/UI/MainPanel.cs" id="1_k3m2i"]
+[ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="2_k3m2i"]
+
+[node name="MainPanel" type="Panel" unique_id=2010670530 node_paths=PackedStringArray("ExitButton", "SettingButton", "PersonalArchiveButton")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_k3m2i")
+ExitButton = NodePath("Exit")
+SettingButton = NodePath("Setting")
+PersonalArchiveButton = NodePath("PersonalArchive")
+
+[node name="Setting" type="Button" parent="." unique_id=1022336450]
+layout_mode = 0
+offset_left = 1084.0
+offset_top = 11.0
+offset_right = 1139.0
+offset_bottom = 60.0
+text = "设置"
+
+[node name="TopBar" type="HFlowContainer" parent="." unique_id=270467312]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 15.0
+offset_right = 1071.0
+offset_bottom = 55.0
+
+[node name="Avater" type="TextureRect" parent="TopBar" unique_id=364984267]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("2_k3m2i")
+expand_mode = 1
+
+[node name="Button" type="Button" parent="TopBar" unique_id=581179273]
+layout_mode = 2
+text = "UserName"
+
+[node name="Solids" type="RichTextLabel" parent="TopBar" unique_id=1334051504]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=yellow]300000[/color]/[color=yellow]300000[/color]"
+
+[node name="Lquid" type="RichTextLabel" parent="TopBar" unique_id=2068377726]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=yellow]300000[/color]/[color=yellow]300000[/color]"
+
+[node name="InductrialProducts" type="RichTextLabel" parent="TopBar" unique_id=1003078310]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=yellow]300000[/color]/[color=yellow]300000[/color]"
+
+[node name="Honor" type="RichTextLabel" parent="TopBar" unique_id=111640714]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=yellow]300000[/color]/[color=yellow]300000[/color]"
+
+[node name="Exit" type="Button" parent="." unique_id=1316587499]
+layout_mode = 0
+offset_left = 1024.0
+offset_top = 571.0
+offset_right = 1118.0
+offset_bottom = 628.0
+text = "退出"
+
+[node name="Fleet" type="Button" parent="." unique_id=531506440]
+layout_mode = 0
+offset_left = 315.0
+offset_top = 78.0
+offset_right = 470.0
+offset_bottom = 182.0
+text = "舰队编成"
+
+[node name="Combat" type="Button" parent="." unique_id=1581583431]
+layout_mode = 0
+offset_left = 311.0
+offset_top = 202.0
+offset_right = 459.0
+offset_bottom = 313.0
+text = "讨伐"
+
+[node name="Hunt" type="Button" parent="." unique_id=1573953463]
+layout_mode = 0
+offset_left = 317.0
+offset_top = 333.0
+offset_right = 461.0
+offset_bottom = 449.0
+text = "猎杀"
+
+[node name="Expedition" type="Button" parent="." unique_id=1679350234]
+layout_mode = 0
+offset_left = 695.0
+offset_top = 88.0
+offset_right = 907.0
+offset_bottom = 330.0
+text = "远征"
+
+[node name="Hanger" type="Button" parent="." unique_id=969541270]
+layout_mode = 0
+offset_left = 497.0
+offset_top = 91.0
+offset_right = 648.0
+offset_bottom = 195.0
+text = "机库"
+
+[node name="StoreHouse" type="Button" parent="." unique_id=574965024]
+layout_mode = 0
+offset_left = 504.0
+offset_top = 210.0
+offset_right = 649.0
+offset_bottom = 318.0
+text = "军备"
+
+[node name="ShipFactory" type="Button" parent="." unique_id=913818271]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 342.0
+offset_right = 683.0
+offset_bottom = 458.0
+text = "舰船工厂"
+
+[node name="EquipFactory" type="Button" parent="." unique_id=630543259]
+layout_mode = 0
+offset_left = 702.0
+offset_top = 358.0
+offset_right = 905.0
+offset_bottom = 474.0
+text = "装备工厂"
+
+[node name="Messages" type="TabContainer" parent="." unique_id=1518375854]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 84.0
+offset_right = 292.0
+offset_bottom = 604.0
+current_tab = 1
+tab_0/title = "战报"
+tab_1/title = "联盟"
+tab_2/title = "公告"
+
+[node name="BattleReports" type="ScrollContainer" parent="Messages" unique_id=164771449]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+metadata/_tab_name = "战报"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Messages/BattleReports" unique_id=680929081]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Alliance" type="ScrollContainer" parent="Messages" unique_id=1213610996]
+layout_mode = 2
+metadata/_tab_index = 1
+metadata/_tab_name = "联盟"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Messages/Alliance" unique_id=1613939040]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Notice" type="ScrollContainer" parent="Messages" unique_id=479821921]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+metadata/_tab_name = "公告"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Messages/Notice" unique_id=558124674]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PersonalArchive" type="Button" parent="." unique_id=1243284298]
+layout_mode = 0
+offset_left = 879.0
+offset_top = 581.0
+offset_right = 986.0
+offset_bottom = 617.0
+text = "指挥官档案"

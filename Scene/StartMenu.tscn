@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://ble4cmbad84m0"]
+
+[ext_resource type="Script" uid="uid://dmhffthvf02ej" path="res://Script/Csharp/UI/StartMenu.cs" id="1_y846o"]
+[ext_resource type="PackedScene" uid="uid://dbub7bjgjk7cp" path="res://Scene/SettingPanel.tscn" id="2_7dlpr"]
+
+[node name="StartMenu" type="Panel" unique_id=1556868306 node_paths=PackedStringArray("EnterButton", "SettingsButton", "ExitButton", "ExitConfirmation")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y846o")
+EnterButton = NodePath("Enter")
+SettingsButton = NodePath("Setting")
+ExitButton = NodePath("Exit")
+ExitConfirmation = NodePath("ConfirmationDialog")
+SettingPanelScene = ExtResource("2_7dlpr")
+
+[node name="Enter" type="Button" parent="." unique_id=405422475]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -341.0
+offset_top = -296.0
+offset_right = -79.0
+offset_bottom = -237.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "进入游戏"
+
+[node name="Setting" type="Button" parent="." unique_id=1007636442]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -340.0
+offset_top = -227.0
+offset_right = -78.0
+offset_bottom = -168.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "设置"
+
+[node name="Exit" type="Button" parent="." unique_id=103290637]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -338.0
+offset_top = -158.0
+offset_right = -76.0
+offset_bottom = -99.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "退出"
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="." unique_id=663071794]
+oversampling_override = 1.0
+title = "请确认"
+size = Vector2i(221, 100)
+popup_window = true
+ok_button_text = "是"
+dialog_text = "确定退出游戏吗？"
+dialog_autowrap = true
+cancel_button_text = "否"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1452245203]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -527.0
+offset_top = 50.0
+offset_right = -22.0
+offset_bottom = 189.0
+grow_horizontal = 0
+theme_override_font_sizes/normal_font_size = 97
+text = "OurGalaxy"
+
+[node name="Label" type="Label" parent="." unique_id=1478843377]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -479.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Powered by Godot"
+horizontal_alignment = 2

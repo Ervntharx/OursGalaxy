@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://wa4oprjfpnmc"]
+
+[ext_resource type="Script" uid="uid://briabjlyh2i7a" path="res://Script/Csharp/UI/MessageItemBox.cs" id="1_hi8mj"]
+
+[node name="MessageItemBox" type="Button" unique_id=1930101493 node_paths=PackedStringArray("ReadReferenceRect")]
+custom_minimum_size = Vector2(100, 50)
+offset_right = 100.0
+offset_bottom = 50.0
+script = ExtResource("1_hi8mj")
+ReadReferenceRect = NodePath("ReadReference")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=841714078]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[color=yellow]Message[/color]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ReadReference" type="ReferenceRect" parent="." unique_id=543191811]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0.99250144, 0.63133764, 0.3018677, 1)
+editor_only = false
