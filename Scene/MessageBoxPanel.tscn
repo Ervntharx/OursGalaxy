@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dfq041nbgee63"]
+
+[ext_resource type="Script" uid="uid://bcvvyemlubuop" path="res://Script/Csharp/UI/MessageBoxPanel.cs" id="1_4ncom"]
+[ext_resource type="PackedScene" uid="uid://wa4oprjfpnmc" path="res://Scene/MessageItemBox.tscn" id="2_bpwqo"]
+[ext_resource type="PackedScene" uid="uid://c4l1lwkd4p383" path="res://Scene/MessageViewPanel.tscn" id="3_fsfin"]
+
+[node name="MessageBoxPanel" type="Panel" unique_id=970246743 node_paths=PackedStringArray("MessagesTabsContainer")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -814.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4ncom")
+MessagesTabsContainer = NodePath("TabContainer")
+MessageItemBox = ExtResource("2_bpwqo")
+MessageViewer = ExtResource("3_fsfin")
+
+[node name="TabContainer" type="TabContainer" parent="." unique_id=404627221]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://dtpx555dugbpt"]
+
+[node name="FactoryPanel" type="Panel" unique_id=1285522151]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="RichTextLabel" parent="." unique_id=1948573123]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 5.0
+offset_right = 194.0
+offset_bottom = 42.0
+text = "工厂"
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="." unique_id=1810733337]
+layout_mode = 0
+offset_right = 48.0
+offset_bottom = 48.0
+text = "<"
+
+[node name="TabContainer" type="TabContainer" parent="." unique_id=1022664366]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 59.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 0
+tab_0/title = "造船厂"
+tab_1/title = "军备车间"
+
+[node name="ShipFactory" type="ScrollContainer" parent="TabContainer" unique_id=2131811560]
+layout_mode = 2
+metadata/_tab_index = 0
+metadata/_tab_name = "造船厂"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/ShipFactory" unique_id=815811100]
+layout_mode = 2
+
+[node name="EquipFactory" type="ScrollContainer" parent="TabContainer" unique_id=661887380]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+metadata/_tab_name = "军备车间"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/EquipFactory" unique_id=1061268808]
+layout_mode = 2

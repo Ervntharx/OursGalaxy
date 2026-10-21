@@ -3,16 +3,14 @@
 [ext_resource type="Script" uid="uid://cuh568h5a2p73" path="res://Script/Csharp/UI/MainPanel.cs" id="1_k3m2i"]
 [ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="2_k3m2i"]
 
-[node name="MainPanel" type="Panel" unique_id=2010670530 node_paths=PackedStringArray("ExitButton", "SettingButton", "PersonalArchiveButton")]
+[node name="MainPanel" type="Panel" unique_id=2010670530 node_paths=PackedStringArray("SettingButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_k3m2i")
-ExitButton = NodePath("Exit")
 SettingButton = NodePath("Setting")
-PersonalArchiveButton = NodePath("PersonalArchive")
 
 [node name="Setting" type="Button" parent="." unique_id=1022336450]
 layout_mode = 0
@@ -39,6 +37,18 @@ expand_mode = 1
 layout_mode = 2
 text = "UserName"
 
+[node name="Ships" type="RichTextLabel" parent="TopBar" unique_id=458896547]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=yellow]200[/color]/[color=yellow]200[/color]"
+
+[node name="Equips" type="RichTextLabel" parent="TopBar" unique_id=1754573206]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=yellow]1000[/color]/[color=yellow]1000[/color]"
+
 [node name="Solids" type="RichTextLabel" parent="TopBar" unique_id=1334051504]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
@@ -63,76 +73,74 @@ layout_mode = 2
 bbcode_enabled = true
 text = "[color=yellow]300000[/color]/[color=yellow]300000[/color]"
 
-[node name="Exit" type="Button" parent="." unique_id=1316587499]
-layout_mode = 0
-offset_left = 1024.0
-offset_top = 571.0
-offset_right = 1118.0
-offset_bottom = 628.0
-text = "退出"
+[node name="ActionPoints" type="RichTextLabel" parent="TopBar" unique_id=457405841]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=yellow]840[/color]/[color=yellow]840[/color]"
 
 [node name="Fleet" type="Button" parent="." unique_id=531506440]
 layout_mode = 0
-offset_left = 315.0
-offset_top = 78.0
-offset_right = 470.0
-offset_bottom = 182.0
+offset_left = 307.0
+offset_top = 123.0
+offset_right = 673.0
+offset_bottom = 220.0
 text = "舰队编成"
 
 [node name="Combat" type="Button" parent="." unique_id=1581583431]
 layout_mode = 0
-offset_left = 311.0
-offset_top = 202.0
-offset_right = 459.0
-offset_bottom = 313.0
+offset_left = 959.0
+offset_top = 94.0
+offset_right = 1099.0
+offset_bottom = 471.0
 text = "讨伐"
-
-[node name="Hunt" type="Button" parent="." unique_id=1573953463]
-layout_mode = 0
-offset_left = 317.0
-offset_top = 333.0
-offset_right = 461.0
-offset_bottom = 449.0
-text = "猎杀"
 
 [node name="Expedition" type="Button" parent="." unique_id=1679350234]
 layout_mode = 0
-offset_left = 695.0
-offset_top = 88.0
-offset_right = 907.0
-offset_bottom = 330.0
+offset_left = 799.0
+offset_top = 102.0
+offset_right = 933.0
+offset_bottom = 478.0
 text = "远征"
 
 [node name="Hanger" type="Button" parent="." unique_id=969541270]
 layout_mode = 0
-offset_left = 497.0
-offset_top = 91.0
-offset_right = 648.0
-offset_bottom = 195.0
+offset_left = 348.0
+offset_top = 351.0
+offset_right = 499.0
+offset_bottom = 455.0
 text = "机库"
 
-[node name="StoreHouse" type="Button" parent="." unique_id=574965024]
+[node name="Mission" type="Button" parent="." unique_id=578683841]
 layout_mode = 0
-offset_left = 504.0
-offset_top = 210.0
-offset_right = 649.0
-offset_bottom = 318.0
-text = "军备"
+offset_left = 299.0
+offset_top = 232.0
+offset_right = 450.0
+offset_bottom = 336.0
+text = "舰队任务"
 
-[node name="ShipFactory" type="Button" parent="." unique_id=913818271]
+[node name="Alliance" type="Button" parent="." unique_id=1600465819]
 layout_mode = 0
-offset_left = 480.0
-offset_top = 342.0
-offset_right = 683.0
-offset_bottom = 458.0
-text = "舰船工厂"
+offset_left = 459.0
+offset_top = 230.0
+offset_right = 610.0
+offset_bottom = 334.0
+text = "舰队联盟"
+
+[node name="Simulation" type="Button" parent="." unique_id=1727502030]
+layout_mode = 0
+offset_left = 615.0
+offset_top = 227.0
+offset_right = 766.0
+offset_bottom = 331.0
+text = "模拟战"
 
 [node name="EquipFactory" type="Button" parent="." unique_id=630543259]
 layout_mode = 0
-offset_left = 702.0
-offset_top = 358.0
-offset_right = 905.0
-offset_bottom = 474.0
+offset_left = 532.0
+offset_top = 359.0
+offset_right = 735.0
+offset_bottom = 475.0
 text = "装备工厂"
 
 [node name="Messages" type="TabContainer" parent="." unique_id=1518375854]
@@ -177,11 +185,3 @@ metadata/_tab_name = "公告"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="PersonalArchive" type="Button" parent="." unique_id=1243284298]
-layout_mode = 0
-offset_left = 879.0
-offset_top = 581.0
-offset_right = 986.0
-offset_bottom = 617.0
-text = "指挥官档案"

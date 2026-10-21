@@ -2,20 +2,22 @@
 
 [ext_resource type="Script" uid="uid://briabjlyh2i7a" path="res://Script/Csharp/UI/MessageItemBox.cs" id="1_hi8mj"]
 
-[node name="MessageItemBox" type="Button" unique_id=1930101493 node_paths=PackedStringArray("ReadReferenceRect")]
+[node name="MessageItemBox" type="Button" unique_id=1930101493 node_paths=PackedStringArray("TitleLabel", "ReadReferenceRect")]
 custom_minimum_size = Vector2(100, 50)
 offset_right = 100.0
 offset_bottom = 50.0
 script = ExtResource("1_hi8mj")
+TitleLabel = NodePath("Title")
 ReadReferenceRect = NodePath("ReadReference")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=841714078]
+[node name="Title" type="RichTextLabel" parent="." unique_id=841714078]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 bbcode_enabled = true
 text = "[color=yellow]Message[/color]"
 horizontal_alignment = 1
@@ -28,5 +30,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 border_color = Color(0.99250144, 0.63133764, 0.3018677, 1)
 editor_only = false

@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://blclolnv55p0j"]
+
+[ext_resource type="Script" uid="uid://clh2sa4aqi8qs" path="res://Script/Csharp/UI/ProduceLine.cs" id="1_43nui"]
+
+[node name="ProduceLine" type="Button" unique_id=797866089]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -748.0
+offset_bottom = -554.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_43nui")
+
+[node name="Title" type="RichTextLabel" parent="." unique_id=865951284]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 10.0
+offset_right = 290.0
+offset_bottom = 36.0
+bbcode_enabled = true
+text = "[color=green]01[/color] 空闲"
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=750746760]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 49.0
+offset_right = 312.0
+offset_bottom = 76.0
+
+[node name="Opeation" type="Button" parent="." unique_id=1921995028]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 47.0
+offset_right = 399.0
+offset_bottom = 79.0
+text = "建造"
+
+[node name="Time" type="RichTextLabel" parent="." unique_id=1987873966]
+layout_mode = 0
+offset_left = 294.0
+offset_top = 11.0
+offset_right = 389.0
+offset_bottom = 37.0
+text = "00 : 00 : 00"
+horizontal_alignment = 2

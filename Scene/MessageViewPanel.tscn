@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://c4l1lwkd4p383"]
+
+[ext_resource type="Script" uid="uid://dhfsmrxfrwlku" path="res://Script/Csharp/UI/MessageViewerPanel.cs" id="1_6lsqn"]
+
+[node name="MessageViewerPanel" type="Window" unique_id=1799348554 node_paths=PackedStringArray("MessageBodyLabel")]
+oversampling_override = 1.0
+initial_position = 1
+size = Vector2i(800, 500)
+transient = true
+exclusive = true
+script = ExtResource("1_6lsqn")
+MessageBodyLabel = NodePath("RichTextLabel")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1838471764]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
