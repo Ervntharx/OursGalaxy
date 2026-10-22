@@ -20,9 +20,6 @@ internal partial class ItemBase : Resource {
 	[Export]
 	public string Code { get; private set; }
 
-	[Export]
-	public string? Name { get; protected set; }
-
 	/// <summary>
 	/// ⚠️予Godot设施提供的构造函数。继承类型中应包含，但不应主动使用以产生空值
 	/// </summary>

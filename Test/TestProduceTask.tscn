@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://g34ugnkuq1qk"]
+
+[ext_resource type="Script" uid="uid://b2ek7q28jdp0s" path="res://Test/TestProduceTask.cs" id="1_d4wr2"]
+[ext_resource type="PackedScene" uid="uid://blclolnv55p0j" path="res://Scene/ProduceLine.tscn" id="2_ad1yb"]
+
+[node name="TestProduceTask" type="Control" unique_id=1562596930 node_paths=PackedStringArray("UI")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_d4wr2")
+UI = NodePath("ProduceLine")
+
+[node name="ProduceLine" parent="." unique_id=797866089 instance=ExtResource("2_ad1yb")]
+layout_mode = 1
+offset_left = 53.0
+offset_top = 103.0
+offset_right = -695.0
+offset_bottom = -451.0
