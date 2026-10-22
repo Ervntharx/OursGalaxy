@@ -1,11 +1,27 @@
 ﻿using Godot.Collections;
 using Godot;
+namespace OursGalaxy;
 
 /// <summary>
 /// 存档数据
 /// </summary>
 [GlobalClass]
-internal partial class ArchiveData : Resource {
+internal partial class Archive : Resource {
+	public static Archive Data { get; protected set; } = new();
+
+	public static void Load() {
+		if (FileAccess.FileExists("user://Archive.tscn")) {
+			Data = ResourceLoader.Load<Archive>("user://Archive.tscn");
+		}
+	}
+
+	public static void Save() {
+		var err = ResourceSaver.Save(Archive.Data, "user://Archive.tscn");
+		if (err is not Error.Ok) {
+			GD.PrintErr(err);
+		}
+	}
+
 	/// <summary>
 	/// 用户ID
 	/// </summary>
@@ -55,4 +71,22 @@ internal partial class ArchiveData : Resource {
 	/// </summary>
 	[Export]
 	public int Honors { get; set; }
+
+	[Export]
+	public Array<ProduceTaskData> ShipsProduceTasks { get; set; } = [
+		ProduceTaskData.Empty,
+		ProduceTaskData.Empty,
+		ProduceTaskData.Empty,
+		ProduceTaskData.Empty,
+		ProduceTaskData.Empty,
+
+	];
+
+	[Export]
+	public Array<ProduceTaskData> EquipProduceTasks { get; set; } = [
+		ProduceTaskData.Empty,
+		ProduceTaskData.Empty,
+		ProduceTaskData.Empty,
+
+	];
 }

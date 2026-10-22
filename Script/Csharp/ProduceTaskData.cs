@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Diagnostics;
 using Godot;
-using Godot.Collections;
 namespace OursGalaxy;
 
 [GlobalClass]
 internal partial class ProduceTaskData : Resource {
 	public static readonly ProduceTaskData Empty = new();
-
 	[Export]
-	public DateTime StartDate;
+	public DateTime StartDate { get; set; }
 
 	[Export]
 	protected long ProgressSeconds { get; set; }
 	public TimeSpan ProgressTimeSpan => TimeSpan.FromSeconds(ProgressSeconds);
 
 	[Export]
-	public ItemBase Target;
+	public ItemBase Target { get; set; }
 
 	protected ProduceTaskData() {
 		Target = ItemBase.Empty;

@@ -7,14 +7,10 @@ namespace OursGalaxy.Test;
 
 internal partial class TestProduceTask : Control {
 	[Export]
-	protected ProduceLine? UI { get; set; }
+	protected FactoryPanel? FP { get; set; }
 
 
 	public override void _Ready() {
-		var task = new ProduceTaskData(DateTime.Now(), TimeSpan.FromSeconds(7), new ItemBase("anything"));
-		// GD.Print(task);
-		// UI!.Make(2, task);
-		UI!.OperatePressed += (opr) => { GD.Print(opr); };
 
 	}
 

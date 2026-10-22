@@ -18,7 +18,7 @@ internal partial class ProduceLine : Button {
 
 	public enum OperationEnum { Start, Cancel, Complete }
 
-	public event Action<OperationEnum>? OperatePressed;
+	public event Action<int, OperationEnum>? OperatePressed;
 
 	[Export]
 	protected RichTextLabel? TitleLabel { get; set; }
@@ -40,12 +40,10 @@ internal partial class ProduceLine : Button {
 
 	public void Make(int line_id, ProduceTaskData task) {
 		lineID = line_id;
-		taskDate = task;
+		if (task != ProduceTaskData.Empty) {
+			taskDate = task;
+		}
 		UpdateUI();
-	}
-
-	public ProduceTaskData? Save() {
-		return taskDate is null ? null : new(taskDate);
 	}
 
 	public void UpdateUI() {
@@ -109,7 +107,7 @@ internal partial class ProduceLine : Button {
 	}
 
 	private void OnOperationButtonPressed() {
-		OperatePressed?.Invoke(State switch {
+		OperatePressed?.Invoke(lineID, State switch {
 			StateEnum.Idle => OperationEnum.Start,
 			StateEnum.Producing => OperationEnum.Cancel,
 			StateEnum.Completed => OperationEnum.Complete,
