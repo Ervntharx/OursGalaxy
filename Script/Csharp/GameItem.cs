@@ -7,21 +7,19 @@ namespace OursGalaxy;
 /// </summary>
 [GlobalClass]
 internal partial class GameItem : ItemBase {
-	public new static readonly GameItem Empty = new(ItemBase.INVALID_ID);
+	public new static readonly GameItem Empty = new();
 	/// <summary>
 	/// 数量
 	/// </summary>
 	[Export]
 	public int Num { get; set; }
 
-	[Obsolete("")]
-	public GameItem() : base() { }
+	/// <summary>
+	/// ⚠️予Godot设施提供的构造函数。继承类型中应包含，但不应主动使用以产生空值
+	/// </summary>
+	protected GameItem() : base() { }
 
-	public GameItem(int id, int num = 0) : base(id) {
-		Num = num;
-	}
-
-	public GameItem(string name, int num = 0) : base(name) {
+	public GameItem(string code, int num = 0) : base(code) {
 		Num = num;
 	}
 
@@ -30,35 +28,4 @@ internal partial class GameItem : ItemBase {
 	/// </summary>
 	/// <returns></returns>
 	public bool IsTemp() => Num == 0;
-
-	/// <summary>
-	/// 查询物品名
-	/// </summary>
-	/// <param name="id"></param>
-	/// <returns></returns>
-	/// <exception cref="NotImplementedException"></exception>
-	public static string QueryName(int id) {
-		throw new NotImplementedException();
-	}
-
-	/// <summary>
-	/// 查询物品ID
-	/// </summary>
-	/// <param name="name"></param>
-	/// <returns></returns>
-	/// <exception cref="NotImplementedException"></exception>
-	public static int QueryID(string name) {
-		throw new NotImplementedException();
-	}
-
-	/// <summary>
-	/// 查询数据据
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	/// <param name="itemName"></param>
-	/// <returns></returns>
-	/// <exception cref="NotImplementedException"></exception>
-	public T Query<T>(string itemName) {
-		throw new NotImplementedException();
-	}
 }

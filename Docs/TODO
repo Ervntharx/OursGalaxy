@@ -20,6 +20,8 @@ AI逻辑行为状态机。
 
 IPromote接口，用于表达运行时游戏局内增益效果。
 
+实现GameTimeDate适配Resource序列化
+
 UI:
 
 主界面UI待继续完成
@@ -27,6 +29,8 @@ UI:
 [+]MessageBox单独建立场景MessageBoxPanel。
 
 生产界面
+
+ProduceLine向ProduceTaskData的序列化和反序列化，UI状态机
 
 物品栏UI构件（GameItemBox）
 
