@@ -5,7 +5,7 @@
 [GlobalClass]
 internal partial class PuntiveCombat : Resource, ICombat {
 	public T ToResource<T>() where T : Resource {
-		return this as T;
+		return (this as T)!;
 	}
 
 	public Resource AsResource() {
