@@ -37,4 +37,8 @@ internal partial class UniqueItem : ItemBase {
 		}
 		return obj is not null && obj is UniqueItem uniqueObj && uniqueObj == this;
 	}
+
+	public override int GetHashCode() {
+		return UniqueID.GetHashCode() + base.GetHashCode() + 17;
+	}
 }
