@@ -1,5 +1,9 @@
 基础：
 
+ObserveItemCollection添加去重
+
+ObserveItemCollection测试ChangedIndex之后再对接Viewer
+
 写数据库读写，让装备，舰船无需单独序列化的表格数据以数据库文件存储
 
 写装备类型，相应的装备简单状态机。使用EquipTypeEnum和SpecialTypeName组合对接装备槽名称
@@ -8,7 +12,7 @@
 
 写光子炮子弹与导弹类型，使用IBullet接口。
 
-基本物品类型
+[+]基本物品类型
 
 完善存档和保存配置文件。
 
@@ -20,7 +24,7 @@ AI逻辑行为状态机。
 
 IPromote接口，用于表达运行时游戏局内增益效果。
 
-实现GameTimeDate适配Resource序列化
+[+]实现GameTimeDate适配Resource序列化
 
 UI:
 
@@ -28,11 +32,11 @@ UI:
 
 [+]MessageBox单独建立场景MessageBoxPanel。
 
-生产界面
+[+]生产界面
 
 ProduceLine向ProduceTaskData的序列化和反序列化，UI状态机
 
-物品栏UI构件（GameItemBox）
+[+]物品栏UI构件（GameItemBox）
 
 通用的Seeker界面用于列出可选物品
 

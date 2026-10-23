@@ -82,4 +82,8 @@ internal partial class ItemBase : Resource {
 	public override int GetHashCode() {
 		return Code.GetHashCode() + 17;
 	}
+
+	public override string ToString() {
+		return $"ItemBase: {Code}";
+	}
 }

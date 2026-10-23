@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="OursGalaxy"
-run/main_scene="uid://ble4cmbad84m0"
+run/main_scene="uid://cem6rxaqjpmlh"
 config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 

@@ -28,4 +28,8 @@ internal partial class GameItem : ItemBase {
 	/// </summary>
 	/// <returns></returns>
 	public bool IsTemp() => Num == 0;
+
+	public override string ToString() {
+		return $"GameItem: {Code}, {Num}";
+	}
 }

@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://bep74tt1l573u"]
+
+[ext_resource type="Script" uid="uid://cvbng0822iup3" path="res://Script/Csharp/UI/ItemBox.cs" id="1_1py4k"]
+[ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="2_026hs"]
+
+[node name="ItemBox" type="Button" unique_id=1694698844 node_paths=PackedStringArray("SelectedButton", "PicTexture", "NameLabel", "NumLabel", "FC", "FoldOptionsVBox")]
+custom_minimum_size = Vector2(400, 110)
+offset_right = 405.0
+offset_bottom = 110.0
+script = ExtResource("1_1py4k")
+SelectedButton = NodePath("Button")
+PicTexture = NodePath("Pic")
+NameLabel = NodePath("Name")
+NumLabel = NodePath("Num")
+FC = NodePath("FoldableContainer")
+FoldOptionsVBox = NodePath("FoldableContainer/VBoxContainer")
+
+[node name="Pic" type="TextureRect" parent="." unique_id=815812706]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 15.0
+offset_top = -40.0
+offset_right = 95.0
+offset_bottom = 40.0
+grow_vertical = 2
+texture = ExtResource("2_026hs")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Name" type="RichTextLabel" parent="." unique_id=1681708355]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -281.0
+offset_top = 10.0
+offset_right = -13.0
+offset_bottom = 50.0
+grow_horizontal = 0
+focus_mode = 2
+bbcode_enabled = true
+text = "[color=gold]物品名称[/color]"
+horizontal_alignment = 2
+vertical_alignment = 1
+selection_enabled = true
+
+[node name="Num" type="Label" parent="." unique_id=2041440502]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -92.0
+offset_top = 41.0
+offset_right = -7.0
+offset_bottom = 66.0
+grow_horizontal = 0
+text = "99"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="FoldableContainer" type="FoldableContainer" parent="." unique_id=541230510]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -127.0
+offset_top = -42.0
+offset_right = -9.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+folded = true
+title = " "
+title_position = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FoldableContainer" unique_id=1957180383]
+visible = false
+layout_mode = 2
+
+[node name="Button" type="Button" parent="." unique_id=1180734850]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -103.0
+offset_top = -42.0
+offset_right = -8.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "选择"
