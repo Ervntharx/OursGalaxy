@@ -1,36 +1,52 @@
 ﻿using Godot;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
+using System.Threading.Tasks;
 namespace OursGalaxy.UI;
 
+/// <summary>
+/// Item查看器。在Show的时候绘制。需要在Show之前制定Items和Opts.Items是可变的，Opts是不可变的
+/// </summary>
 internal partial class ItemViewer : Window {
+	public ItemViewer Load() => (ItemViewer)ResourceLoader.Load<PackedScene>("res://Scene/ItemViewer.tscn").Instantiate();
+
 	[Export]
 	protected HFlowContainer? ItemsPanel { get; set; }
 
-	public ObserveItemCollection Items {
-		get => items; set {
-			items = value;
-			Update(true);
-		}
-	}
+	public ObservableCollection<ItemBase> Items => items;
+
+	// 暂时抛去可变Options
+	// public ObservableCollection<Option> Options {
+	// 	get => opts; set {
+	// 		opts = value;
+
+	// 	}
+	// }
+
+	public IReadOnlyList<string> Opts = [];
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
-
-	}
-
-	/// <summary>
-	/// 更新UI.
-	/// </summary>
-	/// <param name="hard">硬重绘，true时会强行删除所有结果重新计算</param>
-	public void Update(bool hard = false) {
-
+		VisibilityChanged += Redraw;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta) {
 	}
 
-	private ObserveItemCollection items = [];
+	private ObservableCollection<ItemBase> items = [];
+
+	private void Redraw() {
+		if (Visible) {
+			foreach (var child in ItemsPanel?.GetChildren() ?? []) {
+				child.QueueFree();
+			}
+			foreach (var item in items) {
+				var itemBox = ItemBox.Load();
+				itemBox.Make(item, "default");
+				ItemsPanel?.AddChild(itemBox);
+			}
+		}
+	}
 }

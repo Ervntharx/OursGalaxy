@@ -12,7 +12,12 @@ internal partial class GameItem : ItemBase {
 	/// 数量
 	/// </summary>
 	[Export]
-	public int Num { get; set; }
+	public int Num {
+		get => num; set {
+			num = value;
+			PropertyChanged?.Invoke(this, new("Num"));
+		}
+	}
 
 	/// <summary>
 	/// ⚠️予Godot设施提供的构造函数。继承类型中应包含，但不应主动使用以产生空值
@@ -32,4 +37,6 @@ internal partial class GameItem : ItemBase {
 	public override string ToString() {
 		return $"GameItem: {Code}, {Num}";
 	}
+
+	private int num;
 }

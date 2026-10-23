@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cem6rxaqjpmlh"]
 
-[ext_resource type="Script" uid="uid://cjisy2b07nyus" path="res://Test/TestItemViewer.cs" id="1_guya0"]
+[ext_resource type="Script" uid="uid://jt2gkjst6674" path="res://Test/TestItemViewer.cs" id="1_guya0"]
 [ext_resource type="PackedScene" uid="uid://b5opwcdvp8ftf" path="res://Scene/ItemViewer.tscn" id="2_smk2u"]
 
 [node name="TestItemViewer" type="Panel" unique_id=1243685058 node_paths=PackedStringArray("OpenButton", "Viewer")]
@@ -22,3 +22,4 @@ offset_bottom = 235.0
 text = "打开"
 
 [node name="ItemViewer" parent="." unique_id=1674333091 instance=ExtResource("2_smk2u")]
+visible = false

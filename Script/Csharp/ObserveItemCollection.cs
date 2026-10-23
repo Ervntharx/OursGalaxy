@@ -3,136 +3,157 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 namespace OursGalaxy;
+// 实现收益低，遂放弃
 
-[GlobalClass]
-internal partial class ObserveItemCollection : Resource, IList<ItemBase>, ICollection<ItemBase>, IEnumerable<ItemBase>, IReadOnlyList<ItemBase>, IReadOnlyCollection<ItemBase> {
-	public event Action<ObserveItemCollection, ChangedArugments>? ElementsChanged;
+// [GlobalClass]
+// internal partial class ObserveItemCollection : Resource, IList<ItemBase>, ICollection<ItemBase>, IEnumerable<ItemBase>, IReadOnlyList<ItemBase>, IReadOnlyCollection<ItemBase> {
+// 	public event Action<ObserveItemCollection, ChangedArugments>? ElementsChanged;
 
-	public int Count => value.Count;
+// 	public int Count => value.Count;
 
-	public bool IsReadOnly => value.IsReadOnly;
+// 	public bool IsReadOnly => value.IsReadOnly;
 
-	ItemBase IList<ItemBase>.this[int index] {
-		get => value[index]; set {
-			var oldElement = this.value[index];
-			this.value[index] = value;
+// 	ItemBase IList<ItemBase>.this[int index] {
+// 		get => value[index]; set {
+// 			var oldElement = this.value[index];
+// 			this.value[index] = value;
 
-			ElementsChanged?.Invoke(this, new() {
-				OldCount = Count,
-				NewCount = Count,
-				ChangedIndex = [index],
-				NewElements = [value],
-				OldElements = [oldElement]
-			});
-		}
-	}
+// 			ElementsChanged?.Invoke(this, new() {
+// 				OldCount = Count,
+// 				NewCount = Count,
+// 				ChangedIndex = [index],
+// 				NewElements = [value],
+// 				OldElements = [oldElement]
+// 			});
+// 		}
+// 	}
 
-	ItemBase IReadOnlyList<ItemBase>.this[int index] => this.value[index];
+// 	ItemBase IReadOnlyList<ItemBase>.this[int index] => this.value[index];
 
-	int IReadOnlyCollection<ItemBase>.Count => this.Count;
+// 	int IReadOnlyCollection<ItemBase>.Count => this.Count;
 
-	public void Clear() {
-		var list_bak = value.ToList();
-		value.Clear();
+// 	public void Clear() {
+// 		var list_bak = value.ToList();
+// 		value.Clear();
 
-		ElementsChanged?.Invoke(this, new() {
-			OldCount = list_bak.Count,
-			NewCount = Count,
-			ChangedIndex = [.. Enumerable.Range(0, list_bak.Count - 1)],
-			NewElements = [],
-			OldElements = list_bak
-		});
-	}
+// 		ElementsChanged?.Invoke(this, new() {
+// 			OldCount = list_bak.Count,
+// 			NewCount = Count,
+// 			ChangedIndex = [.. Enumerable.Range(0, list_bak.Count - 1)],
+// 			NewElements = [],
+// 			OldElements = list_bak
+// 		});
+// 	}
 
-	public void CopyTo(ItemBase[] array, int arrayIndex) {
-		value.CopyTo(array, arrayIndex);
-	}
+// 	public void CopyTo(ItemBase[] array, int arrayIndex) {
+// 		value.CopyTo(array, arrayIndex);
+// 	}
 
-	public System.Collections.IEnumerator GetEnumerator() {
-		return value.GetEnumerator();
-	}
+// 	public System.Collections.IEnumerator GetEnumerator() {
+// 		return value.GetEnumerator();
+// 	}
 
-	public void RemoveAt(int index) {
-		var oldCount = Count;
-		var oldElement = value[index];
-		value.RemoveAt(index);
+// 	public void RemoveAt(int index) {
+// 		var oldCount = Count;
+// 		var oldElement = value[index];
+// 		value.RemoveAt(index);
 
-		ElementsChanged?.Invoke(this, new() {
-			OldCount = oldCount,
-			NewCount = Count,
-			ChangedIndex = [index],
-			OldElements = [oldElement],
-		});
-	}
+// 		ElementsChanged?.Invoke(this, new() {
+// 			OldCount = oldCount,
+// 			NewCount = Count,
+// 			ChangedIndex = [index],
+// 			OldElements = [oldElement],
+// 		});
+// 	}
 
-	public void Add(ItemBase item) {
-		var oldCount = Count;
-		value.Add(item);
+// 	public void Add(ItemBase item) {
+// 		var oldCount = Count;
+// 		var oldElement = new ItemBase(value.FirstOrDefault(item));
+// 		if (old is not null) {
+// 			var newElement = value.FirstOrDefault(item)
+// 		}
+// 	}
 
-		ElementsChanged?.Invoke(this, new() {
-			OldCount = oldCount,
-			NewCount = Count,
-			ChangedIndex = [Count - 1],
-			NewElements = [item]
-		});
-	}
+// 	public void Add(params ItemBase[] items) {
+// 		var oldCount = Count;
+// 		var oldElements = new List<ItemBase>();
+// 		var newElements = new List<ItemBase>();
+// 		foreach (var item in items) {
+// 			var old = value.FirstOrDefault<ItemBase>(item);
+// 			if (old is not null) {
+// 				oldElements = oldElements
+// 			}
+// 		}
 
-	public bool Contains(ItemBase item) {
-		return value.Contains(item);
-	}
+// 		ElementsChanged?.Invoke(this, new() {
+// 			OldCount = oldCount,
+// 			NewCount = Count,
+// 			ChangedIndex = [Count - 1],
+// 			NewElements = [item]
+// 		});
+// 	}
 
-	int IList<ItemBase>.IndexOf(ItemBase item) {
-		return value.IndexOf(item);
-	}
+// 	public bool Contains(ItemBase item) {
+// 		return value.Contains(item);
+// 	}
 
-	void IList<ItemBase>.Insert(int index, ItemBase item) {
-		var oldCount = Count;
-		value.Insert(index, item);
+// 	int IList<ItemBase>.IndexOf(ItemBase item) {
+// 		return value.IndexOf(item);
+// 	}
 
-		ElementsChanged?.Invoke(this, new() {
-			OldCount = oldCount,
-			NewCount = Count,
-			ChangedIndex = [index],
-			NewElements = [item]
-		});
-	}
+// 	void IList<ItemBase>.Insert(int index, ItemBase item) {
+// 		var oldCount = Count;
+// 		value.Insert(index, item);
 
-	public bool Remove(ItemBase item) {
-		var oldCount = Count;
-		var changedIndex = value.IndexOf(item);
-		var result = value.Remove(item);
+// 		ElementsChanged?.Invoke(this, new() {
+// 			OldCount = oldCount,
+// 			NewCount = Count,
+// 			ChangedIndex = [index],
+// 			NewElements = [item]
+// 		});
+// 	}
 
-		ElementsChanged?.Invoke(this, new() {
-			OldCount = oldCount,
-			NewCount = Count,
-			ChangedIndex = [changedIndex],
-			OldElements = [item]
-		});
+// 	public bool Remove(ItemBase item) {
+// 		var oldCount = Count;
+// 		var changedIndex = value.IndexOf(item);
+// 		var result = value.Remove(item);
 
-		return result;
-	}
+// 		ElementsChanged?.Invoke(this, new() {
+// 			OldCount = oldCount,
+// 			NewCount = Count,
+// 			ChangedIndex = [changedIndex],
+// 			OldElements = [item]
+// 		});
 
-	IEnumerator<ItemBase> IEnumerable<ItemBase>.GetEnumerator() {
-		return value.GetEnumerator();
-	}
+// 		return result;
+// 	}
 
-	[Export]
-	protected Godot.Collections.Array<ItemBase> value { get; set; } = [];
+// 	IEnumerator<ItemBase> IEnumerable<ItemBase>.GetEnumerator() {
+// 		return value.GetEnumerator();
+// 	}
 
-	internal class ChangedArugments : EventArgs {
-		public int OldCount { get; init; }
-		public int NewCount { get; init; }
-		public List<int> ChangedIndex { get; init; } = [];
-		public List<ItemBase> NewElements { get; init; } = [];
-		public List<ItemBase> OldElements { get; init; } = [];
-	}
+// 	[Export]
+// 	protected Godot.Collections.Array<ItemBase> value { get; set; } = [];
 
-	~ObserveItemCollection() {
-		ElementsChanged = null;
-	}
-}
+// 	internal class ChangedArugments : EventArgs {
+// 		public int OldCount { get; init; }
+// 		public int NewCount { get; init; }
+// 		public List<int> ChangedIndex { get; init; } = [];
+// 		public IReadOnlyCollection<ItemBase> NewElements { get; init; } = [];
+// 		public IReadOnlyCollection<ItemBase> OldElements { get; init; } = [];
+// 	}
 
-// public class ObserveRangeCollection<T> : IList<T>, ICollection<T>, IEnumerable<T>, IEnumerable, IReadOnlyList<T>, IReadOnlyCollection<T> where T : INotifyPropertyChanged {
+// 	~ObserveItemCollection() {
+// 		ElementsChanged = null;
+// 	}
+// }
+
+//=====================================================================================================================================================
+
+//=====================================================================================================================================================
+
+// [GlobalClass]
+// public class ObserveItemCollection<T> : IList<T>, ICollection<T>, IEnumerable<T>, IEnumerable, IReadOnlyList<T>, IReadOnlyCollection<T> where T : ItemBase {
 // 	public T this[int index] {
 // 		get => value[index]; set {
 // 			var oldCount = Count;
@@ -153,7 +174,7 @@ internal partial class ObserveItemCollection : Resource, IList<ItemBase>, IColle
 
 // 	public bool IsReadOnly => false;
 
-// 	public event Action<ObserveRangeCollection<T>, ChangedArugments>? Changed;
+// 	public event Action<ObserveItemCollection<T>, ChangedArugments>? Changed;
 
 // 	public void Add(T item) {
 // 		var oldCount = Count;

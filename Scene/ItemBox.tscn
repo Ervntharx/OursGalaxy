@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://bep74tt1l573u"]
 
-[ext_resource type="Script" uid="uid://cvbng0822iup3" path="res://Script/Csharp/UI/ItemBox.cs" id="1_1py4k"]
+[ext_resource type="Script" uid="uid://cgef1vnwn0vw2" path="res://Script/Csharp/UI/ItemBox.cs" id="1_1py4k"]
 [ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="2_026hs"]
 
-[node name="ItemBox" type="Button" unique_id=1694698844 node_paths=PackedStringArray("SelectedButton", "PicTexture", "NameLabel", "NumLabel", "FC", "FoldOptionsVBox")]
+[node name="ItemBox" type="Button" unique_id=1694698844 node_paths=PackedStringArray("DefaultButton", "PicTexture", "NameLabel", "NumLabel", "FC", "FoldOptionsVBox")]
 custom_minimum_size = Vector2(400, 110)
 offset_right = 405.0
 offset_bottom = 110.0
 script = ExtResource("1_1py4k")
-SelectedButton = NodePath("Button")
+DefaultButton = NodePath("Button")
 PicTexture = NodePath("Pic")
 NameLabel = NodePath("Name")
 NumLabel = NodePath("Num")

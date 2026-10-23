@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Godot;
 
@@ -10,26 +11,48 @@ using Godot;
 internal partial class ItemBase : Resource {
 	public static readonly ItemBase Empty = new(string.Empty);
 
+	public enum QulityEnum { White, Green, Purple, Gold }
+
 	[Export]
 	[Obsolete]
 	public int ID { get; protected set; }
 
 	/// <summary>
-	/// 辨识id码, 显式使用[表名_物品名_id]的格式
+	/// 辨识id码, 显式使用[表名_物品名_质量]的格式
 	/// </summary>
 	[Export]
-	public string Code { get; private set; }
+	public string Code {
+		get => code; private set {
+			code = value;
+			PropertyChanged?.Invoke(this, new("Code"));
+		}
+	}
+
+	public Action<ItemBase, string>? PropertyChanged;
 
 	/// <summary>
 	/// ⚠️予Godot设施提供的构造函数。继承类型中应包含，但不应主动使用以产生空值
 	/// </summary>
-	protected ItemBase() { Code = string.Empty; }
+	protected ItemBase() { code = string.Empty; }
 
 	public ItemBase(string code) {
-		Code = code;
+		this.code = code;
 	}
 
+	public ItemBase(string table, string name, QulityEnum qulityEnum = QulityEnum.White) {
+		this.code = $"{table}_{name}_{(int)qulityEnum}";
+	}
+
+	public ItemBase(ItemBase other) : this(other.Code) { }
+
 	protected string GetTableName() => Code.Split("_", false)[0];
+
+	public QulityEnum GetQulity() {
+		if (int.TryParse(Code.Split("_", false)[2], out int reusult)) {
+			return (QulityEnum)reusult;
+		}
+		throw new ArgumentOutOfRangeException("Read Qulity Error");
+	}
 
 	/// <summary>
 	/// ⚠️得到的是db的id,不是id code
@@ -86,4 +109,6 @@ internal partial class ItemBase : Resource {
 	public override string ToString() {
 		return $"ItemBase: {Code}";
 	}
+
+	private string code;
 }

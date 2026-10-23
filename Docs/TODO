@@ -1,8 +1,8 @@
 基础：
 
-ObserveItemCollection添加去重
+[x]ObserveItemCollection添加去重
 
-ObserveItemCollection测试ChangedIndex之后再对接Viewer
+[x]ObserveItemCollection测试ChangedIndex之后再对接Viewer
 
 写数据库读写，让装备，舰船无需单独序列化的表格数据以数据库文件存储
 
