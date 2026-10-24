@@ -2,12 +2,17 @@
 
 [ext_resource type="Script" uid="uid://drdu5u274wkk2" path="res://Script/Csharp/UI/MissionViewer.cs" id="1_brlj2"]
 
-[node name="MissionViewer" type="Window" unique_id=323699979]
+[node name="MissionViewer" type="Window" unique_id=323699979 node_paths=PackedStringArray("NameLabel", "RatingLevelLabel", "EventsPanel", "Accept", "FightBack")]
 oversampling_override = 1.0
 title = "远征信息"
 initial_position = 1
 size = Vector2i(800, 500)
 script = ExtResource("1_brlj2")
+NameLabel = NodePath("Name")
+RatingLevelLabel = NodePath("Level")
+EventsPanel = NodePath("ScrollContainer/VBoxContainer")
+Accept = NodePath("Accept")
+FightBack = NodePath("FightBack")
 
 [node name="Name" type="RichTextLabel" parent="." unique_id=1872240134]
 offset_left = 49.0

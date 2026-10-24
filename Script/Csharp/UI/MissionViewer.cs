@@ -13,7 +13,7 @@ internal partial class MissionViewer : Window {
 	protected RichTextLabel? RatingLevelLabel { get; set; }
 
 	[Export]
-	protected HBoxContainer? EventsPanel { get; set; }
+	protected VBoxContainer? EventsPanel { get; set; }
 
 	[Export]
 	protected Button? Accept { get; set; }

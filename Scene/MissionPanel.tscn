@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://3f5la76gspiu" path="res://Script/Csharp/UI/MissionPanel.cs" id="1_bytmf"]
 
-[node name="MissionPanel" type="Window" unique_id=133417615]
+[node name="MissionPanel" type="Window" unique_id=133417615 node_paths=PackedStringArray("AllMissionsPanel", "AcceptedMissionPanel")]
 oversampling_override = 1.0
 title = "远征任务"
 initial_position = 1
@@ -10,6 +10,8 @@ size = Vector2i(800, 500)
 transient = true
 exclusive = true
 script = ExtResource("1_bytmf")
+AllMissionsPanel = NodePath("HSplitContainer/AllMissionsScrollContainer/HFlowContainer")
+AcceptedMissionPanel = NodePath("HSplitContainer/AcceptedMissionsScrollContainer2/HFlowContainer")
 
 [node name="HSplitContainer" type="HSplitContainer" parent="." unique_id=428305199]
 anchors_preset = 15
