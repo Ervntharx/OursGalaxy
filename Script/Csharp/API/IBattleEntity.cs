@@ -5,7 +5,6 @@
 public interface IBattleEntity {
 	public int Health { get; set; }
 	public int CurrentHealth { get; set; }
-	public int Shield { get; set; }
 
 	/// <summary>
 	/// 回避性能

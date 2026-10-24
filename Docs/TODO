@@ -10,6 +10,8 @@
 
 写装备类型，相应的装备简单状态机。使用EquipTypeEnum和SpecialTypeName组合对接装备槽名称
 
+[+]实现SpaceshipSnapshot类型，供StaticsServer使用
+
 写炮台类型，继承装备类型。
 
 写光子炮子弹与导弹类型，使用IBullet接口。
@@ -44,11 +46,11 @@ ProduceLine向ProduceTaskData的序列化和反序列化，UI状态机
 
 [+]机库界面(直接嵌ItemViewer)
 
-战斗中界面
+[+]战斗中界面
 
-结算界面
+[+]结算界面
 
-舰队编成界面（与选择舰队界面可以重用，叫FleetSeeker罢）
+[+]舰队编成界面
 
 舰队编辑界面
 

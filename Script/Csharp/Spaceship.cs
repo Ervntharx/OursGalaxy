@@ -26,8 +26,6 @@ internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 
 	public int CurrentHealth { get; set; }
 
-	public int Shield { get; set; }
-
 	/// <summary>
 	/// 回避性能
 	/// </summary>
