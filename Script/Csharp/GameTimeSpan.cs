@@ -4,6 +4,7 @@ using System;
 /// Represents a time span in the game. instead of TimeSpan, GameSpan is target to store in the resource file, and can be exported to the editor.
 /// </summary>
 [GlobalClass]
+[Obsolete]
 internal partial class GameTimeSpan : Resource {
 	public GameTimeSpan() { }// Default constructor}
 

@@ -1,5 +1,7 @@
 基础：
 
+实现LongProgressTask类型以覆盖远征，生产制造所需的长离线过程任务
+
 [x]ObserveItemCollection添加去重
 
 [x]ObserveItemCollection测试ChangedIndex之后再对接Viewer
@@ -15,8 +17,6 @@
 [+]基本物品类型
 
 完善存档和保存配置文件。
-
-可离线的长程Progress，用于工厂制造
 
 IBattle.LayerPresetEnum用于规定层
 
@@ -38,9 +38,11 @@ ProduceLine向ProduceTaskData的序列化和反序列化，UI状态机
 
 [+]物品栏UI构件（GameItemBox）
 
-通用的Seeker界面用于列出可选物品
+[+]通用ItemViewer界面用于列出可选物品
 
-机库界面
+通用ItemViewer界面添加MutipleSelected和Filter模式
+
+[+]机库界面(直接嵌ItemViewer)
 
 战斗中界面
 

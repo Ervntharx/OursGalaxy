@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://ce42xy0665jm1"]
+
+[ext_resource type="Script" uid="uid://3f5la76gspiu" path="res://Script/Csharp/UI/MissionPanel.cs" id="1_bytmf"]
+
+[node name="MissionPanel" type="Window" unique_id=133417615]
+oversampling_override = 1.0
+title = "远征任务"
+initial_position = 1
+size = Vector2i(800, 500)
+script = ExtResource("1_bytmf")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="." unique_id=428305199]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AllMissionsScrollContainer" type="ScrollContainer" parent="HSplitContainer" unique_id=515899126]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="HFlowContainer" parent="HSplitContainer/AllMissionsScrollContainer" unique_id=591969295]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AcceptedMissionsScrollContainer2" type="ScrollContainer" parent="HSplitContainer" unique_id=855862135]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="HFlowContainer" parent="HSplitContainer/AcceptedMissionsScrollContainer2" unique_id=1168224822]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

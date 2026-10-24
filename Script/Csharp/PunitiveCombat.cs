@@ -1,6 +1,6 @@
 ﻿using Godot;
 /// <summary>
-/// Represents a punitive combat in the game.
+/// 讨伐
 /// </summary>
 [GlobalClass]
 internal partial class PuntiveCombat : Resource, ICombat {

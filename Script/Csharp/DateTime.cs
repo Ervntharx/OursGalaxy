@@ -6,7 +6,7 @@ namespace OursGalaxy;
 [GlobalClass]
 internal partial class DateTime : Resource {
 	[Export]
-	protected Dictionary? Date;
+	protected Dictionary? Date { get; set; }
 
 	public DateTime(Dictionary godotDateTime) {
 		Date = godotDateTime;

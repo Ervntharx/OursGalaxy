@@ -1,6 +1,6 @@
 ﻿using Godot;
 /// <summary>
-/// Represents a hunt in the game.
+/// 猎杀
 /// </summary>
 [GlobalClass]
 internal partial class Hunt : Resource, ICombat {

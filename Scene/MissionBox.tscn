@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://b0ht1ktujlctu"]
+
+[ext_resource type="Script" uid="uid://dcra60ge50t5n" path="res://Script/Csharp/UI/MissionBox.cs" id="1_4uxdd"]
+
+[node name="Control" type="Button" unique_id=1337043855]
+custom_minimum_size = Vector2(400, 100)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -752.0
+offset_bottom = -548.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4uxdd")
+
+[node name="Name" type="RichTextLabel" parent="." unique_id=1418676406]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 8.0
+offset_right = 172.0
+offset_bottom = 47.0
+bbcode_enabled = true
+text = "[color=white]我们的未来[/color]"
+vertical_alignment = 1
+
+[node name="Time" type="Label" parent="." unique_id=670926033]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 57.0
+offset_right = 390.0
+offset_bottom = 82.0
+text = "00 : 10 : 00"
+vertical_alignment = 1
+
+[node name="Level" type="RichTextLabel" parent="." unique_id=372499741]
+layout_mode = 0
+offset_left = 334.0
+offset_top = 5.0
+offset_right = 381.0
+offset_bottom = 50.0
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "[color=purple]AA[/color]"
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1757160248]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 54.0
+offset_right = 292.0
+offset_bottom = 87.0
