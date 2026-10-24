@@ -1,4 +1,6 @@
 ﻿using System;
+namespace OursGalaxy;
+
 /// <summary>
 /// 战斗实体接口
 /// </summary>

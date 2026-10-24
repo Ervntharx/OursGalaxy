@@ -1,5 +1,7 @@
 ﻿using System;
 using Godot;
+using OursGalaxy;
+
 /// <summary>
 /// 飞船类
 /// </summary>
@@ -13,6 +15,9 @@ internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 	public Node3D ToNode3D() {
 		return this;
 	}
+
+	[Export]
+	protected CombatBehaviorStateMachine? BehaviorStateMachine { get; set; }
 
 	[Export]
 	public ScaleSizeEnum ScaleSize { get; set; } = ScaleSizeEnum.FF;

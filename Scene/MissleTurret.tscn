@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://c3dhobxchp03c"]
+
+[ext_resource type="Script" uid="uid://dk084a26s0r06" path="res://Script/Csharp/Equipments/MissleTurret.cs" id="1_tdi3b"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_1bc55"]
+size = Vector3(0.6, 0.22, 0.656)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tdi3b"]
+size = Vector3(0.524, 0.117, 0.496)
+
+[node name="MissleTurret" type="Node3D" unique_id=1036382210]
+script = ExtResource("1_tdi3b")
+
+[node name="Base" type="MeshInstance3D" parent="." unique_id=1871289591]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.096322894, 0)
+mesh = SubResource("BoxMesh_1bc55")
+
+[node name="Base2" type="MeshInstance3D" parent="." unique_id=8597328]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22510529, 0)
+mesh = SubResource("BoxMesh_tdi3b")

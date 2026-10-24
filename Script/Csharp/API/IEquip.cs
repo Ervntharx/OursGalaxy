@@ -1,4 +1,6 @@
-﻿namespace OursGalaxy;
+﻿using System.Collections.Generic;
+
+namespace OursGalaxy;
 
 public interface IEquip {
 	public enum OutletTypeEnum { S, M, L, XL, AirDefense, Special }
@@ -6,5 +8,5 @@ public interface IEquip {
 	public string? SpecialTypeName { get; }
 
 	public long CDMisc { get; }
-	public IPromote? Promotes { get; }
+	public IReadOnlyCollection<IPromote>? Promotes { get; }
 }
