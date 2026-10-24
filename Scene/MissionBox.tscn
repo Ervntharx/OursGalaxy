@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dcra60ge50t5n" path="res://Script/Csharp/UI/MissionBox.cs" id="1_4uxdd"]
 
-[node name="Control" type="Button" unique_id=1337043855]
+[node name="Control" type="Button" unique_id=1337043855 node_paths=PackedStringArray("NameLabel", "TimeLabel", "TimeProgressBar", "RatingLevelLabel")]
 custom_minimum_size = Vector2(400, 100)
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,6 +12,10 @@ offset_bottom = -548.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4uxdd")
+NameLabel = NodePath("Name")
+TimeLabel = NodePath("Time")
+TimeProgressBar = NodePath("ProgressBar")
+RatingLevelLabel = NodePath("RatingLevel")
 
 [node name="Name" type="RichTextLabel" parent="." unique_id=1418676406]
 layout_mode = 0
@@ -32,7 +36,7 @@ offset_bottom = 82.0
 text = "00 : 10 : 00"
 vertical_alignment = 1
 
-[node name="Level" type="RichTextLabel" parent="." unique_id=372499741]
+[node name="RatingLevel" type="RichTextLabel" parent="." unique_id=372499741]
 layout_mode = 0
 offset_left = 334.0
 offset_top = 5.0

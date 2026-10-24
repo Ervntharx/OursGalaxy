@@ -50,6 +50,9 @@ internal partial class MissionData : Resource {
 	protected long ProgressTime { get; set; }
 	public TimeSpan ProgressTimeSpan => TimeSpan.FromSeconds(ProgressTime);
 
+	[Export]
+	public Godot.Collections.Array<MissionEvent> Events { get; set; } = [];
+
 	public MissionData(string name, RatingLevelEnum ratingLevel, ushort level) {
 		Name = name;
 		RatingLevel = ratingLevel;

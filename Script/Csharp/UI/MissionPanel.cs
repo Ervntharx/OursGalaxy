@@ -6,9 +6,9 @@ internal partial class MissionPanel : Window {
 	public MissionPanel Load() => (MissionPanel)ResourceLoader.Load<PackedScene>("res://Scene/MissionPanel.tscn").Instantiate();
 
 	[Export]
-	protected VFlowContainer? AllMissionsPanel { get; set; }
+	protected HFlowContainer? AllMissionsPanel { get; set; }
 	[Export]
-	protected VFlowContainer? AcceptedMissionPanel { get; set; }
+	protected HFlowContainer? AcceptedMissionPanel { get; set; }
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
