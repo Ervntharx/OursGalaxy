@@ -1,11 +1,14 @@
 [gd_scene format=3 uid="uid://cil3tkso42l01"]
 
-[ext_resource type="PackedScene" uid="uid://c4v8i3k7rshwk" path="res://Scene/FleetBox.tscn" id="1_h43c7"]
+[ext_resource type="Script" uid="uid://cxs3i0xvf500f" path="res://Script/Csharp/UI/FleetsViewer.cs" id="1_h43c7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xdkbe"]
 font_size = 32
 
-[node name="FleetsViewer" type="Panel" unique_id=150746634]
+[node name="FleetsViewer" type="Panel" unique_id=150746634 node_paths=PackedStringArray("FleetsPanel", "Quit")]
+script = ExtResource("1_h43c7")
+FleetsPanel = NodePath("ScrollContainer/HBoxContainer")
+Quit = NodePath("Quit")
 
 [node name="Quit" type="Button" parent="." unique_id=1198263801]
 layout_mode = 0
@@ -38,15 +41,3 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
-
-[node name="FleetBox" parent="ScrollContainer/HBoxContainer" unique_id=1345532312 instance=ExtResource("1_h43c7")]
-layout_mode = 2
-
-[node name="FleetBox2" parent="ScrollContainer/HBoxContainer" unique_id=1398619813 instance=ExtResource("1_h43c7")]
-layout_mode = 2
-
-[node name="FleetBox3" parent="ScrollContainer/HBoxContainer" unique_id=1155711110 instance=ExtResource("1_h43c7")]
-layout_mode = 2
-
-[node name="FleetBox4" parent="ScrollContainer/HBoxContainer" unique_id=794018668 instance=ExtResource("1_h43c7")]
-layout_mode = 2

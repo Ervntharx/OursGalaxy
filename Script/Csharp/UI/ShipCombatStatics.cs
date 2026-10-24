@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using System;
 namespace OursGalaxy.UI;
 
@@ -13,6 +13,9 @@ internal partial class ShipCombatStatics : Panel {
 	protected ProgressBar? HPLeftProgressBar { get; set; }
 	[Export]
 	protected ProgressBar? DamageTakePrecentBar { get; set; }
+
+
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
 	}

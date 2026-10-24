@@ -11,12 +11,12 @@ internal partial class FleetData : Resource {
 	/// 舰队ID
 	/// </summary>
 	[Export]
-	public long ID { get; set; }
+	public string UniqueID { get; set; }
 	[Export]
 	public string Name { get; set; } = DEFAULT_NAME;
 
 	[Export]
-	public required SpaceshipData Flagship { get; set; }
+	public SpaceshipData Flagship { get; set; }
 
 	[Export]
 	public Array<SpaceshipData> Ships { get; set; } = new();
@@ -24,8 +24,17 @@ internal partial class FleetData : Resource {
 	[Export]
 	public Dictionary<SpaceshipData, TacticsSet> Tactics { get; set; } = new();
 
-	public FleetData() {
-		ID = GenerateID();
+	public FleetData(SpaceshipData flagship) {
+		Flagship = flagship;
+		UniqueID = GenerateUniqueID();
+	}
+
+	/// <summary>
+	/// ⚠️不要使用无参构造函数构造无意义量
+	/// </summary>
+	protected FleetData() {
+		Flagship = SpaceshipData.Empty;
+		UniqueID = GenerateUniqueID();
 	}
 
 	/// <summary>
@@ -33,7 +42,7 @@ internal partial class FleetData : Resource {
 	/// 通过当前时间戳生成一个唯一的ID
 	/// </summary>
 	/// <returns></returns>
-	private static long GenerateID() {
-		return Time.GetUnixTimeFromDatetimeDict(Time.GetDateDictFromSystem(true));
+	private static string GenerateUniqueID() {
+		return Time.GetDateStringFromSystem(true);
 	}
 }
