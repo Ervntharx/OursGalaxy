@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cp5u8wxjayjpx"]
+
+[ext_resource type="Script" uid="uid://cutyu61ow6phb" path="res://Script/CombatStage.cs" id="1_dactg"]
+
+[node name="CombatStage" type="Node3D" unique_id=559169952]
+script = ExtResource("1_dactg")
+
+[node name="EndTimer" type="Timer" parent="." unique_id=327072692]
+wait_time = 120.0
+one_shot = true
+
+[node name="SecondsTimer" type="Timer" parent="." unique_id=1606879743]

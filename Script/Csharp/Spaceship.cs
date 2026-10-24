@@ -3,8 +3,9 @@ using Godot;
 /// <summary>
 /// 飞船类
 /// </summary>
-[GlobalClass]
 internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
+	public enum ScaleSizeEnum { FF, DD, CL, CA, BB }
+
 	public T ToNode<T>() where T : Node {
 		return (this as T)!;
 	}
@@ -14,46 +15,42 @@ internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 	}
 
 	[Export]
+	public ScaleSizeEnum ScaleSize { get; set; } = ScaleSizeEnum.FF;
+
 	public int Health { get; set; }
-	[Export]
+
 	public int CurrentHealth { get; set; }
-	[Export]
+
 	public int Shield { get; set; }
 
 	/// <summary>
 	/// 回避性能
 	/// </summary>
-	[Export]
 	public int PreventValue { get; set; }
 
 	/// <summary>
 	/// 冲击伤害耐性
 	/// </summary>
-	[Export]
 	public int ImpactTolerance { get; set; }
 
 	/// <summary>
 	/// 穿透伤害耐性
 	/// </summary>
-	[Export]
 	public int PenetrateTolerance { get; set; }
 
 	/// <summary>
 	/// 光热伤害耐性
 	/// </summary>
-	[Export]
 	public int PhotothermalTolerance { get; set; }
 
 	/// <summary>
 	/// 酸蚀伤害耐性
 	/// </summary>
-	[Export]
 	public int CorrosionTolerance { get; set; }
 
 	/// <summary>
 	/// 电磁伤害耐性
 	/// </summary>
-	[Export]
 	public int ElectromagneticTolerance { get; set; }
 
 	/// <summary>

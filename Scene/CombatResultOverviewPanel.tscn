@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://enplx4f1a3u7"]
+
+[ext_resource type="Script" uid="uid://cp48moe58iqwo" path="res://Script/Csharp/UI/CombatResultOverviewPanel.cs" id="1_tuhks"]
+[ext_resource type="PackedScene" uid="uid://x7d2f05bntg5" path="res://Scene/ShipCombatStatics.tscn" id="2_vcuw2"]
+
+[node name="CombatResultOverviewPanel" type="Panel" unique_id=185343465 node_paths=PackedStringArray("CombatResultLabel", "LeftPanel", "RightPanel", "Comfirm")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tuhks")
+CombatResultLabel = NodePath("RichTextLabel")
+LeftPanel = NodePath("MarginContainer/HSplitContainer/Left/VBoxContainer")
+RightPanel = NodePath("MarginContainer/HSplitContainer/Right/VBoxContainer")
+Comfirm = NodePath("Comfirm")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1504996148]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 75
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 75
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer" unique_id=498311925]
+layout_mode = 2
+
+[node name="Left" type="ScrollContainer" parent="MarginContainer/HSplitContainer" unique_id=2039950310]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HSplitContainer/Left" unique_id=1449697672]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ShipCombatStatics" parent="MarginContainer/HSplitContainer/Left/VBoxContainer" unique_id=1495220755 instance=ExtResource("2_vcuw2")]
+layout_mode = 2
+
+[node name="ShipCombatStatics2" parent="MarginContainer/HSplitContainer/Left/VBoxContainer" unique_id=826924378 instance=ExtResource("2_vcuw2")]
+layout_mode = 2
+
+[node name="ShipCombatStatics3" parent="MarginContainer/HSplitContainer/Left/VBoxContainer" unique_id=280610758 instance=ExtResource("2_vcuw2")]
+layout_mode = 2
+
+[node name="ShipCombatStatics4" parent="MarginContainer/HSplitContainer/Left/VBoxContainer" unique_id=1864003012 instance=ExtResource("2_vcuw2")]
+layout_mode = 2
+
+[node name="ShipCombatStatics5" parent="MarginContainer/HSplitContainer/Left/VBoxContainer" unique_id=1840737885 instance=ExtResource("2_vcuw2")]
+layout_mode = 2
+
+[node name="Right" type="ScrollContainer" parent="MarginContainer/HSplitContainer" unique_id=1350198076]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HSplitContainer/Right" unique_id=1961589453]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ShipCombatStatics6" parent="MarginContainer/HSplitContainer/Right/VBoxContainer" unique_id=1970900408 instance=ExtResource("2_vcuw2")]
+layout_mode = 2
+
+[node name="ShipCombatStatics7" parent="MarginContainer/HSplitContainer/Right/VBoxContainer" unique_id=1645568128 instance=ExtResource("2_vcuw2")]
+layout_mode = 2
+
+[node name="ShipCombatStatics8" parent="MarginContainer/HSplitContainer/Right/VBoxContainer" unique_id=1292352599 instance=ExtResource("2_vcuw2")]
+layout_mode = 2
+
+[node name="Comfirm" type="Button" parent="." unique_id=1988183062]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -269.0
+offset_top = -65.0
+offset_right = -96.0
+offset_bottom = -14.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "确定"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1359151196]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -87.0
+offset_top = 31.0
+offset_right = 92.0
+offset_bottom = 71.0
+grow_horizontal = 2
+text = "战斗结果"
+horizontal_alignment = 1
+vertical_alignment = 1
