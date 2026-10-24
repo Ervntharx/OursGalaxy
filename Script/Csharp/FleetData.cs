@@ -1,5 +1,6 @@
 ﻿using Godot;
 using Godot.Collections;
+namespace OursGalaxy;
 /// <summary>
 /// 舰队数据类, 用于存储舰队的基本信息和状态
 /// </summary>

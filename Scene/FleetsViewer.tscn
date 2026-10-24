@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://cil3tkso42l01"]
+
+[ext_resource type="PackedScene" uid="uid://c4v8i3k7rshwk" path="res://Scene/FleetBox.tscn" id="1_h43c7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xdkbe"]
+font_size = 32
+
+[node name="FleetsViewer" type="Panel" unique_id=150746634]
+
+[node name="Quit" type="Button" parent="." unique_id=1198263801]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 13.0
+offset_right = 84.0
+offset_bottom = 56.0
+text = "<"
+
+[node name="Title" type="Label" parent="." unique_id=243147427]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 12.0
+offset_right = 200.0
+offset_bottom = 60.0
+text = "舰队"
+label_settings = SubResource("LabelSettings_xdkbe")
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1261728957]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 1
+offset_left = 7.0
+offset_top = 79.0
+offset_right = 1142.0
+offset_bottom = 641.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer" unique_id=994752517]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="FleetBox" parent="ScrollContainer/HBoxContainer" unique_id=1345532312 instance=ExtResource("1_h43c7")]
+layout_mode = 2
+
+[node name="FleetBox2" parent="ScrollContainer/HBoxContainer" unique_id=1398619813 instance=ExtResource("1_h43c7")]
+layout_mode = 2
+
+[node name="FleetBox3" parent="ScrollContainer/HBoxContainer" unique_id=1155711110 instance=ExtResource("1_h43c7")]
+layout_mode = 2
+
+[node name="FleetBox4" parent="ScrollContainer/HBoxContainer" unique_id=794018668 instance=ExtResource("1_h43c7")]
+layout_mode = 2

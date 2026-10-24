@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://c4v8i3k7rshwk"]
+
+[ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="1_6f4vr"]
+[ext_resource type="Script" uid="uid://b4t73pi4468j8" path="res://Script/Csharp/UI/FleetBox.cs" id="1_y8kr3"]
+
+[node name="FleetBox" type="Button" unique_id=1345532312 node_paths=PackedStringArray("TitleLabel", "DescLabel", "Pic")]
+custom_minimum_size = Vector2(360, 0)
+offset_left = 32.0
+offset_top = 30.0
+offset_right = 392.0
+offset_bottom = 530.0
+script = ExtResource("1_y8kr3")
+TitleLabel = NodePath("Name")
+DescLabel = NodePath("Desc")
+Pic = NodePath("TextureRect")
+
+[node name="Name" type="RichTextLabel" parent="." unique_id=1786509486]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 21.0
+offset_right = 253.0
+offset_bottom = 72.0
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[color=gold]01[/color] | 未命名舰队"
+
+[node name="Desc" type="RichTextLabel" parent="." unique_id=2031844177]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -149.0
+offset_top = -428.0
+offset_right = 145.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 0
+bbcode_enabled = true
+text = "[color=gold]旗舰:	[/color]旗舰名
+
+[color=gold]舰队HP:	[/color]1000/[color=gold]1000[/color]
+[color=gold]舰队舰船数量:	[/color]10/[color=gold]20[/color]
+[color=gold]舰队规模:	[/color]200/[color=gold]300[/color]
+
+[color=gold]使用舰队预案:	[/color]未使用
+"
+vertical_alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=5567168]
+layout_mode = 0
+offset_left = 65.0
+offset_top = 80.0
+offset_right = 296.0
+offset_bottom = 284.0
+texture = ExtResource("1_6f4vr")

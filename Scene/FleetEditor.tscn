@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://be318n8l1fl3e"]
+
+[ext_resource type="Script" uid="uid://h1nq43o6kh7y" path="res://Script/Csharp/UI/FleetEditor.cs" id="1_6ygrp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oavvr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_oavvr"]
+font_size = 54
+
+[node name="FleetEditor" type="Node3D" unique_id=354198151 node_paths=PackedStringArray("FleetNameEdit", "QuitButton", "SizeLabel", "AddShip", "ChangeFlagShip", "ShipsOverviewsPanel")]
+script = ExtResource("1_6ygrp")
+FleetNameEdit = NodePath("Panel/LineEdit")
+QuitButton = NodePath("Panel/Quit")
+SizeLabel = NodePath("Panel/Size")
+AddShip = NodePath("Panel/AddShip")
+ChangeFlagShip = NodePath("Panel/ChangeFlagShip")
+ShipsOverviewsPanel = NodePath("Panel/FoldableContainer/ScrollContainer/VBoxContainer")
+
+[node name="Panel" type="Panel" parent="." unique_id=1555994768]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_oavvr")
+
+[node name="LineEdit" type="LineEdit" parent="Panel" unique_id=120929405]
+layout_mode = 0
+offset_left = 89.0
+offset_top = 19.0
+offset_right = 270.0
+offset_bottom = 51.0
+text = "未命名"
+placeholder_text = "在这里输入舰队名"
+
+[node name="Quit" type="Button" parent="Panel" unique_id=140692423]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 17.0
+offset_right = 78.0
+offset_bottom = 57.0
+text = "<"
+
+[node name="Size" type="Label" parent="Panel" unique_id=1210712091]
+layout_mode = 0
+offset_left = 917.0
+offset_top = 525.0
+offset_right = 1008.0
+offset_bottom = 607.0
+text = "50"
+label_settings = SubResource("LabelSettings_oavvr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AddShip" type="Button" parent="Panel" unique_id=396409285]
+layout_mode = 0
+offset_left = 1012.0
+offset_top = 521.0
+offset_right = 1126.0
+offset_bottom = 626.0
+text = "新增船只"
+
+[node name="ChangeFlagShip" type="Button" parent="Panel" unique_id=1282636263]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 532.0
+offset_right = 142.0
+offset_bottom = 616.0
+text = "变更旗舰"
+
+[node name="FoldableContainer" type="FoldableContainer" parent="Panel" unique_id=154295292]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 62.0
+offset_right = 251.0
+offset_bottom = 98.0
+title = "舰船"
+title_alignment = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/FoldableContainer" unique_id=1657381641]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/FoldableContainer/ScrollContainer" unique_id=15664565]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Marker" type="Marker3D" parent="." unique_id=443414559]
