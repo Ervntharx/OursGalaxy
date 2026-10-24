@@ -12,17 +12,17 @@
 
 [+]实现SpaceshipSnapshot类型，供StaticsServer使用
 
-写炮台类型，继承装备类型。
+[going]写炮台类型，继承装备类型。
 
-写光子炮子弹与导弹类型，使用IBullet接口。
+[going]写光子炮子弹与导弹类型，使用IBullet接口。
 
 [+]基本物品类型
 
 完善存档和保存配置文件。
 
-IBattle.LayerPresetEnum用于规定层
+[+]IBattle.LayerPresetEnum用于规定层	=>	但是不在该类下。忘了在哪个类下了
 
-AI逻辑行为状态机。
+[going]AI逻辑行为状态机。
 
 IPromote接口，用于表达运行时游戏局内增益效果。
 
@@ -52,7 +52,7 @@ ProduceLine向ProduceTaskData的序列化和反序列化，UI状态机
 
 [+]舰队编成界面
 
-舰队编辑界面
+[going]舰队编辑界面
 
 装备强化界面
 

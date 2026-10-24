@@ -1,4 +1,6 @@
-﻿public struct DamageSet {
+﻿namespace OursGalaxy;
+
+public struct DamageSet {
 	/// <summary>
 	/// 攻击者.用于伤害统计
 	/// </summary>
