@@ -4,7 +4,7 @@ using Godot.Collections;
 namespace OursGalaxy;
 
 [GlobalClass]
-internal partial class MissionEvent : Resource {
+internal partial class AssignedTaskEvent : Resource {
 	/// <summary>
 	/// 远征任务事件名
 	/// </summary>
@@ -26,7 +26,7 @@ internal partial class MissionEvent : Resource {
 	[Export]
 	public bool HasAcceptedReward { get; set; }
 
-	public MissionEvent(string code, DateTime time) {
+	public AssignedTaskEvent(string code, DateTime time) {
 		Code = code;
 		Time = time;
 	}
@@ -39,5 +39,5 @@ internal partial class MissionEvent : Resource {
 	}
 
 	// 禁止无参构造
-	private MissionEvent() { Code = string.Empty; Time = DateTime.Now(); }
+	private AssignedTaskEvent() { Code = string.Empty; Time = DateTime.Now(); }
 }

@@ -8,7 +8,7 @@ namespace OursGalaxy.UI;
 /// <summary>
 /// Item查看器。在Show的时候绘制。需要在Show之前制定Items和Opts.Items是可变的，Opts是不可变的
 /// </summary>
-internal partial class ItemViewer : Window {
+internal partial class ItemViewer : Control {
 	public ItemViewer Load() => (ItemViewer)ResourceLoader.Load<PackedScene>("res://Scene/ItemViewer.tscn").Instantiate();
 
 	[Export]

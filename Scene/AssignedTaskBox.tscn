@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b0ht1ktujlctu"]
 
-[ext_resource type="Script" uid="uid://dcra60ge50t5n" path="res://Script/Csharp/UI/MissionBox.cs" id="1_4uxdd"]
+[ext_resource type="Script" uid="uid://bwov11ha2xtc3" path="res://Script/Csharp/UI/AssignedTaskBox.cs" id="1_spcxu"]
 
 [node name="Control" type="Button" unique_id=1337043855 node_paths=PackedStringArray("NameLabel", "TimeLabel", "TimeProgressBar", "RatingLevelLabel")]
 custom_minimum_size = Vector2(400, 100)
@@ -11,7 +11,7 @@ offset_right = -752.0
 offset_bottom = -548.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_4uxdd")
+script = ExtResource("1_spcxu")
 NameLabel = NodePath("Name")
 TimeLabel = NodePath("Time")
 TimeProgressBar = NodePath("ProgressBar")

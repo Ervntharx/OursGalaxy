@@ -3,8 +3,8 @@ using System;
 using System.ComponentModel;
 namespace OursGalaxy.UI;
 
-internal partial class MissionViewer : Window {
-	public MissionViewer Load() => (MissionViewer)ResourceLoader.Load<PackedScene>("res://Scene/MissionViewer.tscn").Instantiate();
+internal partial class AssignedTaskViewer : Control {
+	public AssignedTaskViewer Load() => (AssignedTaskViewer)ResourceLoader.Load<PackedScene>("res://Scene/AssignedTaskViewer.tscn").Instantiate();
 
 	[Export]
 	protected RichTextLabel? NameLabel { get; set; }
@@ -21,7 +21,7 @@ internal partial class MissionViewer : Window {
 	[Export]
 	protected Button? FightBack { get; set; }
 
-	public void Make(MissionData missionData) {
+	public void Make(AssignedTaskData missionData) {
 		NameLabel!.Text = missionData.Name;
 		RatingLevelLabel!.Text = $"{missionData.RatingLevel}";
 		foreach (var missionEvent in missionData.Events) {

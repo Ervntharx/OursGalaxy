@@ -1,187 +1,335 @@
 [gd_scene format=3 uid="uid://nx08rwg57ket"]
 
 [ext_resource type="Script" uid="uid://cuh568h5a2p73" path="res://Script/Csharp/UI/MainPanel.cs" id="1_k3m2i"]
+[ext_resource type="PackedScene" uid="uid://dfq041nbgee63" path="res://Scene/MessageBoxPanel.tscn" id="2_ghh76"]
 [ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="2_k3m2i"]
 
-[node name="MainPanel" type="Panel" unique_id=2010670530 node_paths=PackedStringArray("SettingButton")]
+[sub_resource type="LabelSettings" id="LabelSettings_ghh76"]
+font_color = Color(1, 0.85, 0, 1)
+
+[node name="Control" type="MarginContainer" unique_id=1410380458 node_paths=PackedStringArray("ExitButton", "SettingButton", "PersonalArchiveButton", "TechnologyButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_force_pass_scroll_events = false
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 script = ExtResource("1_k3m2i")
-SettingButton = NodePath("Setting")
+ExitButton = NodePath("PanelContainer/VSplitContainer/Panels/MarginContainer/HSplitContainer/Quit")
+SettingButton = NodePath("PanelContainer/VSplitContainer/HSplitContainer/TopRight/Setting")
+PersonalArchiveButton = NodePath("PanelContainer/VSplitContainer/HSplitContainer/PersonalCard")
+TechnologyButton = NodePath("PanelContainer/VSplitContainer/Panels/MarginContainer/HSplitContainer/ScrollContainer/HBoxContainer/Control2/Technology")
 
-[node name="Setting" type="Button" parent="." unique_id=1022336450]
-layout_mode = 0
-offset_left = 1084.0
-offset_top = 11.0
-offset_right = 1139.0
-offset_bottom = 60.0
-text = "设置"
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=2010105218]
+layout_mode = 2
 
-[node name="TopBar" type="HFlowContainer" parent="." unique_id=270467312]
-layout_mode = 0
-offset_left = 22.0
-offset_top = 15.0
-offset_right = 1071.0
-offset_bottom = 55.0
+[node name="VSplitContainer" type="VSplitContainer" parent="PanelContainer" unique_id=2141993730]
+layout_mode = 2
+split_offsets = PackedInt32Array(32)
+split_offset = 32
 
-[node name="Avater" type="TextureRect" parent="TopBar" unique_id=364984267]
-custom_minimum_size = Vector2(50, 50)
+[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/VSplitContainer" unique_id=2051103699]
+layout_mode = 2
+split_offsets = PackedInt32Array(0, 0)
+
+[node name="PersonalCard" type="Button" parent="PanelContainer/VSplitContainer/HSplitContainer" unique_id=1845001733]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_constants/icon_max_width = 100
+text = "UserName"
+icon = ExtResource("2_k3m2i")
+alignment = 2
+text_overrun_behavior = 1
+expand_icon = true
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VSplitContainer/HSplitContainer" unique_id=1208905140]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VSplitContainer/HSplitContainer/PanelContainer" unique_id=2140181652]
+layout_mode = 2
+size_flags_horizontal = 3
+scroll_hint_mode = 3
+
+[node name="HFlowContainer" type="VFlowContainer" parent="PanelContainer/VSplitContainer/HSplitContainer/PanelContainer/ScrollContainer" unique_id=492694702]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Ships" type="RichTextLabel" parent="PanelContainer/VSplitContainer/HSplitContainer/PanelContainer/ScrollContainer/HFlowContainer" unique_id=375623373]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "[x] [color=white]2000[/color] [color=gold]/ 2000[/color]"
+fit_content = true
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Equips" type="RichTextLabel" parent="PanelContainer/VSplitContainer/HSplitContainer/PanelContainer/ScrollContainer/HFlowContainer" unique_id=2116756131]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "[x] [color=white]10000[/color] [color=gold]/ 10000[/color]"
+fit_content = true
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Solids" type="RichTextLabel" parent="PanelContainer/VSplitContainer/HSplitContainer/PanelContainer/ScrollContainer/HFlowContainer" unique_id=368706545]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "[x] [color=white]300000[/color] [color=gold]/ 300000[/color]"
+fit_content = true
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Lquid" type="RichTextLabel" parent="PanelContainer/VSplitContainer/HSplitContainer/PanelContainer/ScrollContainer/HFlowContainer" unique_id=1380636084]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "[x] [color=white]300000[/color] [color=gold]/ 300000[/color]"
+fit_content = true
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="IndustrialProducts" type="RichTextLabel" parent="PanelContainer/VSplitContainer/HSplitContainer/PanelContainer/ScrollContainer/HFlowContainer" unique_id=31684286]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "[x] [color=white]300000[/color] [color=gold]/ 300000[/color]"
+fit_content = true
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Honor" type="RichTextLabel" parent="PanelContainer/VSplitContainer/HSplitContainer/PanelContainer/ScrollContainer/HFlowContainer" unique_id=1317554768]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "[x] [color=white]300000[/color] [color=gold]/ 300000[/color]"
+fit_content = true
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TopRight" type="HBoxContainer" parent="PanelContainer/VSplitContainer/HSplitContainer" unique_id=1238997423]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="Action" type="Button" parent="PanelContainer/VSplitContainer/HSplitContainer/TopRight" unique_id=122206290]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VSplitContainer/HSplitContainer/TopRight/Action" unique_id=1924192552]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="PanelContainer/VSplitContainer/HSplitContainer/TopRight/Action/HBoxContainer" unique_id=336649227]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VSplitContainer/HSplitContainer/TopRight/Action/HBoxContainer/AspectRatioContainer" unique_id=198938478]
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 texture = ExtResource("2_k3m2i")
-expand_mode = 1
+expand_mode = 2
+stretch_mode = 5
 
-[node name="Button" type="Button" parent="TopBar" unique_id=581179273]
+[node name="HBoxContainer" type="HFlowContainer" parent="PanelContainer/VSplitContainer/HSplitContainer/TopRight/Action/HBoxContainer" unique_id=127027173]
 layout_mode = 2
-text = "UserName"
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 3.0
+alignment = 2
 
-[node name="Ships" type="RichTextLabel" parent="TopBar" unique_id=458896547]
-custom_minimum_size = Vector2(150, 0)
+[node name="CurrentAction" type="Label" parent="PanelContainer/VSplitContainer/HSplitContainer/TopRight/Action/HBoxContainer/HBoxContainer" unique_id=596633130]
 layout_mode = 2
-bbcode_enabled = true
-text = "[color=yellow]200[/color]/[color=yellow]200[/color]"
+size_flags_horizontal = 4
+text = "1200"
+vertical_alignment = 1
 
-[node name="Equips" type="RichTextLabel" parent="TopBar" unique_id=1754573206]
-custom_minimum_size = Vector2(150, 0)
+[node name="Label" type="Label" parent="PanelContainer/VSplitContainer/HSplitContainer/TopRight/Action/HBoxContainer/HBoxContainer" unique_id=791443265]
 layout_mode = 2
-bbcode_enabled = true
-text = "[color=yellow]1000[/color]/[color=yellow]1000[/color]"
+text = " / 1200"
+label_settings = SubResource("LabelSettings_ghh76")
+vertical_alignment = 1
 
-[node name="Solids" type="RichTextLabel" parent="TopBar" unique_id=1334051504]
-custom_minimum_size = Vector2(150, 0)
+[node name="Setting" type="Button" parent="PanelContainer/VSplitContainer/HSplitContainer/TopRight" unique_id=1684105990]
 layout_mode = 2
-bbcode_enabled = true
-text = "[color=yellow]300000[/color]/[color=yellow]300000[/color]"
+size_flags_horizontal = 3
+text = "设置"
 
-[node name="Lquid" type="RichTextLabel" parent="TopBar" unique_id=2068377726]
-custom_minimum_size = Vector2(150, 0)
+[node name="Panels" type="HSplitContainer" parent="PanelContainer/VSplitContainer" unique_id=781386343]
 layout_mode = 2
-bbcode_enabled = true
-text = "[color=yellow]300000[/color]/[color=yellow]300000[/color]"
+split_offsets = PackedInt32Array(300)
+split_offset = 300
 
-[node name="InductrialProducts" type="RichTextLabel" parent="TopBar" unique_id=1003078310]
-custom_minimum_size = Vector2(150, 0)
+[node name="MessageBoxPanel" parent="PanelContainer/VSplitContainer/Panels" unique_id=970246743 instance=ExtResource("2_ghh76")]
 layout_mode = 2
-bbcode_enabled = true
-text = "[color=yellow]300000[/color]/[color=yellow]300000[/color]"
 
-[node name="Honor" type="RichTextLabel" parent="TopBar" unique_id=111640714]
-custom_minimum_size = Vector2(150, 0)
+[node name="MarginContainer" type="VSplitContainer" parent="PanelContainer/VSplitContainer/Panels" unique_id=1361887124]
 layout_mode = 2
-bbcode_enabled = true
-text = "[color=yellow]300000[/color]/[color=yellow]300000[/color]"
+split_offsets = PackedInt32Array(-100)
+split_offset = -100
 
-[node name="ActionPoints" type="RichTextLabel" parent="TopBar" unique_id=457405841]
-custom_minimum_size = Vector2(150, 0)
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VSplitContainer/Panels/MarginContainer" unique_id=1556039482]
 layout_mode = 2
-bbcode_enabled = true
-text = "[color=yellow]840[/color]/[color=yellow]840[/color]"
+size_flags_vertical = 3
 
-[node name="Fleet" type="Button" parent="." unique_id=531506440]
-layout_mode = 0
-offset_left = 307.0
-offset_top = 123.0
-offset_right = 673.0
-offset_bottom = 220.0
+[node name="Panel" type="Panel" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/ScrollContainer" unique_id=129026880]
+custom_minimum_size = Vector2(900, 500)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+
+[node name="Fleet" type="Button" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/ScrollContainer/Panel" unique_id=1453530251]
+layout_mode = 1
+offset_right = 476.0
+offset_bottom = 160.0
+mouse_filter = 1
 text = "舰队编成"
 
-[node name="Combat" type="Button" parent="." unique_id=1581583431]
-layout_mode = 0
-offset_left = 959.0
-offset_top = 94.0
-offset_right = 1099.0
-offset_bottom = 471.0
-text = "讨伐"
-
-[node name="Expedition" type="Button" parent="." unique_id=1679350234]
-layout_mode = 0
-offset_left = 799.0
-offset_top = 102.0
-offset_right = 933.0
-offset_bottom = 478.0
-text = "远征"
-
-[node name="Hanger" type="Button" parent="." unique_id=969541270]
-layout_mode = 0
-offset_left = 348.0
-offset_top = 351.0
-offset_right = 499.0
-offset_bottom = 455.0
-text = "机库"
-
-[node name="Mission" type="Button" parent="." unique_id=578683841]
-layout_mode = 0
-offset_left = 299.0
-offset_top = 232.0
-offset_right = 450.0
-offset_bottom = 336.0
+[node name="Mission" type="Button" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/ScrollContainer/Panel" unique_id=1860791052]
+layout_mode = 1
+offset_left = 2.0
+offset_top = 170.0
+offset_right = 153.0
+offset_bottom = 274.0
+mouse_filter = 1
 text = "舰队任务"
 
-[node name="Alliance" type="Button" parent="." unique_id=1600465819]
+[node name="Alliance" type="Button" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/ScrollContainer/Panel" unique_id=1647195606]
 layout_mode = 0
-offset_left = 459.0
-offset_top = 230.0
-offset_right = 610.0
-offset_bottom = 334.0
+offset_left = 160.0
+offset_top = 173.0
+offset_right = 311.0
+offset_bottom = 277.0
+mouse_filter = 1
 text = "舰队联盟"
 
-[node name="Simulation" type="Button" parent="." unique_id=1727502030]
+[node name="Simulation" type="Button" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/ScrollContainer/Panel" unique_id=737101021]
 layout_mode = 0
-offset_left = 615.0
-offset_top = 227.0
-offset_right = 766.0
-offset_bottom = 331.0
+offset_left = 319.0
+offset_top = 177.0
+offset_right = 470.0
+offset_bottom = 281.0
+mouse_filter = 1
 text = "模拟战"
 
-[node name="EquipFactory" type="Button" parent="." unique_id=630543259]
+[node name="Hanger" type="Button" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/ScrollContainer/Panel" unique_id=426039514]
 layout_mode = 0
-offset_left = 532.0
-offset_top = 359.0
-offset_right = 735.0
-offset_bottom = 475.0
-text = "装备工厂"
+offset_left = 7.0
+offset_top = 283.0
+offset_right = 224.0
+offset_bottom = 485.0
+mouse_filter = 1
+text = "机库"
 
-[node name="Messages" type="TabContainer" parent="." unique_id=1518375854]
+[node name="Factory" type="Button" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/ScrollContainer/Panel" unique_id=50529632]
 layout_mode = 0
-offset_left = 24.0
-offset_top = 84.0
-offset_right = 292.0
-offset_bottom = 604.0
-current_tab = 1
-tab_0/title = "战报"
-tab_1/title = "联盟"
-tab_2/title = "公告"
+offset_left = 232.0
+offset_top = 285.0
+offset_right = 481.0
+offset_bottom = 480.0
+mouse_filter = 1
+text = "制造工厂"
 
-[node name="BattleReports" type="ScrollContainer" parent="Messages" unique_id=164771449]
-visible = false
+[node name="AssignedTask" type="Button" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/ScrollContainer/Panel" unique_id=938474973]
+layout_mode = 0
+offset_left = 483.0
+offset_top = 1.0
+offset_right = 636.0
+offset_bottom = 490.0
+mouse_filter = 1
+text = "远征"
+
+[node name="Combat" type="Button" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/ScrollContainer/Panel" unique_id=1163302865]
+layout_mode = 0
+offset_left = 646.0
+offset_top = 6.0
+offset_right = 828.0
+offset_bottom = 480.0
+mouse_filter = 1
+text = "讨伐"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/VSplitContainer/Panels/MarginContainer" unique_id=1002025852]
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
-metadata/_tab_index = 0
-metadata/_tab_name = "战报"
+split_offsets = PackedInt32Array(-100)
+split_offset = -100
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Messages/BattleReports" unique_id=680929081]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Alliance" type="ScrollContainer" parent="Messages" unique_id=1213610996]
-layout_mode = 2
-metadata/_tab_index = 1
-metadata/_tab_name = "联盟"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Messages/Alliance" unique_id=1613939040]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Notice" type="ScrollContainer" parent="Messages" unique_id=479821921]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 2
-metadata/_tab_name = "公告"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Messages/Notice" unique_id=558124674]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/HSplitContainer" unique_id=103936513]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/HSplitContainer/ScrollContainer" unique_id=467727703]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+alignment = 2
+
+[node name="Control" type="Control" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/HSplitContainer/ScrollContainer/HBoxContainer" unique_id=269757196]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="About" type="Button" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/HSplitContainer/ScrollContainer/HBoxContainer/Control" unique_id=217472065]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+text = "某个失联的学院"
+
+[node name="Control2" type="Control" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/HSplitContainer/ScrollContainer/HBoxContainer" unique_id=1222485957]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="Technology" type="Button" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/HSplitContainer/ScrollContainer/HBoxContainer/Control2" unique_id=831842728]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+text = "研究"
+
+[node name="Control3" type="Control" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/HSplitContainer/ScrollContainer/HBoxContainer" unique_id=1979613848]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="Storehouse" type="Button" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/HSplitContainer/ScrollContainer/HBoxContainer/Control3" unique_id=1502322008]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+text = "仓库"
+
+[node name="Quit" type="Button" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/HSplitContainer" unique_id=777005797]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "退出"

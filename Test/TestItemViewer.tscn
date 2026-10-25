@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cem6rxaqjpmlh"]
 
-[ext_resource type="Script" uid="uid://jt2gkjst6674" path="res://Test/TestItemViewer.cs" id="1_guya0"]
+[ext_resource type="Script" uid="uid://dxth8hjmd3x55" path="res://Test/TestItemViewer.cs" id="1_guya0"]
 [ext_resource type="PackedScene" uid="uid://b5opwcdvp8ftf" path="res://Scene/ItemViewer.tscn" id="2_smk2u"]
 
 [node name="TestItemViewer" type="Panel" unique_id=1243685058 node_paths=PackedStringArray("OpenButton", "Viewer")]
@@ -22,4 +22,22 @@ offset_bottom = 235.0
 text = "打开"
 
 [node name="ItemViewer" parent="." unique_id=1674333091 instance=ExtResource("2_smk2u")]
-visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 800.0
+offset_bottom = 500.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="ReferenceRect" type="ReferenceRect" parent="." unique_id=943126360]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0.54773974, 0.4013879, 1, 1)
+border_width = 5.0
+editor_only = false

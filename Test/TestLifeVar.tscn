@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://dkdd0iya65qe7"]
 
-[ext_resource type="Script" uid="uid://uqjgv7xiogoh" path="res://Test/TestLifeVar.cs" id="1_n8apm"]
+[ext_resource type="Script" uid="uid://4tqvolrghu4t" path="res://Test/TestLifeVar.cs" id="1_n8apm"]
+[ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="2_1dp48"]
 
-[node name="TestLifeVar" type="Control" unique_id=1904611329 node_paths=PackedStringArray("LabelElement")]
+[node name="TestLifeVar" type="Control" unique_id=1904611329]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,12 +11,126 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n8apm")
-LabelElement = NodePath("Label")
 
-[node name="Label" type="Label" parent="." unique_id=282226855]
-layout_mode = 0
-offset_left = 65.0
-offset_top = 26.0
-offset_right = 105.0
-offset_bottom = 49.0
-text = "A"
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1593129714]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1864870198]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1270093211]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=340068851]
+custom_minimum_size = Vector2(50.015, 70.948)
+layout_mode = 2
+texture = ExtResource("2_1dp48")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="HSplitContainer" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1218320667]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/HSplitContainer" unique_id=321149283]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="CenterContainer" type="AspectRatioContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/HSplitContainer/MarginContainer" unique_id=1421379540]
+layout_mode = 2
+ratio = 15.2674
+stretch_mode = 1
+
+[node name="ReferenceRect" type="ReferenceRect" parent="PanelContainer/VBoxContainer/HBoxContainer/HSplitContainer/MarginContainer/CenterContainer" unique_id=186944109]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/HSplitContainer" unique_id=191792262]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -44.0
+offset_top = -25.0
+offset_bottom = 25.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "X"
+
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer" unique_id=552384592]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=518844093]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="HFlowContainer" type="HFlowContainer" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer" unique_id=1971925127]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer/HFlowContainer" unique_id=1446083238]
+layout_mode = 2
+text = "any"
+
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer/HFlowContainer" unique_id=767483171]
+layout_mode = 2
+text = "any"
+
+[node name="Label3" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer/HFlowContainer" unique_id=107360959]
+layout_mode = 2
+text = "any"
+
+[node name="Label4" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer/HFlowContainer" unique_id=1572947674]
+layout_mode = 2
+text = "any"
+
+[node name="Label5" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer/HFlowContainer" unique_id=344468172]
+layout_mode = 2
+text = "any"
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=1232927058]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="HFlowContainer" type="HFlowContainer" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer2" unique_id=263879036]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer2/HFlowContainer" unique_id=1622289192]
+layout_mode = 2
+text = "any"
+
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer2/HFlowContainer" unique_id=940582465]
+layout_mode = 2
+text = "any"
+
+[node name="Label3" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer2/HFlowContainer" unique_id=183660579]
+layout_mode = 2
+text = "any"
+
+[node name="Label4" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer2/HFlowContainer" unique_id=1689716317]
+layout_mode = 2
+text = "any"
+
+[node name="Label5" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer2/HFlowContainer" unique_id=1453204294]
+layout_mode = 2
+text = "any"

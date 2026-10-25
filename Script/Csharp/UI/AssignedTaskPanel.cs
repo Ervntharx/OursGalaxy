@@ -2,8 +2,8 @@
 using System;
 namespace OursGalaxy.UI;
 
-internal partial class MissionPanel : Window {
-	public MissionPanel Load() => (MissionPanel)ResourceLoader.Load<PackedScene>("res://Scene/MissionPanel.tscn").Instantiate();
+internal partial class AssignedTaskPanel : Window {
+	public AssignedTaskPanel Load() => (AssignedTaskPanel)ResourceLoader.Load<PackedScene>("res://Scene/MissionPanel.tscn").Instantiate();
 
 	[Export]
 	protected HFlowContainer? AllMissionsPanel { get; set; }

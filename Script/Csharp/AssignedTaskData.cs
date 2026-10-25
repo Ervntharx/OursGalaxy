@@ -1,11 +1,12 @@
 ﻿using Godot;
 using System;
 namespace OursGalaxy;
+
 /// <summary>
 /// 远征任务。包括已在跑的和刷新出来没有跑的
 /// </summary>
 [GlobalClass]
-internal partial class MissionData : Resource {
+internal partial class AssignedTaskData : Resource {
 	/// <summary>
 	/// 名称
 	/// </summary>
@@ -51,15 +52,15 @@ internal partial class MissionData : Resource {
 	public TimeSpan ProgressTimeSpan => TimeSpan.FromSeconds(ProgressTime);
 
 	[Export]
-	public Godot.Collections.Array<MissionEvent> Events { get; set; } = [];
+	public Godot.Collections.Array<AssignedTaskEvent> Events { get; set; } = [];
 
-	public MissionData(string name, RatingLevelEnum ratingLevel, ushort level) {
+	public AssignedTaskData(string name, RatingLevelEnum ratingLevel, ushort level) {
 		Name = name;
 		RatingLevel = ratingLevel;
 		Level = level;
 	}
 
 	//不允许无参构造
-	private MissionData() { }
+	private AssignedTaskData() { }
 }
 

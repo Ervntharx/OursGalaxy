@@ -2,8 +2,8 @@
 using System;
 namespace OursGalaxy.UI;
 
-internal partial class MissionBox : Button {
-	public MissionBox Load() => (MissionBox)ResourceLoader.Load<PackedScene>("res://Scene/MissionBox.tscn").Instantiate();
+internal partial class AssignedTaskBox : Button {
+	public AssignedTaskBox Load() => (AssignedTaskBox)ResourceLoader.Load<PackedScene>("res://Scene/MissionBox.tscn").Instantiate();
 
 	[Export]
 	protected RichTextLabel? NameLabel { get; set; }
@@ -14,7 +14,7 @@ internal partial class MissionBox : Button {
 	[Export]
 	protected RichTextLabel? RatingLevelLabel { get; set; }
 
-	public void Make(MissionData missionData) {
+	public void Make(AssignedTaskData missionData) {
 		NameLabel!.Text = $"[color=white]{missionData.Name}[/color]";
 		RatingLevelLabel!.Text = $"{missionData.RatingLevel}";
 	}

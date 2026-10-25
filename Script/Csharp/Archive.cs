@@ -147,11 +147,11 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 
 	[Export]
 	[JsonPropertyName("Missions")]
-	public Array<MissionData> Missions { get; set; } = [
+	public Array<AssignedTaskData> Missions { get; set; } = [
 		// for test only
-		new MissionData("any", MissionData.RatingLevelEnum.S, 2),
-		new MissionData("others",MissionData.RatingLevelEnum.B, 3),
-		new MissionData("and more?", MissionData.RatingLevelEnum.AA, 5)
+		new AssignedTaskData("any", AssignedTaskData.RatingLevelEnum.S, 2),
+		new AssignedTaskData("others",AssignedTaskData.RatingLevelEnum.B, 3),
+		new AssignedTaskData("and more?", AssignedTaskData.RatingLevelEnum.AA, 5)
 	];
 
 	private int _solids;

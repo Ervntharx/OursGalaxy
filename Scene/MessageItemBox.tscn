@@ -6,6 +6,7 @@
 custom_minimum_size = Vector2(100, 50)
 offset_right = 100.0
 offset_bottom = 50.0
+mouse_filter = 1
 script = ExtResource("1_hi8mj")
 TitleLabel = NodePath("Title")
 ReadReferenceRect = NodePath("ReadReference")

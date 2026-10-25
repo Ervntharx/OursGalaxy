@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 namespace OursGalaxy.UI;
 
-internal partial class MessageBoxPanel : Panel {
+internal partial class MessageBoxPanel : PanelContainer {
 	[Export]
 	protected TabContainer? MessagesTabsContainer { get; set; }
 	[Export]
