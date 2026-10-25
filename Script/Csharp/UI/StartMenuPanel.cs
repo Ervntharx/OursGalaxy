@@ -1,7 +1,13 @@
 ﻿using Godot;
 using System;
+namespace OursGalaxy.UI;
 
-internal partial class StartMenu : Panel {
+/// <summary>
+/// 开始主界面
+/// </summary>
+internal partial class StartMenuPanel : MarginContainer {
+	public static StartMenuPanel Load() => (StartMenuPanel)ResourceLoader.Load<PackedScene>("res://Scene/StartMenuPanel.tscn").Instantiate();
+
 	[Export]
 	public Button? EnterButton { get; set; }
 	[Export]
@@ -19,23 +25,15 @@ internal partial class StartMenu : Panel {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
 		SettingsButton!.Pressed += () => {
-			var settingPanel = GetNodeOrNull<SettingPanel?>("SettingPanel");
-			if (settingPanel is null) {
-				var scene = SettingPanelScene!.Instantiate();
-				// scene.Name = SETTING_PANEL_NODE_NAME;
-				AddChild(scene);
-				settingPanel = GetNodeOrNull<SettingPanel?>("SettingPanel");
-			}
-			else {
-				settingPanel.Show();
-			}
-
+			AddChild(SettingPanel.Load());
 		};
 
 		ExitConfirmation!.Confirmed += () => { GetTree().Quit(); };
 		ExitButton!.Pressed += () => {
 			ExitConfirmation!.PopupCentered();
 		};
+
+		//theme_override_constants.margin_left
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

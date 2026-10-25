@@ -27,6 +27,7 @@ PersonalArchiveButton = NodePath("PanelContainer/VSplitContainer/HSplitContainer
 TechnologyButton = NodePath("PanelContainer/VSplitContainer/Panels/MarginContainer/HSplitContainer/ScrollContainer/HBoxContainer/Control2/Technology")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=2010105218]
+texture_filter = 1
 layout_mode = 2
 
 [node name="VSplitContainer" type="VSplitContainer" parent="PanelContainer" unique_id=2141993730]

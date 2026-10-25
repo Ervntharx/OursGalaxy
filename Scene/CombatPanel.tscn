@@ -1,8 +1,6 @@
 [gd_scene format=3 uid="uid://wywlw6f3sftg"]
 
-[ext_resource type="Script" uid="uid://djmkfi4b00rcr" path="res://Script/Csharp/UI/CombatPanel.cs" id="1_fuhmw"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fdu30"]
+[ext_resource type="Script" uid="uid://b672dw0mbu32r" path="res://Script/Csharp/UI/CombatPanel.cs" id="1_fuhmw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fuhmw"]
 
@@ -10,13 +8,14 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2uiev"]
 
-[node name="CombatPanel" type="Panel" unique_id=2102177421]
+[node name="CombatPanel" type="Control" unique_id=981618864]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_fdu30")
+mouse_force_pass_scroll_events = false
 script = ExtResource("1_fuhmw")
 
 [node name="Time" type="Button" parent="." unique_id=1522392421]

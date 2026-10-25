@@ -8,7 +8,7 @@ namespace OursGalaxy.UI;
 [GlobalClass]
 internal partial class CombatResult : Resource {
 	[Export]
-	public DateTime Time { get; set; }
+	public required DateTime Time { get; set; }
 
 	[Export]
 	public long TotalSeconds { get; set; }

@@ -2,18 +2,42 @@
 
 [ext_resource type="Script" uid="uid://dhfsmrxfrwlku" path="res://Script/Csharp/UI/MessageViewerPanel.cs" id="1_6lsqn"]
 
-[node name="MessageViewerPanel" type="Window" unique_id=1799348554 node_paths=PackedStringArray("MessageBodyLabel")]
-oversampling_override = 1.0
-initial_position = 1
-size = Vector2i(800, 500)
-transient = true
-exclusive = true
-script = ExtResource("1_6lsqn")
-MessageBodyLabel = NodePath("RichTextLabel")
-
-[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1838471764]
+[node name="MessageViewerPanel" type="MarginContainer" unique_id=305670453 node_paths=PackedStringArray("MessageBodyLabel")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_force_pass_scroll_events = false
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_6lsqn")
+MessageBodyLabel = NodePath("PanelContainer/VBoxContainer/Body")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1348904720]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1331464952]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=782927464]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1141572503]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "<"
+
+[node name="Head" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1296840618]
+layout_mode = 2
+text = "邮件"
+fit_content = true
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="Body" type="RichTextLabel" parent="PanelContainer/VBoxContainer" unique_id=1838471764]
+layout_mode = 2
+size_flags_vertical = 3
+text = "正文内容"

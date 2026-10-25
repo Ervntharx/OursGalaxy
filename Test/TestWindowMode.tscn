@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://bdjlfsc6hb3uh"]
+
+[ext_resource type="Script" uid="uid://b686qyg272pni" path="res://Test/TestWindowMode.cs" id="1_whweg"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_u1up3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_whweg"]
+size = Vector3(-5, -5, -5)
+
+[node name="TestWindowMode" type="Node3D" unique_id=1283437062 node_paths=PackedStringArray("Camera")]
+script = ExtResource("1_whweg")
+Camera = NodePath("Camera3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=416397472]
+mesh = SubResource("BoxMesh_u1up3")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1103490248]
+mesh = SubResource("BoxMesh_whweg")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=903565378]
+transform = Transform3D(0.7681271, 0, 0.6402974, -0.29481354, 0.8876949, 0.35367045, -0.56838876, -0.4604322, 0.6818625, 3.3424819, 2.4340506, 5.346999)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1960273842]
+transform = Transform3D(0.7958224, -0.5000666, -0.34146768, 0, -0.56391525, 0.82583266, -0.60553014, -0.65721613, -0.4487764, 0, 0, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=534916516]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1000176531]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="CanvasLayer/Control" unique_id=1521766013]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "afbafbab"
+
+[node name="Button2" type="Button" parent="CanvasLayer/Control" unique_id=1495770778]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -78.0
+offset_bottom = 31.0
+grow_horizontal = 0
+text = "afbafbab"
+
+[node name="Button3" type="Button" parent="CanvasLayer/Control" unique_id=2139087671]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+offset_right = 78.0
+grow_vertical = 0
+text = "afbafbab"
+
+[node name="Button4" type="Button" parent="CanvasLayer/Control" unique_id=1587963100]
+layout_mode = 1
+offset_right = 78.0
+offset_bottom = 31.0
+text = "afbafbab"

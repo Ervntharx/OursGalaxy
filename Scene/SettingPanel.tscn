@@ -2,62 +2,90 @@
 
 [ext_resource type="Script" uid="uid://bsirrqwbw2oc5" path="res://Script/Csharp/UI/SettingPanel.cs" id="1_6uyim"]
 
-[node name="SettingPanel" type="Panel" unique_id=1258954474 node_paths=PackedStringArray("ExitButton")]
+[node name="Control" type="MarginContainer" unique_id=919923353 node_paths=PackedStringArray("QuitButton", "AboutPage")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 25
 script = ExtResource("1_6uyim")
-ExitButton = NodePath("Exit")
+QuitButton = NodePath("PanelContainer/VBoxContainer/HBoxContainer/Quit")
+AboutPage = NodePath("PanelContainer/VBoxContainer/TabContainer/About")
 
-[node name="TabContainer" type="TabContainer" parent="." unique_id=235895971]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 54.0
-grow_horizontal = 2
-grow_vertical = 2
-tab_alignment = 1
-current_tab = 0
-drag_to_rearrange_enabled = true
-tab_0/title = "常规"
-tab_1/title = "关于"
-
-[node name="Panel" type="Panel" parent="TabContainer" unique_id=1843721834]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1728619427]
 layout_mode = 2
-metadata/_tab_index = 0
-metadata/_tab_name = "常规"
 
-[node name="Label" type="Label" parent="TabContainer/Panel" unique_id=488610046]
-layout_mode = 0
-offset_left = 18.0
-offset_top = 26.0
-offset_right = 253.0
-offset_bottom = 70.0
-text = "施工中..."
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=953272508]
+layout_mode = 2
 
-[node name="About" type="RichTextLabel" parent="TabContainer" unique_id=217799052]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=635449205]
+layout_mode = 2
+
+[node name="Quit" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=347215430]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "<"
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1457381118]
+layout_mode = 2
+size_flags_vertical = 1
+text = "设置"
+vertical_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer" unique_id=1164286915]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 3
+
+[node name="General" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=28600571]
 visible = false
 layout_mode = 2
-text = "OursGalaxy 仅是一个出于个人学习Godot Engine而开发的项目。
-缓慢开发中..."
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/General" unique_id=1749545799]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/General/VBoxContainer" unique_id=587679237]
+layout_mode = 2
+text = "正在施工..."
+
+[node name="Sound" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=485835951]
+visible = false
+layout_mode = 2
 metadata/_tab_index = 1
-metadata/_tab_name = "关于"
 
-[node name="Label" type="Label" parent="." unique_id=740593530]
-layout_mode = 0
-offset_left = 163.0
-offset_top = 7.0
-offset_right = 306.0
-offset_bottom = 40.0
-text = "设置"
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Sound" unique_id=1293711850]
+layout_mode = 2
 
-[node name="Exit" type="Button" parent="." unique_id=1303881288]
-layout_mode = 0
-offset_left = 78.0
-offset_top = 7.0
-offset_right = 131.0
-offset_bottom = 50.0
-text = "<"
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Sound/VBoxContainer" unique_id=359527284]
+layout_mode = 2
+text = "正在施工..."
+
+[node name="Advance" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=946700391]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Advance" unique_id=1505549223]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Advance/VBoxContainer" unique_id=632293756]
+layout_mode = 2
+text = "正在施工..."
+
+[node name="About" type="RichTextLabel" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=1157691688]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=gold]该项目仅用作学习目的！[/color]
+[code]here is a code line in bbcode[/code]
+
+
+[hr]
+
+[right]powered by Godot Engine!		[img=50bottom]res://icon.svg[/img]
+项目地址：	[url=open_url:https://github.com/Ervntharx/OursGalaxy][hint=\"点击去往Github网站\"]GitHub仓库[/hint][/url][/right]"
+metadata/_tab_index = 3

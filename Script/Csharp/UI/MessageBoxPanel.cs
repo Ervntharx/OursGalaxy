@@ -73,7 +73,7 @@ internal partial class MessageBoxPanel : PanelContainer {
 			GD.Print("try open;");
 			var msgVP = (MessageViewer!.Instantiate() as MessageViewerPanel)!;
 			msgVP.Head = msgData.Head;
-			msgVP.Content = msgData.Content;
+			msgVP.Body = msgData.Content;
 			AddChild(msgVP);
 		};
 	}

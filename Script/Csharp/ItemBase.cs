@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Godot;
+namespace OursGalaxy;
 
 /// <summary>
 /// 游戏物品基类。不具有数量/唯一性标识能力
@@ -12,10 +13,6 @@ internal partial class ItemBase : Resource {
 	public static readonly ItemBase Empty = new(string.Empty);
 
 	public enum QulityEnum { White, Green, Purple, Gold }
-
-	[Export]
-	[Obsolete]
-	public int ID { get; protected set; }
 
 	/// <summary>
 	/// 辨识id码, 显式使用[表名_物品名_质量]的格式

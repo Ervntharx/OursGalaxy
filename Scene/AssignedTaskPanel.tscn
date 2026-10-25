@@ -9,11 +9,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_force_pass_scroll_events = false
 script = ExtResource("1_a8riw")
-AllMissionsPanel = NodePath("Window/HSplitContainer/AllMissionsScrollContainer/HFlowContainer")
-AcceptedMissionPanel = NodePath("Window/HSplitContainer/AcceptedMissionsScrollContainer2/HFlowContainer")
+AllMissionsPanel = NodePath("Panel/HSplitContainer/AllMissionsScrollContainer/HFlowContainer")
+AcceptedMissionPanel = NodePath("Panel/HSplitContainer/AcceptedMissionsScrollContainer2/HFlowContainer")
 
-[node name="Window" type="Panel" parent="." unique_id=465635297]
+[node name="Panel" type="Panel" parent="." unique_id=465635297]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -27,7 +28,7 @@ offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HSplitContainer" type="HSplitContainer" parent="Window" unique_id=428305199]
+[node name="HSplitContainer" type="HSplitContainer" parent="Panel" unique_id=428305199]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,31 +37,31 @@ offset_top = 43.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="AllMissionsScrollContainer" type="ScrollContainer" parent="Window/HSplitContainer" unique_id=515899126]
+[node name="AllMissionsScrollContainer" type="ScrollContainer" parent="Panel/HSplitContainer" unique_id=515899126]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HFlowContainer" type="HFlowContainer" parent="Window/HSplitContainer/AllMissionsScrollContainer" unique_id=591969295]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="AcceptedMissionsScrollContainer2" type="ScrollContainer" parent="Window/HSplitContainer" unique_id=855862135]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HFlowContainer" type="HFlowContainer" parent="Window/HSplitContainer/AcceptedMissionsScrollContainer2" unique_id=1168224822]
+[node name="HFlowContainer" type="HFlowContainer" parent="Panel/HSplitContainer/AllMissionsScrollContainer" unique_id=591969295]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Quit" type="Button" parent="Window" unique_id=1709957266]
+[node name="AcceptedMissionsScrollContainer2" type="ScrollContainer" parent="Panel/HSplitContainer" unique_id=855862135]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HFlowContainer" type="HFlowContainer" parent="Panel/HSplitContainer/AcceptedMissionsScrollContainer2" unique_id=1168224822]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Quit" type="Button" parent="Panel" unique_id=1709957266]
 layout_mode = 0
 offset_right = 45.0
 offset_bottom = 42.0
 text = "<"
 
-[node name="Title" type="Label" parent="Window" unique_id=530191164]
+[node name="Title" type="Label" parent="Panel" unique_id=530191164]
 layout_mode = 0
 offset_left = 55.0
 offset_top = 1.0
