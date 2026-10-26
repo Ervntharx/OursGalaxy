@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://csxsacoj67bvo"]
+
+[ext_resource type="Script" uid="uid://ccib4rrkno2ui" path="res://Test/TestTurret.cs" id="1_c218q"]
+[ext_resource type="PackedScene" uid="uid://caxwk28uhd7qg" path="res://Scene/LaserTurret.tscn" id="2_8axc0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c218q"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_c218q"]
+
+[node name="TestTurret" type="Node3D" unique_id=2018173609 node_paths=PackedStringArray("Laser", "CameraBase", "CamerArm", "Camera")]
+script = ExtResource("1_c218q")
+Laser = NodePath("LaserTurret")
+CameraBase = NodePath("Node3D")
+CamerArm = NodePath("Node3D/Node3D")
+Camera = NodePath("Node3D/Node3D/Camera3D")
+
+[node name="LaserTurret" parent="." unique_id=897529569 instance=ExtResource("2_8axc0")]
+
+[node name="Area3D" type="Area3D" parent="." unique_id=212640886]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.812799, 0, 7.7079315)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1303368666]
+shape = SubResource("BoxShape3D_c218q")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D" unique_id=116785014]
+mesh = SubResource("BoxMesh_c218q")
+
+[node name="Area3D2" type="Area3D" parent="." unique_id=456106635]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.833004, 0, -5.6092806)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2" unique_id=1975997787]
+shape = SubResource("BoxShape3D_c218q")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Area3D2" unique_id=808829284]
+mesh = SubResource("BoxMesh_c218q")
+
+[node name="Area3D3" type="Area3D" parent="." unique_id=249181599]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1646757, 0, -10.179018)
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Area3D3" unique_id=1573999779]
+mesh = SubResource("BoxMesh_c218q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D3" unique_id=750117092]
+shape = SubResource("BoxShape3D_c218q")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1706244229]
+transform = Transform3D(0.8257342, -0.20074311, -0.52712923, 0.5640593, 0.29387057, 0.7716716, 0, -0.9345278, 0.35589004, 0, 0, -0.005777359)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="DirectionalLight3D" unique_id=978454519]
+transform = Transform3D(-0.34442136, 0.14475971, 0.9275874, 0.5089212, -0.8014823, 0.31404668, 0.78890634, 0.5802333, 0.20237654, 0, 0, 0)
+
+[node name="Node3D" type="Node3D" parent="." unique_id=2132550421]
+
+[node name="Node3D" type="Node3D" parent="Node3D" unique_id=419023135]
+
+[node name="Camera3D" type="Camera3D" parent="Node3D/Node3D" unique_id=1718489070]
+transform = Transform3D(-1, 0, -8.742278e-08, -1.1713444e-08, 0.9909832, 0.13398619, 8.66345e-08, 0.13398619, -0.9909832, 0, 0.84938, -3.531)

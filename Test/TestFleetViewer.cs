@@ -12,10 +12,10 @@ internal partial class TestFleetViewer : Control {
 	public override void _Ready() {
 
 		// for test only
-		TestedFleetsViewer!.Fleets.Add(new(new("旗舰型号名A", "自定义名A")));
-		TestedFleetsViewer!.Fleets.Add(new(new("旗舰型号名B", "自定义名B")));
-		TestedFleetsViewer!.Fleets.Add(new(new("旗舰型号名C", "自定义名C")));
-		TestedFleetsViewer!.Fleets.Add(new(new("旗舰型号名D", "自定义名D")));
+		// TestedFleetsViewer!.Fleets.Add(new(new("旗舰型号名A", "自定义名A")));
+		// TestedFleetsViewer!.Fleets.Add(new(new("旗舰型号名B", "自定义名B")));
+		// TestedFleetsViewer!.Fleets.Add(new(new("旗舰型号名C", "自定义名C")));
+		// TestedFleetsViewer!.Fleets.Add(new(new("旗舰型号名D", "自定义名D")));
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

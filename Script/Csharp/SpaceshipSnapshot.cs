@@ -3,7 +3,7 @@
 internal record class SpaceshipSnapshot {
 	public static readonly SpaceshipSnapshot Empty = new();
 
-	public string UniqueID { get; init; }
+	public long UniqueID { get; init; }
 
 	public string TypeName { get; init; }
 
@@ -12,7 +12,7 @@ internal record class SpaceshipSnapshot {
 	public int HP { get; init; }
 
 	private SpaceshipSnapshot() {
-		UniqueID = string.Empty;
+		UniqueID = 0;
 		TypeName = string.Empty;
 	}
 

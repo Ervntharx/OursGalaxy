@@ -2,11 +2,22 @@
 
 namespace OursGalaxy;
 
+/// <summary>
+/// 装备接口
+/// </summary>
 public interface IEquip {
-	public enum OutletTypeEnum { S, M, L, XL, AirDefense, Special }
-	public OutletTypeEnum SizeType { get; }
-	public string? SpecialTypeName { get; }
+	/// <summary>
+	/// 尺寸
+	/// </summary>
+	public OutletSizeType SizeType { get; }
 
+	/// <summary>
+	/// 冷却时长
+	/// </summary>
 	public long CDMisc { get; }
+
+	/// <summary>
+	/// 效果
+	/// </summary>
 	public IReadOnlyCollection<IPromote>? Promotes { get; }
 }

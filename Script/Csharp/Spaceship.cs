@@ -77,13 +77,13 @@ internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 
 	public Spaceship(SpaceshipData data) {
 		UniqueID = data.UniqueID;
-		TypeName = data.TypeName;
+		TypeName = data.GetShipTypeName();
 		CustomName = data.CustomName;
 		CurrentHealth = data.CurrentHP;
 	}
 
 	public SpaceshipData Save() {
-		return new SpaceshipData(this);
+		return new SpaceshipData(TypeName, UniqueID);
 	}
 
 	/// <summary>

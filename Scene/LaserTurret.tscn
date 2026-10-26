@@ -14,8 +14,14 @@ size = Vector3(0.399, 0.332, 0.292)
 [sub_resource type="BoxMesh" id="BoxMesh_27c70"]
 size = Vector3(0.351, 0.492, 0.149)
 
-[node name="LaserTurret" type="Node3D" unique_id=897529569]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_4f6rc"]
+height = 25.0
+radius = 0.267
+
+[node name="LaserTurret" type="Node3D" unique_id=897529569 node_paths=PackedStringArray("RotatableComponent", "RayShape")]
 script = ExtResource("1_4f6rc")
+RotatableComponent = NodePath("MeshInstance3D")
+RayShape = NodePath("MeshInstance3D/ShapeCast3D")
 
 [node name="Base" type="MeshInstance3D" parent="." unique_id=217188865]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.096322894, 0)
@@ -32,3 +38,13 @@ mesh = SubResource("PrismMesh_yxm8j")
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D" unique_id=2052117984]
 transform = Transform3D(1, 0, 0, 0, -0.59797496, -0.80151486, 0, 0.80151486, -0.59797496, 0, -0.16224328, -0.02349326)
 mesh = SubResource("BoxMesh_27c70")
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="MeshInstance3D" unique_id=1062200344]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.05821958, 0.89071727)
+enabled = false
+shape = SubResource("CylinderShape3D_4f6rc")
+target_position = Vector3(0, -12.5, 0)
+max_results = 5
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(0.79697394, 0.5210537, 0.7902077, 1)
