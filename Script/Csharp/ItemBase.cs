@@ -42,7 +42,9 @@ internal partial class ItemBase : Resource {
 
 	public ItemBase(ItemBase other) : this(other.Code) { }
 
-	protected string GetTableName() => Code.Split("_", false)[0];
+	public string GetTableName() => Code.Split("_", false)[0];
+
+	public string GetItemName() => Code.Split("_", false)[1];
 
 	public QulityEnum GetQulity() {
 		if (int.TryParse(Code.Split("_", false)[2], out int reusult)) {

@@ -10,8 +10,6 @@ namespace OursGalaxy;
 /// </summary>
 [GlobalClass]
 internal partial class Archive : Resource, INotifyPropertyChanged {
-
-
 	[JsonIgnore]
 	public static Archive Data { get; protected set; } = new();
 

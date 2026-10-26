@@ -3,8 +3,7 @@
 [ext_resource type="Script" uid="uid://cu6rbdip7h6ss" path="res://Script/Csharp/UI/CombatResultOverviewPanel.cs" id="1_tuhks"]
 [ext_resource type="PackedScene" uid="uid://x7d2f05bntg5" path="res://Scene/ShipCombatStatics.tscn" id="2_vcuw2"]
 
-[node name="Control" type="Control" unique_id=1695482139 node_paths=PackedStringArray("CombatResultLabel", "LeftPanel", "RightPanel", "Comfirm")]
-layout_mode = 3
+[node name="Control" type="MarginContainer" unique_id=508847236 node_paths=PackedStringArray("CombatResultLabel", "LeftPanel", "RightPanel", "Comfirm")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -18,12 +17,7 @@ RightPanel = NodePath("CombatResultOverviewPanel/MarginContainer/HSplitContainer
 Comfirm = NodePath("CombatResultOverviewPanel/Comfirm")
 
 [node name="CombatResultOverviewPanel" type="Panel" parent="." unique_id=185343465]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="CombatResultOverviewPanel" unique_id=1504996148]
 layout_mode = 1

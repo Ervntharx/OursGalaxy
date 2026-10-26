@@ -1,0 +1,231 @@
+[gd_scene format=3 uid="uid://bi06kkwj6v8a5"]
+
+[ext_resource type="Script" uid="uid://v1ctoeg35112" path="res://Script/Csharp/UI/ReadyCombatPanel.cs" id="1_u7bi5"]
+[ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="2_jyjt5"]
+
+[node name="ReadyCombat" type="MarginContainer" unique_id=923970619 node_paths=PackedStringArray("LeftAvatar", "LeftUserNameLabel", "LeftFleetPointsLabel", "LeftFleetInformationLabel", "RightAvatar", "RightUserNameLabel", "RightFleetPointsLabel", "RightFleetInformationLabel", "QuitButton", "ChangeFleetButton", "EditFleetButtton", "StartButton")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_u7bi5")
+LeftAvatar = NodePath("PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/HBoxContainer/Avatar")
+LeftUserNameLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/HBoxContainer/VBoxContainer/Name")
+LeftFleetPointsLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/HBoxContainer/VBoxContainer/Points")
+LeftFleetInformationLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/RichTextLabel")
+RightAvatar = NodePath("PanelContainer/VBoxContainer/HSplitContainer/RightFleet/HBoxContainer/Avatar")
+RightUserNameLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/RightFleet/HBoxContainer/VBoxContainer/Name")
+RightFleetPointsLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/RightFleet/HBoxContainer/VBoxContainer/Points")
+RightFleetInformationLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/RightFleet/RichTextLabel")
+QuitButton = NodePath("PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control/Cancel")
+ChangeFleetButton = NodePath("PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control2/ChangeFleet")
+EditFleetButtton = NodePath("PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control3/EditFleet")
+StartButton = NodePath("PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control4/Start")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1674938818]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=507388734]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="PanelContainer/VBoxContainer" unique_id=1945089159]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/Control" unique_id=1248276890]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "准备战斗！"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/VBoxContainer" unique_id=607225866]
+layout_mode = 2
+size_flags_vertical = 4
+split_offsets = PackedInt32Array(0, 0)
+
+[node name="LeftFleet" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=859066011]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/LeftFleet" unique_id=994880343]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/HBoxContainer" unique_id=536948554]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="Name" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/HBoxContainer/VBoxContainer" unique_id=449741831]
+layout_mode = 2
+text = "Left User Name"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Points" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/HBoxContainer/VBoxContainer" unique_id=1381093934]
+layout_mode = 2
+text = "Points"
+fit_content = true
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Avatar" type="TextureRect" parent="PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/HBoxContainer" unique_id=1638101109]
+layout_mode = 2
+texture = ExtResource("2_jyjt5")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HSplitContainer/LeftFleet" unique_id=1480155178]
+layout_mode = 2
+bbcode_enabled = true
+text = "舰队名 [color=gold]舰队[/color]
+
+[color=gold]舰队规模[/color]		280 [color=gold]/ 300[/color]
+[color=gold]舰船数量[/color]		18 [color=gold]/ 20[/color]
+[color=gold]舰队HP[/color]		15000 [color=gold]/ 20000[/color]
+
+[color=gold]舰队奇袭[/color]		140
+"
+fit_content = true
+autowrap_mode = 0
+
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=1094909377]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="RightFleet" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=1634574938]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/RightFleet" unique_id=1282520353]
+layout_mode = 2
+
+[node name="Avatar" type="TextureRect" parent="PanelContainer/VBoxContainer/HSplitContainer/RightFleet/HBoxContainer" unique_id=488435529]
+layout_mode = 2
+texture = ExtResource("2_jyjt5")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/RightFleet/HBoxContainer" unique_id=7645880]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="Name" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HSplitContainer/RightFleet/HBoxContainer/VBoxContainer" unique_id=458869165]
+layout_mode = 2
+text = "Left User Name"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Points" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HSplitContainer/RightFleet/HBoxContainer/VBoxContainer" unique_id=470130081]
+layout_mode = 2
+text = "Points"
+fit_content = true
+vertical_alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HSplitContainer/RightFleet" unique_id=342241209]
+layout_mode = 2
+bbcode_enabled = true
+text = "舰队名 [color=gold]舰队[/color]
+
+[color=gold]舰队规模[/color]		280 [color=gold]/ 300[/color]
+[color=gold]舰船数量[/color]		18 [color=gold]/ 20[/color]
+[color=gold]舰队HP[/color]		15000 [color=gold]/ 20000[/color]
+
+[color=gold]舰队奇袭[/color]		140
+"
+fit_content = true
+autowrap_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=44870032]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/VBoxContainer" unique_id=1551549358]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 20
+
+[node name="Control" type="Control" parent="PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1534311962]
+custom_minimum_size = Vector2(120, 75)
+layout_mode = 2
+
+[node name="Cancel" type="Button" parent="PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control" unique_id=434103259]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "返回"
+
+[node name="Control2" type="Control" parent="PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1318752224]
+custom_minimum_size = Vector2(120, 75)
+layout_mode = 2
+
+[node name="ChangeFleet" type="Button" parent="PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control2" unique_id=648826372]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "更改出战舰队"
+
+[node name="Control3" type="Control" parent="PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1657547863]
+custom_minimum_size = Vector2(120, 75)
+layout_mode = 2
+
+[node name="EditFleet" type="Button" parent="PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control3" unique_id=101020879]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "编辑舰队"
+
+[node name="Control4" type="Control" parent="PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1052581361]
+custom_minimum_size = Vector2(120, 75)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Start" type="Button" parent="PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control4" unique_id=401038455]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "出战"

@@ -2,19 +2,23 @@
 
 [ext_resource type="Script" uid="uid://bsirrqwbw2oc5" path="res://Script/Csharp/UI/SettingPanel.cs" id="1_6uyim"]
 
-[node name="Control" type="MarginContainer" unique_id=919923353 node_paths=PackedStringArray("QuitButton", "AboutPage")]
+[node name="Control" type="MarginContainer" unique_id=919923353 node_paths=PackedStringArray("QuitButton", "AboutPage", "PanelsMarginLeftBox", "PanelsMarginRightBox", "PanelsMarginTopBox", "PanelsMarginBottomBox")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 25
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 script = ExtResource("1_6uyim")
 QuitButton = NodePath("PanelContainer/VBoxContainer/HBoxContainer/Quit")
 AboutPage = NodePath("PanelContainer/VBoxContainer/TabContainer/About")
+PanelsMarginLeftBox = NodePath("PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/PanelMarginLeft/SpinBox")
+PanelsMarginRightBox = NodePath("PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/PanelMarginRight/SpinBox")
+PanelsMarginTopBox = NodePath("PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/PanelMarginTop/SpinBox")
+PanelsMarginBottomBox = NodePath("PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/PanelMarginBottom/SpinBox")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1728619427]
 layout_mode = 2
@@ -39,7 +43,7 @@ vertical_alignment = 1
 [node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer" unique_id=1164286915]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 3
+current_tab = 1
 
 [node name="General" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=28600571]
 visible = false
@@ -53,10 +57,75 @@ layout_mode = 2
 layout_mode = 2
 text = "正在施工..."
 
+[node name="Apperance" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=488118948]
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Apperance" unique_id=603638358]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PanelMarginLeft" type="HSplitContainer" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer" unique_id=9858133]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/PanelMarginLeft" unique_id=504154443]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "界面边距 左"
+vertical_alignment = 1
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/PanelMarginLeft" unique_id=1547857006]
+layout_mode = 2
+rounded = true
+allow_greater = true
+
+[node name="PanelMarginRight" type="HSplitContainer" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer" unique_id=1135638418]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/PanelMarginRight" unique_id=903388753]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "界面边距 右"
+vertical_alignment = 1
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/PanelMarginRight" unique_id=1443339174]
+layout_mode = 2
+rounded = true
+allow_greater = true
+
+[node name="PanelMarginTop" type="HSplitContainer" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer" unique_id=629201532]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/PanelMarginTop" unique_id=104366740]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "界面边距 上"
+vertical_alignment = 1
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/PanelMarginTop" unique_id=907270185]
+layout_mode = 2
+rounded = true
+allow_greater = true
+
+[node name="PanelMarginBottom" type="HSplitContainer" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer" unique_id=435884719]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/PanelMarginBottom" unique_id=472889531]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "界面边距 下"
+vertical_alignment = 1
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/PanelMarginBottom" unique_id=604861352]
+layout_mode = 2
+rounded = true
+allow_greater = true
+
 [node name="Sound" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=485835951]
 visible = false
 layout_mode = 2
-metadata/_tab_index = 1
+metadata/_tab_index = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Sound" unique_id=1293711850]
 layout_mode = 2
@@ -68,7 +137,7 @@ text = "正在施工..."
 [node name="Advance" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=946700391]
 visible = false
 layout_mode = 2
-metadata/_tab_index = 2
+metadata/_tab_index = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Advance" unique_id=1505549223]
 layout_mode = 2
@@ -78,6 +147,7 @@ layout_mode = 2
 text = "正在施工..."
 
 [node name="About" type="RichTextLabel" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=1157691688]
+visible = false
 layout_mode = 2
 bbcode_enabled = true
 text = "[color=gold]该项目仅用作学习目的！[/color]
@@ -88,4 +158,4 @@ text = "[color=gold]该项目仅用作学习目的！[/color]
 
 [right]powered by Godot Engine!		[img=50bottom]res://icon.svg[/img]
 项目地址：	[url=open_url:https://github.com/Ervntharx/OursGalaxy][hint=\"点击去往Github网站\"]GitHub仓库[/hint][/url][/right]"
-metadata/_tab_index = 3
+metadata/_tab_index = 4

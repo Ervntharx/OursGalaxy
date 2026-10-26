@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class CombatResultOverviewPanel : Panel {
+public partial class CombatResultOverviewPanel : MarginContainer {
 	[Export]
 	protected RichTextLabel? CombatResultLabel { get; set; }
 

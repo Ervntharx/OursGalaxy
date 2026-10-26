@@ -16,11 +16,7 @@ internal partial class UniqueItem : ItemBase {
 	protected UniqueItem() : base() { }
 
 	public UniqueItem(string code, long? uniqueID = null) : base(code) {
-		UniqueID = uniqueID ?? GenerateID();
-	}
-
-	private static long GenerateID() {
-		return Time.GetUnixTimeFromDatetimeDict(Time.GetDateDictFromSystem(true));
+		UniqueID = uniqueID ?? GenerateUniqueID();
 	}
 
 	public static bool operator ==(UniqueItem left, UniqueItem right) {
@@ -41,4 +37,6 @@ internal partial class UniqueItem : ItemBase {
 	public override int GetHashCode() {
 		return UniqueID.GetHashCode() + base.GetHashCode() + 17;
 	}
+
+	private long GenerateUniqueID() => Godot.Time.GetUnixTimeFromDatetimeDict(Time.GetDateDictFromSystem(true));
 }

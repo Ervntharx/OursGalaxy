@@ -1,4 +1,6 @@
-﻿using Godot;
+﻿using System;
+using System.Runtime.InteropServices;
+using Godot;
 using Godot.Collections;
 namespace OursGalaxy;
 /// <summary>
@@ -21,12 +23,54 @@ internal partial class FleetData : Resource {
 	[Export]
 	public Array<SpaceshipData> Ships { get; set; } = new();
 
+	public int Size => size.Value;
+
+	public int ShipsCount => Ships.Count;
+
+	public int HP => hp.Value;
+
+	public int FullHP => fullHP.Value;
+
+	public int Raid => raid.Value;
+
 	[Export]
 	public Dictionary<SpaceshipData, TacticsSet> Tactics { get; set; } = new();
 
 	public FleetData(SpaceshipData flagship) {
 		Flagship = flagship;
 		UniqueID = GenerateUniqueID();
+
+		size = new(() => {
+			var result = Flagship.Size;
+			foreach (var ship in Ships) {
+				result += ship.Size;
+			}
+			return result;
+		});
+
+		hp = new(() => {
+			var result = Flagship.CurrentHP;
+			foreach (var ship in Ships) {
+				result += ship.CurrentHP;
+			}
+			return result;
+		});
+
+		fullHP = new(() => {
+			var result = Flagship.FullHP;
+			foreach (var ship in Ships) {
+				result += ship.FullHP;
+			}
+			return result;
+		});
+
+		raid = new(() => {
+			var result = Flagship.Raid;
+			foreach (var ship in Ships) {
+				result += ship.Raid;
+			}
+			return result;
+		});
 	}
 
 	/// <summary>
@@ -35,6 +79,11 @@ internal partial class FleetData : Resource {
 	protected FleetData() {
 		Flagship = SpaceshipData.Empty;
 		UniqueID = GenerateUniqueID();
+
+		size = new(0);
+		hp = new(0);
+		fullHP = new(0);
+		raid = new(0);
 	}
 
 	/// <summary>
@@ -45,4 +94,9 @@ internal partial class FleetData : Resource {
 	private static string GenerateUniqueID() {
 		return Time.GetDateStringFromSystem(true);
 	}
+
+	private Lazy<int> size;
+	private Lazy<int> hp;
+	private Lazy<int> fullHP;
+	private Lazy<int> raid;
 }

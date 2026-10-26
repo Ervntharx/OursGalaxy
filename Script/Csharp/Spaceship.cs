@@ -22,7 +22,7 @@ internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 	[Export]
 	public ScaleSizeEnum ScaleSize { get; set; } = ScaleSizeEnum.FF;
 
-	public string UniqueID { get; init; }
+	public long UniqueID { get; init; }
 
 	public string TypeName { get; set; }
 	public string CustomName { get; set; }
@@ -79,7 +79,7 @@ internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 		UniqueID = data.UniqueID;
 		TypeName = data.TypeName;
 		CustomName = data.CustomName;
-		CurrentHealth = data.CurrentHealth;
+		CurrentHealth = data.CurrentHP;
 	}
 
 	public SpaceshipData Save() {
