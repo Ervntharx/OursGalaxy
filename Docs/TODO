@@ -2,61 +2,40 @@
 
 实现LongProgressTask类型以覆盖远征，生产制造所需的长离线过程任务
 
-[x]ObserveItemCollection添加去重
+ItemViewerPanel实现用户过滤能力
 
-[x]ObserveItemCollection测试ChangedIndex之后再对接Viewer
+ItemViewerPanel实现多选能力
+
+ItemViewerPanel实现返回选择项的回调能力
 
 写数据库读写，让装备，舰船无需单独序列化的表格数据以数据库文件存储
 
-写装备类型，相应的装备简单状态机。使用EquipTypeEnum和SpecialTypeName组合对接装备槽名称
+[going]写装备类型，相应的装备简单状态机。使用EquipTypeEnum和SpecialTypeName组合对接装备槽名称
 
-[+]实现SpaceshipSnapshot类型，供StaticsServer使用
+存档增加PropertyChanged追踪和MD5校验能力
 
-[going]写炮台类型，继承装备类型。
+LayyerEnum改入引擎Layer名
 
-[going]写光子炮子弹与导弹类型，使用IBullet接口。
-
-[+]基本物品类型
-
-完善存档和保存配置文件。
-
-[+]IBattle.LayerPresetEnum用于规定层	=>	但是不在该类下。忘了在哪个类下了
-
-[going]AI逻辑行为状态机。
-
-IPromote接口，用于表达运行时游戏局内增益效果。
-
-[+]实现GameTimeDate适配Resource序列化
+[]AI逻辑行为状态机。
 
 UI:
+新增装备强化界面
 
-主界面UI待继续完成
+新增联盟界面
 
-[+]MessageBox单独建立场景MessageBoxPanel。
+问题：
+UI Panels之间的切换逻辑交给什么？Panels Stack？
 
-[+]生产界面
+是否引入SubViewport对接3D场景的摄像机？
 
-ProduceLine向ProduceTaskData的序列化和反序列化，UI状态机
+TacticsSet内适宜存储保护对象的UniqueID吗？
 
-[+]物品栏UI构件（GameItemBox）
+ShipData内的OutletsConfig适合存IEquip的UniqueID吗？IEquip与ShipData互相保存UniqueID吗？是否意味着temp形的UniqueItem可表现为Snapshot类系列
 
-[+]通用ItemViewer界面用于列出可选物品
+Outlet的NodePath按Marker名称标记槽位合理吗？
 
-通用ItemViewer界面添加MutipleSelected和Filter模式
+等待研究：
 
-[+]机库界面(直接嵌ItemViewer)
-
-[+]战斗中界面
-
-[+]结算界面
-
-[+]舰队编成界面
-
-[going]舰队编辑界面
-
-装备强化界面
-
-联盟界面
-
-
+等待修理：
+Turret旋转逻辑不正常
 
