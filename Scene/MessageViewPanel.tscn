@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dhfsmrxfrwlku" path="res://Script/Csharp/UI/MessageViewerPanel.cs" id="1_6lsqn"]
 
-[node name="MessageViewerPanel" type="MarginContainer" unique_id=305670453 node_paths=PackedStringArray("MessageBodyLabel")]
+[node name="MessageViewerPanel" type="MarginContainer" unique_id=305670453 node_paths=PackedStringArray("QuitButton", "MsgHeadLabel", "MsgBodyLabel")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -14,7 +14,9 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 script = ExtResource("1_6lsqn")
-MessageBodyLabel = NodePath("PanelContainer/VBoxContainer/Body")
+QuitButton = NodePath("PanelContainer/VBoxContainer/HBoxContainer/Quit")
+MsgHeadLabel = NodePath("PanelContainer/VBoxContainer/HBoxContainer/Head")
+MsgBodyLabel = NodePath("PanelContainer/VBoxContainer/Body")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1348904720]
 layout_mode = 2
@@ -25,7 +27,7 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=782927464]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1141572503]
+[node name="Quit" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=956619561]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 text = "<"
