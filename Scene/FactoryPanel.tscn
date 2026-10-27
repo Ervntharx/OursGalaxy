@@ -1,63 +1,59 @@
 [gd_scene format=3 uid="uid://dtpx555dugbpt"]
 
-[ext_resource type="Script" uid="uid://bcuo0lug4jq7t" path="res://Script/Csharp/UI/FactoryPanel.cs" id="1_i3dag"]
-[ext_resource type="PackedScene" uid="uid://blclolnv55p0j" path="res://Scene/ProduceLine.tscn" id="2_m0jne"]
+[ext_resource type="Script" uid="uid://btwcw7v4rcl1i" path="res://Script/Csharp/UI/FactoryPanel.cs" id="1_i3dag"]
 
-[node name="FactoryPanel" type="Panel" unique_id=1285522151 node_paths=PackedStringArray("ShipsProduceLinesPanel", "EquipProduceLinePanel")]
+[node name="MarginContainer" type="MarginContainer" unique_id=1201786128 node_paths=PackedStringArray("ShipsProduceLinesPanel", "EquipProduceLinePanel")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_i3dag")
-ShipsProduceLinesPanel = NodePath("TabContainer/ShipFactory/HFlowContainer")
-EquipProduceLinePanel = NodePath("TabContainer/EquipFactory/HFlowContainer")
-ProduceLineUI = ExtResource("2_m0jne")
+ShipsProduceLinesPanel = NodePath("PanelContainer/VBoxContainer/TabContainer/EquipFactory/HFlowContainer")
+EquipProduceLinePanel = NodePath("PanelContainer/VBoxContainer/TabContainer/ShipFactory/HFlowContainer")
 
-[node name="Title" type="RichTextLabel" parent="." unique_id=1948573123]
-layout_mode = 0
-offset_left = 68.0
-offset_top = 5.0
-offset_right = 194.0
-offset_bottom = 42.0
-text = "工厂"
-vertical_alignment = 1
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1585538588]
+layout_mode = 2
 
-[node name="Button" type="Button" parent="." unique_id=1810733337]
-layout_mode = 0
-offset_right = 48.0
-offset_bottom = 48.0
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1765051249]
+layout_mode = 2
+
+[node name="TopBar" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1744370707]
+layout_mode = 2
+
+[node name="Quit" type="Button" parent="PanelContainer/VBoxContainer/TopBar" unique_id=736415792]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
 text = "<"
 
-[node name="TabContainer" type="TabContainer" parent="." unique_id=1022664366]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 59.0
-grow_horizontal = 2
-grow_vertical = 2
-current_tab = 0
-tab_0/title = "造船厂"
-tab_1/title = "军备车间"
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer/TopBar" unique_id=1577261783]
+layout_mode = 2
+text = "工厂"
 
-[node name="ShipFactory" type="ScrollContainer" parent="TabContainer" unique_id=2131811560]
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer" unique_id=96537641]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+tab_0/title = "装备工厂"
+tab_1/title = "舰船工厂"
+
+[node name="EquipFactory" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=661887380]
 layout_mode = 2
 metadata/_tab_index = 0
-metadata/_tab_name = "造船厂"
+metadata/_tab_name = "装备工厂"
 
-[node name="HFlowContainer" type="HFlowContainer" parent="TabContainer/ShipFactory" unique_id=1662563560]
+[node name="HFlowContainer" type="HFlowContainer" parent="PanelContainer/VBoxContainer/TabContainer/EquipFactory" unique_id=829547160]
+layout_mode = 2
+
+[node name="ShipFactory" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=2131811560]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+metadata/_tab_name = "舰船工厂"
+
+[node name="HFlowContainer" type="HFlowContainer" parent="PanelContainer/VBoxContainer/TabContainer/ShipFactory" unique_id=1662563560]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 last_wrap_alignment = 1
-
-[node name="EquipFactory" type="ScrollContainer" parent="TabContainer" unique_id=661887380]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 1
-metadata/_tab_name = "军备车间"
-
-[node name="HFlowContainer" type="HFlowContainer" parent="TabContainer/EquipFactory" unique_id=829547160]
-layout_mode = 2

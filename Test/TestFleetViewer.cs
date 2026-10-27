@@ -5,7 +5,7 @@ namespace OursGalaxy.Test;
 
 internal partial class TestFleetViewer : Control {
 	[Export]
-	protected FleetsViewer? TestedFleetsViewer { get; set; }
+	protected FleetsViewerPanel? TestedFleetsViewer { get; set; }
 
 
 	// Called when the node enters the scene tree for the first time.

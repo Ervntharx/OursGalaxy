@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://b55j0fi27tmst"]
+
+[ext_resource type="Script" uid="uid://dkuyotorgtvoy" path="res://Script/Csharp/UI/CombatBox.cs" id="1_gsv1c"]
+[ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="1_tqey3"]
+
+[node name="CombatBox" type="Button" unique_id=1447992835 node_paths=PackedStringArray("Avater", "NameLabel", "LevelLabel", "PgrsBar")]
+custom_minimum_size = Vector2(350, 100)
+offset_right = 350.0
+offset_bottom = 100.0
+mouse_filter = 1
+script = ExtResource("1_gsv1c")
+Avater = NodePath("HBoxContainer/MarginContainer/TextureRect")
+NameLabel = NodePath("HBoxContainer/MarginContainer2/VBoxContainer/Title")
+LevelLabel = NodePath("HBoxContainer/MarginContainer2/VBoxContainer/Level")
+PgrsBar = NodePath("HBoxContainer/MarginContainer2/VBoxContainer/ProgressBar")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1987102029]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer" unique_id=1746821917]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/MarginContainer" unique_id=1591260060]
+layout_mode = 2
+texture = ExtResource("1_tqey3")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer" unique_id=1025149809]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MarginContainer2" unique_id=1997883786]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="Title" type="RichTextLabel" parent="HBoxContainer/MarginContainer2/VBoxContainer" unique_id=756527624]
+layout_mode = 2
+mouse_filter = 1
+text = "名称"
+fit_content = true
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Level" type="RichTextLabel" parent="HBoxContainer/MarginContainer2/VBoxContainer" unique_id=1184928060]
+layout_mode = 2
+mouse_filter = 1
+text = "⭐⭐⭐⭐⭐⭐⭐⭐"
+fit_content = true
+horizontal_alignment = 2
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/MarginContainer2/VBoxContainer" unique_id=1405849319]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="HBoxContainer/MarginContainer2/VBoxContainer" unique_id=1143692814]
+layout_mode = 2
+mouse_filter = 1
+step = 0.1
+value = 45.0

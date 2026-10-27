@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="2_k3m2i"]
 [ext_resource type="PackedScene" uid="uid://c4l1lwkd4p383" path="res://Scene/MessageViewPanel.tscn" id="4_0ky6a"]
 
-[node name="Control" type="MarginContainer" unique_id=1410380458 node_paths=PackedStringArray("QuitButton", "MsgBoxesListPanel", "MsgViewPanel", "PersonalArchiveButton", "SettingButton", "ActionPointsButton", "ActionPointsLabel", "FuncPanelTab", "FleetsEditButton", "MissionButton", "AllianceButton", "SimulatedCombatButton", "HangerButton", "FactoryButton", "AssignedTaskButton", "CombatButton", "TechnologyButton", "StoreButton", "ConnectionButton")]
+[node name="Control" type="MarginContainer" unique_id=1410380458 node_paths=PackedStringArray("QuitButton", "MsgBoxesListPanel", "MsgViewPanel", "PersonalArchiveButton", "SettingButton", "ActionPointsButton", "ActionPointsLabel", "ShipsCountLabel", "EquipsCountLabel", "SolidsLabel", "LiquidLabel", "IndustrialProductsLabel", "HonorLabel", "FuncPanelTab", "FleetsEditButton", "MissionButton", "AllianceButton", "SimulatedCombatButton", "HangerButton", "FactoryButton", "AssignedTaskButton", "CombatButton", "TechnologyButton", "StoreButton", "ConnectionButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -26,6 +26,12 @@ PersonalArchiveButton = NodePath("PanelContainer/VSplitContainer/HSplitContainer
 SettingButton = NodePath("PanelContainer/VSplitContainer/HSplitContainer/TopRight/Setting")
 ActionPointsButton = NodePath("PanelContainer/VSplitContainer/HSplitContainer/TopRight/Action")
 ActionPointsLabel = NodePath("PanelContainer/VSplitContainer/HSplitContainer/TopRight/Action/HBoxContainer/ActionPoints")
+ShipsCountLabel = NodePath("PanelContainer/VSplitContainer/HSplitContainer/PanelContainer/ScrollContainer/HFlowContainer/Ships")
+EquipsCountLabel = NodePath("PanelContainer/VSplitContainer/HSplitContainer/PanelContainer/ScrollContainer/HFlowContainer/Equips")
+SolidsLabel = NodePath("PanelContainer/VSplitContainer/HSplitContainer/PanelContainer/ScrollContainer/HFlowContainer/Solids")
+LiquidLabel = NodePath("PanelContainer/VSplitContainer/HSplitContainer/PanelContainer/ScrollContainer/HFlowContainer/Lquid")
+IndustrialProductsLabel = NodePath("PanelContainer/VSplitContainer/HSplitContainer/PanelContainer/ScrollContainer/HFlowContainer/IndustrialProducts")
+HonorLabel = NodePath("PanelContainer/VSplitContainer/HSplitContainer/PanelContainer/ScrollContainer/HFlowContainer/Honor")
 FuncPanelTab = NodePath("PanelContainer/VSplitContainer/Panels/MarginContainer/FuncPanelTab")
 FleetsEditButton = NodePath("PanelContainer/VSplitContainer/Panels/MarginContainer/FuncPanelTab/FuncPanel/Panel/Fleet")
 MissionButton = NodePath("PanelContainer/VSplitContainer/Panels/MarginContainer/FuncPanelTab/FuncPanel/Panel/Mission")

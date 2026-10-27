@@ -1,0 +1,140 @@
+[gd_scene format=3 uid="uid://be318n8l1fl3e"]
+
+[ext_resource type="Script" uid="uid://dh8nvk4d1q58l" path="res://Script/Csharp/UI/FleetEditorPanel.cs" id="1_qhvpf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y6ubi"]
+
+[node name="MarginContainer" type="MarginContainer" unique_id=1207734174 node_paths=PackedStringArray("QuitButton", "FleetNameEdit", "ChangeFlagShip", "AddShip", "ShipsOverviewsPanel", "ShipsCountLabel", "FleetSizeLabel", "FleetRaidLabel")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_qhvpf")
+QuitButton = NodePath("PanelContainer/VBoxContainer/TopBar/Quit")
+FleetNameEdit = NodePath("PanelContainer/VBoxContainer/TopBar/LineEdit")
+ChangeFlagShip = NodePath("PanelContainer/VBoxContainer/BottomBar/Control/ChangeFlagship")
+AddShip = NodePath("PanelContainer/VBoxContainer/BottomBar/Control2/AddShip")
+ShipsOverviewsPanel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/FleetsMembers/VBoxContainer")
+ShipsCountLabel = NodePath("PanelContainer/VBoxContainer/BottomBar/ScrollContainer/HBoxContainer/ShipsCount")
+FleetSizeLabel = NodePath("PanelContainer/VBoxContainer/BottomBar/ScrollContainer/HBoxContainer/FleetSize")
+FleetRaidLabel = NodePath("PanelContainer/VBoxContainer/BottomBar/ScrollContainer/HBoxContainer/Raid")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=136680076]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_y6ubi")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=2013479260]
+layout_mode = 2
+
+[node name="TopBar" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1785623338]
+layout_mode = 2
+
+[node name="Quit" type="Button" parent="PanelContainer/VBoxContainer/TopBar" unique_id=312745041]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "<"
+
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/VBoxContainer/TopBar" unique_id=1927776288]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LineEdit" type="LineEdit" parent="PanelContainer/VBoxContainer/TopBar" unique_id=1437596382]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+placeholder_text = "舰队名限制25字"
+max_length = 25
+
+[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/VBoxContainer" unique_id=1975311567]
+layout_mode = 2
+size_flags_vertical = 3
+drag_area_highlight_in_editor = true
+
+[node name="FleetsMembers" type="FoldableContainer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=1716715029]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+folded = true
+title = "舰队成员"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/FleetsMembers" unique_id=563027569]
+visible = false
+layout_mode = 2
+
+[node name="Control" type="Control" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=1135476719]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BottomBar" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=479976917]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="PanelContainer/VBoxContainer/BottomBar" unique_id=1992538206]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+
+[node name="ChangeFlagship" type="Button" parent="PanelContainer/VBoxContainer/BottomBar/Control" unique_id=741883692]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "更改旗舰"
+
+[node name="Control2" type="Control" parent="PanelContainer/VBoxContainer/BottomBar" unique_id=1423472819]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+
+[node name="AddShip" type="Button" parent="PanelContainer/VBoxContainer/BottomBar/Control2" unique_id=1699599380]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "添加舰船"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/BottomBar" unique_id=490225169]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/BottomBar/ScrollContainer" unique_id=885110433]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ShipsCount" type="RichTextLabel" parent="PanelContainer/VBoxContainer/BottomBar/ScrollContainer/HBoxContainer" unique_id=1678267405]
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "[color=gold]舰船数量 [/color]20 [color=gold]/ 20[/color]"
+fit_content = true
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="FleetSize" type="RichTextLabel" parent="PanelContainer/VBoxContainer/BottomBar/ScrollContainer/HBoxContainer" unique_id=1195749068]
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "[color=gold]舰队规模 [/color]300 [color=gold]/ 300[/color]"
+fit_content = true
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="Raid" type="RichTextLabel" parent="PanelContainer/VBoxContainer/BottomBar/ScrollContainer/HBoxContainer" unique_id=79377968]
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "[color=gold]舰队奇袭 [/color] 400"
+fit_content = true
+autowrap_mode = 0
+vertical_alignment = 1

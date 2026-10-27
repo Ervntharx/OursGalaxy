@@ -2,7 +2,9 @@
 using System;
 namespace OursGalaxy.UI;
 
-internal partial class ProduceLine : Button {
+internal partial class ProduceLineBox : Button {
+	public static ProduceLineBox Load() => (ProduceLineBox)ResourceLoader.Load<PackedScene>("res://Scene/ProduceLineBox.tscn").Instantiate();
+
 	public enum StateEnum { Idle, Producing, Completed }
 	public StateEnum State {
 		get {

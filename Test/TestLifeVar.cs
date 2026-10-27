@@ -1,10 +1,14 @@
 ﻿using Godot;
+using OursGalaxy;
 using System;
+namespace OursGalaxy;
 
-public partial class TestLifeVar : PanelContainer {
-
+internal partial class TestLifeVar : Control {
+	[Export]
+	protected Archive? ArchiveData { get; set; }
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
+		var a = 2;
 
 	}
 

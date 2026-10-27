@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://2svqb5c5hafa"]
+
+[ext_resource type="Script" uid="uid://bqu2edwwyjdqi" path="res://Script/Csharp/UI/CombatsOverviewPanel.cs" id="1_onbrg"]
+
+[node name="CombatsOverviewPanel" type="MarginContainer" unique_id=1545238071 node_paths=PackedStringArray("QuitButton", "CombatsPanel", "HuntsPanel")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_onbrg")
+QuitButton = NodePath("PanelContainer/VBoxContainer/HBoxContainer/Button")
+CombatsPanel = NodePath("PanelContainer/VBoxContainer/TabContainer/CombatsPanel")
+HuntsPanel = NodePath("PanelContainer/VBoxContainer/TabContainer/HuntsPanel")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1435685283]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=2031756730]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=906185240]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1009978281]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "<"
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=449783052]
+layout_mode = 2
+text = "战斗"
+
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer" unique_id=1773776611]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+tab_0/title = "讨伐"
+tab_1/title = "猎杀"
+
+[node name="CombatsPanel" type="HFlowContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=1479271596]
+clip_contents = true
+layout_mode = 2
+metadata/_tab_index = 0
+metadata/_tab_name = "讨伐"
+
+[node name="HuntsPanel" type="HFlowContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=1204140297]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+metadata/_tab_name = "猎杀"

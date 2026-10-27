@@ -8,7 +8,7 @@ internal partial class TestItemViewer : Panel {
 	[Export]
 	protected Button? OpenButton { get; set; }
 	[Export]
-	protected ItemViewer? Viewer { get; set; }
+	protected ItemViewerPanel? Viewer { get; set; }
 	// Called when the node enters the scene tree for the first time.
 	public override async void _Ready() {
 		OpenButton!.Pressed += () => GD.Print("her");

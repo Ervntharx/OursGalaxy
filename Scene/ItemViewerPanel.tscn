@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://b5opwcdvp8ftf"]
+
+[ext_resource type="Script" uid="uid://7ypf2uykccvy" path="res://Script/Csharp/UI/ItemViewerPanel.cs" id="1_8twgs"]
+
+[node name="ItemViewer" type="MarginContainer" unique_id=1079582908 node_paths=PackedStringArray("QuitButton", "SettingsButton", "Tabs", "ItemsPanel")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_force_pass_scroll_events = false
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_8twgs")
+QuitButton = NodePath("PanelContainer/VBoxContainer/TopBar/Quit")
+SettingsButton = NodePath("PanelContainer/VBoxContainer/TopBar/HBoxContainer/FilterSetting")
+Tabs = NodePath("PanelContainer/VBoxContainer/TabContainer")
+ItemsPanel = NodePath("PanelContainer/VBoxContainer/TabContainer/ItemsTab/HFlowContainer")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=425658758]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=101086012]
+layout_mode = 2
+
+[node name="TopBar" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1093008989]
+layout_mode = 2
+
+[node name="Quit" type="Button" parent="PanelContainer/VBoxContainer/TopBar" unique_id=1515261181]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "<"
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer/TopBar" unique_id=1371536686]
+layout_mode = 2
+text = "物品栏"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TopBar" unique_id=2039772716]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="FilterSetting" type="Button" parent="PanelContainer/VBoxContainer/TopBar/HBoxContainer" unique_id=1539064873]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "过滤与排序"
+
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer" unique_id=1704859848]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+tabs_visible = false
+
+[node name="ItemsTab" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=2094108313]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="HFlowContainer" type="HFlowContainer" parent="PanelContainer/VBoxContainer/TabContainer/ItemsTab" unique_id=204939955]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="FilterSettingsPanel" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=1286531524]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/FilterSettingsPanel" unique_id=1472737131]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/FilterSettingsPanel/VBoxContainer" unique_id=1130533139]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/TabContainer/FilterSettingsPanel/VBoxContainer/HBoxContainer" unique_id=1731604400]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "排序"
+fit_content = true
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/VBoxContainer/TabContainer/FilterSettingsPanel/VBoxContainer/HBoxContainer" unique_id=120063199]
+layout_mode = 2
+selected = 1
+item_count = 3
+popup/item_0/text = "名称"
+popup/item_0/id = 0
+popup/item_1/text = "类型"
+popup/item_1/id = 1
+popup/item_2/text = "稀有度"
+popup/item_2/id = 2

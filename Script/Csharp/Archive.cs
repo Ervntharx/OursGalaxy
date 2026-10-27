@@ -1,7 +1,5 @@
 ﻿using Godot.Collections;
 using Godot;
-using System.Text.Json.Serialization;
-using System.Text.Json;
 using System.ComponentModel;
 namespace OursGalaxy;
 
@@ -10,7 +8,6 @@ namespace OursGalaxy;
 /// </summary>
 [GlobalClass]
 internal partial class Archive : Resource, INotifyPropertyChanged {
-	[JsonIgnore]
 	public static Archive Data { get; protected set; } = new();
 
 	public event PropertyChangedEventHandler? PropertyChanged;
@@ -28,53 +25,43 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 		}
 	}
 
-	public static void JsonSnapshot(string? path = null) {
-		var json_data = JsonSerializer.Serialize<Archive>(Data, new JsonSerializerOptions() { });
-		System.IO.File.WriteAllText(path ?? $"user://snapshot_{Godot.Time.GetDateStringFromSystem(true)}.json", json_data);
-	}
+	/// <summary>
+	/// 存档最后编辑时间
+	/// </summary>
+	[Export]
+	public Dictionary LastSaveTime { get; set; } = [];
 
+	#region User Profiles
+	[ExportGroup("User Profiles")]
 	/// <summary>
 	/// 用户ID
 	/// </summary>
 	[Export]
-	[JsonPropertyName("UserID")]
 	public int UserID { get; set; }
 	/// <summary>
 	/// 用户名
 	/// </summary>
 	[Export]
-	[JsonPropertyName("UserName")]
 	public string UserName { get; set; } = string.Empty;
 
 	[Export]
-	[JsonIgnore]
 	public Texture2D Avatar { get; set; } = new();
 
 	/// <summary>
 	/// 注册时间
 	/// </summary>
 	[Export]
-	[JsonIgnore]
 	public Dictionary RegisterTime { get; set; } = [];
 
-	[JsonPropertyName("RegisterTime")]
-	protected string RegisterTimeStr => Godot.Time.GetDatetimeStringFromDatetimeDict(RegisterTime, true).ToString();
+	#endregion User Profiles
 
-	/// <summary>
-	/// 存档最后编辑时间
-	/// </summary>
-	[Export]
-	[JsonIgnore]
-	public Dictionary LastSaveTime { get; set; } = [];
-
-	[JsonPropertyName("LastSaveTime")]
-	protected string LastSaveTimeStr => Godot.Time.GetDatetimeStringFromDatetimeDict(LastSaveTime, true).ToString();
+	#region Base Resource
+	[ExportGroup("Base Resource")]
 
 	/// <summary>
 	/// 固体资源
 	/// </summary>
 	[Export]
-	[JsonPropertyName("Solids")]
 	public int Solids {
 		get => _solids;
 		set {
@@ -87,7 +74,6 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 	/// 液体资源
 	/// </summary>
 	[Export]
-	[JsonPropertyName("Liquid")]
 	public int Liquid {
 		get => _liquid;
 		set {
@@ -100,7 +86,6 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 	/// 工业品资源
 	/// </summary>
 	[Export]
-	[JsonPropertyName("IndustralProducts")]
 	public int IndustrialProducts {
 		get => _industrialProducts;
 		set {
@@ -113,7 +98,6 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 	/// 战勋资源
 	/// </summary>
 	[Export]
-	[JsonPropertyName("Honors")]
 	public int Honors {
 		get => _honors;
 		set {
@@ -122,8 +106,11 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 		}
 	}
 
+	#endregion Base Resource
+
+	#region Produce Tasks
+	[ExportGroup("Produce Tasks")]
 	[Export]
-	[JsonPropertyName("ShipsProduceTasks")]
 	public Array<ProduceTaskData> ShipsProduceTasks { get; set; } = [
 		//	for test only
 		ProduceTaskData.Empty,
@@ -135,7 +122,6 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 	];
 
 	[Export]
-	[JsonPropertyName("EquipProduceTasks")]
 	public Array<ProduceTaskData> EquipProduceTasks { get; set; } = [
 		// for text only
 		ProduceTaskData.Empty,
@@ -144,13 +130,13 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 	];
 
 	[Export]
-	[JsonPropertyName("Missions")]
 	public Array<AssignedTaskData> Missions { get; set; } = [
 		// for test only
 		new AssignedTaskData("any", AssignedTaskData.RatingLevelEnum.S, 2),
 		new AssignedTaskData("others",AssignedTaskData.RatingLevelEnum.B, 3),
 		new AssignedTaskData("and more?", AssignedTaskData.RatingLevelEnum.AA, 5)
 	];
+	#endregion Produce Tasks
 
 	private int _solids;
 	private int _liquid;

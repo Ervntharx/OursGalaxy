@@ -3,6 +3,8 @@ using System;
 namespace OursGalaxy.UI;
 
 internal partial class MessageItemBox : Button {
+	public static MessageItemBox Load() => (MessageItemBox)ResourceLoader.Load<PackedScene>("res://Scene/MessageItemBox.tscn").Instantiate();
+
 	public bool HasRead {
 		get => hasRead; set {
 			hasRead = value;
@@ -13,9 +15,6 @@ internal partial class MessageItemBox : Button {
 		}
 	}
 
-	[Export]
-	protected RichTextLabel? TitleLabel { get; set; }
-
 	/// <summary>
 	/// 用于标记是否已读的描边框（暂借用ReferenceRect）
 	/// </summary>
@@ -23,7 +22,7 @@ internal partial class MessageItemBox : Button {
 	protected ReferenceRect? ReadReferenceRect { get; set; }
 
 	public void Make(MessageData msgData) {
-		TitleLabel!.Text = msgData.Head;
+		Text = msgData.Head;
 	}
 
 	// Called when the node enters the scene tree for the first time.

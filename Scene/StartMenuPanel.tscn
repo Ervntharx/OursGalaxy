@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://ble4cmbad84m0"]
 
 [ext_resource type="Script" uid="uid://boqy7fqtjn3o4" path="res://Script/Csharp/UI/StartMenuPanel.cs" id="1_2tsk8"]
-[ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="2_2cqyk"]
 
 [node name="Control" type="MarginContainer" unique_id=1004670838 node_paths=PackedStringArray("EnterButton", "SettingsButton", "ExitButton", "ExitConfirmation")]
 anchors_preset = 15
@@ -15,100 +14,59 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 script = ExtResource("1_2tsk8")
-EnterButton = NodePath("StartMenu/Enter")
-SettingsButton = NodePath("StartMenu/Setting")
-ExitButton = NodePath("StartMenu/Exit")
-ExitConfirmation = NodePath("StartMenu/ConfirmationDialog")
+EnterButton = NodePath("PanelContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Enter")
+SettingsButton = NodePath("PanelContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Setting")
+ExitButton = NodePath("PanelContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Exit")
+ExitConfirmation = NodePath("")
 
-[node name="StartMenu" type="Panel" parent="." unique_id=1556868306]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1883177801]
 layout_mode = 2
 
-[node name="Enter" type="Button" parent="StartMenu" unique_id=405422475]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -341.0
-offset_top = -296.0
-offset_right = -79.0
-offset_bottom = -237.0
-grow_horizontal = 0
-grow_vertical = 0
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=151779056]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer" unique_id=1501779081]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/MarginContainer" unique_id=990685237]
+layout_mode = 2
+bbcode_enabled = true
+text = "[font_size=128]OurGalaxy[/font_size]
+[font_size=16]雷霆大字报[/font_size]"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=37854081]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1336132154]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=414054032]
+layout_mode = 2
+theme_override_constants/margin_right = 65
+theme_override_constants/margin_bottom = 45
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/MarginContainer" unique_id=1461469210]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Enter" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=405422475]
+custom_minimum_size = Vector2(0, 65)
+layout_mode = 2
 text = "进入游戏"
 
-[node name="Setting" type="Button" parent="StartMenu" unique_id=1007636442]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -340.0
-offset_top = -227.0
-offset_right = -78.0
-offset_bottom = -168.0
-grow_horizontal = 0
-grow_vertical = 0
+[node name="Setting" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=1007636442]
+custom_minimum_size = Vector2(0, 65)
+layout_mode = 2
 text = "设置"
 
-[node name="Exit" type="Button" parent="StartMenu" unique_id=103290637]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -338.0
-offset_top = -158.0
-offset_right = -76.0
-offset_bottom = -99.0
-grow_horizontal = 0
-grow_vertical = 0
+[node name="Exit" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" unique_id=103290637]
+custom_minimum_size = Vector2(0, 65)
+layout_mode = 2
 text = "退出"
-
-[node name="ConfirmationDialog" type="ConfirmationDialog" parent="StartMenu" unique_id=663071794]
-oversampling_override = 1.0
-title = "请确认"
-initial_position = 1
-size = Vector2i(221, 100)
-popup_window = true
-ok_button_text = "是"
-dialog_text = "确定退出游戏吗？"
-dialog_autowrap = true
-cancel_button_text = "否"
-
-[node name="RichTextLabel" type="RichTextLabel" parent="StartMenu" unique_id=1452245203]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -575.0
-offset_top = 156.0
-offset_right = -70.0
-offset_bottom = 295.0
-grow_horizontal = 0
-theme_override_font_sizes/normal_font_size = 97
-text = "OurGalaxy"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="StartMenu" unique_id=948984093]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
-alignment = 2
-
-[node name="Label" type="Label" parent="StartMenu/HBoxContainer" unique_id=1478843377]
-layout_mode = 2
-text = "Powered by Godot!"
-horizontal_alignment = 2
-
-[node name="TextureRect" type="TextureRect" parent="StartMenu/HBoxContainer" unique_id=689548137]
-layout_mode = 2
-texture = ExtResource("2_2cqyk")
-expand_mode = 2
-stretch_mode = 4

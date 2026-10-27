@@ -4,11 +4,13 @@ using System.Collections.ObjectModel;
 using System.Data.Common;
 namespace OursGalaxy.UI;
 
-internal partial class FleetsViewer : Panel {
-	[Export]
-	protected HBoxContainer? FleetsPanel { get; set; }
+internal partial class FleetsViewerPanel : MarginContainer {
+	public static FleetsViewerPanel Load() => (FleetsViewerPanel)ResourceLoader.Load<PackedScene>("res://Scene/FleetsViewerPanel.tscn").Instantiate();
+
 	[Export]
 	protected Button? Quit { get; set; }
+	[Export]
+	protected HBoxContainer? FleetsPanel { get; set; }
 
 	public ObservableCollection<FleetData> Fleets { get; private set; } = [];
 

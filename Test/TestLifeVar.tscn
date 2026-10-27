@@ -1,136 +1,74 @@
 [gd_scene format=3 uid="uid://dkdd0iya65qe7"]
 
 [ext_resource type="Script" uid="uid://4tqvolrghu4t" path="res://Test/TestLifeVar.cs" id="1_n8apm"]
-[ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="2_1dp48"]
+[ext_resource type="Script" uid="uid://cy8tvmp3erne5" path="res://Script/Csharp/ProduceTaskData.cs" id="2_7jhvh"]
+[ext_resource type="Script" uid="uid://ci5rkxej67u2g" path="res://Script/Csharp/DateTime.cs" id="3_6yswc"]
+[ext_resource type="Script" uid="uid://ca5hudhjlbi3o" path="res://Script/Csharp/ItemBase.cs" id="4_4cu58"]
+[ext_resource type="Script" uid="uid://4oajqxmixao5" path="res://Script/Csharp/AssignedTaskData.cs" id="5_y4tt7"]
+[ext_resource type="Script" uid="uid://el2vgvnyqoo3" path="res://Script/Csharp/AssignedTaskEvent.cs" id="6_r1p60"]
+[ext_resource type="Script" uid="uid://ccb2eskfl3a65" path="res://Script/Csharp/Archive.cs" id="7_tpl5a"]
+[ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="8_6yswc"]
+
+[sub_resource type="Texture2D" id="Texture2D_4cu58"]
+resource_local_to_scene = false
+resource_name = ""
+
+[sub_resource type="Resource" id="Resource_y4tt7"]
+script = ExtResource("3_6yswc")
+Date = {
+"day": 27,
+"dst": false,
+"hour": 13,
+"minute": 31,
+"month": 10,
+"second": 11,
+"weekday": 2,
+"year": 2026
+}
+
+[sub_resource type="Resource" id="Resource_r1p60"]
+script = ExtResource("4_4cu58")
+
+[sub_resource type="Resource" id="Resource_tpl5a"]
+script = ExtResource("2_7jhvh")
+StartDate = SubResource("Resource_y4tt7")
+ProgressSeconds = 5
+Target = SubResource("Resource_r1p60")
+
+[sub_resource type="Resource" id="Resource_33a1m"]
+script = ExtResource("5_y4tt7")
+Name = "any"
+RatingLevel = 5
+Level = 2
+
+[sub_resource type="Resource" id="Resource_tnshn"]
+script = ExtResource("5_y4tt7")
+Name = "others"
+RatingLevel = 2
+Level = 3
+
+[sub_resource type="Resource" id="Resource_ygt2r"]
+script = ExtResource("5_y4tt7")
+Name = "and more?"
+Level = 5
+
+[sub_resource type="Resource" id="Resource_7jhvh"]
+script = ExtResource("7_tpl5a")
+metadata/_custom_type_script = "uid://ccb2eskfl3a65"
 
 [node name="TestLifeVar" type="Control" unique_id=1904611329]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 134.0
+offset_top = 68.0
+offset_right = 134.0
+offset_bottom = 68.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n8apm")
+ArchiveData = SubResource("Resource_7jhvh")
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1593129714]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1864870198]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1270093211]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=340068851]
-custom_minimum_size = Vector2(50.015, 70.948)
-layout_mode = 2
-texture = ExtResource("2_1dp48")
-expand_mode = 4
-stretch_mode = 4
-
-[node name="HSplitContainer" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1218320667]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/HSplitContainer" unique_id=321149283]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_right = 50
-
-[node name="CenterContainer" type="AspectRatioContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/HSplitContainer/MarginContainer" unique_id=1421379540]
-layout_mode = 2
-ratio = 15.2674
-stretch_mode = 1
-
-[node name="ReferenceRect" type="ReferenceRect" parent="PanelContainer/VBoxContainer/HBoxContainer/HSplitContainer/MarginContainer/CenterContainer" unique_id=186944109]
-layout_mode = 2
-
-[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/HSplitContainer" unique_id=191792262]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -44.0
-offset_top = -25.0
-offset_bottom = 25.0
-grow_horizontal = 0
-grow_vertical = 2
-size_flags_horizontal = 4
-text = "X"
-
-[node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer" unique_id=552384592]
-layout_mode = 2
-size_flags_vertical = 3
-current_tab = 0
-
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=518844093]
-layout_mode = 2
-metadata/_tab_index = 0
-
-[node name="HFlowContainer" type="HFlowContainer" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer" unique_id=1971925127]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer/HFlowContainer" unique_id=1446083238]
-layout_mode = 2
-text = "any"
-
-[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer/HFlowContainer" unique_id=767483171]
-layout_mode = 2
-text = "any"
-
-[node name="Label3" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer/HFlowContainer" unique_id=107360959]
-layout_mode = 2
-text = "any"
-
-[node name="Label4" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer/HFlowContainer" unique_id=1572947674]
-layout_mode = 2
-text = "any"
-
-[node name="Label5" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer/HFlowContainer" unique_id=344468172]
-layout_mode = 2
-text = "any"
-
-[node name="ScrollContainer2" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=1232927058]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 1
-
-[node name="HFlowContainer" type="HFlowContainer" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer2" unique_id=263879036]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer2/HFlowContainer" unique_id=1622289192]
-layout_mode = 2
-text = "any"
-
-[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer2/HFlowContainer" unique_id=940582465]
-layout_mode = 2
-text = "any"
-
-[node name="Label3" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer2/HFlowContainer" unique_id=183660579]
-layout_mode = 2
-text = "any"
-
-[node name="Label4" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer2/HFlowContainer" unique_id=1689716317]
-layout_mode = 2
-text = "any"
-
-[node name="Label5" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/ScrollContainer2/HFlowContainer" unique_id=1453204294]
-layout_mode = 2
-text = "any"
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1272213129]
+texture = ExtResource("8_6yswc")

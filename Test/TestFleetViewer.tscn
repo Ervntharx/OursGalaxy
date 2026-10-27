@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bp82sixw531ie"]
 
-[ext_resource type="PackedScene" uid="uid://cil3tkso42l01" path="res://Scene/FleetsViewer.tscn" id="1_wgfqk"]
-[ext_resource type="Script" uid="uid://bfsst3xjmq88q" path="res://Test/TestFleetViewer.cs" id="1_wlan5"]
+[ext_resource type="PackedScene" uid="uid://cil3tkso42l01" path="res://Scene/FleetsViewerPanel.tscn" id="1_wgfqk"]
+[ext_resource type="Script" uid="uid://7d7bu7a02vyg" path="res://Test/TestFleetViewer.cs" id="1_wlan5"]
 
 [node name="TestFleetViewer" type="Control" unique_id=1093078689 node_paths=PackedStringArray("TestedFleetsViewer")]
 layout_mode = 3

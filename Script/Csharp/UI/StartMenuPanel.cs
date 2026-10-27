@@ -11,12 +11,9 @@ internal partial class StartMenuPanel : MarginContainer {
 	[Export]
 	public Button? EnterButton { get; set; }
 	[Export]
-	public Button? SettingsButton { get; set; }
+	public Button SettingsButton { get; set; } = null!;
 	[Export]
-	public Button? ExitButton { get; set; }
-
-	[Export]
-	public ConfirmationDialog? ExitConfirmation { get; set; }
+	public Button ExitButton { get; set; } = null!;
 
 	// public const string SETTING_PANEL_NODE_NAME = "SettingPanel";
 	[Export]
@@ -24,19 +21,28 @@ internal partial class StartMenuPanel : MarginContainer {
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
-		SettingsButton!.Pressed += () => {
-			AddChild(SettingPanel.Load());
-		};
+		SettingsButton!.Pressed += OnSettingButtonPressed;
+		ExitButton.Pressed += OnExitPressed;
 
-		ExitConfirmation!.Confirmed += () => { GetTree().Quit(); };
-		ExitButton!.Pressed += () => {
-			ExitConfirmation!.PopupCentered();
-		};
 
 		//theme_override_constants.margin_left
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta) {
+	}
+
+	public override void _ExitTree() {
+		SettingsButton.Pressed -= OnSettingButtonPressed;
+		ExitButton.Pressed -= OnExitPressed;
+		base._ExitTree();
+	}
+
+	private void OnSettingButtonPressed() {
+
+	}
+
+	private void OnExitPressed() {
+
 	}
 }

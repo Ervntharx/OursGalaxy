@@ -74,14 +74,30 @@ internal partial class MainPanel : Control {
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
-		MsgViewPanel!.Quit += OnMsgViewPanelQUit;
+		MsgBoxesListPanel!.OpenMessage += OnMsgOpen;
+		MsgViewPanel!.Quit += OnMsgViewPanelQuit;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta) {
 	}
 
-	private void OnMsgViewPanelQUit(MessageViewerPanel messageViewerPanel) {
-		// TODO: Switch tabs
+	public override void _ExitTree() {
+		MsgBoxesListPanel!.OpenMessage -= OnMsgOpen;
+		MsgViewPanel!.Quit -= OnMsgViewPanelQuit;
+		base._ExitTree();
+	}
+
+	private void OnMsgOpen(MessageData msg) {
+		MsgViewPanel!.Make(msg);
+		var msgViewerIdx = FuncPanelTab!.GetTabIdxFromControl(MsgViewPanel);
+		FuncPanelTab!.SetTabHidden(msgViewerIdx, false);
+		FuncPanelTab!.CurrentTab = msgViewerIdx;
+		FuncPanelTab!.TabsVisible = true;
+	}
+
+	private void OnMsgViewPanelQuit(MessageViewerPanel messageViewerPanel) {
+		FuncPanelTab!.SetTabHidden(FuncPanelTab.GetTabIdxFromControl(messageViewerPanel), true);
+		FuncPanelTab!.TabsVisible = false;
 	}
 }

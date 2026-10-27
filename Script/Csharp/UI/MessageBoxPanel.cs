@@ -5,13 +5,12 @@ using System.Linq;
 namespace OursGalaxy.UI;
 
 internal partial class MessageBoxPanel : PanelContainer {
+	public static MessageBoxPanel Load() => (MessageBoxPanel)ResourceLoader.Load<PackedScene>("res://Scene/MessageBoxPanel.tscn").Instantiate();
+
 	[Export]
 	protected TabContainer? MessagesTabsContainer { get; set; }
 	[Export]
 	protected PackedScene? MessageItemBox { get; set; }
-
-	[Export]
-	protected PackedScene? MessageViewer { get; set; }
 
 	public IEnumerable<string> MessageTabs => MessagesTabsContainer!.GetChildren().Select(tab => tab.Name.ToString());
 
@@ -52,6 +51,8 @@ internal partial class MessageBoxPanel : PanelContainer {
 		base._Ready();
 		AddTab("Personal", "Notice");
 
+		// for test only
+
 		GD.Print(TryPushMessage("Notice",
 		new MessageData() { Head = "Welcome", Content = "here" },
 		 new MessageData() { Head = "Again", Content = "here" },
@@ -68,13 +69,5 @@ internal partial class MessageBoxPanel : PanelContainer {
 		 new MessageData() { Head = "abaetbeynetyn", Content = "here" },
 		 new MessageData() { Head = "Again", Content = "here" }
 		 ));
-
-		OpenMessage += (msgData) => {
-			GD.Print("try open;");
-			var msgVP = (MessageViewer!.Instantiate() as MessageViewerPanel)!;
-			msgVP.Head = msgData.Head;
-			msgVP.Body = msgData.Content;
-			AddChild(msgVP);
-		};
 	}
 }
