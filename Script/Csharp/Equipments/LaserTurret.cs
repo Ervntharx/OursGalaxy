@@ -22,12 +22,12 @@ internal partial class LaserTurret : Node3D, ITurret {
 
 	public IReadOnlyCollection<IPromote> Promotes => promotes.AsReadOnly();
 
-	public float RotateAngleVelocity { get; set; } = 5;
+	public float RotateAngleVelocity { get; set; } = 45;
 
 	public ITurret.StateEnum State { get; protected set; } = ITurret.StateEnum.Ready;
 
-	public float LeftYawMax { get; set; }
-	public float RightYawMax { get; set; }
+	public float LeftYawMax { get; set; } = 180;
+	public float RightYawMax { get; set; } = 180;
 
 	public bool IsAimmed {
 		get {

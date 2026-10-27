@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://boqy7fqtjn3o4" path="res://Script/Csharp/UI/StartMenuPanel.cs" id="1_2tsk8"]
 
-[node name="Control" type="MarginContainer" unique_id=1004670838 node_paths=PackedStringArray("EnterButton", "SettingsButton", "ExitButton", "ExitConfirmation")]
+[node name="Control" type="MarginContainer" unique_id=1004670838 node_paths=PackedStringArray("EnterButton", "SettingsButton", "ExitButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -17,7 +17,6 @@ script = ExtResource("1_2tsk8")
 EnterButton = NodePath("PanelContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Enter")
 SettingsButton = NodePath("PanelContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Setting")
 ExitButton = NodePath("PanelContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Exit")
-ExitConfirmation = NodePath("")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1883177801]
 layout_mode = 2
@@ -49,7 +48,7 @@ size_flags_horizontal = 3
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=414054032]
 layout_mode = 2
 theme_override_constants/margin_right = 65
-theme_override_constants/margin_bottom = 45
+theme_override_constants/margin_bottom = 25
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/MarginContainer" unique_id=1461469210]
 custom_minimum_size = Vector2(300, 0)
@@ -70,3 +69,10 @@ text = "设置"
 custom_minimum_size = Vector2(0, 65)
 layout_mode = 2
 text = "退出"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer" unique_id=1218214094]
+layout_mode = 2
+text = "Powered by Godot engine♥️"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 2

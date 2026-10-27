@@ -14,7 +14,7 @@ internal partial class TacticsSet : Resource {
 		Roundabot_Left, // 左迂回
 		Roundabot_Right,    //右迂回
 		Facile,         // 高机动
-
+		Protect         // 护卫
 	}
 
 	/// <summary>
@@ -43,4 +43,7 @@ internal partial class TacticsSet : Resource {
 	public MovementEnum Movement { get; set; } = MovementEnum.Forward;
 	[Export]
 	public TargetingEnum Targeting { get; set; } = TargetingEnum.Closest;
+
+	[Export]
+	public long UniqueIDOfProtectedShip { get; set; }
 }

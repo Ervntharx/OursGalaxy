@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://750feo7ocfb0"]
+
+[ext_resource type="Script" uid="uid://cdeuid74b1xse" path="res://Script/Csharp/UI/ShipConfigPanel.cs" id="1_cti5s"]
+[ext_resource type="PackedScene" uid="uid://b5opwcdvp8ftf" path="res://Scene/ItemViewerPanel.tscn" id="1_yqs27"]
+
+[node name="ShipConfigPanel" type="MarginContainer" unique_id=2131798070 node_paths=PackedStringArray("QuitButton", "IVPanel", "ShipOverview")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_cti5s")
+QuitButton = NodePath("PanelContainer/VBoxContainer/TopBar/Quit")
+IVPanel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/ItemViewer")
+ShipOverview = NodePath("PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer/SubViewport")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1717783387]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=513192146]
+layout_mode = 2
+
+[node name="TopBar" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1456678536]
+layout_mode = 2
+
+[node name="Quit" type="Button" parent="PanelContainer/VBoxContainer/TopBar" unique_id=315103630]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "<"
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer/TopBar" unique_id=1814151810]
+layout_mode = 2
+text = "舰船装配"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/VBoxContainer" unique_id=823755406]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=1142010588]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer" unique_id=1473934275]
+size = Vector2i(565, 603)
+
+[node name="ItemViewer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=1079582908 instance=ExtResource("1_yqs27")]
+layout_mode = 2
+size_flags_horizontal = 3

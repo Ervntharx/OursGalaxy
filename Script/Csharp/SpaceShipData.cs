@@ -1,5 +1,6 @@
 ﻿using System;
 using Godot;
+namespace OursGalaxy;
 /// <summary>
 /// 飞船数据类, 用于存储飞船的基本信息和状态
 /// </summary>
@@ -13,6 +14,9 @@ internal partial class SpaceshipData : UniqueItem {
 
 	[Export]
 	public int CurrentHP { get; set; }
+
+	[Export]
+	public Godot.Collections.Dictionary<Outlet, UniqueItem> EquipsConfig { get; set; } = [];
 
 	public int FullHP => fullHP.Value;
 

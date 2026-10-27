@@ -90,6 +90,4 @@ internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 	/// 死亡事件
 	/// </summary>
 	public event Action<IBattleEntity>? OnDeath;
-
-
 }

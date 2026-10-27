@@ -2,70 +2,58 @@
 
 [ext_resource type="Script" uid="uid://cvq28wkeov32s" path="res://Script/Csharp/UI/AssignedTaskPanel.cs" id="1_a8riw"]
 
-[node name="Control" type="Control" unique_id=898303425 node_paths=PackedStringArray("AllMissionsPanel", "AcceptedMissionPanel")]
-layout_mode = 3
+[node name="Control" type="MarginContainer" unique_id=1237838636 node_paths=PackedStringArray("AllMissionsPanel", "AcceptedMissionPanel")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_force_pass_scroll_events = false
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 script = ExtResource("1_a8riw")
-AllMissionsPanel = NodePath("Panel/HSplitContainer/AllMissionsScrollContainer/HFlowContainer")
-AcceptedMissionPanel = NodePath("Panel/HSplitContainer/AcceptedMissionsScrollContainer2/HFlowContainer")
+AllMissionsPanel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/AllMissionsScrollContainer/HFlowContainer")
+AcceptedMissionPanel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/AcceptedMissionsScrollContainer2/HFlowContainer")
 
-[node name="Panel" type="Panel" parent="." unique_id=465635297]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -250.0
-offset_right = 400.0
-offset_bottom = 250.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="HSplitContainer" type="HSplitContainer" parent="Panel" unique_id=428305199]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 43.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="AllMissionsScrollContainer" type="ScrollContainer" parent="Panel/HSplitContainer" unique_id=515899126]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1294126043]
 layout_mode = 2
-size_flags_horizontal = 3
 
-[node name="HFlowContainer" type="HFlowContainer" parent="Panel/HSplitContainer/AllMissionsScrollContainer" unique_id=591969295]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=162311544]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
-[node name="AcceptedMissionsScrollContainer2" type="ScrollContainer" parent="Panel/HSplitContainer" unique_id=855862135]
+[node name="TopBar" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=706452179]
 layout_mode = 2
-size_flags_horizontal = 3
 
-[node name="HFlowContainer" type="HFlowContainer" parent="Panel/HSplitContainer/AcceptedMissionsScrollContainer2" unique_id=1168224822]
+[node name="Quit" type="Button" parent="PanelContainer/VBoxContainer/TopBar" unique_id=1709957266]
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Quit" type="Button" parent="Panel" unique_id=1709957266]
-layout_mode = 0
-offset_right = 45.0
-offset_bottom = 42.0
 text = "<"
 
-[node name="Title" type="Label" parent="Panel" unique_id=530191164]
-layout_mode = 0
-offset_left = 55.0
-offset_top = 1.0
-offset_right = 257.0
-offset_bottom = 41.0
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer/TopBar" unique_id=530191164]
+layout_mode = 2
 text = "远征任务"
 vertical_alignment = 1
+
+[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/VBoxContainer" unique_id=428305199]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AllMissionsScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=515899126]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HFlowContainer" type="HFlowContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/AllMissionsScrollContainer" unique_id=591969295]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AcceptedMissionsScrollContainer2" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=855862135]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HFlowContainer" type="HFlowContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/AcceptedMissionsScrollContainer2" unique_id=1168224822]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
