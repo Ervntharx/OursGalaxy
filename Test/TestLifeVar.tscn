@@ -9,45 +9,45 @@
 [ext_resource type="Script" uid="uid://ccb2eskfl3a65" path="res://Script/Csharp/Archive.cs" id="7_tpl5a"]
 [ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="8_6yswc"]
 
-[sub_resource type="Texture2D" id="Texture2D_4cu58"]
+[sub_resource type="Texture2D" id="Texture2D_6yswc"]
 resource_local_to_scene = false
 resource_name = ""
 
-[sub_resource type="Resource" id="Resource_y4tt7"]
+[sub_resource type="Resource" id="Resource_4cu58"]
 script = ExtResource("3_6yswc")
 Date = {
-"day": 27,
+"day": 28,
 "dst": false,
-"hour": 13,
-"minute": 31,
+"hour": 8,
+"minute": 20,
 "month": 10,
-"second": 11,
-"weekday": 2,
+"second": 27,
+"weekday": 3,
 "year": 2026
 }
 
-[sub_resource type="Resource" id="Resource_r1p60"]
+[sub_resource type="Resource" id="Resource_y4tt7"]
 script = ExtResource("4_4cu58")
 
-[sub_resource type="Resource" id="Resource_tpl5a"]
+[sub_resource type="Resource" id="Resource_r1p60"]
 script = ExtResource("2_7jhvh")
-StartDate = SubResource("Resource_y4tt7")
+StartDate = SubResource("Resource_4cu58")
 ProgressSeconds = 5
-Target = SubResource("Resource_r1p60")
+Target = SubResource("Resource_y4tt7")
 
-[sub_resource type="Resource" id="Resource_33a1m"]
+[sub_resource type="Resource" id="Resource_tpl5a"]
 script = ExtResource("5_y4tt7")
 Name = "any"
 RatingLevel = 5
 Level = 2
 
-[sub_resource type="Resource" id="Resource_tnshn"]
+[sub_resource type="Resource" id="Resource_33a1m"]
 script = ExtResource("5_y4tt7")
 Name = "others"
 RatingLevel = 2
 Level = 3
 
-[sub_resource type="Resource" id="Resource_ygt2r"]
+[sub_resource type="Resource" id="Resource_tnshn"]
 script = ExtResource("5_y4tt7")
 Name = "and more?"
 Level = 5
@@ -72,3 +72,9 @@ ArchiveData = SubResource("Resource_7jhvh")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1272213129]
 texture = ExtResource("8_6yswc")
+
+[node name="Button" type="Button" parent="." unique_id=1344246771]
+layout_mode = 0
+offset_top = 127.0
+offset_right = 137.0
+offset_bottom = 177.0

@@ -1,14 +1,18 @@
 基础：
 
-引入可序列化的UniqueItem.Guid, UniqueItemReference, UniqueItemWeakReference机制，引入UniqueItem.OccupyState主动和Reference联动解决占用问题
+[+]引入可序列化的UniqueItem.Guid, UniqueItemReference, UniqueItemWeakReference机制，引入UniqueItem.OccupyState主动和Reference联动解决占用问题
 引入StaticsServer.ShipSnapshot，ship信号量可以大量传递Snapshot
 UniqueItemWeakReference可以解决fleetpreset序列化问题。
 
 引入PanelsStack以管理ui场景上下文
 
-引入blueprint类型
+[+]引入blueprint类型
 
-引入subblueprint类型。但在database内使用相同数据库表
+[+]引入subblueprint类型。但在database内使用相同数据库表
+
+Outlet内NodePath序列化槽位标记
+
+TacticsSet内存储ship的UniqueID
 
 实现LongProgressTask类型以覆盖远征，生产制造所需的长离线过程任务
 远征的Tasks堆积让远征vb自行解引

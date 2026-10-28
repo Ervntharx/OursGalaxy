@@ -28,6 +28,10 @@ internal partial class GameItem : ItemBase {
 		Num = num;
 	}
 
+	public GameItem(string table, string name, ItemBase.QulityEnum qulity, int num = 0) : base(table, name, qulity) {
+		Num = num;
+	}
+
 	/// <summary>
 	/// 是否是临时数据。依靠数量进行判断。
 	/// </summary>

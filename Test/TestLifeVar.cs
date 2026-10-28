@@ -4,16 +4,12 @@ using System;
 namespace OursGalaxy;
 
 internal partial class TestLifeVar : Control {
-	[Export]
-	protected Archive? ArchiveData { get; set; }
-	// Called when the node enters the scene tree for the first time.
+	private Lazy<int> a = new(() => 2);
 	public override void _Ready() {
-		var a = 2;
-
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta) {
+		base._Ready();
+		GD.Print(a.IsValueCreated);
+		GD.Print(a.Value);
+		GD.Print(a.IsValueCreated);
 
 	}
 }

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bh75juoj7flxo"]
+
+[ext_resource type="Script" uid="uid://doid3isgoe6fc" path="res://Script/Csharp/UI/PanelsStack.cs" id="1_7yvla"]
+
+[node name="PanelsStack" type="CanvasLayer" unique_id=1613686578 node_paths=PackedStringArray("PanelsRoot", "QuitGameDialog")]
+script = ExtResource("1_7yvla")
+PanelsRoot = NodePath("Panels")
+QuitGameDialog = NodePath("ExcludsiveLayer/QuitGameDialog")
+
+[node name="Panels" type="CanvasLayer" parent="." unique_id=1150949575]
+
+[node name="ExcludsiveLayer" type="CanvasLayer" parent="." unique_id=399877018]
+
+[node name="QuitGameDialog" type="ConfirmationDialog" parent="ExcludsiveLayer" unique_id=1019234574]
+oversampling_override = 1.0
+title = "ComfirmQuitGame"
+initial_position = 2
+borderless = true
+ok_button_text = "退出"
+dialog_text = "确定退出游戏吗？"
+cancel_button_text = "返回"

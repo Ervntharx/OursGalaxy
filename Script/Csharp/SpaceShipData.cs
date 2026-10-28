@@ -24,7 +24,7 @@ internal partial class SpaceshipData : UniqueItem {
 
 	public int Raid => raid.Value;
 
-	public SpaceshipData(string typeName, long? uniqueID = null) : base(ItemCodePrefix + typeName, uniqueID) {
+	public SpaceshipData(string typeName, GUID? ID = null) : base(ItemCodePrefix + typeName, ID) {
 		size = new(() => {
 			if (TryQuery<int>("Size", out var result)) {
 				return result;
