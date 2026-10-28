@@ -9,7 +9,7 @@ internal partial class StartMenuPanel : MarginContainer {
 	public static StartMenuPanel Load() => (StartMenuPanel)ResourceLoader.Load<PackedScene>("res://Scene/StartMenuPanel.tscn").Instantiate();
 
 	[Export]
-	public Button? EnterButton { get; set; }
+	public Button EnterButton { get; set; } = null!;
 	[Export]
 	public Button SettingsButton { get; set; } = null!;
 	[Export]
@@ -21,28 +21,15 @@ internal partial class StartMenuPanel : MarginContainer {
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
-		SettingsButton!.Pressed += OnSettingButtonPressed;
-		ExitButton.Pressed += OnExitPressed;
-
-
-		//theme_override_constants.margin_left
+		EnterButton.Pressed += () => {
+			PanelsStack.PushPanel(MainPanel.Load());
+			PanelsStack.PopPanel(this);
+		};
+		SettingsButton.Pressed += () => { PanelsStack.PushPanel(SettingPanel.Load()); };
+		ExitButton.Pressed += () => { PanelsStack.RequireQuitGame(); };
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta) {
-	}
-
-	public override void _ExitTree() {
-		SettingsButton.Pressed -= OnSettingButtonPressed;
-		ExitButton.Pressed -= OnExitPressed;
-		base._ExitTree();
-	}
-
-	private void OnSettingButtonPressed() {
-
-	}
-
-	private void OnExitPressed() {
-
+	~StartMenuPanel() {
+		GD.Print("free");
 	}
 }

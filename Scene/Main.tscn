@@ -1,18 +1,14 @@
 [gd_scene format=3 uid="uid://rt38b5iwvqw8"]
 
 [ext_resource type="Script" uid="uid://d4ahfl7hvpd1w" path="res://Script/Csharp/Main.cs" id="1_djkur"]
-[ext_resource type="PackedScene" uid="uid://ble4cmbad84m0" path="res://Scene/StartMenuPanel.tscn" id="1_g6ejq"]
 [ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="2_djkur"]
+[ext_resource type="PackedScene" uid="uid://bh75juoj7flxo" path="res://Scene/PanelsStack.tscn" id="3_djkur"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6jvjn"]
 
 [node name="Main" type="Node3D" unique_id=813783030 node_paths=PackedStringArray("Camera")]
 script = ExtResource("1_djkur")
 Camera = NodePath("Camera3D")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1251647905]
-
-[node name="Control" parent="CanvasLayer" unique_id=1004670838 instance=ExtResource("1_g6ejq")]
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=878520372]
 transform = Transform3D(0.9343827, -0.17714915, 0.30910724, 0.018457668, 0.8905231, 0.4545635, -0.3557927, -0.41903085, 0.83535904, 1.0862696, 1.1468686, 1.5696939)
@@ -26,3 +22,5 @@ texture = ExtResource("2_djkur")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1849149779]
 transform = Transform3D(0.9521718, -0.15421438, 0.26379308, 0, 0.8633014, 0.5046891, -0.30556324, -0.48055077, 0.8220113, 0, 0, 0)
+
+[node name="PanelsStack" parent="." unique_id=1613686578 instance=ExtResource("3_djkur")]

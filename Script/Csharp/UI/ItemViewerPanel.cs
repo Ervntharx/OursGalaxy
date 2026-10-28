@@ -9,10 +9,11 @@ namespace OursGalaxy.UI;
 /// Item查看器。在Show的时候绘制。需要在Show之前制定Items和Opts.Items是可变的，Opts是不可变的
 /// </summary>
 internal partial class ItemViewerPanel : Control {
-	public ItemViewerPanel Load() => (ItemViewerPanel)ResourceLoader.Load<PackedScene>("res://Scene/ItemViewer.tscn").Instantiate();
+	public static ItemViewerPanel Load() => (ItemViewerPanel)ResourceLoader.Load<PackedScene>("res://Scene/ItemViewer.tscn").Instantiate();
 
 	[Export]
-	protected Button? QuitButton { get; set; }
+	protected Button QuitButton { get; set; } = null!;
+
 	[Export]
 	protected Button? SettingsButton { get; set; }
 
@@ -37,6 +38,8 @@ internal partial class ItemViewerPanel : Control {
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
+		QuitButton.Pressed += () => PanelsStack.PopPanel(this);
+
 		VisibilityChanged += Redraw;
 	}
 

@@ -5,6 +5,9 @@ internal partial class FactoryPanel : Panel {
 	public static FactoryPanel Load() => (FactoryPanel)ResourceLoader.Load<PackedScene>("res://Scene/FactoryPanel.tscn").Instantiate();
 
 	[Export]
+	protected Button QuitButton { get; set; } = null!;
+
+	[Export]
 	protected HFlowContainer? ShipsProduceLinesPanel { get; set; }
 
 	[Export]
@@ -18,6 +21,8 @@ internal partial class FactoryPanel : Panel {
 
 	public override void _Ready() {
 		base._Ready();
+		QuitButton.Pressed += () => PanelsStack.PopPanel(this);
+
 		var tasks = Archive.Data.ShipsProduceTasks;
 		for (var i = 0; i < tasks.Count; i++) {
 			var line = ProduceLineBox.Load();

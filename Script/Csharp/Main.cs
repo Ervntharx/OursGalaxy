@@ -1,4 +1,5 @@
 ﻿using Godot;
+using OursGalaxy.UI;
 using System;
 namespace OursGalaxy;
 
@@ -11,6 +12,7 @@ internal partial class Main : Node3D {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
 		GetTree().Root.SizeChanged += OnRootViewportSizeChanged;
+		PanelsStack.PushPanel(StartMenuPanel.Load());
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -23,7 +25,7 @@ internal partial class Main : Node3D {
 	}
 
 	private void OnRootViewportSizeChanged() {
-		currentAspect = GetTree().Root.Size.X / (double)GetTree().Root.Size.Y;
+		var currentAspect = GetTree().Root.Size.X / (double)GetTree().Root.Size.Y;
 		if (currentAspect >= ASPECT) {
 			Camera.KeepAspect = Camera3D.KeepAspectEnum.Height;
 		}
@@ -31,6 +33,4 @@ internal partial class Main : Node3D {
 			Camera.KeepAspect = Camera3D.KeepAspectEnum.Width;
 		}
 	}
-
-	private double currentAspect;
 }

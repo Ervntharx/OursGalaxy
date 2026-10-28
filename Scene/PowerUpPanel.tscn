@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://dihqqmasd741u"]
+
+[ext_resource type="Script" uid="uid://cvr2m15eneep1" path="res://Script/Csharp/UI/PowerUpPanel.cs" id="1_0x5c1"]
+
+[node name="PowerUpPanel" type="MarginContainer" unique_id=714547575 node_paths=PackedStringArray("QuitButton", "PowerUpItemListPanel", "MaterialPanel", "PgrsBar", "PowerUpButton")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_0x5c1")
+QuitButton = NodePath("VBoxContainer/TopBar/Quit")
+PowerUpItemListPanel = NodePath("VBoxContainer/HSplitContainer/ScrollContainer/Items")
+MaterialPanel = NodePath("VBoxContainer/HSplitContainer/VSplitContainer/VBoxContainer/ScrollContainer/HFlowContainer")
+PgrsBar = NodePath("VBoxContainer/HSplitContainer/VSplitContainer/VBoxContainer/ProgressBar")
+PowerUpButton = NodePath("VBoxContainer/HSplitContainer/VSplitContainer/VBoxContainer/HBoxContainer/Control/PowerUp")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=668409247]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1343175710]
+layout_mode = 2
+
+[node name="TopBar" type="HBoxContainer" parent="VBoxContainer" unique_id=1302960866]
+layout_mode = 2
+
+[node name="Quit" type="Button" parent="VBoxContainer/TopBar" unique_id=974912524]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "<"
+
+[node name="Title" type="Label" parent="VBoxContainer/TopBar" unique_id=521473060]
+layout_mode = 2
+text = "强化"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer" unique_id=1843684209]
+layout_mode = 2
+size_flags_vertical = 3
+split_offsets = PackedInt32Array(200)
+drag_area_highlight_in_editor = true
+split_offset = 200
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HSplitContainer" unique_id=854804105]
+layout_mode = 2
+
+[node name="Items" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/ScrollContainer" unique_id=1689687733]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VSplitContainer" type="VSplitContainer" parent="VBoxContainer/HSplitContainer" unique_id=256360718]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="VBoxContainer/HSplitContainer/VSplitContainer" unique_id=627416505]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer" unique_id=531330462]
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer/HSplitContainer/VSplitContainer/VBoxContainer" unique_id=645647830]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer/VBoxContainer" unique_id=279519735]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="HFlowContainer" type="HFlowContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer/VBoxContainer/ScrollContainer" unique_id=397896800]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HSplitContainer/VSplitContainer/VBoxContainer" unique_id=176230964]
+layout_mode = 2
+alignment = 1
+
+[node name="Control" type="Control" parent="VBoxContainer/HSplitContainer/VSplitContainer/VBoxContainer/HBoxContainer" unique_id=591796157]
+custom_minimum_size = Vector2(120, 65)
+layout_mode = 2
+
+[node name="PowerUp" type="Button" parent="VBoxContainer/HSplitContainer/VSplitContainer/VBoxContainer/HBoxContainer/Control" unique_id=815365315]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "强化"

@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" uid="uid://doid3isgoe6fc" path="res://Script/Csharp/UI/PanelsStack.cs" id="1_7yvla"]
 
-[node name="PanelsStack" type="CanvasLayer" unique_id=1613686578 node_paths=PackedStringArray("PanelsRoot", "QuitGameDialog")]
+[node name="PanelsStack" type="CanvasLayer" unique_id=1613686578 node_paths=PackedStringArray("PanelsRoot", "ExcludsiveLayer", "QuitGameDialog")]
 script = ExtResource("1_7yvla")
 PanelsRoot = NodePath("Panels")
+ExcludsiveLayer = NodePath("ExcludsiveLayer")
 QuitGameDialog = NodePath("ExcludsiveLayer/QuitGameDialog")
 
 [node name="Panels" type="CanvasLayer" parent="." unique_id=1150949575]

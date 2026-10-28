@@ -1,25 +1,22 @@
 ﻿using Godot;
-using System;
-using Godot.Collections;
-using System.Collections.ObjectModel;
 namespace OursGalaxy.UI;
 
 internal partial class MainPanel : Control {
-	public static MainPanel Load() => (MainPanel)ResourceLoader.Load<PackedScene>("res://Script/Csharp/UI/MainPanel.cs").Instantiate();
+	public static MainPanel Load() => (MainPanel)ResourceLoader.Load<PackedScene>("res://Scene/MainPanel.tscn").Instantiate();
 
 	[Export]
-	protected Button? QuitButton { get; set; }
+	protected Button QuitButton { get; set; } = null!;
 	[Export]
-	protected MessageBoxPanel? MsgBoxesListPanel { get; set; }
+	protected MessageBoxPanel MsgBoxesListPanel { get; set; } = null!;
 	[Export]
-	protected MessageViewerPanel? MsgViewPanel { get; set; }
+	protected MessageViewerPanel MsgViewPanel { get; set; } = null!;
 
 	// top bar
 	[ExportGroup("Top Bar Overview")]
 	[Export]
 	protected Button? PersonalArchiveButton { get; set; }
 	[Export]
-	protected Button? SettingButton { get; set; }
+	protected Button SettingButton { get; set; } = null!;
 	[Export]
 	protected Button? ActionPointsButton { get; set; }
 	[Export]
@@ -44,23 +41,23 @@ internal partial class MainPanel : Control {
 	// function panel
 	[ExportGroup("Function Panel Overview")]
 	[Export]
-	protected TabContainer? FuncPanelTab { get; set; }
+	protected TabContainer FuncPanelTab { get; set; } = null!;
 	[Export]
-	protected Button? FleetsEditButton { get; set; }
+	protected Button FleetsEditButton { get; set; } = null!;
 	[Export]
 	protected Button? MissionButton { get; set; }
 	[Export]
 	protected Button? AllianceButton { get; set; }
 	[Export]
-	protected Button? SimulatedCombatButton { get; set; }
+	protected Button SimulatedCombatButton { get; set; } = null!;
 	[Export]
-	protected Button? HangerButton { get; set; }
+	protected Button HangerButton { get; set; } = null!;
 	[Export]
-	protected Button? FactoryButton { get; set; }
+	protected Button FactoryButton { get; set; } = null!;
 	[Export]
-	protected Button? AssignedTaskButton { get; set; }
+	protected Button AssignedTaskButton { get; set; } = null!;
 	[Export]
-	protected Button? CombatButton { get; set; }
+	protected Button CombatButton { get; set; } = null!;
 
 
 	// bottom panels
@@ -68,18 +65,24 @@ internal partial class MainPanel : Control {
 	[Export]
 	protected Button? TechnologyButton { get; set; }
 	[Export]
-	protected Button? StoreButton { get; set; }
+	protected Button StoreButton { get; set; } = null!;
 	[Export]
 	protected Button? ConnectionButton { get; set; }
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
-		MsgBoxesListPanel!.OpenMessage += OnMsgOpen;
 		MsgViewPanel!.Quit += OnMsgViewPanelQuit;
-	}
+		MsgBoxesListPanel!.OpenMessage += OnMsgOpen;
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta) {
+		SettingButton.Pressed += () => PanelsStack.PushPanel(SettingPanel.Load());
+		QuitButton.Pressed += PanelsStack.RequireQuitGame;
+		FleetsEditButton.Pressed += () => PanelsStack.PushPanel(FleetEditorPanel.Load());
+		SimulatedCombatButton.Pressed += () => PanelsStack.PushPanel(ReadyCombatPanel.Load());
+		AssignedTaskButton.Pressed += () => PanelsStack.PushPanel(AssignedTaskPanel.Load());
+		FactoryButton.Pressed += () => PanelsStack.PushPanel(FactoryPanel.Load());
+		CombatButton.Pressed += () => PanelsStack.PushPanel(CombatsOverviewPanel.Load());
+		HangerButton.Pressed += () => PanelsStack.PushPanel(ItemViewerPanel.Load());
+		StoreButton.Pressed += () => PanelsStack.PushPanel(ItemViewerPanel.Load());
 	}
 
 	public override void _ExitTree() {

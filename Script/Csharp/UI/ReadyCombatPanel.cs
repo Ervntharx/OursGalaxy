@@ -6,7 +6,7 @@ namespace OursGalaxy.UI;
 /// 准备战斗界面
 /// </summary>
 internal partial class ReadyCombatPanel : MarginContainer {
-	public ReadyCombatPanel Load() => (ReadyCombatPanel)ResourceLoader.Load<PackedScene>("res://Scene/ReadyCombatPanel.tscn").Instantiate();
+	public static ReadyCombatPanel Load() => (ReadyCombatPanel)ResourceLoader.Load<PackedScene>("res://Scene/ReadyCombatPanel.tscn").Instantiate();
 	[Export]
 	protected TextureRect? LeftAvatar { get; set; }
 	[Export]
@@ -27,7 +27,7 @@ internal partial class ReadyCombatPanel : MarginContainer {
 
 
 	[Export]
-	protected Button? QuitButton { get; set; }
+	protected Button QuitButton { get; set; } = null!;
 	[Export]
 	protected Button? ChangeFleetButton { get; set; }
 	[Export]
@@ -61,6 +61,7 @@ internal partial class ReadyCombatPanel : MarginContainer {
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
+		QuitButton.Pressed += () => PanelsStack.PopPanel(this);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

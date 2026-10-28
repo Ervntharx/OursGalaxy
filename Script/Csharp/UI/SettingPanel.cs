@@ -9,7 +9,7 @@ internal partial class SettingPanel : MarginContainer {
 	public static SettingPanel Load() => (SettingPanel)ResourceLoader.Load<PackedScene>("res://Scene/SettingPanel.tscn").Instantiate();
 
 	[Export]
-	protected Button? QuitButton { get; set; }
+	protected Button QuitButton { get; set; } = null!;
 
 	[Export]
 	protected RichTextLabel? AboutPage { get; set; }
@@ -28,6 +28,8 @@ internal partial class SettingPanel : MarginContainer {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
 		base._Ready();
+		QuitButton.Pressed += () => PanelsStack.PopPanel(this);
+
 		SettingsArchive.Data.PanelsMarginChanged += OnMarginChanged;
 
 
