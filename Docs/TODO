@@ -1,27 +1,11 @@
 基础：
 
-[+]引入可序列化的UniqueItem.Guid, UniqueItemReference, UniqueItemWeakReference机制，引入UniqueItem.OccupyState主动和Reference联动解决占用问题
-引入StaticsServer.ShipSnapshot，ship信号量可以大量传递Snapshot
-UniqueItemWeakReference可以解决fleetpreset序列化问题。
-
 引入PanelsStack以管理ui场景上下文
 
-[+]引入blueprint类型
-
-[+]引入subblueprint类型。但在database内使用相同数据库表
-
-[+]Outlet内NodePath序列化槽位标记
-
-[+]TacticsSet内存储ship的UniqueID
 
 实现LongProgressTask类型以覆盖远征，生产制造所需的长离线过程任务
 远征的Tasks堆积让远征vb自行解引
 
-ItemViewerPanel实现用户过滤能力
-
-ItemViewerPanel实现多选能力
-
-ItemViewerPanel实现返回选择项的回调能力
 
 写数据库读写，让装备，舰船无需单独序列化的表格数据以数据库文件存储
 
@@ -34,12 +18,24 @@ LayyerEnum改入引擎Layer名
 UI:
 [+]新增装备强化界面
 
-新增联盟界面
+ItemViewerPanel实现用户过滤能力
+
+ItemViewerPanel实现多选能力
+
+ItemViewerPanel实现返回选择项的回调能力
+
+[x:没有联机能力，做🔨]新增联盟界面
+
+测试：
+	TemplateShip写入数据库，进行首轮战斗测试
 
 问题：
+	舰船转向需要正对目标or炮台能够对准目标即可
+	可能与战术设置Forward/Roundbat有关
 
 等待研究：
+	粒子系统效果配置，发射式粒子特效
 
 等待修理：
-Turret旋转逻辑不正常
+	Turret旋转逻辑不正常
 
