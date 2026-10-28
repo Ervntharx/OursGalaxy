@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using Godot;
+using OursGalaxy.UI;
 namespace OursGalaxy;
 
 /// <summary>
@@ -29,6 +30,8 @@ internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 	public string? CustomName { get; set; }
 
 	#region Battle
+
+	public CombatStage.CampEnum Camp { get; set; } = CombatStage.CampEnum.None;
 
 	public int Health { get; set; }
 

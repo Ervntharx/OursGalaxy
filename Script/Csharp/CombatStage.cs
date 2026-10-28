@@ -8,6 +8,8 @@ namespace OursGalaxy.UI;
 internal partial class CombatStage : Node3D {
 	public CombatStage Load() => (CombatStage)ResourceLoader.Load<PackedScene>("res://Scene/CombatStage.tscn").Instantiate();
 
+	public enum CampEnum { None, Left, Right }
+
 	/// <summary>
 	/// 终止到计时器
 	/// </summary>
@@ -32,6 +34,11 @@ internal partial class CombatStage : Node3D {
 	[Export]
 	protected Node3D ActiveBoard { get; set; } = null!;
 
+	public int LeftFleetTotalHP { get; set; } = 0;
+	public int RightFleetTotalHP { get; set; } = 0;
+
+	public CombatResult? Result { get; set; }
+
 	/// <summary>
 	/// 初始化
 	/// </summary>
@@ -41,13 +48,17 @@ internal partial class CombatStage : Node3D {
 		left = leftFleet;
 		leftSurvivalCount = left.ShipsCount;
 		foreach (var leftShipAndTactics in leftFleet.Ships) {
-			ActiveBoard.AddChild(CreateShip(LeftFleetPos.Position, leftShipAndTactics.Key, leftShipAndTactics.Value));
+			var ship = CreateShip(LeftFleetPos.Position, leftShipAndTactics.Key, leftShipAndTactics.Value);
+			ship.OnDeath += OnShipDeath;
+			ActiveBoard.AddChild(ship);
 		}
 
 		Right = rightFleet;
 		rightSurvivalCount = Right.ShipsCount;
 		foreach (var rightShipAndTactics in rightFleet.Ships) {
-			ActiveBoard.AddChild(CreateShip(RightFleetPos.Position, rightShipAndTactics.Key, rightShipAndTactics.Value));
+			var ship = CreateShip(RightFleetPos.Position, rightShipAndTactics.Key, rightShipAndTactics.Value);
+			ship.OnDeath += OnShipDeath;
+			ActiveBoard.AddChild(ship);
 		}
 	}
 
@@ -58,7 +69,12 @@ internal partial class CombatStage : Node3D {
 	}
 
 	public void End() {
-
+		Result = new() {
+			Time = DateTime.Now(),
+			TotalSeconds = (long)(SecondsTimer.WaitTime - SecondsTimer.TimeLeft),
+			Win = LeftFleetTotalHP > RightFleetTotalHP
+			// TODO:	记录舰队剩余状态
+		};
 	}
 
 	// Called when the node enters the scene tree for the first time.
@@ -75,6 +91,19 @@ internal partial class CombatStage : Node3D {
 			Position = originPos + tactics.OffsetPosition
 		};
 		return ship;
+	}
+
+	private void OnShipDeath(SpaceshipSnapshot shipshot) {
+		if (shipshot.Camp == CampEnum.Left) {
+			leftSurvivalCount -= 1;
+		}
+		if (shipshot.Camp == CampEnum.Right) {
+			rightSurvivalCount -= 1;
+		}
+
+		if (leftSurvivalCount == 0 || rightSurvivalCount == 0) {
+			End();
+		}
 	}
 
 	private FleetData? left;

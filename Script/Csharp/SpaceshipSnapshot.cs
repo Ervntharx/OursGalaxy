@@ -1,4 +1,5 @@
-﻿namespace OursGalaxy;
+﻿using OursGalaxy.UI;
+namespace OursGalaxy;
 
 internal record class SpaceshipSnapshot {
 	public static readonly SpaceshipSnapshot Empty = new();
@@ -8,6 +9,8 @@ internal record class SpaceshipSnapshot {
 	public string TypeName { get; init; }
 
 	public string? CustomName { get; init; }
+
+	public CombatStage.CampEnum Camp { get; init; }
 
 	public int HP { get; init; }
 
@@ -20,6 +23,7 @@ internal record class SpaceshipSnapshot {
 		UniqueID = ship.ID;
 		TypeName = ship.TypeName;
 		CustomName = ship.CustomName;
+		Camp = ship.Camp;
 		HP = ship.CurrentHealth;
 	}
 

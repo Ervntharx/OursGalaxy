@@ -14,6 +14,8 @@ internal partial class CombatResult : Resource {
 	public long TotalSeconds { get; set; }
 	public TimeSpan ProgressTime => TimeSpan.FromSeconds(TotalSeconds);
 
+	public bool Win { get; set; }
+
 	// TODO: 是否需要Fleet的更多衍生类型？
 	[Export]
 	public FleetData? LeftResult { get; set; }
