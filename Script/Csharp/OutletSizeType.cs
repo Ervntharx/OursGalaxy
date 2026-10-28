@@ -9,6 +9,7 @@ public partial class OutletSizeType : Resource {
 	[Export]
 	public string? SpecialSizeTypeName { get; set; }
 
+	protected OutletSizeType() { SizeType = SizeTypeEnum.DefenseAir; }
 
 	public OutletSizeType(SizeTypeEnum sizeType, string? specialSTName = null) {
 		SizeType = sizeType;

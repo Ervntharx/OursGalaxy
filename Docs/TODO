@@ -10,9 +10,9 @@ UniqueItemWeakReference可以解决fleetpreset序列化问题。
 
 [+]引入subblueprint类型。但在database内使用相同数据库表
 
-Outlet内NodePath序列化槽位标记
+[+]Outlet内NodePath序列化槽位标记
 
-TacticsSet内存储ship的UniqueID
+[+]TacticsSet内存储ship的UniqueID
 
 实现LongProgressTask类型以覆盖远征，生产制造所需的长离线过程任务
 远征的Tasks堆积让远征vb自行解引
@@ -32,23 +32,11 @@ LayyerEnum改入引擎Layer名
 []AI逻辑行为状态机。
 
 UI:
-新增装备强化界面
+[+]新增装备强化界面
 
 新增联盟界面
 
 问题：
-UI Panels之间的切换逻辑交给什么？Panels Stack？
-	引入PanelsStack挂载Canvaslayer
-是否引入SubViewport对接3D场景的摄像机？
-	常规需求不引入
-TacticsSet内适宜存储保护对象的UniqueID吗？
-	引入Guid, UnqueItemReference, UniqueItemSnapshot, UnqueItem.OccupiedEnum, UniqueItemWeakRefence和unique到weakreference之间的切换机制解决此问题。
-
-ShipData内的OutletsConfig适合存IEquip的UniqueID吗？IEquip与ShipData互相保存UniqueID吗？是否意味着temp形的UniqueItem可表现为Snapshot类系列
-	同上
-
-Outlet的NodePath按Marker名称标记槽位合理吗？
-	无需多虑
 
 等待研究：
 

@@ -1,8 +1,9 @@
 ﻿using Godot;
+namespace OursGalaxy;
 /// <summary>
 /// 空间实体接口
 /// </summary>
-public interface ISpaceEntity {
+internal interface ISpaceEntity {
 	public T ToNode<T>() where T : Node;
 	public Node3D ToNode3D();
 }

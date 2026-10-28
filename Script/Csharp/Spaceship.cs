@@ -1,20 +1,15 @@
 ﻿using System;
 using Godot;
-using OursGalaxy;
+namespace OursGalaxy;
 
 /// <summary>
-/// 飞船类
+/// 运行时飞船类
 /// </summary>
 internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 	public enum ScaleSizeEnum { FF, DD, CL, CA, BB }
 
-	public T ToNode<T>() where T : Node {
-		return (this as T)!;
-	}
-
-	public Node3D ToNode3D() {
-		return this;
-	}
+	public T ToNode<T>() where T : Node => (this as T)!;
+	public Node3D ToNode3D() => this;
 
 	[Export]
 	protected CombatBehaviorStateMachine? BehaviorStateMachine { get; set; }
@@ -25,7 +20,7 @@ internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 	public GUID ID { get; init; }
 
 	public string TypeName { get; set; }
-	public string CustomName { get; set; }
+	public string? CustomName { get; set; }
 
 	public int Health { get; set; }
 
@@ -75,6 +70,12 @@ internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 		};
 	}
 
+	public Spaceship() {
+		ID = GUID.Empty;
+		TypeName = string.Empty;
+		CurrentHealth = 0;
+	}
+
 	public Spaceship(SpaceshipData data) {
 		ID = data.ID;
 		TypeName = data.GetShipTypeName();
@@ -90,4 +91,13 @@ internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 	/// 死亡事件
 	/// </summary>
 	public event Action<IBattleEntity>? OnDeath;
+
+	public override void _Process(double delta) {
+
+		base._Process(delta);
+	}
+
+	public override void _PhysicsProcess(double delta) {
+		base._PhysicsProcess(delta);
+	}
 }

@@ -10,7 +10,7 @@ internal partial class SpaceshipData : UniqueItem {
 	protected readonly static string ItemCodePrefix = "Ship_";
 
 	[Export]
-	public string CustomName { get; set; } = string.Empty;
+	public string? CustomName { get; set; }
 
 	[Export]
 	public int CurrentHP { get; set; }

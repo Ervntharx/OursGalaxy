@@ -1,20 +1,25 @@
-﻿using Godot;
+﻿using System;
+using Godot;
+namespace OursGalaxy;
 /// <summary>
 /// 战术集类, 用于存储飞船的战术信息
 /// </summary>
 [GlobalClass]
 internal partial class TacticsSet : Resource {
 	/// <summary>
-	/// 移动方式枚举
+	/// 战术模式枚举
 	/// </summary>
-	public enum MovementEnum {
-		Forward,        // 勇往直前
-		Roundabot_Up,   // 上迂回
-		Roundabot_Down, // 下迂回
-		Roundabot_Left, // 左迂回
-		Roundabot_Right,    //右迂回
-		Facile,         // 高机动
-		Protect         // 护卫
+	public enum ModeEnum {
+		None,       // 无。对应勇往直前
+		Roundabot,  // 迂回
+		Protect     // 护卫
+	}
+
+	/// <summary>
+	/// 迂回方向枚举
+	/// </summary>
+	public enum RoundabotEnum {
+		Rand, Up, Down, Left, Right
 	}
 
 	/// <summary>
@@ -40,10 +45,29 @@ internal partial class TacticsSet : Resource {
 	}
 
 	[Export]
-	public MovementEnum Movement { get; set; } = MovementEnum.Forward;
+	public ModeEnum Mode { get; set; } = ModeEnum.None;
+
+	[Export]
+	public RoundabotEnum RoundabotDir { get; set; } = RoundabotEnum.Rand;
+
+	[Export]
+	public bool Facile { get; set; } = false;
+
 	[Export]
 	public TargetingEnum Targeting { get; set; } = TargetingEnum.Closest;
 
 	[Export]
-	public long UniqueIDOfProtectedShip { get; set; }
+	public GUID? UniqueIDOfProtectedShip { get; set; }
+
+	/// <summary>
+	/// 舰船相对位置。非护卫设置下是相对旗舰位置。护卫设置下是相对护卫目标位置
+	/// </summary>
+	[Export]
+	public Vector2 OffsetPosition { get; set; }
+
+	/// <summary>
+	/// 所处层
+	/// </summary>
+	[Export]
+	public int Layer { get; set; }
 }

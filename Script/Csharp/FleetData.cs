@@ -21,7 +21,7 @@ internal partial class FleetData : Resource {
 	public SpaceshipData Flagship { get; set; }
 
 	[Export]
-	public Array<SpaceshipData> Ships { get; set; } = new();
+	public Dictionary<SpaceshipData, TacticsSet> Ships { get; set; } = [];
 
 	public int Size => size.Value;
 
@@ -33,9 +33,6 @@ internal partial class FleetData : Resource {
 
 	public int Raid => raid.Value;
 
-	[Export]
-	public Dictionary<SpaceshipData, TacticsSet> Tactics { get; set; } = new();
-
 	public FleetData(SpaceshipData flagship) {
 		Flagship = flagship;
 		UniqueID = GenerateUniqueID();
@@ -43,7 +40,7 @@ internal partial class FleetData : Resource {
 		size = new(() => {
 			var result = Flagship.Size;
 			foreach (var ship in Ships) {
-				result += ship.Size;
+				result += ship.Key.Size;
 			}
 			return result;
 		});
@@ -51,7 +48,7 @@ internal partial class FleetData : Resource {
 		hp = new(() => {
 			var result = Flagship.CurrentHP;
 			foreach (var ship in Ships) {
-				result += ship.CurrentHP;
+				result += ship.Key.CurrentHP;
 			}
 			return result;
 		});
@@ -59,7 +56,7 @@ internal partial class FleetData : Resource {
 		fullHP = new(() => {
 			var result = Flagship.FullHP;
 			foreach (var ship in Ships) {
-				result += ship.FullHP;
+				result += ship.Key.FullHP;
 			}
 			return result;
 		});
@@ -67,7 +64,7 @@ internal partial class FleetData : Resource {
 		raid = new(() => {
 			var result = Flagship.Raid;
 			foreach (var ship in Ships) {
-				result += ship.Raid;
+				result += ship.Key.Raid;
 			}
 			return result;
 		});

@@ -2,7 +2,9 @@
 using System;
 namespace OursGalaxy;
 
-internal partial class TemplateShip : Node3D {
+internal partial class TemplateShip : Spaceship {
+	public static TemplateShip Load() => (TemplateShip)ResourceLoader.Load<PackedScene>("res://Script/Csharp/Ships/TemplateShip.tscn").Instantiate();
+
 	[Export]
 	public Godot.Collections.Dictionary<OutletSizeType, NodePath> Outlets { get; set; } = [];
 
