@@ -43,9 +43,4 @@ public interface IBattleEntity {
 	/// </summary>
 	/// <param name="target">目标实体</param>
 	public void Attacked(DamageSet damageSet);
-
-	/// <summary>
-	/// 死亡事件
-	/// </summary>
-	public event Action<IBattleEntity>? OnDeath;
 }

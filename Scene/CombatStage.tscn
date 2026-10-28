@@ -1,12 +1,25 @@
 [gd_scene format=3 uid="uid://cp5u8wxjayjpx"]
 
-[ext_resource type="Script" uid="uid://cutyu61ow6phb" path="res://Script/CombatStage.cs" id="1_dactg"]
+[ext_resource type="Script" uid="uid://b74vm8cpqyoht" path="res://Script/Csharp/CombatStage.cs" id="1_dactg"]
+[ext_resource type="Script" uid="uid://cdv2p3d4bubff" path="res://Script/Csharp/StaticsServer.cs" id="2_vb6ob"]
 
-[node name="CombatStage" type="Node3D" unique_id=559169952]
+[node name="CombatStage" type="Node3D" unique_id=559169952 node_paths=PackedStringArray("EndTimer", "SecondsTimer")]
 script = ExtResource("1_dactg")
+EndTimer = NodePath("EndTimer")
+SecondsTimer = NodePath("SecondsTimer")
 
 [node name="EndTimer" type="Timer" parent="." unique_id=327072692]
 wait_time = 120.0
 one_shot = true
 
 [node name="SecondsTimer" type="Timer" parent="." unique_id=1606879743]
+
+[node name="StaticsServer" type="Node" parent="." unique_id=1893016648]
+script = ExtResource("2_vb6ob")
+metadata/_custom_type_script = "uid://cdv2p3d4bubff"
+
+[node name="LeftFleetPos" type="Marker3D" parent="." unique_id=2028608028]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -75)
+
+[node name="RightFleetPos" type="Marker3D" parent="." unique_id=173711663]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 75)

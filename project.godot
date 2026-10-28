@@ -33,6 +33,16 @@ version_control/autoload_on_startup=true
 
 pointing/emulate_touch_from_mouse=true
 
+[layer_names]
+
+3d_physics/layer_1="Default"
+3d_physics/layer_2="LeftShips"
+3d_physics/layer_3="RightShips"
+3d_physics/layer_4="LeftBullets"
+3d_physics/layer_5="RightBullets"
+3d_physics/layer_6="LeftMissiles"
+3d_physics/layer_7="RightMissiles"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

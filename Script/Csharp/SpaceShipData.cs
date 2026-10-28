@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Godot;
 namespace OursGalaxy;
 /// <summary>
@@ -24,26 +25,49 @@ internal partial class SpaceshipData : UniqueItem {
 
 	public int Raid => raid.Value;
 
+	public int Range => range.Value;
+
 	public SpaceshipData(string typeName, GUID? ID = null) : base(ItemCodePrefix + typeName, ID) {
 		size = new(() => {
 			if (TryQuery<int>("Size", out var result)) {
 				return result;
 			}
-			return 0;
+			throw new IOException("Can't query valid data");
 		});
 
 		fullHP = new(() => {
 			if (TryQuery<int>("HP", out var result)) {
 				return result;
 			}
-			return 0;
+			throw new IOException("Can't query valid data");
 		});
 
 		raid = new(() => {
 			if (TryQuery<int>("Raid", out var result)) {
 				return result;
 			}
-			return 0;
+			throw new IOException("Can't query valid data");
+		});
+
+		range = new(() => {
+			var leastRange = 0;
+			foreach (var equip in EquipsConfig) {
+				// TODO:	转为非硬编码的射程统计
+				var tableName = equip.Value.GetTableName();
+				if (tableName == "Laser" || tableName == "Missile" || tableName == "Photon") {
+					if (TryQuery<int>("Range", out int singleRange)) {
+						if (leastRange == 0) {
+							leastRange = Math.Max(leastRange, singleRange);
+						}
+						else {
+							leastRange = Math.Min(leastRange, singleRange);
+						}
+						continue;
+					}
+					throw new IOException("Can't query valid data");
+				}
+			}
+			return leastRange;
 		});
 	}
 
@@ -56,9 +80,11 @@ internal partial class SpaceshipData : UniqueItem {
 		size = new(0);
 		fullHP = new(0);
 		raid = new(0);
+		range = new(0);
 	}
 
 	private Lazy<int> fullHP;
 	private Lazy<int> size;
 	private Lazy<int> raid;
+	private Lazy<int> range;
 }

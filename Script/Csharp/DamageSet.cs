@@ -29,4 +29,6 @@ public struct DamageSet {
 	/// 电磁伤害
 	/// </summary>
 	public int Electromagnetic { get; set; }
+
+	public int Sum() => Impact + Penetrate + Photothermal + Corrosion + Electromagnetic;
 }

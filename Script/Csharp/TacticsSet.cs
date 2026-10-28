@@ -60,10 +60,10 @@ internal partial class TacticsSet : Resource {
 	public GUID? UniqueIDOfProtectedShip { get; set; }
 
 	/// <summary>
-	/// 舰船相对位置。非护卫设置下是相对旗舰位置。护卫设置下是相对护卫目标位置
+	/// 舰船相对位置。非护卫设置下是相对旗舰位置。护卫设置下是相对护卫目标位置.Y值暂时没有意义（未来会替代Layer吗？）
 	/// </summary>
 	[Export]
-	public Vector2 OffsetPosition { get; set; }
+	public Vector3 OffsetPosition { get; set; }
 
 	/// <summary>
 	/// 所处层

@@ -2,13 +2,14 @@
 
 [ext_resource type="Script" uid="uid://beeqmj0rs3de7" path="res://Script/Csharp/TemplateShip.cs" id="1_pn7tu"]
 [ext_resource type="Script" uid="uid://bk1uh2q5oiut3" path="res://Script/Csharp/OutletSizeType.cs" id="2_dk8ix"]
+[ext_resource type="Script" uid="uid://biq7prpykdipe" path="res://Script/Csharp/CombatBehaviorStateMachine.cs" id="3_ow04k"]
 
-[sub_resource type="Resource" id="Resource_tqby7"]
+[sub_resource type="Resource" id="Resource_vb6ob"]
 script = ExtResource("2_dk8ix")
 SizeType = 2
 metadata/_custom_type_script = "uid://bk1uh2q5oiut3"
 
-[sub_resource type="Resource" id="Resource_kuiqm"]
+[sub_resource type="Resource" id="Resource_cwefk"]
 script = ExtResource("2_dk8ix")
 SizeType = 1
 metadata/_custom_type_script = "uid://bk1uh2q5oiut3"
@@ -19,8 +20,8 @@ size = Vector3(1, 1, 0.357)
 [node name="TemplateShip" type="Node3D" unique_id=1644786529]
 script = ExtResource("1_pn7tu")
 Outlets = Dictionary[ExtResource("2_dk8ix"), NodePath]({
-SubResource("Resource_tqby7"): NodePath("L0"),
-SubResource("Resource_kuiqm"): NodePath("M0")
+SubResource("Resource_vb6ob"): NodePath("L0"),
+SubResource("Resource_cwefk"): NodePath("M0")
 })
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=760403056]
@@ -40,3 +41,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17401052, -0.5898331)
 
 [node name="M0" type="Marker3D" parent="." unique_id=385352868]
 transform = Transform3D(0.32639748, 0.9452326, 0, -0.9452326, 0.32639748, 0, 0, 0, 1, 0.4898867, -0.22146034, 0.49930823)
+
+[node name="CombatBehaviorStateMachine" type="Timer" parent="." unique_id=2014291412]
+script = ExtResource("3_ow04k")
+metadata/_custom_type_script = "uid://biq7prpykdipe"
