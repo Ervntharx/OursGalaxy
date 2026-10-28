@@ -1,6 +1,17 @@
 基础：
 
+引入可序列化的UniqueItem.Guid, UniqueItemReference, UniqueItemWeakReference机制，引入UniqueItem.OccupyState主动和Reference联动解决占用问题
+引入StaticsServer.ShipSnapshot，ship信号量可以大量传递Snapshot
+UniqueItemWeakReference可以解决fleetpreset序列化问题。
+
+引入PanelsStack以管理ui场景上下文
+
+引入blueprint类型
+
+引入subblueprint类型。但在database内使用相同数据库表
+
 实现LongProgressTask类型以覆盖远征，生产制造所需的长离线过程任务
+远征的Tasks堆积让远征vb自行解引
 
 ItemViewerPanel实现用户过滤能力
 
@@ -9,8 +20,6 @@ ItemViewerPanel实现多选能力
 ItemViewerPanel实现返回选择项的回调能力
 
 写数据库读写，让装备，舰船无需单独序列化的表格数据以数据库文件存储
-
-[going]写装备类型，相应的装备简单状态机。使用EquipTypeEnum和SpecialTypeName组合对接装备槽名称
 
 存档增加PropertyChanged追踪和MD5校验能力
 
@@ -25,14 +34,17 @@ UI:
 
 问题：
 UI Panels之间的切换逻辑交给什么？Panels Stack？
-
+	引入PanelsStack挂载Canvaslayer
 是否引入SubViewport对接3D场景的摄像机？
-
+	常规需求不引入
 TacticsSet内适宜存储保护对象的UniqueID吗？
+	引入Guid, UnqueItemReference, UniqueItemSnapshot, UnqueItem.OccupiedEnum, UniqueItemWeakRefence和unique到weakreference之间的切换机制解决此问题。
 
 ShipData内的OutletsConfig适合存IEquip的UniqueID吗？IEquip与ShipData互相保存UniqueID吗？是否意味着temp形的UniqueItem可表现为Snapshot类系列
+	同上
 
 Outlet的NodePath按Marker名称标记槽位合理吗？
+	无需多虑
 
 等待研究：
 
