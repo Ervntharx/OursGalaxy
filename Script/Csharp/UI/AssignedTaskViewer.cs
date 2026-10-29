@@ -4,7 +4,7 @@ using System.ComponentModel;
 namespace OursGalaxy.UI;
 
 internal partial class AssignedTaskViewer : MarginContainer {
-	public AssignedTaskViewer Load() => (AssignedTaskViewer)ResourceLoader.Load<PackedScene>("res://Scene/AssignedTaskViewer.tscn").Instantiate();
+	public static AssignedTaskViewer Load() => (AssignedTaskViewer)ResourceLoader.Load<PackedScene>("res://Scene/AssignedTaskViewer.tscn").Instantiate();
 
 	[Export]
 	protected RichTextLabel AssignedTaskInfLabel { get; set; } = null!;
@@ -18,8 +18,8 @@ internal partial class AssignedTaskViewer : MarginContainer {
 	public void Make(AssignedTaskData missionData) {
 		AssignedTaskInfLabel.Text = $"{missionData.Name} {missionData.Level}";
 		foreach (var missionEvent in missionData.Events) {
-			var eventDescLabel = new Label();
-			eventDescLabel.Text = $"{missionEvent.Code}\n{"no description for now"}";
+			var eventDescLabel = AssignedTaskEventBox.Load();
+			eventDescLabel.Make(missionEvent);
 			EventsPanel!.AddChild(eventDescLabel);
 		}
 	}

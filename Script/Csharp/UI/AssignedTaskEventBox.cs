@@ -3,26 +3,17 @@ using System;
 namespace OursGalaxy.UI;
 
 internal partial class AssignedTaskEventBox : MarginContainer {
+	public static AssignedTaskEventBox Load() => (AssignedTaskEventBox)ResourceLoader.Load<PackedScene>("res://Scene/AssignedTaskEventBox.tscn").Instantiate();
+
 	[Export]
 	protected RichTextLabel TitleLable { get; set; } = null!;
 	[Export]
-	protected RichTextLabel BodyLabel { get; set; } = null!;    // TODO:	根据远征事件在此绘制
+	protected RichTextLabel BodyLabel { get; set; } = null!;
 
-	public void Make(AssignedTaskEvent taskEvent) {
-		TitleLable.Text = taskEvent.Code;
-		switch (taskEvent.EventType) {
-			case AssignedTaskEvent.EventTypeEnum.None:
-				// OperationButton.Hide();
-				break;
-			case AssignedTaskEvent.EventTypeEnum.SignedPunitiveCombat:
-				// OperationButton.Text = "标记";
-				// OperationButton.Show();
-				break;
-			case AssignedTaskEvent.EventTypeEnum.FightBack:
-				// TODO:	直接调用CombatStage，ReadyCombat开始打击退
-				break;
-				// TODO:	其他远征事件类型响应
-		}
+	public void Make(TaskEvent taskEvent) {
+		task = taskEvent;
+		task.TaskEventStateChanged += OnTaskStateChanged;
+		OnTaskStateChanged(taskEvent);
 	}
 
 	// Called when the node enters the scene tree for the first time.
@@ -35,6 +26,20 @@ internal partial class AssignedTaskEventBox : MarginContainer {
 	}
 
 	private void OnUrlPressed(Variant variant) {
-
+		if (variant.ToString() == task?.ReactUrl) {
+			task.OnMatchUrl(variant);
+		}
 	}
+
+	private void OnTaskStateChanged(TaskEvent taskEvent) {
+		TitleLable.Text = taskEvent.Code;
+		if (taskEvent.ReactButtonName is not null) {
+			BodyLabel.Text = taskEvent.Desc + $"[right][url={taskEvent.ReactUrl}][lb] > {taskEvent.ReactButtonName} < [rb][/url][/right]";
+		}
+		else {
+			BodyLabel.Text = taskEvent.Desc;
+		}
+	}
+
+	private TaskEvent? task;
 }

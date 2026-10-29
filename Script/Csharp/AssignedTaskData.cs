@@ -52,7 +52,7 @@ internal partial class AssignedTaskData : Resource {
 	public TimeSpan ProgressTimeSpan => TimeSpan.FromSeconds(ProgressTime);
 
 	[Export]
-	public Godot.Collections.Array<AssignedTaskEvent> Events { get; set; } = [];
+	public Godot.Collections.Array<TaskEvent> Events { get; set; } = [];
 
 	public AssignedTaskData(string name, RatingLevelEnum ratingLevel, ushort level) {
 		Name = name;

@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System;
+using Godot;
 namespace OursGalaxy;
 
 /// <summary>
@@ -6,6 +7,11 @@ namespace OursGalaxy;
 /// </summary>
 [GlobalClass]
 internal partial class PuntiveCombat : Resource, ICombat {
+	[Obsolete]
+	public readonly static PuntiveCombat? Empty = null;
+
+	public readonly static PuntiveCombat Template = new("Template", 1);
+
 	public T ToResource<T>() where T : Resource {
 		return (this as T)!;
 	}
@@ -15,11 +21,14 @@ internal partial class PuntiveCombat : Resource, ICombat {
 	}
 
 	[Export]
-	public string Name { get; set; } = "Punitive Combat";
+	public string Name { get; set; }
 
 	[Export]
-	public ushort Level { get; set; } = 1;
+	public ushort Level { get; set; }
 
-
+	public PuntiveCombat(string name, ushort level) {
+		Name = name;
+		Level = level;
+	}
 }
 

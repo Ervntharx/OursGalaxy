@@ -3,6 +3,9 @@ using Godot;
 using Godot.Collections;
 namespace OursGalaxy;
 
+/// <summary>
+/// 可走Godot Resource序列化的日期类。
+/// </summary>
 [GlobalClass]
 internal partial class DateTime : Resource {
 	[Export]
