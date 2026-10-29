@@ -12,6 +12,12 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 
 	public event PropertyChangedEventHandler? PropertyChanged;
 
+	protected Archive() {
+		// 修改时都会触发最新修改日期
+		LastSaveTime = DateTime.Now();
+		PropertyChanged += (_, _) => LastSaveTime = DateTime.Now();
+	}
+
 	public static void Load() {
 		if (FileAccess.FileExists("user://Archive.tscn")) {
 			Data = ResourceLoader.Load<Archive>("user://Archive.tscn");
@@ -29,7 +35,7 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 	/// 存档最后编辑时间
 	/// </summary>
 	[Export]
-	public Dictionary LastSaveTime { get; set; } = [];
+	public DateTime LastSaveTime { get; set; }
 
 	#region User Profiles
 	[ExportGroup("User Profiles")]
@@ -135,7 +141,7 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 	];
 
 	[Export]
-	public Array<AssignedTaskData> Missions { get; set; } = [
+	public Array<AssignedTaskData> TasksList { get; set; } = [
 		// for test only
 		new AssignedTaskData("any", AssignedTaskData.RatingLevelEnum.S, 2),
 		new AssignedTaskData("others",AssignedTaskData.RatingLevelEnum.B, 3),

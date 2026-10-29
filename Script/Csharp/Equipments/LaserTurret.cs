@@ -9,7 +9,7 @@ internal partial class LaserTurret : Node3D, ITurret {
 	public static LaserTurret Load() => (LaserTurret)ResourceLoader.Load<PackedScene>("res://Scene/LaserTurret.tscn").Instantiate();
 
 	[Export]
-	protected Node3D? RotatableComponent { get; set; }
+	protected Node3D RotatableComponent { get; set; } = null!;
 
 	[Export]
 	protected ShapeCast3D? RayShape { get; set; }
@@ -22,12 +22,12 @@ internal partial class LaserTurret : Node3D, ITurret {
 
 	public IReadOnlyCollection<IPromote> Promotes => promotes.AsReadOnly();
 
-	public float RotateAngleVelocity { get; set; } = 45;
+	public float RotateAngleVelocity { get; set; } = 1;
 
 	public ITurret.StateEnum State { get; protected set; } = ITurret.StateEnum.Ready;
 
-	public float LeftYawMax { get; set; } = 180;
-	public float RightYawMax { get; set; } = 180;
+	public float LeftYawMax { get; set; } = float.DegreesToRadians(45);
+	public float RightYawMax { get; set; } = float.DegreesToRadians(45);
 
 	public bool IsAimmed {
 		get {
@@ -57,17 +57,34 @@ internal partial class LaserTurret : Node3D, ITurret {
 	public override void _Process(double delta) {
 		// rotate
 		if (!IsAimmed) {
-			var lkQ = new Quaternion(Basis.LookingAt(TargetBasis.Z.Normalized(), Vector3.Up));
-			var euler = lkQ.GetEuler();
-			euler.X = 0;
-			euler.Y = Mathf.Clamp(euler.Y, Mathf.DegToRad(LeftYawMax), Mathf.DegToRad(RightYawMax));
-			var clampedQ = Quaternion.FromEuler(euler);
+			// 计算局部Basis
+			var localBasis = GlobalBasis.Inverse() * TargetBasis;
 
-			var angleDiff = new Quaternion(RotatableComponent!.Basis).AngleTo(clampedQ);
-			var maxAngle = Mathf.DegToRad(RotateAngleVelocity) * (float)delta;
+			var localZ = -localBasis.Z;
+			localZ.Y = 0;
+			if (localZ.LengthSquared() < 0.001f) {
+				//目标在上下方向，停止
+				return;
+			}
+			localZ = localZ.Normalized();
 
-			RotatableComponent!.Basis = new(new Quaternion(RotatableComponent!.Basis).Slerp(clampedQ, (float)(angleDiff > 0.001f ? Mathf.Min(maxAngle / angleDiff, 1.0f) : 1.0f)));
+			var intendLocalBasis = Basis.LookingAt(-localZ, Vector3.Up);
+			var currentDir = RotatableComponent.Basis.GetRotationQuaternion();
+			var targetDir = intendLocalBasis.GetRotationQuaternion();
+
+			var targetEuler = targetDir.GetEuler();
+			targetDir = Quaternion.FromEuler(new(0, Mathf.Clamp(targetEuler.Y, -LeftYawMax, RightYawMax), 0));
+
+			float angleDiff = currentDir.AngleTo(targetDir);
+			var maxAngle = RotateAngleVelocity * (float)delta;
+			if (angleDiff > maxAngle) {
+				RotatableComponent.GlobalBasis = new(currentDir.Slerp(targetDir, (float)(maxAngle / angleDiff)));
+			}
+			else {
+				RotatableComponent.GlobalBasis = new(targetDir);
+			}
 		}
+
 		// fire
 		if (State == ITurret.StateEnum.Ready) {
 			if (IsAimmed) {
