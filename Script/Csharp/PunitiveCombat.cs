@@ -1,4 +1,6 @@
 ﻿using Godot;
+namespace OursGalaxy;
+
 /// <summary>
 /// 讨伐
 /// </summary>

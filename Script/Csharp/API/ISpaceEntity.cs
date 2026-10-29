@@ -1,5 +1,6 @@
 ﻿using Godot;
 namespace OursGalaxy;
+
 /// <summary>
 /// 空间实体接口
 /// </summary>

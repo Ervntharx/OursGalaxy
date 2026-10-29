@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://bto3wngljf3fb"]
 
-[ext_resource type="Script" uid="uid://beeqmj0rs3de7" path="res://Script/Csharp/TemplateShip.cs" id="1_pn7tu"]
+[ext_resource type="Script" uid="uid://beeqmj0rs3de7" path="res://Script/Csharp/Ships/TemplateShip.cs" id="1_pn7tu"]
 [ext_resource type="Script" uid="uid://bk1uh2q5oiut3" path="res://Script/Csharp/OutletSizeType.cs" id="2_dk8ix"]
 [ext_resource type="Script" uid="uid://biq7prpykdipe" path="res://Script/Csharp/CombatBehaviorStateMachine.cs" id="3_ow04k"]
 
-[sub_resource type="Resource" id="Resource_vb6ob"]
+[sub_resource type="Resource" id="Resource_dk8ix"]
 script = ExtResource("2_dk8ix")
 SizeType = 2
 metadata/_custom_type_script = "uid://bk1uh2q5oiut3"
 
-[sub_resource type="Resource" id="Resource_cwefk"]
+[sub_resource type="Resource" id="Resource_ow04k"]
 script = ExtResource("2_dk8ix")
 SizeType = 1
 metadata/_custom_type_script = "uid://bk1uh2q5oiut3"
@@ -17,11 +17,12 @@ metadata/_custom_type_script = "uid://bk1uh2q5oiut3"
 [sub_resource type="PrismMesh" id="PrismMesh_6jvjn"]
 size = Vector3(1, 1, 0.357)
 
-[node name="TemplateShip" type="Node3D" unique_id=1644786529]
+[node name="TemplateShip" type="Node3D" unique_id=1644786529 node_paths=PackedStringArray("CombatStateMachine")]
 script = ExtResource("1_pn7tu")
+CombatStateMachine = NodePath("CombatBehaviorStateMachine")
 Outlets = Dictionary[ExtResource("2_dk8ix"), NodePath]({
-SubResource("Resource_vb6ob"): NodePath("L0"),
-SubResource("Resource_cwefk"): NodePath("M0")
+SubResource("Resource_dk8ix"): NodePath("L0"),
+SubResource("Resource_ow04k"): NodePath("M0")
 })
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=760403056]

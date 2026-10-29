@@ -1,7 +1,9 @@
 ﻿using Godot;
+namespace OursGalaxy;
 
 /// <summary>
-/// 个人小卡数据
+/// 个人小卡数据.
+/// 考虑并入存档或变更为 势力归属 等内容用于舰队标注。
 /// </summary>
 [GlobalClass]
 internal partial class ProfileData : Resource {

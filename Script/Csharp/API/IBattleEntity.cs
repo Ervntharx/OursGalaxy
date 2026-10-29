@@ -4,7 +4,7 @@ namespace OursGalaxy;
 /// <summary>
 /// 战斗实体接口
 /// </summary>
-public interface IBattleEntity {
+internal interface IBattleEntity {
 	public int Health { get; set; }
 	public int CurrentHealth { get; set; }
 

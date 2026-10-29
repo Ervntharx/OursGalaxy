@@ -4,7 +4,7 @@ namespace OursGalaxy;
 /// <summary>
 /// 炮台接口
 /// </summary>
-public interface ITurret : IEquip {
+internal interface ITurret : IEquip {
 	/// <summary>
 	/// 状态机枚举
 	/// </summary>

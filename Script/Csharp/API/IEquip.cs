@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-
 namespace OursGalaxy;
 
 /// <summary>
 /// 装备接口
 /// </summary>
-public interface IEquip {
+internal interface IEquip {
 	/// <summary>
 	/// 尺寸
 	/// </summary>
