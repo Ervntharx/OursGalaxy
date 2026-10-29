@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://103w6twa00ac"]
+
+[ext_resource type="Script" uid="uid://hbfn1qpuyd3i" path="res://Script/Csharp/UI/AssignedTaskEventBox.cs" id="1_xua3l"]
+
+[node name="AssignedTaskEventBox" type="MarginContainer" unique_id=487511947 node_paths=PackedStringArray("TitleLable", "BodyLabel")]
+custom_minimum_size = Vector2(400, 75)
+offset_right = 400.0
+offset_bottom = 98.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_xua3l")
+TitleLable = NodePath("PanelContainer/VBoxContainer/Title")
+BodyLabel = NodePath("PanelContainer/VBoxContainer/Body")
+
+[node name="Button" type="Button" parent="." unique_id=1676020190]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=2144860471]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=2082964508]
+layout_mode = 2
+
+[node name="Title" type="RichTextLabel" parent="PanelContainer/VBoxContainer" unique_id=568906893]
+layout_mode = 2
+mouse_filter = 1
+text = "标题"
+fit_content = true
+
+[node name="Body" type="RichTextLabel" parent="PanelContainer/VBoxContainer" unique_id=1742787093]
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "正文
+[right][url=Event:Sign][lb] > 标记 < [rb][/url][/right]"
+fit_content = true

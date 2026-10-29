@@ -106,6 +106,11 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 		}
 	}
 
+	private int _solids;
+	private int _liquid;
+	private int _industrialProducts;
+	private int _honors;
+
 	#endregion Base Resource
 
 	#region Produce Tasks
@@ -138,8 +143,11 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 	];
 	#endregion Produce Tasks
 
-	private int _solids;
-	private int _liquid;
-	private int _industrialProducts;
-	private int _honors;
+	#region Battle and Combat
+	[Export]
+	public Array<PuntiveCombat> PunitiveCombatList { get; set; } = [];
+
+	[Export]
+	public Array<Hunt> TrackedHuntList { get; set; } = [];
+	#endregion Battle and Combat
 }

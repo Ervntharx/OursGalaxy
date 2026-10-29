@@ -2,77 +2,74 @@
 
 [ext_resource type="Script" uid="uid://cc76s61hyhjle" path="res://Script/Csharp/UI/AssignedTaskViewer.cs" id="1_gs4xb"]
 
-[node name="Control" type="Control" unique_id=696487767 node_paths=PackedStringArray("NameLabel", "RatingLevelLabel", "EventsPanel", "Accept", "FightBack")]
-layout_mode = 3
+[node name="Control" type="MarginContainer" unique_id=791930376 node_paths=PackedStringArray("AssignedTaskInfLabel", "EventsPanel", "OperationButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 script = ExtResource("1_gs4xb")
-NameLabel = NodePath("Viewer/Name")
-RatingLevelLabel = NodePath("Viewer/Level")
-EventsPanel = NodePath("Viewer/ScrollContainer/VBoxContainer")
-Accept = NodePath("Viewer/Accept")
-FightBack = NodePath("Viewer/FightBack")
+AssignedTaskInfLabel = NodePath("PanelContainer/VBoxContainer/VSplitContainer/AssignedTaskInf")
+EventsPanel = NodePath("PanelContainer/VBoxContainer/VSplitContainer/ScrollContainer/EventsPanel")
+OperationButton = NodePath("PanelContainer/VBoxContainer/BottomBar/Control/Operation")
 
-[node name="Viewer" type="Panel" parent="." unique_id=1935484792]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -250.0
-offset_right = 400.0
-offset_bottom = 250.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=644418166]
+layout_mode = 2
 
-[node name="Name" type="RichTextLabel" parent="Viewer" unique_id=1872240134]
-layout_mode = 0
-offset_left = 49.0
-offset_top = 30.0
-offset_right = 269.0
-offset_bottom = 75.0
-text = "远征名字"
-vertical_alignment = 1
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=176162683]
+layout_mode = 2
 
-[node name="Level" type="RichTextLabel" parent="Viewer" unique_id=526411014]
-layout_mode = 0
-offset_left = 684.0
-offset_top = 47.0
-offset_right = 742.0
-offset_bottom = 97.0
-theme_override_font_sizes/normal_font_size = 34
-bbcode_enabled = true
-text = "[color=purple]AA[/color]"
+[node name="TopBar" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=66325345]
+layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Viewer" unique_id=1510839632]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 94.0
-offset_right = 792.0
-offset_bottom = 451.0
+[node name="Quit" type="Button" parent="PanelContainer/VBoxContainer/TopBar" unique_id=1515019971]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "<"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Viewer/ScrollContainer" unique_id=681944515]
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer/TopBar" unique_id=508364658]
+layout_mode = 2
+text = "远征日志"
+
+[node name="VSplitContainer" type="VSplitContainer" parent="PanelContainer/VBoxContainer" unique_id=409565062]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AssignedTaskInf" type="RichTextLabel" parent="PanelContainer/VBoxContainer/VSplitContainer" unique_id=2145153261]
+layout_mode = 2
+text = "远征名字 远征等级
+相关标注"
+fit_content = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/VSplitContainer" unique_id=1538985913]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EventsPanel" type="VBoxContainer" parent="PanelContainer/VBoxContainer/VSplitContainer/ScrollContainer" unique_id=1823223917]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Accept" type="Button" parent="Viewer" unique_id=2108952424]
-layout_mode = 0
-offset_left = 605.0
-offset_top = 454.0
-offset_right = 765.0
-offset_bottom = 490.0
-text = "接受"
+[node name="BottomBar" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1918236292]
+layout_mode = 2
+alignment = 2
 
-[node name="FightBack" type="Button" parent="Viewer" unique_id=2117789954]
-layout_mode = 0
-offset_left = 407.0
-offset_top = 455.0
-offset_right = 584.0
-offset_bottom = 490.0
-text = "击退"
+[node name="Control" type="Control" parent="PanelContainer/VBoxContainer/BottomBar" unique_id=1490507984]
+custom_minimum_size = Vector2(100, 75)
+layout_mode = 2
+
+[node name="Operation" type="Button" parent="PanelContainer/VBoxContainer/BottomBar/Control" unique_id=1386936284]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "完成"

@@ -3,27 +3,20 @@ using System;
 using System.ComponentModel;
 namespace OursGalaxy.UI;
 
-internal partial class AssignedTaskViewer : Control {
+internal partial class AssignedTaskViewer : MarginContainer {
 	public AssignedTaskViewer Load() => (AssignedTaskViewer)ResourceLoader.Load<PackedScene>("res://Scene/AssignedTaskViewer.tscn").Instantiate();
 
 	[Export]
-	protected RichTextLabel? NameLabel { get; set; }
+	protected RichTextLabel AssignedTaskInfLabel { get; set; } = null!;
 
 	[Export]
-	protected RichTextLabel? RatingLevelLabel { get; set; }
+	protected VBoxContainer EventsPanel { get; set; } = null!;
 
 	[Export]
-	protected VBoxContainer? EventsPanel { get; set; }
-
-	[Export]
-	protected Button? Accept { get; set; }
-
-	[Export]
-	protected Button? FightBack { get; set; }
+	protected Button? OperationButton { get; set; }
 
 	public void Make(AssignedTaskData missionData) {
-		NameLabel!.Text = missionData.Name;
-		RatingLevelLabel!.Text = $"{missionData.RatingLevel}";
+		AssignedTaskInfLabel.Text = $"{missionData.Name} {missionData.Level}";
 		foreach (var missionEvent in missionData.Events) {
 			var eventDescLabel = new Label();
 			eventDescLabel.Text = $"{missionEvent.Code}\n{"no description for now"}";

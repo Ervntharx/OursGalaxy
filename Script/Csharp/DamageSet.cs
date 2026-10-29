@@ -1,6 +1,6 @@
 ﻿namespace OursGalaxy;
 
-public struct DamageSet {
+internal struct DamageSet {
 	/// <summary>
 	/// 攻击者.用于伤害统计
 	/// </summary>

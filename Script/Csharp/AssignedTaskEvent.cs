@@ -12,6 +12,12 @@ internal partial class AssignedTaskEvent : Resource {
 	public string Code { get; set; }
 
 	/// <summary>
+	/// 远征事件类型
+	/// </summary>
+	public enum EventTypeEnum { None, SignedPunitiveCombat, FightBack, Reward, Repair }
+	public EventTypeEnum EventType { get; set; } = EventTypeEnum.None;
+
+	/// <summary>
 	/// 发生时间
 	/// </summary>
 	[Export]
@@ -30,8 +36,6 @@ internal partial class AssignedTaskEvent : Resource {
 		Code = code;
 		Time = time;
 	}
-
-
 
 	public bool TryQueryEventDesription([NotNullWhen(true)] out string? result) {
 		result = null;
