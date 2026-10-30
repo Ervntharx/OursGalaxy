@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://dsdc21ppktsrl"]
+
+[ext_resource type="Script" uid="uid://chlwiq6c334tu" path="res://Script/Csharp/UI/AlliancePanel.cs" id="1_twixo"]
+[ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="2_y6ek0"]
+
+[node name="AlliancePanel" type="MarginContainer" unique_id=376263489 node_paths=PackedStringArray("QuitButton", "Avater", "AllianceTitleLabel", "TabCs", "MembersPanel", "SupportsFleetViewer", "ChatPanel")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_twixo")
+QuitButton = NodePath("PanelContainer/VBoxContainer/TopBar/Quit")
+Avater = NodePath("PanelContainer/VBoxContainer/HSplitContainer/PanelContainer/CenterContainer/VBoxContainer/TextureRect")
+AllianceTitleLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/PanelContainer/CenterContainer/VBoxContainer/Name")
+TabCs = NodePath("PanelContainer/VBoxContainer/HSplitContainer/TabContainer")
+MembersPanel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/TabContainer/Members/MembersPanel")
+SupportsFleetViewer = NodePath("PanelContainer/VBoxContainer/HSplitContainer/TabContainer/SupportFleets/SupportFleetsPanel")
+ChatPanel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/TabContainer/Chat/ChatsPanel")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=53901364]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1973772204]
+layout_mode = 2
+
+[node name="TopBar" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1080898776]
+layout_mode = 2
+
+[node name="Quit" type="Button" parent="PanelContainer/VBoxContainer/TopBar" unique_id=1349254106]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "<"
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer/TopBar" unique_id=1148115861]
+layout_mode = 2
+text = "联盟"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/VBoxContainer" unique_id=1944773172]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=1537593995]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/PanelContainer" unique_id=1894664663]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/PanelContainer/CenterContainer" unique_id=518810691]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/HSplitContainer/PanelContainer/CenterContainer/VBoxContainer" unique_id=928901866]
+layout_mode = 2
+texture = ExtResource("2_y6ek0")
+
+[node name="Name" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HSplitContainer/PanelContainer/CenterContainer/VBoxContainer" unique_id=1082218557]
+layout_mode = 2
+text = "名称 [ 20 / 20 ]"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=136539838]
+layout_mode = 2
+current_tab = 0
+tab_0/title = "成员列表"
+tab_1/title = "聊天"
+tab_2/title = "支援舰队"
+
+[node name="Members" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/TabContainer" unique_id=1066931807]
+layout_mode = 2
+metadata/_tab_index = 0
+metadata/_tab_name = "成员列表"
+
+[node name="MembersPanel" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/TabContainer/Members" unique_id=2111537582]
+layout_mode = 2
+
+[node name="Chat" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/TabContainer" unique_id=1403814697]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+metadata/_tab_name = "聊天"
+
+[node name="ChatsPanel" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/TabContainer/Chat" unique_id=222456906]
+layout_mode = 2
+
+[node name="SupportFleets" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/TabContainer" unique_id=1119091334]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+metadata/_tab_name = "支援舰队"
+
+[node name="SupportFleetsPanel" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/TabContainer/SupportFleets" unique_id=1137006301]
+layout_mode = 2

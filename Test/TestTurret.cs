@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using OursGalaxy;
 using System;
 namespace OursGalaxy.Test;
@@ -14,14 +14,25 @@ internal partial class TestTurret : Node3D {
 	[Export]
 	protected Camera3D? Camera { get; set; }
 
+	// [Export]
+	// protected MeshInstance3D TargetMesh { get; set; } = null!;
+	// [Export]
+	// protected MeshInstance3D CurrentMesh { get; set; } = null!;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta) {
-		Laser!.TargetBasis = Camera!.GlobalBasis;
+		// GD.Print("SET");
+		Laser!.TargetBasis = Camera.GlobalBasis;
 		_delta = delta;
+
+		// CurrentMesh.GlobalBasis = Laser.RotatableComponent.GlobalBasis;
+		// var euler = CurrentMesh.GlobalBasis.GetEuler();
+		// // euler.X = 0;
+		// TargetMesh.GlobalBasis = Basis.FromEuler(euler);
 	}
 
 	public override void _UnhandledInput(InputEvent @event) {

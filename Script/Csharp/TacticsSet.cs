@@ -70,4 +70,16 @@ internal partial class TacticsSet : Resource {
 	/// </summary>
 	[Export]
 	public int Layer { get; set; }
+
+	public static float TacticsVigilance_Highest_Max { get; } = 0.5f;
+	public static float TacticsVigilance_Highest_Min { get; } = 0.25f;
+
+	public static float TacticsVigilance_Higher_Max { get; } = 2.5f;
+	public static float TacticsVigilance_Higher_Min { get; } = 1.2f;
+
+	public static float TacticsVigilance_Middle_Max { get; } = 5;
+	public static float TacticsVigilance_Middle_Min { get; } = 4;
+
+	public static float TacticsVigilance_Low_Max { get; } = 10;
+	public static float TacticsVigilance_Low_Min { get; } = 8;
 }

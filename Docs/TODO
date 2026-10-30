@@ -5,7 +5,6 @@ GameItem添加string静态构造方法为表格配置留下基础
 实现LongProgressTask类型以覆盖远征，生产制造所需的长离线过程任务
 远征的Tasks堆积让远征vb自行解引
 
-
 写数据库读写，让装备，舰船无需单独序列化的表格数据以数据库文件存储
 
 存档增加PropertyChanged追踪和MD5校验能力
@@ -27,8 +26,6 @@ CombatStage引入战场半径，限制尺寸
 
 
 UI:
-[+]新增装备强化界面
-
 新增通用的”恭喜获得物品界面“
 
 针对一般Item使用新增的精简ItemBox.针对UniqueItem使用UniuqeItemBox.即引入类型上挂载相应的ItemBox Load

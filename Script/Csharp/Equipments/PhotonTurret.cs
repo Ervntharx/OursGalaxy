@@ -9,7 +9,7 @@ internal partial class PhotonTurret : Node3D, ITurret {
 
 	public OutletSizeType SizeType { get; protected set; } = new(OutletSizeType.SizeTypeEnum.S);
 
-	public long CDMisc { get; set; }
+	public ulong CDMisc { get; set; }
 
 	public IReadOnlyCollection<IPromote> Promotes => promotes.AsReadOnly();
 

@@ -117,6 +117,12 @@ internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 
 	public int RotateCapability { get; set; } = 15;
 	public int PowerCapability { get; set; } = 5;
+	public int MicroPowrCapability { get; set; } = 1;
+
+	/// <summary>
+	/// 船头椎体角度
+	/// </summary>
+	public float BowAngle { get; set; } = 15;
 
 	public AccelerationMap AccelMap { get; set; } = new();
 	public AccelerationMap BrakeMap { get; set; } = new();

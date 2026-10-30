@@ -13,7 +13,7 @@ internal interface IEquip {
 	/// <summary>
 	/// 冷却时长
 	/// </summary>
-	public long CDMisc { get; }
+	public ulong CDMisc { get; }
 
 	/// <summary>
 	/// 效果

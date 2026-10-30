@@ -7,6 +7,16 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_c218q"]
 
+[sub_resource type="PrismMesh" id="PrismMesh_6jvjn"]
+size = Vector3(1, 1, 0.275)
+
+[sub_resource type="PrismMesh" id="PrismMesh_f227l"]
+size = Vector3(1, 1, 0.084)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_f227l"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_6jvjn"]
+
 [node name="TestTurret" type="Node3D" unique_id=2018173609 node_paths=PackedStringArray("Laser", "CameraBase", "CamerArm", "Camera")]
 script = ExtResource("1_c218q")
 Laser = NodePath("LaserTurret")
@@ -17,7 +27,7 @@ Camera = NodePath("Node3D/Node3D/Camera3D")
 [node name="LaserTurret" parent="." unique_id=897529569 instance=ExtResource("2_8axc0")]
 
 [node name="Area3D" type="Area3D" parent="." unique_id=212640886]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.812799, 0, 7.7079315)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22833443, 0, 7.1494884)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1303368666]
 shape = SubResource("BoxShape3D_c218q")
@@ -55,3 +65,35 @@ transform = Transform3D(-0.34442136, 0.14475971, 0.9275874, 0.5089212, -0.801482
 
 [node name="Camera3D" type="Camera3D" parent="Node3D/Node3D" unique_id=1718489070]
 transform = Transform3D(-1, 0, -8.742278e-08, -1.1713444e-08, 0.9909832, 0.13398619, 8.66345e-08, 0.13398619, -0.9909832, 0, 0.84938, -3.531)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1059951542]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -0.8169503, -1.1075544)
+mesh = SubResource("PrismMesh_6jvjn")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=2118245787]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -0.5892186, 0)
+mesh = SubResource("PrismMesh_f227l")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=421708573]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5657763, 0, 6.000829)
+gravity_scale = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=1013904870]
+shape = SubResource("SphereShape3D_f227l")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D" unique_id=95525988]
+mesh = SubResource("SphereMesh_6jvjn")
+
+[node name="RigidBody3D2" type="RigidBody3D" parent="." unique_id=910642155]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5049167, 0, 3.6994338)
+gravity_scale = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2" unique_id=2091729915]
+shape = SubResource("SphereShape3D_f227l")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D2" unique_id=45770865]
+mesh = SubResource("SphereMesh_6jvjn")
+
+[node name="Area3D4" type="Area3D" parent="." unique_id=752212678]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1697301011]
