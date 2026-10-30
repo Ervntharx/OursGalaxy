@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CombatData" format=3 uid="uid://b3q0v18s728db"]
+
+[ext_resource type="Script" uid="uid://bgtjsrxfg7n4l" path="res://Script/Csharp/CombatData.cs" id="1_fbp12"]
+
+[resource]
+script = ExtResource("1_fbp12")
+Code = "Template"
+DisplayName = "模板"
+Level = 3
+metadata/_custom_type_script = "uid://bgtjsrxfg7n4l"

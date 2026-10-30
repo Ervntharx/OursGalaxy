@@ -1,31 +1,14 @@
-using System;
-using System.IO;
-using System.Xml.XPath;
 using Godot;
 namespace OursGalaxy;
 
 [GlobalClass]
 internal partial class SubBlueprint : GameItem {
-	protected SubBlueprint() : base() {
-		requireNum = new(() => {
-			if (TryQuery<int>("RequireNum", out var result)) {
-				return result;
-			}
-			throw new IOException("Can't query valid data");
-		});
-	}
+	public new static readonly SubBlueprint Empty = new();
+	public static SubBlueprint Template => ResourceLoader.Load<SubBlueprint>("res://Res/Blueprints/Template.tres");
 
-	public SubBlueprint(string name, ItemBase.QulityEnum qulity, int num = 0) : base("Blueprint", name, qulity, num) {
-		requireNum = new(() => {
-			if (TryQuery<int>("RequireNum", out var result)) {
-				return result;
-			}
-			throw new IOException("Can't query valid data");
-		});
-	}
+	public static SubBlueprint? Load(string code) => ResourceLoader.Exists($"res://Res/Blueprint/{code}.tres") ?
+		ResourceLoader.Load<SubBlueprint>($"res://Res/DamageControlData/{code}.tres") : null;
 
-	public int RequireNum => requireNum.Value;
-
-
-	private Lazy<int> requireNum;
+	[Export]
+	public int RequireNum { get; set; }
 }
