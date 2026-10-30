@@ -1,11 +1,16 @@
 基础：
 
-GameItem添加string静态构造方法为表格配置留下基础
+Blueprint,Combat,TaskEvent,Task转为Resource直接存储到Res/
+所以这几个类型的实现应转变实现，暴露所有配置项
+
+⚠️GameItem某几个派生类型的数据库读写没有显式开关链接
 
 实现LongProgressTask类型以覆盖远征，生产制造所需的长离线过程任务
 远征的Tasks堆积让远征vb自行解引
 
-写数据库读写，让装备，舰船无需单独序列化的表格数据以数据库文件存储
+[+]写数据库读写，让装备，舰船无需单独序列化的表格数据以数据库文件存储
+
+[going]使用Res/Task Res/TaskEvent Res/Combat直接收录Resource,不使用表格进行读写。
 
 存档增加PropertyChanged追踪和MD5校验能力
 

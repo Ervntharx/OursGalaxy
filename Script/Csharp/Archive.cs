@@ -151,9 +151,9 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 
 	#region Battle and Combat
 	[Export]
-	public Array<PuntiveCombat> PunitiveCombatList { get; set; } = [];
+	public Array<CombatData> PunitiveCombatList { get; set; } = [];
 
 	[Export]
-	public Array<Hunt> TrackedHuntList { get; set; } = [];
+	public Array<HuntData> TrackedHuntList { get; set; } = [];
 	#endregion Battle and Combat
 }

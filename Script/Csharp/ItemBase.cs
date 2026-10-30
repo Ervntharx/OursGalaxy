@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Godot;
+using OursGalaxy.DataBase;
 namespace OursGalaxy;
 
 /// <summary>
@@ -75,11 +76,35 @@ internal partial class ItemBase : Resource {
 		return false;
 	}
 
+	public string Query(string key) {
+		return GameDataBase.QueryString(GetTableName(), GetItemName(), key);
+	}
+
+	public string QueryAndClear(string key) {
+		GameDataBase.Connect();
+		var result = Query(key);
+		GameDataBase.Disconnet();
+		return result;
+	}
+
+	public Dictionary<string, string?> Quary(params string[] keys) {
+		return GameDataBase.Query(GetTableName(), GetItemName(), keys);
+	}
+
+	public System.Collections.Generic.Dictionary<string, string?> QuaryWithClear(params string[] keys) {
+		GameDataBase.Connect();
+		var result = Quary(keys);
+		GameDataBase.Disconnet();
+		return result;
+	}
+
+	[Obsolete]
 	public bool TryQuery<T>(string itemName, [NotNullWhen(true)] out T? result) {
 		result = default(T);
 		return false;
 	}
 
+	[Obsolete]
 	public bool TryQueryMore(string[] itemName, [NotNullWhen(true)] out Dictionary<string, object?>? result) {
 		result = null;
 		return false;

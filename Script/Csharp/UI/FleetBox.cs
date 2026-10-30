@@ -36,7 +36,7 @@ internal partial class FleetBox : Button {
 		return $"[color=gold]{index}[/color] | {name}";
 	}
 
-	private string MakeDescString(string flagshipCustomName, string flagshipTypeName, int hp, int fullHP, int shipsCount, int fullShipsCount, int size, int fullSize, string? presetName = null) {
+	private string MakeDescString(string? flagshipCustomName, string flagshipTypeName, int hp, int fullHP, int shipsCount, int fullShipsCount, int size, int fullSize, string? presetName = null) {
 		return $"[color=gold]旗舰:	[/color]{flagshipCustomName}[color=gold]{flagshipTypeName}[/color]\n\n[color=gold]舰队HP: [/color]{hp} / [color=gold]{fullHP}[/color]\n[color=gold]舰队舰船数量: [/color]{shipsCount} / [color=gold]{fullShipsCount}[/color]\n[color=gold]舰队规模: [/color]{size} / [color=gold]{fullSize}[/color]\n\n[color=gold]使用舰队预案: [/color]{$"[color=gold]{presetName}[/color]" ?? "未使用"}";
 	}
 }

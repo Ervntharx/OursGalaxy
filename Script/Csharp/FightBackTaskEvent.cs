@@ -9,7 +9,7 @@ internal partial class FightBackTaskEvent : TaskEvent {
 	public override string? ReactUrl => $"FightBack";
 	// TODO:	击退类型？无需创建击退类型，是否意味着PunitiveCombat同样无需特例化
 	[Export]
-	public PuntiveCombat Combat { get; set; }
+	public CombatData Combat { get; set; }
 
 	[Export]
 	public bool HasFightBack { get; set; }
@@ -18,17 +18,16 @@ internal partial class FightBackTaskEvent : TaskEvent {
 	public FightBackTaskEvent(string code) {
 		Time = DateTime.Now();
 		Code = code;
+		Combat = CombatData.Template;
 	}
 
 	protected FightBackTaskEvent() {
 		Time = DateTime.Now();
 		Code = string.Empty;
-		desc = new(string.Empty);
+		Combat = CombatData.Empty;
 	}
 
-	public void OnMatchUrl(Variant variant) {
+	public override void OnMatchUrl(Variant variant) {
 		// TODO:	直接调用CombatStage
 	}
-
-	private Lazy<string> desc;
 }

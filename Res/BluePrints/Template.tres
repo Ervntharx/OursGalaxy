@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Blueprint" format=3 uid="uid://deh6eqgtpfj3t"]
+
+[ext_resource type="Script" uid="uid://cto52m53eyl4k" path="res://Script/Csharp/Blueprint.cs" id="1_j34s5"]
+
+[resource]
+script = ExtResource("1_j34s5")
+metadata/_custom_type_script = "uid://cto52m53eyl4k"

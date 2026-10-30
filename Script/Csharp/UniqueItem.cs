@@ -12,8 +12,6 @@ internal partial class UniqueItem : ItemBase {
 	public GUID ID { get; protected set; }
 
 	[Export]
-	[Obsolete]
-	public virtual string? OccupyState { get; set; }
 	public ItemLocationInf? ItemLocation { get; set; }
 
 	/// <summary>
@@ -23,13 +21,6 @@ internal partial class UniqueItem : ItemBase {
 
 	public UniqueItem(string code, GUID? uniqueID = null) : base(code) {
 		ID = uniqueID ?? GUID.Generate();
-	}
-
-	[Obsolete]
-	public UniqueItemReference MakeReference(string occupyStateStr) {
-		var result = new UniqueItemReference(this);
-		OccupyState = occupyStateStr;
-		return result;
 	}
 
 	/// <summary>

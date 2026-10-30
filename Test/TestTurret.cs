@@ -12,7 +12,7 @@ internal partial class TestTurret : Node3D {
 	protected Node3D? CamerArm { get; set; }
 
 	[Export]
-	protected Camera3D? Camera { get; set; }
+	protected Camera3D Camera { get; set; } = null!;
 
 	// [Export]
 	// protected MeshInstance3D TargetMesh { get; set; } = null!;

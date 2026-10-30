@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Godot;
 namespace OursGalaxy;
 
@@ -17,6 +18,14 @@ internal partial class GameItem : ItemBase {
 			num = value;
 			PropertyChanged?.Invoke(this, new("Num"));
 		}
+	}
+
+	public static GameItem FromString(string str) {
+		var ls = str.Split(":", false);
+		if (int.TryParse(ls[1], out var num)) {
+			return new(ls[0], num);
+		}
+		throw new InvalidCastException("not a string of game item");
 	}
 
 	/// <summary>
@@ -39,7 +48,7 @@ internal partial class GameItem : ItemBase {
 	public bool IsTemp() => Num == 0;
 
 	public override string ToString() {
-		return $"GameItem: {Code}, {Num}";
+		return $"{Code}:{Num}";
 	}
 
 	private int num;

@@ -29,21 +29,21 @@ internal partial class SpaceshipData : UniqueItem {
 
 	public SpaceshipData(string typeName, GUID? ID = null) : base(ItemCodePrefix + typeName, ID) {
 		size = new(() => {
-			if (TryQuery<int>("Size", out var result)) {
+			if (int.TryParse(Query("Size"), out var result)) {
 				return result;
 			}
 			throw new IOException("Can't query valid data");
 		});
 
 		fullHP = new(() => {
-			if (TryQuery<int>("HP", out var result)) {
+			if (int.TryParse(Query("HP"), out var result)) {
 				return result;
 			}
 			throw new IOException("Can't query valid data");
 		});
 
 		raid = new(() => {
-			if (TryQuery<int>("Raid", out var result)) {
+			if (int.TryParse(Query("Raid"), out var result)) {
 				return result;
 			}
 			throw new IOException("Can't query valid data");
@@ -55,7 +55,7 @@ internal partial class SpaceshipData : UniqueItem {
 				// TODO:	转为非硬编码的射程统计
 				var tableName = equip.Value.GetTableName();
 				if (tableName == "Laser" || tableName == "Missile" || tableName == "Photon") {
-					if (TryQuery<int>("Range", out int singleRange)) {
+					if (int.TryParse(Query("Range"), out int singleRange)) {
 						if (leastRange == 0) {
 							leastRange = Math.Max(leastRange, singleRange);
 						}

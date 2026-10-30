@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using Godot;
+using OursGalaxy.DataBase;
 namespace OursGalaxy;
 
 /// <summary>
@@ -27,7 +28,7 @@ internal partial class TaskEvent : Resource {
 	public TaskEvent(string code) {
 		this.Time = DateTime.Now();
 		Code = code;
-		desc = new("here's some desc");
+		desc = new("desc");
 	}
 
 	protected TaskEvent() {

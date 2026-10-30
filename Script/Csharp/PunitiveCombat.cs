@@ -6,6 +6,7 @@ namespace OursGalaxy;
 /// 讨伐
 /// </summary>
 [GlobalClass]
+[Obsolete("CombatData instead")]
 internal partial class PuntiveCombat : Resource, ICombat {
 	[Obsolete]
 	public readonly static PuntiveCombat? Empty = null;

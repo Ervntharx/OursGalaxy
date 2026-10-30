@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="AssignedTaskData" format=3 uid="uid://k0otlqliuugj"]
+
+[ext_resource type="Script" uid="uid://bq6nl2t36ww5j" path="res://Script/Csharp/TaskEvent.cs" id="1_cx8g3"]
+[ext_resource type="Script" uid="uid://4oajqxmixao5" path="res://Script/Csharp/AssignedTaskData.cs" id="2_4wt50"]
+
+[resource]
+script = ExtResource("2_4wt50")
+metadata/_custom_type_script = "uid://4oajqxmixao5"
