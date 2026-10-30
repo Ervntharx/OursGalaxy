@@ -1,7 +1,6 @@
 基础：
 
-引入PanelsStack以管理ui场景上下文
-
+GameItem添加string静态构造方法为表格配置留下基础
 
 实现LongProgressTask类型以覆盖远征，生产制造所需的长离线过程任务
 远征的Tasks堆积让远征vb自行解引
