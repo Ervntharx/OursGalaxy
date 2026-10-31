@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://c6tmdfkvb40jv"]
+
+[ext_resource type="Script" uid="uid://cmbjx057iwm84" path="res://Test/TestMovement.cs" id="1_y8ha1"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_6jvjn"]
+size = Vector3(1, 1, 0.138)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6jvjn"]
+height = 0.25
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6jvjn"]
+radius = 0.409
+height = 1.272
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6jvjn"]
+size = Vector3(20, 0.5, 20)
+
+[node name="TestMovement" type="Area3D" unique_id=555258746 node_paths=PackedStringArray("Util", "Target", "UtilTargetPos")]
+script = ExtResource("1_y8ha1")
+Util = NodePath("Util")
+Target = NodePath("Target")
+UtilTargetPos = NodePath("UtilTargetPos")
+
+[node name="Util" type="CharacterBody3D" parent="." unique_id=2026419154]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Util" unique_id=1611928100]
+transform = Transform3D(1, 0, 0, 0, 1.1924881e-08, 1, 0, -1, 1.1924881e-08, 0, 0, 0)
+mesh = SubResource("PrismMesh_6jvjn")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1371247370]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 15, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Camera3D" unique_id=1613668023]
+
+[node name="Target" type="Node3D" parent="." unique_id=1385235744]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.718, 0, -6.847)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Target" unique_id=513876148]
+mesh = SubResource("CylinderMesh_6jvjn")
+
+[node name="UtilTargetPos" type="MeshInstance3D" parent="." unique_id=529840279]
+mesh = SubResource("CapsuleMesh_6jvjn")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=671734974]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1450155699]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.164, 0)
+shape = SubResource("BoxShape3D_6jvjn")

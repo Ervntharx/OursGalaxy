@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
+using System.Runtime.CompilerServices;
 using Godot;
 using OursGalaxy.UI;
 namespace OursGalaxy;
@@ -8,7 +10,7 @@ namespace OursGalaxy;
 /// <summary>
 /// 运行时飞船类
 /// </summary>
-internal partial class Spaceship : Node3D, IBattleEntity {
+internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	public Node3D AsNode3D() => this;
 	public T ToNode<T>() where T : Node => (this as T)!;
 
@@ -16,6 +18,11 @@ internal partial class Spaceship : Node3D, IBattleEntity {
 
 	[Export]
 	public ScaleSizeEnum ScaleSize { get; set; } = ScaleSizeEnum.FF;
+
+	/// <summary>
+	/// 活动总开关
+	/// </summary>
+	public bool Active { get; set; }
 
 	[ExportGroup("Outlets Setup")]
 	[Export]
@@ -26,6 +33,24 @@ internal partial class Spaceship : Node3D, IBattleEntity {
 
 	public string TypeName { get; set; }
 	public string? CustomName { get; set; }
+
+	public Spaceship() {
+		ID = GUID.Empty;
+		TypeName = string.Empty;
+		CurrentHealth = 0;
+	}
+
+	public Spaceship(SpaceshipData data) {
+		ID = data.ID;
+		TypeName = data.GetShipTypeName();
+		CustomName = data.CustomName;
+		CurrentHealth = data.CurrentHP;
+		Range = data.Range;
+	}
+
+	public SpaceshipData Save() {
+		return new SpaceshipData(TypeName, ID);
+	}
 
 	#region Battle
 	[ExportGroup("BattleEntity")]
@@ -98,40 +123,117 @@ internal partial class Spaceship : Node3D, IBattleEntity {
 
 	#endregion Battle
 
-	public Spaceship() {
-		ID = GUID.Empty;
-		TypeName = string.Empty;
-		CurrentHealth = 0;
-	}
-
-	public Spaceship(SpaceshipData data) {
-		ID = data.ID;
-		TypeName = data.GetShipTypeName();
-		CustomName = data.CustomName;
-		CurrentHealth = data.CurrentHP;
-		Range = data.Range;
-	}
-
-	public SpaceshipData Save() {
-		return new SpaceshipData(TypeName, ID);
-	}
+	#region Tactics
+	public TacticsSet Tactics { get; set; } = new();
+	#endregion Tactics
 
 	#region Movement
-
+	// 移动能力原本参数
 	public int RotateCapability { get; set; } = 15;
 	public int PowerCapability { get; set; } = 5;
+	public int BackPowerCapability { get; set; } = 2;
 	public int MicroPowrCapability { get; set; } = 1;
+
+	public float RotateAngleVelocity => (float)RotateCapability / 10f;
+	public float PowerVelocity => (float)PowerCapability / 10f;
+	public float BackPowerVelocity => (float)BackPowerCapability / 10f;
+	public float MicroPowerVelocity => (float)MicroPowrCapability / 10f;
 
 	/// <summary>
 	/// 船头椎体角度
 	/// </summary>
-	public float BowAngle { get; set; } = 15;
+	public float ShipHeadConeAngle { get; set; } = 25;
+
+	// 保持的距离
+	public float KeepDistanceMax { get; set; } = 15;
+	public float KeepDistanceMin { get; set; } = 5;
 
 	public AccelerationMap AccelMap { get; set; } = new();
 	public AccelerationMap BrakeMap { get; set; } = new();
-	public int RotateAngleVelocity { get; set; } = 15;
 
-	public Vector3 Velocity { get; set; } = new();
+	public enum MovePowEnum { Stay, MicroMove, Forward, Backward }
+	public MovePowEnum MovePow { get; set; } = MovePowEnum.Stay;
+
+	public enum RotateModeEnum { Stay, Rest, RotateToTarget }
+	public RotateModeEnum RotateMode { get; set; } = RotateModeEnum.Stay;
+
+	private void HandleShipMvementState(double delta, Spaceship ship, IBattleEntity? target) {
+		switch (MovePow) {
+			case MovePowEnum.Forward:
+				ship.Velocity = ship.Velocity.Lerp(ship.GlobalBasis.Z * ship.PowerVelocity, Mathf.Clamp(0.5f, 0f, 1f));
+				break;
+			case MovePowEnum.Backward:
+				ship.Velocity = ship.Velocity.Lerp(ship.GlobalBasis.Z * ship.BackPowerVelocity, Mathf.Clamp(0.5f, 0f, 1f));
+				break;
+			case MovePowEnum.Stay:
+				ship.Velocity = ship.Velocity.Lerp(new Vector3(), Mathf.Clamp(0.5f, 0f, 1f));
+				break;
+			default:
+				break;
+		}
+
+		switch (RotateMode) {
+			case RotateModeEnum.RotateToTarget:
+				if (GodotObject.IsInstanceValid(target?.AsNode3D())) {
+					var targetOffPos = target.AsNode3D().GlobalTransform.Origin - ship.GlobalTransform.Origin;
+					var targetQ = new Quaternion(Vector3.Forward, targetOffPos.Normalized());
+					var currentQ = ship.GlobalBasis.Orthonormalized().GetRotationQuaternion().Normalized();
+
+					if (currentQ.AngleTo(targetQ) >= float.DegreesToRadians(0.5f)) {
+						ship.GlobalBasis = new(currentQ.Slerp(targetQ, Math.Clamp(ship.RotateAngleVelocity * (float)delta / currentQ.AngleTo(targetQ), 0f, 1f)));
+					}
+					else {
+						ship.GlobalBasis = new(currentQ);
+					}
+				}
+				break;
+			case RotateModeEnum.Rest:
+				var currentDir = ship.GlobalBasis.Z;
+				currentDir.Y = 0;
+				if (!currentDir.IsZeroApprox()) {
+					ship.GlobalBasis = ship.GlobalBasis.Slerp(Basis.LookingAt(currentDir, Vector3.Up), Mathf.Clamp(ship.RotateAngleVelocity * (float)delta / currentDir.AngleTo(ship.GlobalBasis.Z), 0f, 1f));
+				}
+				else {
+					ship.GlobalBasis = Basis.LookingAt(currentDir, Vector3.Up);
+				}
+				break;
+			case RotateModeEnum.Stay:
+			default:
+				break;
+		}
+	}
+
+	private void AutoSetShipMovementState(double delta, Transform3D selfTrans, Transform3D targetTrans, float coneAngle, float keepDistanceMin, float keepDistanceMax) {
+		var targetOffPos = targetTrans.Origin - selfTrans.Origin; // 目标相对位置
+		if (!targetOffPos.IsZeroApprox()) {
+			if (IsInClone(selfTrans, targetTrans, coneAngle)) {
+				// 在船头椎内就停止旋转
+				RotateMode = RotateModeEnum.Stay;
+				if (selfTrans.Origin.DistanceTo(targetTrans.Origin) > keepDistanceMax) {
+					MovePow = MovePowEnum.Forward;  // 在最大距离之外选择靠近
+				}
+				else if (selfTrans.Origin.DistanceTo(targetTrans.Origin) > keepDistanceMin) {
+					MovePow = MovePowEnum.Stay; // 在最大距离和最小距离之间停机
+				}
+				else {
+					MovePow = MovePowEnum.Backward; // 在最小距离之内后退
+				}
+			}
+			else {
+				// 不在船头椎内，停止推进，先旋转
+				MovePow = MovePowEnum.Stay;
+				RotateMode = RotateModeEnum.RotateToTarget;
+			}
+		}
+		else {
+			// 目标重叠，全部停止
+			MovePow = MovePowEnum.Stay;
+			RotateMode = RotateModeEnum.Stay;
+		}
+
+		// 判定是否有在船头椎内
+		bool IsInClone(Transform3D self, Transform3D target, float coneAngle) => (self.AffineInverse() * target.Origin).AngleTo(Vector3.Forward) <= float.DegreesToRadians(coneAngle);
+	}
 
 	#endregion Movement
 
@@ -147,7 +249,7 @@ internal partial class Spaceship : Node3D, IBattleEntity {
 	}
 
 	// 代理炮台旋转算法
-	private static void AgentTurretRotation(double delta, TurretBase turretBase, IBattleEntity? targetEntity) {
+	private static void HandleTurretRotation(double delta, TurretBase turretBase, IBattleEntity? targetEntity) {
 		if (turretBase.IsRotatble) {
 			var currentLocalBasis = turretBase.RotatableNode!.Basis;
 			if (GodotObject.IsInstanceValid(targetEntity?.AsNode3D())) {
@@ -189,107 +291,25 @@ internal partial class Spaceship : Node3D, IBattleEntity {
 
 	#endregion Turret
 
-	public bool Active { get => CombatStateMachine.Paused; set => CombatStateMachine.Paused = value; }
-
 	public override void _Ready() {
 		base._Ready();
 		ProbeTurret();
 		// TODO:	RotateCapability, PowerCapability换算为物理值
 		AccelMap.MaxVelocity = PowerCapability;
-		RotateAngleVelocity = RotateCapability;
-		// 依靠Timer驱动行为状态机的Ship初始置paused
-		CombatStateMachine.Paused = true;
-		CombatStateMachine.Start();
 	}
 
 
 	public override void _Process(double delta) {
-
-
-		// 计算目标角速度
-		if (GodotObject.IsInstanceValid(CombatStateMachine.Target?.ToNode3D())) {
-			if (targetPrePos is not null) {
-				targetAngleVelocityCache = targetPrePos.Value.DistanceTo(CombatStateMachine.Target.ToNode3D().Position);
-			}
-			targetPrePos = CombatStateMachine.Target.ToNode3D().Position;
-		}
-		else {
-			targetAngleVelocityCache = null;
-			targetPrePos = null;
-		}
-
-		// 计算目标是否在射程内
-		if (GodotObject.IsInstanceValid(CombatStateMachine.Target?.ToNode3D())) {
-			var distance = (CombatStateMachine.Target.ToNode3D().Transform.Origin - Transform.Origin).Length();
-			isInRange = distance <= Range;
-		}
-
-		// 如果目标角速度值小于自身能达到的旋转角速度,且目标在射程外时，期望接近目标
-		intendApporach = GodotObject.IsInstanceValid(CombatStateMachine.Target?.ToNode3D()) && targetAngleVelocityCache is not null
-			? targetAngleVelocityCache <= RotateAngleVelocity && !isInRange
-			: false;
-
-		// 目标Basis传递到炮塔
-		if (GodotObject.IsInstanceValid(CombatStateMachine.Target?.ToNode3D())) {
-			var targetBasis = CombatStateMachine.Target.ToNode3D().Basis * Basis.Inverse();
-			foreach (var outlet in Outlets) {
-				var equip = GetNodeOrNull<Node?>(outlet.Value);
-				if (equip is not null && equip is ITurret turret) {
-					// turret.TargetBasis = targetBasis;
-				}
-			}
-		}
-
 		base._Process(delta);
+		AutoSetShipMovementState(delta, GlobalTransform, TargetEntity.AsNode3D().GlobalTransform, ShipHeadConeAngle, KeepDistanceMin, KeepDistanceMax);
 	}
 
 	public override void _PhysicsProcess(double delta) {
 		// 炮台朝向和状态机控制
 		foreach (var turretBase in Turrets) {
-			AgentTurretRotation(delta, turretBase, TargetEntity);
+			HandleTurretRotation(delta, turretBase, TargetEntity);
 			turretBase.DriveState(delta, this, TargetEntity);
 		}
-
-		// 方向控制
-		if (GodotObject.IsInstanceValid(CombatStateMachine.Target?.ToNode3D())) {
-			// 四元数匀速差值转向目标
-			var currentQ = new Quaternion(Basis);
-			var targetQ = new Quaternion((CombatStateMachine.Target.ToNode3D().Transform * Transform.Inverse()).Basis);
-			var angleDiff = currentQ.AngleTo(targetQ);
-			var maxAngle = RotateAngleVelocity * (float)delta;
-			if (angleDiff > maxAngle) {
-				Basis = new(currentQ.Slerp(targetQ, (float)(maxAngle / angleDiff)));
-			}
-			else {
-				Basis = new(targetQ);
-			}
-		}
-		// 速度控制
-		if (intendApporach) {
-			var v = Velocity;
-			var linearV = v.Length();
-			linearV += AccelMap.GetAcceleration(linearV, (float)delta);
-			v = v.Normalized() * linearV;
-			Velocity = v;
-		}
-		else {
-			var v = Velocity;
-			var linearV = v.Length();
-			linearV -= BrakeMap.GetAcceleration(linearV, (float)delta);
-			v = v.Normalized() * linearV;
-			Velocity = v;
-		}
-
-		// 移动
-		var pos = Position;
-		pos += Velocity * (float)delta;
-		Position = pos;
-		base._PhysicsProcess(delta);
+		HandleShipMvementState(delta, this, TargetEntity);
 	}
-
-	private double? targetAngleVelocityCache;
-	private Vector3? targetPrePos;
-
-	private bool isInRange;
-	private bool intendApporach;
 }

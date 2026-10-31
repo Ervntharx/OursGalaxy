@@ -1,6 +1,7 @@
 ﻿using System;
 using Godot;
 namespace OursGalaxy;
+
 /// <summary>
 /// 战术集类, 用于存储飞船的战术信息
 /// </summary>
@@ -10,7 +11,7 @@ internal partial class TacticsSet : Resource {
 	/// 战术模式枚举
 	/// </summary>
 	public enum ModeEnum {
-		None,       // 无。对应勇往直前
+		Forward,    // 强袭
 		Roundabot,  // 迂回
 		Protect     // 护卫
 	}
@@ -19,7 +20,7 @@ internal partial class TacticsSet : Resource {
 	/// 迂回方向枚举
 	/// </summary>
 	public enum RoundabotEnum {
-		Rand, Up, Down, Left, Right
+		Rand, Level, Vertical, Up, Down, Left, Right
 	}
 
 	/// <summary>
@@ -37,15 +38,16 @@ internal partial class TacticsSet : Resource {
 	/// <summary>
 	/// 目标变更频率
 	/// </summary>
-	public enum ConcentrationEnum {
-		NeverChange,    // 从不改变目标
-		FewerChange,    // 较少改变目标
-		ModerateChange, // 适当改变目标
-		FruquetChange   // 频繁改变目标
+	public enum VigilanceEnum {
+		Lowest,    // 从不改变目标
+		Lower,    // 较少改变目标
+		Middle, // 适当改变目标
+		Higher,   // 频繁改变目标
+		Highest, // 极高频改变目标
 	}
 
 	[Export]
-	public ModeEnum Mode { get; set; } = ModeEnum.None;
+	public ModeEnum Mode { get; set; } = ModeEnum.Forward;
 
 	[Export]
 	public RoundabotEnum RoundabotDir { get; set; } = RoundabotEnum.Rand;
