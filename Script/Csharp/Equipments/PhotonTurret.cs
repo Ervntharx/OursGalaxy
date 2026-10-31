@@ -44,8 +44,8 @@ internal partial class PhotonTurret : Node3D, ITurret {
 	public PackedScene? BulletRes { get; set; }
 
 	public void Install(Outlet outlet) {
-		LeftYawClampAngle = outlet.LimitYawLeft;
-		RightYawClampAngle = outlet.LimitYawRight;
+		LeftYawClampAngle = outlet.LeftClampAngle;
+		RightYawClampAngle = outlet.RightClampAngle;
 	}
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
@@ -61,7 +61,7 @@ internal partial class PhotonTurret : Node3D, ITurret {
 				}
 				break;
 			case ITurret.StateEnum.Fire:
-				BulletServer.Add(this, BulletRes.Instantiate(), new Transform3D(RotatableComponent.GlobalBasis, Trajectory.GlobalPosition), 5);
+				BulletServer.Add(null, (IBullet)BulletRes!.Instantiate(), new Transform3D(RotatableComponent.GlobalBasis, Trajectory.GlobalPosition), RotatableComponent.GlobalBasis.Z * 5);
 				State = ITurret.StateEnum.CoolDown;
 				last_damage_time = Time.GetTicksMsec();
 				break;

@@ -6,5 +6,5 @@ namespace OursGalaxy;
 /// </summary>
 internal interface ISpaceEntity {
 	public T ToNode<T>() where T : Node;
-	public Node3D ToNode3D();
+	public Node3D AsNode3D();
 }

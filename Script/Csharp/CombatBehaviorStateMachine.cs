@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System;
+using Godot;
 
 namespace OursGalaxy;
 
@@ -6,6 +7,7 @@ namespace OursGalaxy;
 /// 舰船战斗行为状态机
 /// </summary>
 [GlobalClass]
+[Obsolete("嵌入Spaceship")]
 internal partial class CombatBehaviorStateMachine : Timer {
 	/// <summary>
 	/// 行为步长。秒单位，每过一段步长时间行为状态机将尝试改变行为

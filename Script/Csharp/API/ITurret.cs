@@ -1,9 +1,11 @@
-﻿using Godot;
+﻿using System;
+using Godot;
 namespace OursGalaxy;
 
 /// <summary>
 /// 炮台接口
 /// </summary>
+[Obsolete("Turret base instead")]
 internal interface ITurret : IEquip {
 	/// <summary>
 	/// 状态机枚举

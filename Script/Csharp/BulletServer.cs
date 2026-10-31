@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System;
+using Godot;
 namespace OursGalaxy;
 
 /// <summary>
@@ -14,7 +15,7 @@ internal partial class BulletServer : Node {
 	/// <summary>
 	/// 场景根节点是否已准备好
 	/// </summary>
-	public static bool IsReadyToShoot => GodotObject.IsInstanceValid(SceneRoot);
+	public static bool ServerReady => GodotObject.IsInstanceValid(SceneRoot);
 
 	/// <summary>
 	/// 添加子弹
@@ -23,11 +24,20 @@ internal partial class BulletServer : Node {
 	/// <param name="bullet">子弹</param>
 	/// <param name="initGlobalTranform">初始的3D变换，位置和方向</param>
 	/// <param name="velocity">子弹速度</param>
+	[Obsolete]
 	public static void Add(ISpaceEntity from, IBullet bullet, Transform3D initGlobalTranform, Vector3 velocity) {
 		if (GodotObject.IsInstanceValid(SceneRoot)) {
 			bullet.AsArea3D().GlobalTransform = initGlobalTranform;
 			bullet.Velocity = velocity;
 			SceneRoot.AddChild(bullet.AsArea3D());
+		}
+	}
+
+	public static void Add(IBattleEntity from, BulletBase bullet, Transform3D initGlobalTransform, Vector3 initVelocity) {
+		if (ServerReady) {
+			bullet.GlobalTransform = initGlobalTransform;
+			bullet.LinearVelocity = initVelocity;
+			SceneRoot!.AddChild(bullet);
 		}
 	}
 }

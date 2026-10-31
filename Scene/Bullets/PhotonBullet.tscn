@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dw32p3a00p3wc"]
+
+[ext_resource type="Script" uid="uid://dekj288sr81kn" path="res://Script/Csharp/PhotonBullet.cs" id="1_qyfqb"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6jvjn"]
+size = Vector3(0.25, 0.25, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6jvjn"]
+size = Vector3(0.25, 0.25, 1)
+
+[node name="PhotonBullet" type="Area3D" unique_id=182609138]
+script = ExtResource("1_qyfqb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=549798137]
+mesh = SubResource("BoxMesh_6jvjn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=187484946]
+shape = SubResource("BoxShape3D_6jvjn")

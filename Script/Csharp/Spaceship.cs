@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using OursGalaxy.UI;
 namespace OursGalaxy;
@@ -6,14 +8,11 @@ namespace OursGalaxy;
 /// <summary>
 /// 运行时飞船类
 /// </summary>
-internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
-	public enum ScaleSizeEnum { FF, DD, CL, CA, BB }
-
+internal partial class Spaceship : Node3D, IBattleEntity {
+	public Node3D AsNode3D() => this;
 	public T ToNode<T>() where T : Node => (this as T)!;
-	public Node3D ToNode3D() => this;
 
-	[Export]
-	protected CombatBehaviorStateMachine CombatStateMachine { get; set; } = null!;
+	public enum ScaleSizeEnum { FF, DD, CL, CA, BB }
 
 	[Export]
 	public ScaleSizeEnum ScaleSize { get; set; } = ScaleSizeEnum.FF;
@@ -29,8 +28,13 @@ internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 	public string? CustomName { get; set; }
 
 	#region Battle
+	[ExportGroup("BattleEntity")]
+	[Export]
+	public Area3D AttackableArea { get; set; } = null!;
 
 	public CombatStage.CampEnum Camp { get; set; } = CombatStage.CampEnum.None;
+
+	public IBattleEntity? TargetEntity { get; set; }
 
 	public int Health { get; set; }
 
@@ -131,10 +135,65 @@ internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 
 	#endregion Movement
 
+	#region Turret
+
+	private readonly List<TurretBase> Turrets = [];
+
+	// 探测船上可用的Turret
+	private void ProbeTurret() {
+		foreach (var turret in Outlets.Select(outlet => GetNodeOrNull<Node?>(outlet.Value)?.GetChildOrNull<Node?>(0)).OfType<TurretBase>()) {
+			Turrets.Add(turret);
+		}
+	}
+
+	// 代理炮台旋转算法
+	private static void AgentTurretRotation(double delta, TurretBase turretBase, IBattleEntity? targetEntity) {
+		if (turretBase.IsRotatble) {
+			var currentLocalBasis = turretBase.RotatableNode!.Basis;
+			if (GodotObject.IsInstanceValid(targetEntity?.AsNode3D())) {
+				var localDir = turretBase.GlobalTransform.Inverse() * targetEntity.AsNode3D().GlobalPosition;
+				localDir.Y = 0;
+				var targetLocalBasis = Basis.LookingAt(localDir.Normalized(), Vector3.Up);
+				var currentLocalQ = new Quaternion(currentLocalBasis);
+				var targetLocalQ = new Quaternion(targetLocalBasis);
+
+				targetLocalQ = ClampAngle(targetLocalQ, turretBase.LeftClampAngle, turretBase.RightClampAngle);
+
+				if (currentLocalQ.AngleTo(targetLocalQ) > float.DegreesToRadians(turretBase.RotateAngleVelocity) * (float)delta) {
+					currentLocalQ = currentLocalQ.Slerp(targetLocalQ, float.DegreesToRadians(turretBase.RotateAngleVelocity) * (float)delta / currentLocalQ.AngleTo(targetLocalQ));
+				}
+				else {
+					currentLocalQ = targetLocalQ;
+				}
+				turretBase.RotatableNode.Basis = new Basis(currentLocalQ);
+			}
+			else {
+				var currentLocalQ = new Quaternion(currentLocalBasis);
+				var targetLocalQ = new Quaternion(Basis.Identity);
+				if (currentLocalQ.AngleTo(targetLocalQ) > float.DegreesToRadians(turretBase.RotateAngleVelocity) * (float)delta) {
+					currentLocalQ = currentLocalQ.Slerp(targetLocalQ, float.DegreesToRadians(turretBase.RotateAngleVelocity) * (float)delta / currentLocalQ.AngleTo(targetLocalQ));
+				}
+				else {
+					currentLocalQ = targetLocalQ;
+				}
+				turretBase.RotatableNode.Basis = new Basis(currentLocalQ);
+			}
+		}
+
+		Quaternion ClampAngle(Quaternion dir, float leftClampAngle, float rightClampAngle) {
+			var euler = dir.GetEuler(EulerOrder.Yxz);
+			euler.Y = Mathf.Clamp(euler.Y, float.DegreesToRadians(-leftClampAngle), float.DegreesToRadians(rightClampAngle));
+			return Quaternion.FromEuler(euler);
+		}
+	}
+
+	#endregion Turret
+
 	public bool Active { get => CombatStateMachine.Paused; set => CombatStateMachine.Paused = value; }
 
 	public override void _Ready() {
 		base._Ready();
+		ProbeTurret();
 		// TODO:	RotateCapability, PowerCapability换算为物理值
 		AccelMap.MaxVelocity = PowerCapability;
 		RotateAngleVelocity = RotateCapability;
@@ -145,6 +204,8 @@ internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 
 
 	public override void _Process(double delta) {
+
+
 		// 计算目标角速度
 		if (GodotObject.IsInstanceValid(CombatStateMachine.Target?.ToNode3D())) {
 			if (targetPrePos is not null) {
@@ -183,6 +244,12 @@ internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 	}
 
 	public override void _PhysicsProcess(double delta) {
+		// 炮台朝向和状态机控制
+		foreach (var turretBase in Turrets) {
+			AgentTurretRotation(delta, turretBase, TargetEntity);
+			turretBase.DriveState(delta, this, TargetEntity);
+		}
+
 		// 方向控制
 		if (GodotObject.IsInstanceValid(CombatStateMachine.Target?.ToNode3D())) {
 			// 四元数匀速差值转向目标

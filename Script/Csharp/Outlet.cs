@@ -14,8 +14,8 @@ public partial class Outlet : Resource {
 	public NodePath? OutletMarker { get; set; }
 
 	[Export]
-	public float LimitYawLeft { get; set; }
+	public float LeftClampAngle { get; set; }
 
 	[Export]
-	public float LimitYawRight { get; set; }
+	public float RightClampAngle { get; set; }
 }

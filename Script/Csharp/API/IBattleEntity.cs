@@ -1,10 +1,13 @@
 ﻿using System;
+using Godot;
 namespace OursGalaxy;
 
 /// <summary>
 /// 战斗实体接口
 /// </summary>
-internal interface IBattleEntity {
+internal interface IBattleEntity : ISpaceEntity {
+	public Area3D AttackableArea { get; }
+
 	public int Health { get; set; }
 	public int CurrentHealth { get; set; }
 
