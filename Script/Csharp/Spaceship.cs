@@ -174,7 +174,7 @@ internal partial class Spaceship : Node3D, ISpaceEntity, IBattleEntity {
 			foreach (var outlet in Outlets) {
 				var equip = GetNodeOrNull<Node?>(outlet.Value);
 				if (equip is not null && equip is ITurret turret) {
-					turret.TargetBasis = targetBasis;
+					// turret.TargetBasis = targetBasis;
 				}
 			}
 		}

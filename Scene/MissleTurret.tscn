@@ -8,6 +8,9 @@ size = Vector3(0.6, 0.22, 0.656)
 [sub_resource type="BoxMesh" id="BoxMesh_tdi3b"]
 size = Vector3(0.524, 0.117, 0.496)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_6jvjn"]
+radius = 25.0
+
 [node name="MissleTurret" type="Node3D" unique_id=1036382210]
 script = ExtResource("1_tdi3b")
 
@@ -18,3 +21,8 @@ mesh = SubResource("BoxMesh_1bc55")
 [node name="Base2" type="MeshInstance3D" parent="." unique_id=8597328]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22510529, 0)
 mesh = SubResource("BoxMesh_tdi3b")
+
+[node name="RangeArea" type="Area3D" parent="." unique_id=796050986]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RangeArea" unique_id=1513590357]
+shape = SubResource("SphereShape3D_6jvjn")

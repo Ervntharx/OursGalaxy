@@ -26,7 +26,7 @@ internal partial class TestTurret : Node3D {
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta) {
 		// ProcessRotate(delta);
-		Laser.TargetBasis = Camera.GlobalBasis;
+		// Laser.TargetBasis = Camera.GlobalBasis;
 		_delta = delta;
 	}
 

@@ -29,19 +29,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.096322894, 0)
 mesh = SubResource("BoxMesh_4l3to")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1411013488]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3967667, -0.05059886)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3967667, 0.1816383)
 mesh = SubResource("BoxMesh_4f6rc")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D" unique_id=1054734677]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.013827562, 0, 0.7011723)
+transform = Transform3D(-1, -8.742278e-08, 3.821371e-15, 0, -4.371139e-08, -1, 8.742278e-08, -1, 4.371139e-08, -0.013827562, 0, -0.7744241)
 mesh = SubResource("PrismMesh_yxm8j")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D" unique_id=2052117984]
-transform = Transform3D(1, 0, 0, 0, -0.59797496, -0.80151486, 0, 0.80151486, -0.59797496, 0, -0.16224328, -0.02349326)
+transform = Transform3D(1, 0, 0, 0, 0.6045773, -0.79654646, 0, 0.79654646, 0.6045773, 0, -0.16224328, -0.09508279)
 mesh = SubResource("BoxMesh_27c70")
 
 [node name="DamageArea" type="Area3D" parent="MeshInstance3D" unique_id=169616973]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.0337753)
+monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/DamageArea" unique_id=1871002932]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 12.5)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -12.5)
 shape = SubResource("CylinderShape3D_6jvjn")

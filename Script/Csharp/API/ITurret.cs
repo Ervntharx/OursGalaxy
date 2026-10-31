@@ -9,7 +9,6 @@ internal interface ITurret : IEquip {
 	/// 状态机枚举
 	/// </summary>
 	public enum StateEnum { Ready, Fire, CoolDown }
-
 	public StateEnum State { get; }
 	/// <summary>
 	/// 已瞄准
@@ -22,9 +21,9 @@ internal interface ITurret : IEquip {
 	public float Range { get; set; }
 
 	/// <summary>
-	/// 目标方向，注意是全局的Basis。内部将自动转换为局部方向
+	/// 打击目标
 	/// </summary>
-	public Basis TargetBasis { get; set; }
+	public Node3D? TargetEntity { get; set; }
 
 	/// <summary>
 	/// 初始化适配。并不是物理安装动作
