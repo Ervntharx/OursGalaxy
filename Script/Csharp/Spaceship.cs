@@ -20,7 +20,16 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	/// <summary>
 	/// 活动总开关
 	/// </summary>
-	public bool Active { get; set; }
+	public bool Active {
+		get => active;
+		set {
+			active = value;
+			if (Active) {
+				ProbeTarget();
+			}
+		}
+	}
+	private bool active;
 
 	[ExportGroup("Outlets Setup")]
 	[Export]
@@ -46,9 +55,6 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 		ship.CurrentHealth = data.CurrentHP;
 		ship.Range = data.Range;
 		ship.Tactics = tactics ?? new();
-		ship.PickUpTarget();
-		ship.TacticsPickTargetTimer.Start();
-		ship.TacticsPickTargetTimer.Timeout += ship.PickUpTarget;
 		ship.AttackableArea.AreaEntered += ship.OnAttakableAreaAreaEntered;
 		return ship;
 	}
@@ -143,10 +149,11 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	[ExportGroup("Tactics")]
 	[Export]
-	protected Timer TacticsPickTargetTimer { get; set; } = null!;
+	protected Timer TacticsTargetProberTimer { get; set; } = null!;
 
-	private void PickUpTarget() {
+	private void ProbeTarget() {
 		var targetsLs = CombatStage.ScanShips(Camp);
+		GD.Print($"try spaceship probe target: {targetsLs.Count}");
 		switch (Tactics.Targeting) {
 			case TacticsSet.TargetingEnum.Closest:
 				targetsLs.Sort((left, right) => Mathf.RoundToInt(left.Transform.Origin.DistanceTo(GlobalTransform.Origin) - right.Transform.Origin.DistanceTo(GlobalTransform.Origin)));
@@ -314,6 +321,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	private readonly List<TurretBase> Turrets = [];
 
+
 	// 探测船上可用的Turret
 	private void ProbeTurret() {
 		foreach (var turret in Outlets.Select(outlet => GetNodeOrNull<Node?>(outlet.Value)?.GetChildOrNull<Node?>(0)).OfType<TurretBase>()) {
@@ -366,11 +374,14 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	public override void _Ready() {
 		base._Ready();
-		ProbeTurret();
+		Name = $"{TypeName}_{CustomName}";
+		GD.Print($"Set name as {$"{TypeName}_{CustomName}"}, but {Name} instead?");
+		TacticsTargetProberTimer.OneShot = false;
+		TacticsTargetProberTimer.Start();
+		TacticsTargetProberTimer.Timeout += ProbeTarget;
 		// TODO:	RotateCapability, PowerCapability换算为物理值
 		AccelMap.MaxVelocity = PowerCapability;
 	}
-
 
 	public override void _Process(double delta) {
 		base._Process(delta);

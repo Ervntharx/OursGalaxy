@@ -28,6 +28,19 @@ internal partial class SettingsArchive : Resource {
 	/// </summary>
 	[JsonIgnore]
 	public static SettingsArchive Data { get; protected set; } = new();
+	#region Camera
+	public event Action<float>? CameraDistanceMaxChanged;
+	public event Action<float>? CameraDiatanceMinChanged;
+	public event Action<float>? CameraDefaultDistanceChanged;
+	public event Action<float>? CameraMoveVelocityChanged;
+	public event Action<float>? CameraDistanceChangeStepChanged;
+
+	public float Camera_Distance_Max { get; set; }
+	public float Camera_Distance_Min { get; set; }
+	public float Camera_Default_Distance { get; set; }
+	public float Camera_Move_Velocity { get; set; }
+	public float Camera_Distance_ChangsStep { get; set; }
+	#endregion Camera
 
 	#region Apperance UI
 

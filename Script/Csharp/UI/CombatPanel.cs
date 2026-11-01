@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 namespace OursGalaxy.UI;
 
-internal partial class CombatPanel : Panel {
+internal partial class CombatPanel : Control {
 	public static CombatPanel Load() => (CombatPanel)ResourceLoader.Load<PackedScene>("res://Scene/CombatPanel.tscn").Instantiate();
 
 	[Export]

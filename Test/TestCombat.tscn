@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cpbw6pca6kva7"]
+
+[ext_resource type="Script" uid="uid://c2jpjlf3fby04" path="res://Test/TestCombat.cs" id="1_ltc18"]
+[ext_resource type="PackedScene" uid="uid://cp5u8wxjayjpx" path="res://Scene/CombatStage.tscn" id="2_jkv8s"]
+
+[node name="TestCombat" type="Node3D" unique_id=767212822 node_paths=PackedStringArray("Stage")]
+script = ExtResource("1_ltc18")
+Stage = NodePath("CombatStage")
+
+[node name="CombatStage" parent="." unique_id=559169952 instance=ExtResource("2_jkv8s")]

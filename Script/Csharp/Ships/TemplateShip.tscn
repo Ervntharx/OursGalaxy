@@ -3,12 +3,12 @@
 [ext_resource type="Script" uid="uid://beeqmj0rs3de7" path="res://Script/Csharp/Ships/TemplateShip.cs" id="1_pn7tu"]
 [ext_resource type="Script" uid="uid://bk1uh2q5oiut3" path="res://Script/Csharp/OutletSizeType.cs" id="2_dk8ix"]
 
-[sub_resource type="Resource" id="Resource_dk8ix"]
+[sub_resource type="Resource" id="Resource_pn7tu"]
 script = ExtResource("2_dk8ix")
 SizeType = 2
 metadata/_custom_type_script = "uid://bk1uh2q5oiut3"
 
-[sub_resource type="Resource" id="Resource_ow04k"]
+[sub_resource type="Resource" id="Resource_dk8ix"]
 script = ExtResource("2_dk8ix")
 SizeType = 1
 metadata/_custom_type_script = "uid://bk1uh2q5oiut3"
@@ -16,79 +16,18 @@ metadata/_custom_type_script = "uid://bk1uh2q5oiut3"
 [sub_resource type="PrismMesh" id="PrismMesh_6jvjn"]
 size = Vector3(1, 1, 0.357)
 
-[sub_resource type="CSharpScript" id="CSharpScript_dk8ix"]
-script/source = "using System;
-using Godot;
-
-namespace OursGalaxy;
-
-/// <summary>
-/// 舰船战斗行为状态机
-/// </summary>
-[GlobalClass]
-[Obsolete(\"嵌入Spaceship\")]
-internal partial class CombatBehaviorStateMachine : Timer {
-	/// <summary>
-	/// 行为步长。秒单位，每过一段步长时间行为状态机将尝试改变行为
-	/// </summary>
-	public const int BEHAVIOR_STEP_TIME = 10;
-
-	/// <summary>
-	/// 战术设置
-	/// </summary>
-	public TacticsSet Tactics { get; set; } = new();
-
-	/// <summary>
-	/// 移动行为状态枚举
-	/// </summary>
-	public enum MovementStateEnum {
-		Stay,       // 停止
-		Approach,   // 接近目标
-		Roundabot,  // 迂回
-	}
-
-	public MovementStateEnum MovementState { get; set; } = MovementStateEnum.Stay;
-
-	/// <summary>
-	/// 锁定的目标
-	/// </summary>
-	public ISpaceEntity? Target { get; set; }
-
-	/// <summary>
-	/// 尝试变更行为状态。
-	/// ⚠️该方法并不需要帧刷新
-	/// </summary>
-	public void UpdateState() {
-		// TODO: 更新状态
-		preTarget = Target;
-		preTargetSteps += 1;
-	}
-
-	public override void _Ready() {
-		base._Ready();
-		OneShot = false;
-		WaitTime = BEHAVIOR_STEP_TIME;
-		Timeout += UpdateState;
-	}
-
-	// 上一个目标
-	private ISpaceEntity? preTarget;
-	// 锁定上一个目标行为所占的行为步数。用于计算行为频率
-	private int preTargetSteps;
-}
-"
-
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_6jvjn"]
 height = 0.5
 radius = 1.2
 
-[node name="TemplateShip" type="Node3D" unique_id=1644786529 node_paths=PackedStringArray("AttackableArea")]
+[node name="TemplateShip" type="CharacterBody3D" unique_id=760973978 node_paths=PackedStringArray("AttackableArea", "TacticsPickTargetTimer")]
 script = ExtResource("1_pn7tu")
 Outlets = Dictionary[ExtResource("2_dk8ix"), NodePath]({
-SubResource("Resource_dk8ix"): NodePath("L0"),
-SubResource("Resource_ow04k"): NodePath("M0")
+SubResource("Resource_pn7tu"): NodePath("L0"),
+SubResource("Resource_dk8ix"): NodePath("M0")
 })
 AttackableArea = NodePath("AttackableArea")
+TacticsPickTargetTimer = NodePath("TacticsTimer")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=760403056]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
@@ -108,10 +47,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17401052, -0.5898331)
 [node name="M0" type="Marker3D" parent="." unique_id=385352868]
 transform = Transform3D(0.32639748, 0.9452326, 0, -0.9452326, 0.32639748, 0, 0, 0, 1, 0.4898867, -0.22146034, 0.49930823)
 
-[node name="CombatBehaviorStateMachine" type="Timer" parent="." unique_id=2014291412]
-script = SubResource("CSharpScript_dk8ix")
-
 [node name="AttackableArea" type="Area3D" parent="." unique_id=1310374608]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AttackableArea" unique_id=1223290675]
 shape = SubResource("CylinderShape3D_6jvjn")
+
+[node name="TacticsTimer" type="Timer" parent="." unique_id=1021734723]

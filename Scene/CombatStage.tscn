@@ -2,11 +2,18 @@
 
 [ext_resource type="Script" uid="uid://b74vm8cpqyoht" path="res://Script/Csharp/CombatStage.cs" id="1_dactg"]
 [ext_resource type="Script" uid="uid://cdv2p3d4bubff" path="res://Script/Csharp/StaticsServer.cs" id="2_vb6ob"]
+[ext_resource type="PackedScene" uid="uid://wywlw6f3sftg" path="res://Scene/CombatPanel.tscn" id="3_cwefk"]
 
-[node name="CombatStage" type="Node3D" unique_id=559169952 node_paths=PackedStringArray("EndTimer", "SecondsTimer")]
+[node name="CombatStage" type="Node3D" unique_id=559169952 node_paths=PackedStringArray("EndTimer", "SecondsTimer", "Statics", "LeftFleetPos", "RightFleetPos", "ActiveBoard", "CameraArm", "Camera")]
 script = ExtResource("1_dactg")
 EndTimer = NodePath("EndTimer")
 SecondsTimer = NodePath("SecondsTimer")
+Statics = NodePath("StaticsServer")
+LeftFleetPos = NodePath("LeftFleetPos")
+RightFleetPos = NodePath("RightFleetPos")
+ActiveBoard = NodePath("ActiveBoard")
+CameraArm = NodePath("CameraArm")
+Camera = NodePath("CameraArm/Arm/Camera3D")
 
 [node name="EndTimer" type="Timer" parent="." unique_id=327072692]
 wait_time = 120.0
@@ -19,9 +26,24 @@ script = ExtResource("2_vb6ob")
 metadata/_custom_type_script = "uid://cdv2p3d4bubff"
 
 [node name="LeftFleetPos" type="Marker3D" parent="." unique_id=2028608028]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -75, 0, 0)
 
 [node name="RightFleetPos" type="Marker3D" parent="." unique_id=173711663]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 75)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 0, 0)
 
 [node name="ActiveBoard" type="Node3D" parent="." unique_id=917288360]
+
+[node name="CameraArm" type="Node3D" parent="." unique_id=944381424]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.34153, 0, 17.216808)
+
+[node name="Arm" type="Node3D" parent="CameraArm" unique_id=299524426]
+
+[node name="Camera3D" type="Camera3D" parent="CameraArm/Arm" unique_id=840517532]
+transform = Transform3D(1, 0, 0, 0, 0.25881907, 0.9659258, 0, -0.9659258, 0.25881907, 0, 39.478363, 0.91656876)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="CameraArm/Arm/Camera3D" unique_id=401411933]
+transform = Transform3D(0.95668226, -0.24629605, 0.15523288, 0, 0.53320086, 0.8459887, -0.29113397, -0.8093424, 0.5101038, 0, 0, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1332370113]
+
+[node name="CombatPanel" parent="CanvasLayer" unique_id=981618864 instance=ExtResource("3_cwefk")]

@@ -14,6 +14,19 @@ internal partial class SettingPanel : MarginContainer {
 	[Export]
 	protected RichTextLabel? AboutPage { get; set; }
 
+	#region Combat Stage
+	[Export]
+	protected LineEdit? CameraMoveVelocityEdit { get; set; }
+	[Export]
+	protected LineEdit? CameraOverviewModePitchAngleEdit { get; set; }
+	[Export]
+	protected LineEdit? CameraDistanceMaxEdit { get; set; }
+	[Export]
+	protected LineEdit? CameraDistanceMinEdit { get; set; }
+
+
+	#endregion Combat Stage
+
 	#region Apperance
 	[Export]
 	protected SpinBox? PanelsMarginLeftBox { get; set; }
