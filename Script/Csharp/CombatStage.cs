@@ -106,9 +106,8 @@ internal partial class CombatStage : Node3D {
 	}
 
 	private Spaceship CreateShip(Vector3 originPos, SpaceshipData shipData, TacticsSet tactics) {
-		var ship = new Spaceship(shipData) {
-			Position = originPos + tactics.OffsetPosition
-		};
+		var ship = Spaceship.Load(shipData, tactics);
+		ship.Position = originPos + tactics.OffsetPosition;
 		return ship;
 	}
 

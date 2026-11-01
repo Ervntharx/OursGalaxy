@@ -7,6 +7,8 @@ namespace OursGalaxy;
 internal partial class TurretBase : Node3D {
 	public const ulong DEFAULT_CDMISC = 3000;
 	public const float DEFAULT_ROTATE_ANGLE_VELOCITY = 45;
+	public const float DEFAULT_LEFT_CLAMP_ANGLE = 180;
+	public const float DEFAULT_RIGHT_CLAMP_ANGLE = 180;
 
 	/// <summary>
 	/// 尺寸
@@ -61,8 +63,8 @@ internal partial class TurretBase : Node3D {
 	/// </summary>
 	public virtual float Range { get; set; }
 
-	public float LeftClampAngle { get; set; }
-	public float RightClampAngle { get; set; }
+	public float LeftClampAngle { get; set; } = DEFAULT_LEFT_CLAMP_ANGLE;
+	public float RightClampAngle { get; set; } = DEFAULT_RIGHT_CLAMP_ANGLE;
 
 	/// <summary>
 	/// 是否可旋转。按是否存在旋转构件判断
@@ -124,14 +126,10 @@ internal partial class TurretBase : Node3D {
 	protected float BulletInitVelocity { get; set; }
 
 	/// <summary>
-	/// 实例化子弹资源，并已初始化伤害
+	/// 实例化子弹资源，并应当初始化伤害。基类需要override以重写加载子弹的行为
 	/// </summary>
 	/// <returns></returns>
-	protected virtual BulletBase LoadBullet() {
-		var bullet = BulletBase.Load();
-		bullet.Damage = Damage;
-		return bullet;
-	}
+	protected virtual BulletBase? LoadBullet() => BulletBase.Load();
 
 	/// <summary>
 	/// 获得初始射击时子弹的变换

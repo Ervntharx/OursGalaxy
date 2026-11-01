@@ -38,16 +38,19 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 		CurrentHealth = 0;
 	}
 
-	public void Make(SpaceshipData data, TacticsSet tactics) {
-		ID = data.ID;
-		TypeName = data.GetShipTypeName();
-		CustomName = data.CustomName;
-		CurrentHealth = data.CurrentHP;
-		Range = data.Range;
-		Tactics = tactics;
-		PickUpTarget();
-		TacticsPickTargetTimer.Start();
-		TacticsPickTargetTimer.Timeout += PickUpTarget;
+	public static Spaceship Load(SpaceshipData data, TacticsSet? tactics) {
+		var ship = (Spaceship)ResourceLoader.Load<PackedScene>($"res://Script/Csharp/Ships/{data.GetShipTypeName()}.tscn").Instantiate();
+		ship.ID = data.ID;
+		ship.TypeName = data.GetShipTypeName();
+		ship.CustomName = data.CustomName;
+		ship.CurrentHealth = data.CurrentHP;
+		ship.Range = data.Range;
+		ship.Tactics = tactics ?? new();
+		ship.PickUpTarget();
+		ship.TacticsPickTargetTimer.Start();
+		ship.TacticsPickTargetTimer.Timeout += ship.PickUpTarget;
+		ship.AttackableArea.AreaEntered += ship.OnAttakableAreaAreaEntered;
+		return ship;
 	}
 
 	public SpaceshipData Save() {
@@ -106,23 +109,31 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	/// </summary>
 	public event Action<SpaceshipSnapshot>? OnDeath;
 
+	private void OnAttakableAreaAreaEntered(Area3D area) {
+		if (area is BulletBase bullet) {
+			var originalDamage = bullet.Damage;
+			var damage = new DamageSet() {
+				Impact = Math.Max(originalDamage.Impact - ImpactTolerance, 0),
+				Penetrate = Math.Max(originalDamage.Penetrate - PenetrateTolerance, 0),
+				Photothermal = Math.Max(originalDamage.Photothermal - PhotothermalTolerance, 0),
+				Corrosion = Math.Max(originalDamage.Corrosion - CorrosionTolerance, 0),
+				Electromagnetic = Math.Max(originalDamage.Electromagnetic - ElectromagneticTolerance, 0)
+			};
+			CurrentHealth -= damage.Sum();
+			if (CurrentHealth <= 0) {
+				OnDeath?.Invoke(new(this));
+				QueueFree();
+			}
+		}
+	}
+
 	/// <summary>
 	/// 被攻击
 	/// </summary>
 	/// <param name="target">目标实体</param>
+	[Obsolete]
 	public void Attacked(DamageSet damageSet) {
-		var damage = new DamageSet() {
-			Impact = Math.Max(damageSet.Impact - ImpactTolerance, 0),
-			Penetrate = Math.Max(damageSet.Penetrate - PenetrateTolerance, 0),
-			Photothermal = Math.Max(damageSet.Photothermal - PhotothermalTolerance, 0),
-			Corrosion = Math.Max(damageSet.Corrosion - CorrosionTolerance, 0),
-			Electromagnetic = Math.Max(damageSet.Electromagnetic - ElectromagneticTolerance, 0)
-		};
-		CurrentHealth -= damage.Sum();
-		if (CurrentHealth <= 0) {
-			OnDeath?.Invoke(new(this));
-			QueueFree();
-		}
+
 	}
 
 	#endregion Battle
