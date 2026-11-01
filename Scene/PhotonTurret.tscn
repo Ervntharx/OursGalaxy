@@ -18,8 +18,11 @@ size = Vector3(0.351, 0.492, 0.149)
 height = 25.0
 radius = 0.25
 
-[node name="PhotonTurret" type="Node3D" unique_id=897231260]
+[node name="PhotonTurret" type="Node3D" unique_id=897231260 node_paths=PackedStringArray("RotatableComponent", "Trajectory", "TrajectoryShape")]
 script = ExtResource("1_od7lc")
+RotatableComponent = NodePath("MeshInstance3D")
+Trajectory = NodePath("MeshInstance3D/Area3D")
+TrajectoryShape = NodePath("MeshInstance3D/Area3D/CollisionShape3D")
 
 [node name="Base" type="MeshInstance3D" parent="." unique_id=1602946181]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.096322894, 0)

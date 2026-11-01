@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Godot;
 namespace OursGalaxy.UI;
 
@@ -7,6 +8,8 @@ namespace OursGalaxy.UI;
 /// </summary>
 internal partial class CombatStage : Node3D {
 	public CombatStage Load() => (CombatStage)ResourceLoader.Load<PackedScene>("res://Scene/CombatStage.tscn").Instantiate();
+
+	public static CombatStage? Value { get; private set; }
 
 	public enum CampEnum { None, Left, Right }
 
@@ -38,6 +41,12 @@ internal partial class CombatStage : Node3D {
 	public int RightFleetTotalHP { get; set; } = 0;
 
 	public CombatResult? Result { get; set; }
+
+	public CombatStage() {
+		if (Value is not null) {
+			Value = this;
+		}
+	}
 
 	/// <summary>
 	/// 初始化
@@ -75,6 +84,16 @@ internal partial class CombatStage : Node3D {
 			Win = LeftFleetTotalHP > RightFleetTotalHP
 			// TODO:	记录舰队剩余状态
 		};
+	}
+
+	public static List<SpaceshipSnapshot> ScanShips(CampEnum campFilter) {
+		return [.. Value?.ActiveBoard.GetChildren().OfType<Spaceship>()
+			.Where(ship => ship.Camp != campFilter)
+			.Select<Spaceship, SpaceshipSnapshot>(ship => new(ship))??[]];
+	}
+
+	public static Spaceship? GetShip(GUID id) {
+		return Value?.ActiveBoard.GetChildren().OfType<Spaceship>().Where(ship => ship.ID == id).ToList()[0];
 	}
 
 	// Called when the node enters the scene tree for the first time.

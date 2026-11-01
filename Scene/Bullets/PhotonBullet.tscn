@@ -8,8 +8,9 @@ size = Vector3(0.25, 0.25, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_6jvjn"]
 size = Vector3(0.25, 0.25, 1)
 
-[node name="PhotonBullet" type="Area3D" unique_id=182609138]
+[node name="PhotonBullet" type="Area3D" unique_id=182609138 node_paths=PackedStringArray("Shape")]
 script = ExtResource("1_qyfqb")
+Shape = NodePath("CollisionShape3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=549798137]
 mesh = SubResource("BoxMesh_6jvjn")

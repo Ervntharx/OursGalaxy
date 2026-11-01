@@ -1,4 +1,5 @@
-﻿using OursGalaxy.UI;
+﻿using Godot;
+using OursGalaxy.UI;
 namespace OursGalaxy;
 
 internal record class SpaceshipSnapshot {
@@ -14,6 +15,11 @@ internal record class SpaceshipSnapshot {
 
 	public int HP { get; init; }
 
+	public Transform3D Transform { get; init; }
+	public Spaceship.ScaleSizeEnum ScaleSize { get; init; }
+
+	public bool IsFlagShip { get; init; }
+
 	private SpaceshipSnapshot() {
 		UniqueID = GUID.Empty;
 		TypeName = string.Empty;
@@ -25,6 +31,9 @@ internal record class SpaceshipSnapshot {
 		CustomName = ship.CustomName;
 		Camp = ship.Camp;
 		HP = ship.CurrentHealth;
+		Transform = ship.Transform;
+		ScaleSize = ship.ScaleSize;
+		IsFlagShip = ship.IsFlagShip;
 	}
 
 	public bool IsFrom(Spaceship ship) => UniqueID == ship.ID;

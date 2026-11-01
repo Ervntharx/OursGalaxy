@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime;
-using System.Runtime.CompilerServices;
 using Godot;
 using OursGalaxy.UI;
 namespace OursGalaxy;
@@ -14,7 +12,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	public Node3D AsNode3D() => this;
 	public T ToNode<T>() where T : Node => (this as T)!;
 
-	public enum ScaleSizeEnum { FF, DD, CL, CA, BB }
+	public enum ScaleSizeEnum { FF = 0, DD = 1, CL = 2, CA = 3, BB = 4 }
 
 	[Export]
 	public ScaleSizeEnum ScaleSize { get; set; } = ScaleSizeEnum.FF;
@@ -29,23 +27,27 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	public Godot.Collections.Dictionary<OutletSizeType, NodePath> Outlets { get; set; } = [];
 
 
-	public GUID ID { get; init; }
+	public GUID ID { get; private set; }
 
 	public string TypeName { get; set; }
 	public string? CustomName { get; set; }
 
-	public Spaceship() {
+	protected Spaceship() {
 		ID = GUID.Empty;
 		TypeName = string.Empty;
 		CurrentHealth = 0;
 	}
 
-	public Spaceship(SpaceshipData data) {
+	public void Make(SpaceshipData data, TacticsSet tactics) {
 		ID = data.ID;
 		TypeName = data.GetShipTypeName();
 		CustomName = data.CustomName;
 		CurrentHealth = data.CurrentHP;
 		Range = data.Range;
+		Tactics = tactics;
+		PickUpTarget();
+		TacticsPickTargetTimer.Start();
+		TacticsPickTargetTimer.Timeout += PickUpTarget;
 	}
 
 	public SpaceshipData Save() {
@@ -58,6 +60,8 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	public Area3D AttackableArea { get; set; } = null!;
 
 	public CombatStage.CampEnum Camp { get; set; } = CombatStage.CampEnum.None;
+
+	public bool IsFlagShip { get; set; }
 
 	public IBattleEntity? TargetEntity { get; set; }
 
@@ -125,6 +129,57 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	#region Tactics
 	public TacticsSet Tactics { get; set; } = new();
+
+	[ExportGroup("Tactics")]
+	[Export]
+	protected Timer TacticsPickTargetTimer { get; set; } = null!;
+
+	private void PickUpTarget() {
+		var targetsLs = CombatStage.ScanShips(Camp);
+		switch (Tactics.Targeting) {
+			case TacticsSet.TargetingEnum.Closest:
+				targetsLs.Sort((left, right) => Mathf.RoundToInt(left.Transform.Origin.DistanceTo(GlobalTransform.Origin) - right.Transform.Origin.DistanceTo(GlobalTransform.Origin)));
+				break;
+			case TacticsSet.TargetingEnum.Biggest:
+				targetsLs.Sort((left, right) => (int)left.ScaleSize - (int)right.ScaleSize);
+				break;
+			case TacticsSet.TargetingEnum.Smallest:
+				targetsLs.Sort((left, right) => (int)right.ScaleSize - (int)left.ScaleSize);
+				break;
+			case TacticsSet.TargetingEnum.MiddleThenLargest:
+				var targetSplitLs_MiddleScaleSize = targetsLs.Where(shipshot => shipshot.ScaleSize == ScaleSizeEnum.CL);
+				if (targetSplitLs_MiddleScaleSize.Count() > 0) {
+					targetsLs = [.. targetSplitLs_MiddleScaleSize];
+				}
+				else {
+					targetsLs.Sort((left, right) => (int)left.ScaleSize - (int)right.ScaleSize);
+				}
+				break;
+			case TacticsSet.TargetingEnum.MiddleThenSmallest:
+				var targetSplitLs_MiddleScaleSize_2 = targetsLs.Where(shipshot => shipshot.ScaleSize == ScaleSizeEnum.CL);
+				if (targetSplitLs_MiddleScaleSize_2.Count() > 0) {
+					targetsLs = [.. targetSplitLs_MiddleScaleSize_2];
+				}
+				else {
+					targetsLs.Sort((left, right) => (int)right.ScaleSize - (int)left.ScaleSize);
+				}
+				break;
+			case TacticsSet.TargetingEnum.KillFlagship:
+				var target = targetsLs.Find(shipshot => shipshot.IsFlagShip);
+				if (target is not null) {
+					targetsLs = [target];
+				}
+				else {
+					targetsLs = [];
+				}
+				break;
+			default:
+				break;
+		}
+		if (targetsLs.Count > 0) {
+			TargetEntity = CombatStage.GetShip(targetsLs[0].UniqueID);
+		}
+	}
 	#endregion Tactics
 
 	#region Movement
@@ -203,32 +258,34 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 		}
 	}
 
-	private void AutoSetShipMovementState(double delta, Transform3D selfTrans, Transform3D targetTrans, float coneAngle, float keepDistanceMin, float keepDistanceMax) {
-		var targetOffPos = targetTrans.Origin - selfTrans.Origin; // 目标相对位置
-		if (!targetOffPos.IsZeroApprox()) {
-			if (IsInClone(selfTrans, targetTrans, coneAngle)) {
-				// 在船头椎内就停止旋转
-				RotateMode = RotateModeEnum.Stay;
-				if (selfTrans.Origin.DistanceTo(targetTrans.Origin) > keepDistanceMax) {
-					MovePow = MovePowEnum.Forward;  // 在最大距离之外选择靠近
-				}
-				else if (selfTrans.Origin.DistanceTo(targetTrans.Origin) > keepDistanceMin) {
-					MovePow = MovePowEnum.Stay; // 在最大距离和最小距离之间停机
+	private void AutoSetShipMovementState(Transform3D selfTrans, Transform3D? targetTrans, float coneAngle, float keepDistanceMin, float keepDistanceMax) {
+		if (targetTrans is not null) {
+			var targetOffPos = targetTrans.Value.Origin - selfTrans.Origin; // 目标相对位置
+			if (!targetOffPos.IsZeroApprox()) {
+				if (IsInClone(selfTrans, targetTrans.Value, coneAngle)) {
+					// 在船头椎内就停止旋转
+					RotateMode = RotateModeEnum.Stay;
+					if (selfTrans.Origin.DistanceTo(targetTrans.Value.Origin) > keepDistanceMax) {
+						MovePow = MovePowEnum.Forward;  // 在最大距离之外选择靠近
+					}
+					else if (selfTrans.Origin.DistanceTo(targetTrans.Value.Origin) > keepDistanceMin) {
+						MovePow = MovePowEnum.Stay; // 在最大距离和最小距离之间停机
+					}
+					else {
+						MovePow = MovePowEnum.Backward; // 在最小距离之内后退
+					}
 				}
 				else {
-					MovePow = MovePowEnum.Backward; // 在最小距离之内后退
+					// 不在船头椎内，停止推进，先旋转
+					MovePow = MovePowEnum.Stay;
+					RotateMode = RotateModeEnum.RotateToTarget;
 				}
 			}
 			else {
-				// 不在船头椎内，停止推进，先旋转
+				// 目标重叠，全部停止
 				MovePow = MovePowEnum.Stay;
-				RotateMode = RotateModeEnum.RotateToTarget;
+				RotateMode = RotateModeEnum.Stay;
 			}
-		}
-		else {
-			// 目标重叠，全部停止
-			MovePow = MovePowEnum.Stay;
-			RotateMode = RotateModeEnum.Stay;
 		}
 
 		// 判定是否有在船头椎内
@@ -301,7 +358,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	public override void _Process(double delta) {
 		base._Process(delta);
-		AutoSetShipMovementState(delta, GlobalTransform, TargetEntity.AsNode3D().GlobalTransform, ShipHeadConeAngle, KeepDistanceMin, KeepDistanceMax);
+		AutoSetShipMovementState(GlobalTransform, TargetEntity?.AsNode3D().GlobalTransform, ShipHeadConeAngle, KeepDistanceMin, KeepDistanceMax);
 	}
 
 	public override void _PhysicsProcess(double delta) {

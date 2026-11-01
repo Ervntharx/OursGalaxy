@@ -8,8 +8,9 @@ size = Vector3(0.25, 0.25, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_oeerv"]
 size = Vector3(0.25, 0.25, 1)
 
-[node name="Missile" type="Area3D" unique_id=1270377400]
+[node name="Missile" type="Area3D" unique_id=1270377400 node_paths=PackedStringArray("Shape")]
 script = ExtResource("1_oeerv")
+Shape = NodePath("CollisionShape3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1988847362]
 mesh = SubResource("BoxMesh_am84s")
