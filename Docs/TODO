@@ -10,13 +10,9 @@ Blueprint,Combat,TaskEvent,Task转为Resource直接存储到Res/
 
 [+]写数据库读写，让装备，舰船无需单独序列化的表格数据以数据库文件存储
 
-[going]使用Res/Task Res/TaskEvent Res/Combat直接收录Resource,不使用表格进行读写。
-
 存档增加PropertyChanged追踪和MD5校验能力
 
 LayyerEnum改入引擎Layer名
-
-引入船头椎。6度微机动/主机动判定，15度主船船椎
 
 CombatStage引入战场半径，限制尺寸
 
@@ -43,14 +39,19 @@ ItemViewerPanel实现多选能力
 
 ItemViewerPanel实现返回选择项的回调能力
 
-[x:没有联机能力，做🔨]新增联盟界面
+ItemViewerPanel实现无顶栏嵌入模式
 
 测试：
 	TemplateShip写入数据库，进行首轮战斗测试
 
 问题：
 	迂回机动迂回多远的距离问题如何计算
+		按自身射程向外方向走射程距离
 	船头椎是否依赖某些计算自动生成，还是写死？
+		按转向能力计算。但迂回对对方机动能力判断使用的船头椎默认25
+	
+	Resource直接存储在res://替代数据库能力应该覆盖多大范围？
+	TurretBase如何简化收敛API
 
 等待研究：
 	粒子系统效果配置，发射式粒子特效

@@ -17,7 +17,7 @@ internal partial class PhotonTurret : TurretBase {
 		}
 	}
 
-	protected override BulletBase? LoadBullet() {
+	protected override BulletBase LoadBullet() {
 		var result = PhotonBullet.Load();
 		result.Damage = Damage;
 		return result;

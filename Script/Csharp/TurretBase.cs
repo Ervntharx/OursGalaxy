@@ -129,7 +129,7 @@ internal partial class TurretBase : Node3D {
 	/// 实例化子弹资源，并应当初始化伤害。基类需要override以重写加载子弹的行为
 	/// </summary>
 	/// <returns></returns>
-	protected virtual BulletBase? LoadBullet() => BulletBase.Load();
+	protected virtual BulletBase LoadBullet() => BulletBase.Load();
 
 	/// <summary>
 	/// 获得初始射击时子弹的变换

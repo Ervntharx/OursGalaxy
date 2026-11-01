@@ -11,7 +11,7 @@ internal partial class MissleTurret : TurretBase {
 
 	public override float Range { get => ((SphereShape3D)RangeAreaShape.Shape).Radius; set => ((SphereShape3D)RangeAreaShape.Shape).Radius = value; }
 
-	protected override BulletBase? LoadBullet() {
+	protected override BulletBase LoadBullet() {
 		var result = Missile.Load();
 		result.Damage = Damage;
 		return result;

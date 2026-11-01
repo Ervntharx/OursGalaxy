@@ -195,9 +195,13 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	#region Movement
 	// 移动能力原本参数
+	[Export]
 	public int RotateCapability { get; set; } = 15;
+	[Export]
 	public int PowerCapability { get; set; } = 5;
+	[Export]
 	public int BackPowerCapability { get; set; } = 2;
+	[Export]
 	public int MicroPowrCapability { get; set; } = 1;
 
 	public float RotateAngleVelocity => (float)RotateCapability / 10f;
@@ -211,6 +215,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	public float ShipHeadConeAngle { get; set; } = 25;
 
 	// 保持的距离
+	// TODO:	使用射程动态计算
 	public float KeepDistanceMax { get; set; } = 15;
 	public float KeepDistanceMin { get; set; } = 5;
 
