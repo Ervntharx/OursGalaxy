@@ -1,12 +1,15 @@
 ﻿using Godot;
 using Godot.Collections;
-[GlobalClass]
-internal partial class EquipData : Resource {
-	[Export]
-	public int TypeID { get; set; }
-	[Export]
-	public int UniqueID { get; set; }
+namespace OursGalaxy;
 
+[GlobalClass]
+internal partial class EquipData : UniqueItem {
 	[Export]
-	public Dictionary<string, ushort> Strengthen { get; set; } = [];
+	public Dictionary<string, ushort> Strengthen { get; set; }
+
+	public EquipData(string code, GUID? id = null, Dictionary<string, ushort>? strengthen = null) : base(code, id) {
+		Strengthen = strengthen ?? [];
+	}
+
+	protected EquipData() : base() { Strengthen = []; }
 }

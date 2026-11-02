@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://csxsacoj67bvo"]
 
 [ext_resource type="Script" uid="uid://ccib4rrkno2ui" path="res://Test/TestTurret.cs" id="1_c218q"]
-[ext_resource type="PackedScene" uid="uid://caxwk28uhd7qg" path="res://Scene/LaserTurret.tscn" id="2_8axc0"]
+[ext_resource type="PackedScene" uid="uid://caxwk28uhd7qg" path="res://Scene/Turret/LaserTurret.tscn" id="2_8axc0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c218q"]
 

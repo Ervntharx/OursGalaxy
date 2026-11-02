@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dh67kuoanfngd"]
+
+[ext_resource type="Script" uid="uid://baqa3y041r0df" path="res://Script/Csharp/EquipBase.cs" id="1_mt5uj"]
+
+[node name="TemplateEquip" type="Node3D" unique_id=586916922]
+script = ExtResource("1_mt5uj")

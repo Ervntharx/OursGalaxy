@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using Godot;
-using OursGalaxy.DataBase;
 namespace OursGalaxy;
 
 /// <summary>
 /// 游戏物品基类。不具有数量/唯一性标识能力
 /// </summary>
 [GlobalClass]
-internal partial class ItemBase : Resource {
-	public static readonly ItemBase Empty = new(string.Empty);
-
+internal abstract partial class ItemBase : Resource {
 	public enum QulityEnum { White, Green, Purple, Gold }
 
 	/// <summary>
@@ -20,7 +14,7 @@ internal partial class ItemBase : Resource {
 	/// </summary>
 	[Export]
 	public string Code {
-		get => code; private set {
+		get => code; protected set {
 			code = value;
 			PropertyChanged?.Invoke(this, new("Code"));
 		}
@@ -33,13 +27,9 @@ internal partial class ItemBase : Resource {
 	/// </summary>
 	protected ItemBase() { code = string.Empty; }
 
-	public ItemBase(string code) {
-		this.code = code;
-	}
+	public ItemBase(string code) => this.code = code;
 
-	public ItemBase(string table, string name, QulityEnum qulityEnum = QulityEnum.White) {
-		this.code = $"{table}_{name}_{(int)qulityEnum}";
-	}
+	public ItemBase(string table, string name, QulityEnum qulityEnum = QulityEnum.White) => this.code = $"{table}_{name}_{(int)qulityEnum}";
 
 	public ItemBase(ItemBase other) : this(other.Code) { }
 
@@ -54,69 +44,8 @@ internal partial class ItemBase : Resource {
 		throw new ArgumentOutOfRangeException("Read Qulity Error");
 	}
 
-	/// <summary>
-	/// ⚠️得到的是db的id,不是id code
-	/// </summary>
-	/// <param name="name"></param>
-	/// <param name="id"></param>
-	/// <returns></returns>
-	public bool TryQueryID([NotNullWhen(true)] out int? id) {
-		id = null;
-		return false;
-	}
-
-	/// <summary>
-	/// 得到显示名
-	/// </summary>
-	/// <param name="id"></param>
-	/// <param name="displayName"></param>
-	/// <returns></returns>
-	public bool TryQueryDisplayName([NotNullWhen(true)] out string? displayName) {
-		displayName = null;
-		return false;
-	}
-
-	public string Query(string key) {
-		return GameDataBase.QueryString(GetTableName(), GetItemName(), key);
-	}
-
-	public string QueryAndClear(string key) {
-		GameDataBase.Connect();
-		var result = Query(key);
-		GameDataBase.Disconnet();
-		return result;
-	}
-
-	public Dictionary<string, string?> Quary(params string[] keys) {
-		return GameDataBase.Query(GetTableName(), GetItemName(), keys);
-	}
-
-	public System.Collections.Generic.Dictionary<string, string?> QuaryWithClear(params string[] keys) {
-		GameDataBase.Connect();
-		var result = Quary(keys);
-		GameDataBase.Disconnet();
-		return result;
-	}
-
-	[Obsolete]
-	public bool TryQuery<T>(string itemName, [NotNullWhen(true)] out T? result) {
-		result = default(T);
-		return false;
-	}
-
-	[Obsolete]
-	public bool TryQueryMore(string[] itemName, [NotNullWhen(true)] out Dictionary<string, object?>? result) {
-		result = null;
-		return false;
-	}
-
-	public static bool operator ==(ItemBase left, ItemBase right) {
-		return !(left != right);
-	}
-
-	public static bool operator !=(ItemBase left, ItemBase right) {
-		return left.Code != right.Code;
-	}
+	public static bool operator ==(ItemBase left, ItemBase right) => !(left != right);
+	public static bool operator !=(ItemBase left, ItemBase right) => left.Code != right.Code;
 
 	public override bool Equals(object? obj) {
 		if (ReferenceEquals(this, obj)) {
@@ -126,13 +55,9 @@ internal partial class ItemBase : Resource {
 	}
 
 	// override object.GetHashCode
-	public override int GetHashCode() {
-		return Code.GetHashCode() + 17;
-	}
+	public override int GetHashCode() => Code.GetHashCode() + 17;
 
-	public override string ToString() {
-		return $"ItemBase: {Code}";
-	}
+	public override string ToString() => $"ItemBase: {Code}";
 
 	private string code;
 }

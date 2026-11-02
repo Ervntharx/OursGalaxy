@@ -18,8 +18,10 @@ internal partial class TestCombat : Node3D {
 	}
 
 	private FleetData MakeLFleetData() {
-		var flagship = new SpaceshipData("TemplateShip");
-		flagship.CustomName = "left flag ship!";
+		var flagship = new SpaceshipData("TemplateShip") {
+			CustomName = "left flag ship!",
+			EquipsConfig = new() { }
+		};
 		var fleet = new FleetData(flagship);
 		fleet.Name = "left fleet!";
 		fleet.Ships = new(){
@@ -44,6 +46,7 @@ internal partial class TestCombat : Node3D {
 		};
 		return fleet;
 	}
+
 	private FleetData MakeRFleetData() {
 		var flagship = new SpaceshipData("TemplateShip");
 		flagship.CustomName = "right flag ship!";

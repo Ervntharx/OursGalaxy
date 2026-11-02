@@ -1,17 +1,6 @@
 [gd_scene format=3 uid="uid://bto3wngljf3fb"]
 
-[ext_resource type="Script" uid="uid://beeqmj0rs3de7" path="res://Script/Csharp/Ships/TemplateShip.cs" id="1_pn7tu"]
-[ext_resource type="Script" uid="uid://bk1uh2q5oiut3" path="res://Script/Csharp/OutletSizeType.cs" id="2_dk8ix"]
-
-[sub_resource type="Resource" id="Resource_pn7tu"]
-script = ExtResource("2_dk8ix")
-SizeType = 2
-metadata/_custom_type_script = "uid://bk1uh2q5oiut3"
-
-[sub_resource type="Resource" id="Resource_dk8ix"]
-script = ExtResource("2_dk8ix")
-SizeType = 1
-metadata/_custom_type_script = "uid://bk1uh2q5oiut3"
+[ext_resource type="Script" uid="uid://dyr6j1m4u45e3" path="res://Script/Csharp/Spaceship.cs" id="1_en85r"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_6jvjn"]
 size = Vector3(1, 1, 0.357)
@@ -20,14 +9,9 @@ size = Vector3(1, 1, 0.357)
 height = 0.5
 radius = 1.2
 
-[node name="TemplateShip" type="CharacterBody3D" unique_id=760973978 node_paths=PackedStringArray("AttackableArea", "TacticsPickTargetTimer")]
-script = ExtResource("1_pn7tu")
-Outlets = Dictionary[ExtResource("2_dk8ix"), NodePath]({
-SubResource("Resource_pn7tu"): NodePath("L0"),
-SubResource("Resource_dk8ix"): NodePath("M0")
-})
-AttackableArea = NodePath("AttackableArea")
-TacticsPickTargetTimer = NodePath("TacticsTimer")
+[node name="TemplateShip" type="CharacterBody3D" unique_id=760973978 node_paths=PackedStringArray("TacticsTargetProberTimer")]
+script = ExtResource("1_en85r")
+TacticsTargetProberTimer = NodePath("TacticsTimer")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=760403056]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)

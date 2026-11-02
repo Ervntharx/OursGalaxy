@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Godot;
 namespace OursGalaxy;
 
 /// <summary>
 /// 装备接口
 /// </summary>
+[Obsolete("Equip instead")]
 internal interface IEquip {
 	/// <summary>
 	/// 尺寸

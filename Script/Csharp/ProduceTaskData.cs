@@ -13,10 +13,10 @@ internal partial class ProduceTaskData : Resource {
 	public TimeSpan ProgressTimeSpan => TimeSpan.FromSeconds(ProgressSeconds);
 
 	[Export]
-	public ItemBase Target { get; set; }
+	public ItemBase? Target { get; set; }
 
 	protected ProduceTaskData() {
-		Target = ItemBase.Empty;
+		Target = null;
 		StartDate = DateTime.Now();
 		ProgressSeconds = 5;
 	}

@@ -18,5 +18,5 @@ internal partial class UniqueItemReference : Resource {
 	/// 得到的是副本！
 	/// </summary>
 	/// <returns></returns>
-	public ItemBase GetItem() => new(Code);
+	public UniqueItem GetItem() => new(Code);
 }

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SpaceshipConfig" format=3 uid="uid://b2d2jrthl7tec"]
+
+[ext_resource type="Script" uid="uid://du6lqnnufec7u" path="res://Script/Csharp/SpaceshipConfig.cs" id="1_7udq8"]
+
+[resource]
+script = ExtResource("1_7udq8")
+HP = 1
+metadata/_custom_type_script = "uid://du6lqnnufec7u"

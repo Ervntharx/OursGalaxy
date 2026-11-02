@@ -23,42 +23,45 @@ internal partial class ItemBox : Button {
 	[Export]
 	protected VBoxContainer? FoldOptionsVBox { get; set; }
 
-	public ItemBase Item { get => item; set => Make(value, "选择"); }
+	public ItemBase? Item { get => item; set => Make(value, "选择"); }
 
 	public event Action<string>? PressedOption;
 
-	public void Make(ItemBase itemValue, string defaultOpt, params string[] opts) {
+	public void Make(ItemBase? itemValue, string defaultOpt, params string[] opts) {
 		item = itemValue;
-		itemValue.PropertyChanged += Update;
-		NameLabel!.Text = $"[color=gold]{itemValue.Code}[/color]";
-		if (itemValue is OursGalaxy.GameItem mItem) {
-			NumLabel!.Show();
-			NumLabel!.Text = $"{mItem.Num}";
-		}
-		else {
-			NumLabel!.Hide();
-			NumLabel!.Text = string.Empty;
-		}
+		if (itemValue is not null) {
+			itemValue.PropertyChanged += Update;
 
-		foreach (var connection in DefaultButton!.GetSignalConnectionList(Button.SignalName.Pressed)) {
-			if (connection["callable"].Obj is Callable callable) {
-				DefaultButton!.Disconnect(Button.SignalName.Pressed, callable);
+			NameLabel!.Text = $"[color=gold]{itemValue.Code}[/color]";
+			if (itemValue is OursGalaxy.GameItem mItem) {
+				NumLabel!.Show();
+				NumLabel!.Text = $"{mItem.Num}";
 			}
-		}
+			else {
+				NumLabel!.Hide();
+				NumLabel!.Text = string.Empty;
+			}
 
-		DefaultButton!.Pressed += OnDefaultButtonPressed;
-		DefaultButton!.Text = defaultOpt;
-		FoldOptionsVBox!.GetChildren().ToList().ForEach(child => child.QueueFree());
-		foreach (var opt in opts) {
-			var optButton = new Button {
-				Text = opt
-			};
-			optButton.Pressed += () => PressedOption?.Invoke(opt);
-			FoldOptionsVBox!.AddChild(optButton);
-		}
+			foreach (var connection in DefaultButton!.GetSignalConnectionList(Button.SignalName.Pressed)) {
+				if (connection["callable"].Obj is Callable callable) {
+					DefaultButton!.Disconnect(Button.SignalName.Pressed, callable);
+				}
+			}
 
-		void OnDefaultButtonPressed() {
-			PressedOption?.Invoke(defaultOpt);
+			DefaultButton!.Pressed += OnDefaultButtonPressed;
+			DefaultButton!.Text = defaultOpt;
+			FoldOptionsVBox!.GetChildren().ToList().ForEach(child => child.QueueFree());
+			foreach (var opt in opts) {
+				var optButton = new Button {
+					Text = opt
+				};
+				optButton.Pressed += () => PressedOption?.Invoke(opt);
+				FoldOptionsVBox!.AddChild(optButton);
+			}
+
+			void OnDefaultButtonPressed() {
+				PressedOption?.Invoke(defaultOpt);
+			}
 		}
 	}
 
@@ -93,5 +96,5 @@ internal partial class ItemBox : Button {
 		base._ExitTree();
 	}
 
-	private ItemBase item = ItemBase.Empty;
+	private ItemBase? item;
 }

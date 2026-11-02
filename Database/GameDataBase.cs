@@ -7,6 +7,7 @@ namespace OursGalaxy.DataBase;
 /// <summary>
 /// 静态数据库类
 /// </summary>
+[Obsolete("ResourceLib instead")]
 internal partial class GameDataBase {
 	/// <summary>
 	/// 设定密码，后续连接一直使用

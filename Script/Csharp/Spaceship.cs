@@ -78,7 +78,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	public int CurrentHealth { get; set; }
 
-	public int Range { get; set; }
+	public float Range { get; set; }
 
 	/// <summary>
 	/// 回避性能

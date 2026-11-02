@@ -8,7 +8,6 @@ namespace OursGalaxy;
 /// </summary>
 [GlobalClass]
 internal partial class GameItem : ItemBase {
-	public new static readonly GameItem Empty = new();
 	/// <summary>
 	/// 数量
 	/// </summary>

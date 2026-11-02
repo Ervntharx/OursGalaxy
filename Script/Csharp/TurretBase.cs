@@ -4,7 +4,7 @@ namespace OursGalaxy;
 /// <summary>
 /// 炮台基
 /// </summary>
-internal partial class TurretBase : Node3D {
+internal partial class TurretBase : EquipBase {
 	public const ulong DEFAULT_CDMISC = 3000;
 	public const float DEFAULT_ROTATE_ANGLE_VELOCITY = 45;
 	public const float DEFAULT_LEFT_CLAMP_ANGLE = 180;
@@ -61,7 +61,7 @@ internal partial class TurretBase : Node3D {
 	/// <summary>
 	/// 射程
 	/// </summary>
-	public virtual float Range { get; set; }
+	public virtual float Range { get; set; } = 1;
 
 	public float LeftClampAngle { get; set; } = DEFAULT_LEFT_CLAMP_ANGLE;
 	public float RightClampAngle { get; set; } = DEFAULT_RIGHT_CLAMP_ANGLE;
