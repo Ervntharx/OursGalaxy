@@ -4,6 +4,8 @@ namespace OursGalaxy;
 internal partial class BulletBase : Area3D {
 	public static BulletBase Load() => (BulletBase)ResourceLoader.Load<PackedScene>("res://Scene/Bullets/TemplateBullet.tscn").Instantiate();
 
+	public SpaceshipSnapshot? From { get; set; }
+
 	[Export]
 	public CollisionShape3D Shape { get; set; } = null!;
 

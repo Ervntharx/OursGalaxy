@@ -12,6 +12,7 @@ internal partial class CombatStage : Node3D {
 
 	public static CombatStage? Value { get; private set; }
 
+	[Obsolete]
 	public enum CampEnum { None, Left, Right }
 
 	/// <summary>
@@ -43,6 +44,9 @@ internal partial class CombatStage : Node3D {
 	[Export]
 	protected Camera3D Camera { get; set; } = null!;
 
+	[Export]
+	protected CombatPanel Panel { get; set; } = null!;
+
 	public int LeftFleetTotalHP { get; set; } = 0;
 	public int RightFleetTotalHP { get; set; } = 0;
 
@@ -64,23 +68,21 @@ internal partial class CombatStage : Node3D {
 	/// <param name="rightFleet"></param>
 	public void Make(FleetData leftFleet, FleetData rightFleet) {
 		left = leftFleet;
-		leftSurvivalCount = left.ShipsCount;
 		foreach (var leftShipAndTactics in leftFleet.Ships) {
 			var ship = CreateShip(LeftFleetPos.Position, leftShipAndTactics.Key, leftShipAndTactics.Value);
 			ship.Basis = Basis.LookingAt(Vector3.Left, Vector3.Up);
-			ship.Camp = CampEnum.Left;
-			ship.OnDeath += OnShipDeath;
+			ship.FromFleetID = leftFleet.ID;
 			ActiveBoard.AddChild(ship);
+			Statics.TrackShip(ship);
 		}
 
 		Right = rightFleet;
-		rightSurvivalCount = Right.ShipsCount;
 		foreach (var rightShipAndTactics in rightFleet.Ships) {
 			var ship = CreateShip(RightFleetPos.Position, rightShipAndTactics.Key, rightShipAndTactics.Value);
 			ship.Basis = Basis.LookingAt(Vector3.Right, Vector3.Up);
-			ship.Camp = CampEnum.Right;
-			ship.OnDeath += OnShipDeath;
+			ship.FromFleetID = rightFleet.ID;
 			ActiveBoard.AddChild(ship);
+			Statics.TrackShip(ship);
 		}
 	}
 
@@ -99,10 +101,17 @@ internal partial class CombatStage : Node3D {
 		};
 	}
 
+	[Obsolete("Via fleet guid filter instead")]
 	public static List<SpaceshipSnapshot> ScanShips(CampEnum campFilter) {
 		return [.. Value?.ActiveBoard.GetChildren().OfType<Spaceship>()
 			.Where(ship => ship.Camp != campFilter)
 			.Select<Spaceship, SpaceshipSnapshot>(ship => new(ship))??[]];
+	}
+
+	public static List<SpaceshipSnapshot> ProbeShips(GUID filterFleetID) {
+		return [..Value?.ActiveBoard.GetChildren().OfType<Spaceship>()
+			.Where(ship=>ship.FromFleetID != filterFleetID)
+			.Select<Spaceship,SpaceshipSnapshot>(ship=>new(ship))??[]];
 	}
 
 	public static Spaceship? GetShip(GUID id) {
@@ -161,25 +170,8 @@ internal partial class CombatStage : Node3D {
 		return ship;
 	}
 
-	private void OnShipDeath(SpaceshipSnapshot shipshot) {
-		if (shipshot.Camp == CampEnum.Left) {
-			leftSurvivalCount -= 1;
-		}
-		if (shipshot.Camp == CampEnum.Right) {
-			rightSurvivalCount -= 1;
-		}
-
-		if (leftSurvivalCount == 0 || rightSurvivalCount == 0) {
-			End();
-		}
-	}
-
 	private FleetData? left;
 	private FleetData? Right;
-
-	// 存活舰船计数
-	private int leftSurvivalCount;
-	private int rightSurvivalCount;
 
 	// 摄像机
 	private const float OVERVIEW_MODE_CAMERA_CLAMP_PITCH = 70;

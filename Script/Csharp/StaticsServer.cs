@@ -1,35 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
-
+using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
 
+/// <summary>
+/// 统计服务器。统计Combat中Fleet的HP，ShipsCount,Ship的HP
+/// </summary>
 [GlobalClass]
 internal partial class StaticsServer : Node {
-	public void Regiter(Spaceship ship) {
-		value.TryAdd(new(ship), new());
-	}
-
-	public StaticsSet this[Spaceship ship] {
-		get {
-			foreach (var pair in value) {
-				if (pair.Key.IsFrom(ship)) {
-					return pair.Value;
-				}
-			}
-			throw new ArgumentOutOfRangeException();
+	public void TrackShip(Spaceship ship) {
+		if (ShipsStatics.FirstOrDefault(shipstatics => shipstatics.ID == ship.ID) is null) {
+			ShipsStatics.Add(new(ship.Save()));
 		}
-		set {
-			this.value.TryAdd(new(ship), value);
+		else {
+			GD.PushWarning($"StaticsServer has already tracked ship {ship.ID}");
 		}
 	}
 
-	private Dictionary<SpaceshipSnapshot, StaticsSet> value = [];
+	private HashSet<CombatSpaceshipStaticsData> ShipsStatics { get; set; } = [];
 
-	public class StaticsSet {
-		public Dictionary<Spaceship.ScaleSizeEnum, int> KillCount { get; private set; } = [];
-		public int TotalTakeDamage { get; set; }
-		public int TotalDamage { get; set; }
-		public int? DeadSeconds { get; set; }
+	private void OnShipDeath(SpaceshipSnapshot shipShot) {
+
 	}
 }

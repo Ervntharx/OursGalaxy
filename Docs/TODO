@@ -3,12 +3,16 @@
 Blueprint,Combat,TaskEvent,Task转为Resource直接存储到Res/
 所以这几个类型的实现应转变实现，暴露所有配置项
 
-⚠️GameItem某几个派生类型的数据库读写没有显式开关链接
+实现的UniqueItem的派生类（SpaceshipData,EquipBase）都需要实现Reference，且能MakeCopy()
+
+引入ShieldConfig, ShieldData
+引入DamageControlEquipConfig，DamageControlEquipData
+
+TurretConfig的三派生类各自需要实现GetTemplate()
+TurretBase的三派生类各自需要From(config)能力
 
 实现LongProgressTask类型以覆盖远征，生产制造所需的长离线过程任务
 远征的Tasks堆积让远征vb自行解引
-
-[+]写数据库读写，让装备，舰船无需单独序列化的表格数据以数据库文件存储
 
 存档增加PropertyChanged追踪和MD5校验能力
 
@@ -16,14 +20,15 @@ LayyerEnum改入引擎Layer名
 
 CombatStage引入战场半径，限制尺寸
 
+StaticsServer添加按舰队筛选能力
+
 机动模式引入纯GoForward,GoBackward,Stay通用推进模式。不在船头椎内时Stay转向
 迂回机动设置目标点就在目标全局位置的相对上下左右。自动迂回模式下选择最短者。
 护卫机动设置机动目标点为相对位置。但如果过远（距离未知）使用通用机动逻辑。
 护卫机动下如果有目标，仍然先尝试旋转攻击目标
 
 []AI逻辑行为状态机：
-	新增警戒度——0.25-0.5/1.2-2.5/4-5/8-10/nolimit硬时间差尝试切换目标
-	锁定目标模式按体积排序。但不计划引入体积系数
+	迂回以绕飞点替代跟踪目标
 
 Spaceship引入BaseStateEnum管理基础行为状态替代Active
 
@@ -33,8 +38,6 @@ FleetEditor，实现MemShips摆放，Tactics配置
 
 UI:
 新增通用的”恭喜获得物品界面“
-
-针对一般Item使用新增的精简ItemBox.针对UniqueItem使用UniuqeItemBox.即引入类型上挂载相应的ItemBox Load
 
 新增对舰船/装备的查看面板
 
@@ -66,5 +69,4 @@ ItemViewerPanel实现无顶栏嵌入模式
 	粒子系统效果配置，发射式粒子特效
 
 等待修理：
-	Turret旋转逻辑不正常
 

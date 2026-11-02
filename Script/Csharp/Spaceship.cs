@@ -20,6 +20,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	/// <summary>
 	/// 活动总开关
 	/// </summary>
+	[Obsolete("BaseStateMachine instead")]
 	public bool Active {
 		get => active;
 		set {
@@ -29,11 +30,12 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 			}
 		}
 	}
+	[Obsolete("BaseStateMachine instead")]
 	private bool active;
 
 	[ExportGroup("Outlets Setup")]
 	[Export]
-	public Godot.Collections.Dictionary<OutletSizeType, NodePath> Outlets { get; set; } = [];
+	public Godot.Collections.Array<Outlet> Outlets { get; set; } = [];
 
 
 	public GUID ID { get; private set; }
@@ -43,6 +45,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	protected Spaceship() {
 		ID = GUID.Empty;
+		FromFleetID = GUID.Empty;
 		TypeName = string.Empty;
 		CurrentHealth = 0;
 	}
@@ -68,7 +71,10 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	[Export]
 	public Area3D AttackableArea { get; set; } = null!;
 
+	[Obsolete("Fleet GUID instead")]
 	public CombatStage.CampEnum Camp { get; set; } = CombatStage.CampEnum.None;
+
+	public GUID FromFleetID { get; set; }
 
 	public bool IsFlagShip { get; set; }
 
@@ -113,34 +119,36 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	/// <summary>
 	/// 死亡事件
 	/// </summary>
-	public event Action<SpaceshipSnapshot>? OnDeath;
+	public event Action<SpaceshipSnapshot>? DeathEvent;
+
+	/// <summary>
+	/// 被攻击.前者是被攻击者，后者是攻击者
+	/// </summary>
+	public event Action<SpaceshipSnapshot, SpaceshipSnapshot>? AttackedEvent;
 
 	private void OnAttakableAreaAreaEntered(Area3D area) {
 		if (area is BulletBase bullet) {
 			var originalDamage = bullet.Damage;
-			var damage = new DamageSet() {
-				Impact = Math.Max(originalDamage.Impact - ImpactTolerance, 0),
-				Penetrate = Math.Max(originalDamage.Penetrate - PenetrateTolerance, 0),
-				Photothermal = Math.Max(originalDamage.Photothermal - PhotothermalTolerance, 0),
-				Corrosion = Math.Max(originalDamage.Corrosion - CorrosionTolerance, 0),
-				Electromagnetic = Math.Max(originalDamage.Electromagnetic - ElectromagneticTolerance, 0)
-			};
-			CurrentHealth -= damage.Sum();
-			if (CurrentHealth <= 0) {
-				OnDeath?.Invoke(new(this));
-				QueueFree();
-			}
+
 		}
 	}
 
-	/// <summary>
-	/// 被攻击
-	/// </summary>
-	/// <param name="target">目标实体</param>
-	[Obsolete]
-	public void Attacked(DamageSet damageSet) {
-
+	public void Attacked(DamageSet damage, SpaceshipSnapshot from) {
+		var finalDamage = new DamageSet() {
+			Impact = Math.Max(damage.Impact - ImpactTolerance, 0),
+			Penetrate = Math.Max(damage.Penetrate - PenetrateTolerance, 0),
+			Photothermal = Math.Max(damage.Photothermal - PhotothermalTolerance, 0),
+			Corrosion = Math.Max(damage.Corrosion - CorrosionTolerance, 0),
+			Electromagnetic = Math.Max(damage.Electromagnetic - ElectromagneticTolerance, 0)
+		};
+		CurrentHealth -= finalDamage.Sum();
+		AttackedEvent?.Invoke(new(this), from);
+		if (CurrentHealth <= 0) {
+			DeathEvent?.Invoke(new(this));
+			QueueFree();
+		}
 	}
+
 
 	#endregion Battle
 
@@ -152,7 +160,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	protected Timer TacticsTargetProberTimer { get; set; } = null!;
 
 	private void ProbeTarget() {
-		var targetsLs = CombatStage.ScanShips(Camp);
+		var targetsLs = CombatStage.ProbeShips(FromFleetID);
 		GD.Print($"try spaceship probe target: {targetsLs.Count}");
 		switch (Tactics.Targeting) {
 			case TacticsSet.TargetingEnum.Closest:
@@ -324,7 +332,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	// 探测船上可用的Turret
 	private void ProbeTurret() {
-		foreach (var turret in Outlets.Select(outlet => GetNodeOrNull<Node?>(outlet.Value)?.GetChildOrNull<Node?>(0)).OfType<TurretBase>()) {
+		foreach (var turret in Outlets.Select(outlet => outlet.GetChild(0)).OfType<TurretBase>()) {
 			Turrets.Add(turret);
 		}
 	}

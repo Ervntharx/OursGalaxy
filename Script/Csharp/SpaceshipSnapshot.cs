@@ -11,7 +11,7 @@ internal record class SpaceshipSnapshot {
 
 	public string? CustomName { get; init; }
 
-	public CombatStage.CampEnum Camp { get; init; }
+	public GUID FromFleetID { get; init; }
 
 	public int HP { get; init; }
 
@@ -22,6 +22,7 @@ internal record class SpaceshipSnapshot {
 
 	private SpaceshipSnapshot() {
 		UniqueID = GUID.Empty;
+		FromFleetID = GUID.Empty;
 		TypeName = string.Empty;
 	}
 
@@ -29,7 +30,7 @@ internal record class SpaceshipSnapshot {
 		UniqueID = ship.ID;
 		TypeName = ship.TypeName;
 		CustomName = ship.CustomName;
-		Camp = ship.Camp;
+		FromFleetID = ship.FromFleetID;
 		HP = ship.CurrentHealth;
 		Transform = ship.Transform;
 		ScaleSize = ship.ScaleSize;

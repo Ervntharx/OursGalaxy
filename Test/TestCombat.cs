@@ -1,6 +1,8 @@
 using Godot;
+using OursGalaxy.ResourceConfig;
 using OursGalaxy.UI;
 using System;
+using System.Numerics;
 namespace OursGalaxy;
 
 internal partial class TestCombat : Node3D {
@@ -9,7 +11,13 @@ internal partial class TestCombat : Node3D {
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
-		Stage.Make(MakeLFleetData(), MakeRFleetData());
+		var fleet = MakeFleetData("left");
+		var mem3 = SpaceshipData.From(SpaceshipLib.GetTemplate());
+		mem3.CustomName = $"{fleet.Name} mem 1";
+		fleet.Ships.Add(mem3, new() {
+			OffsetPosition = Godot.Vector3.Back * 5
+		});
+		Stage.Make(fleet, MakeFleetData("right"));
 		Stage.Start();
 	}
 
@@ -17,55 +25,23 @@ internal partial class TestCombat : Node3D {
 	public override void _Process(double delta) {
 	}
 
-	private FleetData MakeLFleetData() {
-		var flagship = new SpaceshipData("TemplateShip") {
-			CustomName = "left flag ship!",
-			EquipsLs = new() { }
+	private FleetData MakeFleetData(string fleetName) {
+		var flagship = SpaceshipData.From(SpaceshipLib.GetTemplate());
+		flagship.CustomName = $"{fleetName} flag ship!";
+		var fleet = new FleetData(flagship) {
+			Name = fleetName
 		};
-		var fleet = new FleetData(flagship);
-		fleet.Name = "left fleet!";
-		fleet.Ships = new(){
-			{new SpaceshipData("TemplateShip") {
-				CustomName = "left mem 1"
-			}, new TacticsSet() {
-				OffsetPosition = Vector3.Back*5
-			}
-			},
-			{new SpaceshipData("TemplateShip") {
-				CustomName = "left mem 2"
-			}, new TacticsSet() {
-				OffsetPosition = Vector3.Left*5
-			}
-			},
-			{new SpaceshipData("TemplateShip") {
-				CustomName = "left mem 3"
-			}, new TacticsSet() {
-				OffsetPosition = Vector3.Right*5
-			}
-			},
-		};
-		return fleet;
-	}
+		var mem1 = SpaceshipData.From(SpaceshipLib.GetTemplate());
+		mem1.CustomName = $"{fleetName} mem 1";
+		fleet.Ships.Add(mem1, new() {
+			OffsetPosition = Godot.Vector3.Right * 5
+		});
+		var mem2 = SpaceshipData.From(SpaceshipLib.GetTemplate());
+		mem2.CustomName = $"{fleetName} mem 1";
+		fleet.Ships.Add(mem2, new() {
+			OffsetPosition = Godot.Vector3.Left * 5
+		});
 
-	private FleetData MakeRFleetData() {
-		var flagship = new SpaceshipData("TemplateShip");
-		flagship.CustomName = "right flag ship!";
-		var fleet = new FleetData(flagship);
-		fleet.Name = "right fleet!";
-		fleet.Ships = new() {
-			{new SpaceshipData("TemplateShip") {
-				CustomName = "right mem 1"
-			},new TacticsSet() {
-				OffsetPosition = Vector3.Right*5
-			}
-			},
-			{new SpaceshipData("TemplateShip") {
-				CustomName = "right mem 2"
-			},new TacticsSet() {
-				OffsetPosition = Vector3.Left*5
-			}
-			},
-		};
 		return fleet;
 	}
 }

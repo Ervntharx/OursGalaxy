@@ -9,7 +9,6 @@ namespace OursGalaxy;
 /// </summary>
 [GlobalClass]
 internal partial class SpaceshipData : UniqueItem {
-
 	[Export] public string? CustomName { get; set; }
 
 	[Export(PropertyHint.Range, "1,0,99999")]
@@ -23,6 +22,11 @@ internal partial class SpaceshipData : UniqueItem {
 	public int Raid => raid.Value;
 	public float Range => range.Value;
 
+	/// <summary>
+	/// 从Config构造Data
+	/// </summary>
+	/// <param name="config"></param>
+	/// <returns></returns>
 	public static SpaceshipData From(SpaceshipConfig config) {
 		return new(config.ShipTypeName);
 	}

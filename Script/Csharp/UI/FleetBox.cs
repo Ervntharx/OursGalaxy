@@ -18,7 +18,7 @@ internal partial class FleetBox : Button {
 
 	public void Make(int index, FleetData fleetData) {
 		// TODO
-		TrackedFleetUniqueID = fleetData.UniqueID;
+		TrackedFleetUniqueID = fleetData.ID;
 		TitleLabel!.Text = MakeTitleString(index, fleetData.Name);
 		DescLabel!.Text = MakeDescString(fleetData.Flagship.CustomName, fleetData.Flagship.GetShipTypeName(),
 			123, 321, 6, 8, 250, 256);

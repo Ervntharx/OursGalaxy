@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System;
+using Godot;
 namespace OursGalaxy;
 
 /// <summary>
@@ -12,11 +13,14 @@ internal partial class OutletSizeType : Resource {
 	public readonly static OutletSizeType XL = new("XL");
 	public readonly static OutletSizeType Air = new("Air");
 
-	protected OutletSizeType() { type = Air.type; }
-	public OutletSizeType(string specialOutletTypeName) { type = specialOutletTypeName; }
+	[Export(PropertyHint.EnumSuggestion, "S,M,L,XL,Air")]
+	public string Type { get; set; } = "Air";
+
+	public OutletSizeType() { }
+	public OutletSizeType(string sizeType) { Type = sizeType; }
 
 	public static bool operator ==(OutletSizeType left, OutletSizeType right) => !(left != right);
-	public static bool operator !=(OutletSizeType left, OutletSizeType right) => left.type != right.type;
+	public static bool operator !=(OutletSizeType left, OutletSizeType right) => left.Type != right.Type;
 
 	public override bool Equals(object? obj) {
 		if (ReferenceEquals(this, obj)) {
@@ -25,8 +29,6 @@ internal partial class OutletSizeType : Resource {
 		return obj is not null && obj is OutletSizeType outletObj && outletObj == this;
 	}
 
-	public override int GetHashCode() => type.GetHashCode();
-	public override string ToString() => type;
-
-	private string type = "S";
+	public override int GetHashCode() => Type.GetHashCode();
+	public override string ToString() => Type;
 }

@@ -8,5 +8,8 @@ internal static class SpaceshipLib {
 	public static SpaceshipConfig QueryConfig(string shipType, ItemBaseConfig.QulityEnum qulity)
 		=> ResourceLib.QueryConfig<SpaceshipConfig>(SpaceshipConfig.ItemCodePrefix, shipType, qulity);
 
+	public static SpaceshipConfig QueryConfig(SpaceshipData data)
+		=> SpaceshipLib.QueryConfig(data.GetShipTypeName(), data.GetQulity());
+
 	public static SpaceshipConfig GetTemplate() => ResourceLoader.Load<SpaceshipConfig>("res://ResourceLib/Spaceship/TemplateShip.tres");
 }

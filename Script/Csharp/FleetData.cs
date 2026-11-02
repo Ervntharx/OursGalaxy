@@ -14,7 +14,7 @@ internal partial class FleetData : Resource {
 	/// 舰队ID
 	/// </summary>
 	[Export]
-	public string UniqueID { get; set; }
+	public GUID ID { get; set; }
 	[Export]
 	public string Name { get; set; } = DEFAULT_NAME;
 
@@ -36,7 +36,7 @@ internal partial class FleetData : Resource {
 
 	public FleetData(SpaceshipData flagship) {
 		Flagship = flagship;
-		UniqueID = GenerateUniqueID();
+		ID = GUID.Generate();
 
 		size = new(() => {
 			var result = Flagship.Size;
@@ -76,21 +76,12 @@ internal partial class FleetData : Resource {
 	/// </summary>
 	protected FleetData() {
 		Flagship = SpaceshipData.From(SpaceshipLib.GetTemplate());
-		UniqueID = GenerateUniqueID();
+		ID = GUID.Empty;
 
 		size = new(0);
 		hp = new(0);
 		fullHP = new(0);
 		raid = new(0);
-	}
-
-	/// <summary>
-	/// 生成舰队ID
-	/// 通过当前时间戳生成一个唯一的ID
-	/// </summary>
-	/// <returns></returns>
-	private static string GenerateUniqueID() {
-		return Time.GetDateStringFromSystem(true);
 	}
 
 	private Lazy<int> size;

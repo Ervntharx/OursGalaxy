@@ -45,5 +45,5 @@ internal interface IBattleEntity : ISpaceEntity {
 	/// 被攻击
 	/// </summary>
 	/// <param name="target">目标实体</param>
-	public void Attacked(DamageSet damageSet);
+	public void Attacked(DamageSet damageSet, SpaceshipSnapshot from);
 }

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bto3wngljf3fb"]
 
 [ext_resource type="Script" uid="uid://dyr6j1m4u45e3" path="res://Script/Csharp/Spaceship.cs" id="1_en85r"]
+[ext_resource type="Script" uid="uid://ccgefu38lpmc7" path="res://Script/Csharp/Outlet.cs" id="2_ny3qw"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_6jvjn"]
 size = Vector3(1, 1, 0.357)
@@ -9,8 +10,9 @@ size = Vector3(1, 1, 0.357)
 height = 0.5
 radius = 1.2
 
-[node name="TemplateShip" type="CharacterBody3D" unique_id=760973978 node_paths=PackedStringArray("TacticsTargetProberTimer")]
+[node name="TemplateShip" type="CharacterBody3D" unique_id=760973978 node_paths=PackedStringArray("Outlets", "TacticsTargetProberTimer")]
 script = ExtResource("1_en85r")
+Outlets = [NodePath("L0"), NodePath("M0")]
 TacticsTargetProberTimer = NodePath("TacticsTimer")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=760403056]
@@ -25,15 +27,19 @@ mesh = SubResource("PrismMesh_6jvjn")
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0.87735003)
 mesh = SubResource("PrismMesh_6jvjn")
 
-[node name="L0" type="Marker3D" parent="." unique_id=1108244777]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17401052, -0.5898331)
-
-[node name="M0" type="Marker3D" parent="." unique_id=385352868]
-transform = Transform3D(0.32639748, 0.9452326, 0, -0.9452326, 0.32639748, 0, 0, 0, 1, 0.4898867, -0.22146034, 0.49930823)
-
 [node name="AttackableArea" type="Area3D" parent="." unique_id=1310374608]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AttackableArea" unique_id=1223290675]
 shape = SubResource("CylinderShape3D_6jvjn")
 
 [node name="TacticsTimer" type="Timer" parent="." unique_id=1021734723]
+
+[node name="L0" type="Marker3D" parent="." unique_id=208583975]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21029079, -1.1436055)
+script = ExtResource("2_ny3qw")
+metadata/_custom_type_script = "uid://ccgefu38lpmc7"
+
+[node name="M0" type="Marker3D" parent="." unique_id=1263168289]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 0, -0.3932273, -0.83807415)
+script = ExtResource("2_ny3qw")
+metadata/_custom_type_script = "uid://ccgefu38lpmc7"
