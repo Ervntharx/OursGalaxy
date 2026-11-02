@@ -7,7 +7,6 @@ namespace OursGalaxy;
 /// </summary>
 [GlobalClass]
 internal partial class UniqueItem : ItemBase {
-	public new static readonly UniqueItem Empty = new();
 	[Export]
 	public GUID ID { get; protected set; }
 
@@ -34,7 +33,6 @@ internal partial class UniqueItem : ItemBase {
 	}
 
 	public static bool operator ==(UniqueItem left, UniqueItem right) => !(left != right);
-
 	public static bool operator !=(UniqueItem left, UniqueItem right) => left.ID != right.ID;
 
 	public override bool Equals(object? obj) {

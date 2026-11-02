@@ -1,70 +1,47 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using Godot;
-using OursGalaxy.DataBase;
+using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
+
 /// <summary>
 /// 飞船数据类, 用于存储飞船的基本信息和状态
 /// </summary>
 [GlobalClass]
 internal partial class SpaceshipData : UniqueItem {
-	public new static readonly SpaceshipData Empty = new();
-	protected readonly static string ItemCodePrefix = "Ship_";
 
-	[Export]
-	public string? CustomName { get; set; }
+	[Export] public string? CustomName { get; set; }
 
-	[Export]
+	[Export(PropertyHint.Range, "1,0,99999")]
 	public int CurrentHP { get; set; }
 
 	[Export]
-	public Godot.Collections.Dictionary<Outlet, EquipData> EquipsConfig { get; set; } = [];
+	public Godot.Collections.Array<OutletData> EquipsLs { get; set; } = [];
 
 	public int FullHP => fullHP.Value;
-
 	public int Size => size.Value;
-
 	public int Raid => raid.Value;
-
 	public float Range => range.Value;
 
-	public SpaceshipData(string typeName, GUID? ID = null) : base(ItemCodePrefix + typeName, ID) {
+	public static SpaceshipData From(SpaceshipConfig config) {
+		return new(config.ShipTypeName);
+	}
+
+	public SpaceshipData(string typeName, GUID? ID = null) : base(SpaceshipConfig.ItemCodePrefix + typeName, ID) {
 		// GameDataBase.Connect();
-		size = new(() => {
-			if (int.TryParse(Query("Size"), out var result)) {
-				return result;
-			}
-			throw new IOException("Can't query valid data");
-		});
+		size = new(() => ResourceLib.QueryConfig<SpaceshipConfig>(SpaceshipConfig.ItemCodePrefix + typeName).Size);
 
-		fullHP = new(() => {
-			if (int.TryParse(Query("HP"), out var result)) {
-				return result;
-			}
-			throw new IOException("Can't query valid data");
-		});
+		fullHP = new(() => ResourceLib.QueryConfig<SpaceshipConfig>(SpaceshipConfig.ItemCodePrefix + typeName).HP);
 
-		raid = new(() => {
-			if (int.TryParse(Query("Raid"), out var result)) {
-				return result;
-			}
-			throw new IOException("Can't query valid data");
-		});
+		raid = new(() => ResourceLib.QueryConfig<SpaceshipConfig>(SpaceshipConfig.ItemCodePrefix + typeName).Raid);
 
 		range = new(() => {
 			var leastRange = 0f;
-			foreach (var turret in EquipsConfig.Select(out2Equip => out2Equip.Value).OfType<TurretBase>()) {
-				if (leastRange == 0) {
-					leastRange = Math.Max(leastRange, turret.Range);
-				}
-				else {
-					leastRange = Math.Min(leastRange, turret.Range);
-				}
+			foreach (var turret in EquipsLs.Select(out2Equip => out2Equip.InstalledEquip).OfType<TurretData>()) {
+				leastRange = leastRange == 0 ? Math.Max(leastRange, turret.Range) : Math.Min(leastRange, turret.Range);
 			}
 			return leastRange;
 		});
-		// GameDataBase.Disconnet();
 	}
 
 	public string GetShipTypeName() => GetItemName();

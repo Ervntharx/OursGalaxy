@@ -1,21 +1,16 @@
 ﻿using Godot;
-
 namespace OursGalaxy;
 
 /// <summary>
-/// 插槽数据类型
+/// 实体插槽类型
 /// </summary>
 [GlobalClass]
-public partial class Outlet : Resource {
+internal partial class Outlet : Marker3D {
 	[Export]
-	public OutletSizeType SizeType { get; set; } = new(OutletSizeType.SizeTypeEnum.S);
+	public string UniqueName { get; set; } = string.Empty;
 
 	[Export]
-	public NodePath? OutletMarker { get; set; }
+	public OutletSizeType SizeType { get; set; } = OutletSizeType.Air;
 
-	[Export]
-	public float LeftClampAngle { get; set; }
-
-	[Export]
-	public float RightClampAngle { get; set; }
+	public EquipBase GetEquip() => GetChild<EquipBase>(0);
 }

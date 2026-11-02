@@ -11,11 +11,6 @@ internal partial class TurretBase : EquipBase {
 	public const float DEFAULT_RIGHT_CLAMP_ANGLE = 180;
 
 	/// <summary>
-	/// 尺寸
-	/// </summary>
-	public OutletSizeType SizeType { get; protected set; } = new(OutletSizeType.SizeTypeEnum.S);
-
-	/// <summary>
 	/// 炮台状态机枚举
 	/// </summary>
 	public enum StateEnum { IsReady, OnFire, CoolDown }

@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using Godot;
 using Godot.Collections;
+using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
 /// <summary>
 /// 舰队数据类, 用于存储舰队的基本信息和状态
@@ -74,7 +75,7 @@ internal partial class FleetData : Resource {
 	/// ⚠️不要使用无参构造函数构造无意义量
 	/// </summary>
 	protected FleetData() {
-		Flagship = SpaceshipData.Empty;
+		Flagship = SpaceshipData.From(SpaceshipLib.GetTemplate());
 		UniqueID = GenerateUniqueID();
 
 		size = new(0);

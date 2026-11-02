@@ -4,9 +4,17 @@ namespace OursGalaxy.ResourceConfig;
 
 [GlobalClass]
 internal partial class SpaceshipConfig : ItemBaseConfig {
-	public enum SizeEnum { FF, DD, CL, CA, BB }
+	public const string ItemCodePrefix = "Ship";
+
 	[Export]
-	public SizeEnum Size { get; set; } = SizeEnum.FF;
+	public string ShipTypeName { get; set; } = string.Empty;
+
+	public enum ScaleSizeEnum { FF, DD, CL, CA, BB }
+	[Export]
+	public ScaleSizeEnum ScaleSize { get; set; } = ScaleSizeEnum.FF;
+
+	[Export(PropertyHint.Range, "1,1000,1")]
+	public int Size { get; set; }
 
 	/// <summary>
 	/// 血量上限
@@ -14,6 +22,9 @@ internal partial class SpaceshipConfig : ItemBaseConfig {
 	[ExportGroup("Battle")]
 	[Export(PropertyHint.Range, "1,9999,1")]
 	public int HP { get; set; }
+
+	[Export(PropertyHint.Range, "1,9999,0")]
+	public int Raid { get; set; }
 
 	/// <summary>
 	/// 回避性能

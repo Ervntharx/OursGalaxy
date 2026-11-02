@@ -20,7 +20,7 @@ internal partial class TestCombat : Node3D {
 	private FleetData MakeLFleetData() {
 		var flagship = new SpaceshipData("TemplateShip") {
 			CustomName = "left flag ship!",
-			EquipsConfig = new() { }
+			EquipsLs = new() { }
 		};
 		var fleet = new FleetData(flagship);
 		fleet.Name = "left fleet!";

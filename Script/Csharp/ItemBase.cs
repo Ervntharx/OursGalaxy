@@ -1,5 +1,6 @@
 ﻿using System;
 using Godot;
+using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
 
 /// <summary>
@@ -7,8 +8,6 @@ namespace OursGalaxy;
 /// </summary>
 [GlobalClass]
 internal abstract partial class ItemBase : Resource {
-	public enum QulityEnum { White, Green, Purple, Gold }
-
 	/// <summary>
 	/// 辨识id码, 显式使用[表名_物品名_质量]的格式
 	/// </summary>
@@ -29,7 +28,7 @@ internal abstract partial class ItemBase : Resource {
 
 	public ItemBase(string code) => this.code = code;
 
-	public ItemBase(string table, string name, QulityEnum qulityEnum = QulityEnum.White) => this.code = $"{table}_{name}_{(int)qulityEnum}";
+	public ItemBase(string table, string name, ItemBaseConfig.QulityEnum qulityEnum = ItemBaseConfig.QulityEnum.White) => this.code = $"{table}_{name}_{(int)qulityEnum}";
 
 	public ItemBase(ItemBase other) : this(other.Code) { }
 
@@ -37,9 +36,9 @@ internal abstract partial class ItemBase : Resource {
 
 	public string GetItemName() => Code.Split("_", false)[1];
 
-	public QulityEnum GetQulity() {
+	public ItemBaseConfig.QulityEnum GetQulity() {
 		if (int.TryParse(Code.Split("_", false)[2], out int reusult)) {
-			return (QulityEnum)reusult;
+			return (ItemBaseConfig.QulityEnum)reusult;
 		}
 		throw new ArgumentOutOfRangeException("Read Qulity Error");
 	}

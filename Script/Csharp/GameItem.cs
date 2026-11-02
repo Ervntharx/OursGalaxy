@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Godot;
+using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
 
 /// <summary>
@@ -36,7 +37,7 @@ internal partial class GameItem : ItemBase {
 		Num = num;
 	}
 
-	public GameItem(string table, string name, ItemBase.QulityEnum qulity, int num = 0) : base(table, name, qulity) {
+	public GameItem(string table, string name, ItemBaseConfig.QulityEnum qulity, int num = 0) : base(table, name, qulity) {
 		Num = num;
 	}
 

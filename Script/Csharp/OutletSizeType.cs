@@ -1,30 +1,22 @@
 ﻿using Godot;
 namespace OursGalaxy;
 
+/// <summary>
+/// 插槽类型尺寸信息
+/// </summary>
 [GlobalClass]
-public partial class OutletSizeType : Resource {
-	public enum SizeTypeEnum { S, M, L, XL, DefenseAir, Special }
-	[Export]
-	public SizeTypeEnum SizeType { get; set; }
-	[Export]
-	public string? SpecialSizeTypeName { get; set; }
+internal partial class OutletSizeType : Resource {
+	public readonly static OutletSizeType S = new("S");
+	public readonly static OutletSizeType M = new("M");
+	public readonly static OutletSizeType L = new("L");
+	public readonly static OutletSizeType XL = new("XL");
+	public readonly static OutletSizeType Air = new("Air");
 
-	protected OutletSizeType() { SizeType = SizeTypeEnum.DefenseAir; }
+	protected OutletSizeType() { type = Air.type; }
+	public OutletSizeType(string specialOutletTypeName) { type = specialOutletTypeName; }
 
-	public OutletSizeType(SizeTypeEnum sizeType, string? specialSTName = null) {
-		SizeType = sizeType;
-		SpecialSizeTypeName = specialSTName;
-	}
-	public static bool operator !=(OutletSizeType left, OutletSizeType right) {
-		if (left.SizeType == SizeTypeEnum.Special && right.SizeType == SizeTypeEnum.Special) {
-			return left.SpecialSizeTypeName != right.SpecialSizeTypeName;
-		}
-		return left.SizeType != right.SizeType;
-	}
-
-	public static bool operator ==(OutletSizeType left, OutletSizeType right) {
-		return !(left != right);
-	}
+	public static bool operator ==(OutletSizeType left, OutletSizeType right) => !(left != right);
+	public static bool operator !=(OutletSizeType left, OutletSizeType right) => left.type != right.type;
 
 	public override bool Equals(object? obj) {
 		if (ReferenceEquals(this, obj)) {
@@ -33,11 +25,8 @@ public partial class OutletSizeType : Resource {
 		return obj is not null && obj is OutletSizeType outletObj && outletObj == this;
 	}
 
-	public override int GetHashCode() {
-		return SizeType.GetHashCode() + SpecialSizeTypeName?.GetHashCode() ?? 0;
-	}
+	public override int GetHashCode() => type.GetHashCode();
+	public override string ToString() => type;
 
-	public override string ToString() {
-		return SizeType == SizeTypeEnum.Special ? SpecialSizeTypeName! : SizeType.ToString();
-	}
+	private string type = "S";
 }

@@ -6,20 +6,19 @@ namespace OursGalaxy.ResourceConfig;
 /// </summary>
 [GlobalClass]
 internal partial class ItemBaseConfig : Resource {
+	public enum QulityEnum { White, Green, Purple, Gold }
+
 	/// <summary>
 	/// ItemBase的物品类型Code
 	/// </summary>
-	[Export]
-	public string Code { get; set; } = TEMPLATE_CODE;
+	[Export] public string Code { get; set; } = TEMPLATE_CODE;
 
-	[Export]
-	public string DisplayName { get; set; } = string.Empty;
+	[Export] public string DisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// 简介
 	/// </summary>
-	[Export]
-	public string Introductuon { get; set; } = string.Empty;
+	[Export] public string Introductuon { get; set; } = string.Empty;
 
 	private const string TEMPLATE_CODE = "Template";
 }
