@@ -1,10 +1,13 @@
+using System;
+using System.Collections.Generic;
 using Godot;
 using Godot.Collections;
 using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
 
 [GlobalClass]
-internal partial class FleetStaticsData : Resource {
+[Obsolete]
+internal partial class CombatFleetStaticsData : Resource {
 	[Export]
 	public GUID FleetID { get; set; }
 
@@ -18,15 +21,17 @@ internal partial class FleetStaticsData : Resource {
 	public int LeftHP { get; set; }
 
 	[Export]
-	public Dictionary<SpaceshipConfig.ScaleSizeEnum, int> ShipsCount { get; set; } = [];
+	public Godot.Collections.Dictionary<SpaceshipConfig.ScaleSizeEnum, int> ShipsCount { get; set; } = [];
 
 	[Export]
-	public Dictionary<SpaceshipConfig.ScaleSizeEnum, int> LeftShipsCount { get; set; } = [];
+	public Godot.Collections.Dictionary<SpaceshipConfig.ScaleSizeEnum, int> LeftShipsCount { get; set; } = [];
 
 	[Export]
 	public Array<CombatSpaceshipStaticsData> ShipsStatics { get; set; } = [];
 
-	public FleetStaticsData(FleetData fleet) {
+	public List<Spaceship> RuntimeShips { get; set; } = [];
+
+	public CombatFleetStaticsData(FleetData fleet) {
 		FleetID = fleet.ID;
 		FleetName = fleet.Name;
 
@@ -41,5 +46,4 @@ internal partial class FleetStaticsData : Resource {
 			}
 		}
 	}
-
 }

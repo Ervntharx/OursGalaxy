@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource("1_da1qv")
-Code = "TemplateShip"
+ShipTypeName = "TemplateShip"
+Code = "Spaceship_TemplateShip"
+DisplayName = "模板"
 Introductuon = "木板"
 metadata/_custom_type_script = "uid://du6lqnnufec7u"

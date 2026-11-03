@@ -7,7 +7,7 @@ namespace OursGalaxy;
 /// 游戏物品基类。不具有数量/唯一性标识能力
 /// </summary>
 [GlobalClass]
-internal abstract partial class ItemBase : Resource {
+internal partial class ItemBase : Resource {
 	/// <summary>
 	/// 辨识id码, 显式使用[表名_物品名_质量]的格式
 	/// </summary>

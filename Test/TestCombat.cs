@@ -13,11 +13,12 @@ internal partial class TestCombat : Node3D {
 	public override void _Ready() {
 		var fleet = MakeFleetData("left");
 		var mem3 = SpaceshipData.From(SpaceshipLib.GetTemplate());
-		mem3.CustomName = $"{fleet.Name} mem 1";
+		mem3.CustomName = $"{fleet.Name} mem 3";
 		fleet.Ships.Add(mem3, new() {
 			OffsetPosition = Godot.Vector3.Back * 5
 		});
-		Stage.Make(fleet, MakeFleetData("right"));
+		Stage.Make(CombatStage.CampEnum.Left, fleet);
+		Stage.Make(CombatStage.CampEnum.Right, MakeFleetData("right"));
 		Stage.Start();
 	}
 
@@ -37,7 +38,7 @@ internal partial class TestCombat : Node3D {
 			OffsetPosition = Godot.Vector3.Right * 5
 		});
 		var mem2 = SpaceshipData.From(SpaceshipLib.GetTemplate());
-		mem2.CustomName = $"{fleetName} mem 1";
+		mem2.CustomName = $"{fleetName} mem 2";
 		fleet.Ships.Add(mem2, new() {
 			OffsetPosition = Godot.Vector3.Left * 5
 		});

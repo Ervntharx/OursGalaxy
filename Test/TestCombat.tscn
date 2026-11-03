@@ -7,4 +7,8 @@
 script = ExtResource("1_ltc18")
 Stage = NodePath("CombatStage")
 
-[node name="CombatStage" parent="." unique_id=559169952 instance=ExtResource("2_jkv8s")]
+[node name="CombatStage" parent="." unique_id=559169952 node_paths=PackedStringArray("FleetPosMarkers") instance=ExtResource("2_jkv8s")]
+FleetPosMarkers = {
+1: NodePath("LeftFleetPos"),
+2: NodePath("RightFleetPos")
+}

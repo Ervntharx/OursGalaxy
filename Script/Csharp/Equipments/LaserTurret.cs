@@ -79,7 +79,7 @@ internal partial class LaserTurret : TurretBase {
 				// 继续打出伤害段
 				if (Time.GetTicksMsec() - LastMakeDamageTime >= MakeDamageTimeGapMisc) {
 					foreach (var entity in DamageArea.GetOverlappingAreas().OfType<IBattleEntity>()) {
-						entity.Attacked(Damage);
+						entity.Attacked(Damage, FromSpaceship());
 					}
 					LastMakeDamageTime = Time.GetTicksMsec();
 					HasMadeDamageCount += 1;

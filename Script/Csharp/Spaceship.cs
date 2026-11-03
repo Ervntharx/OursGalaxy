@@ -33,12 +33,13 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	[Obsolete("BaseStateMachine instead")]
 	private bool active;
 
+
 	[ExportGroup("Outlets Setup")]
 	[Export]
 	public Godot.Collections.Array<Outlet> Outlets { get; set; } = [];
 
 
-	public GUID ID { get; private set; }
+	public GUID ID { get; set; }
 
 	public string TypeName { get; set; }
 	public string? CustomName { get; set; }
@@ -47,18 +48,19 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 		ID = GUID.Empty;
 		FromFleetID = GUID.Empty;
 		TypeName = string.Empty;
-		CurrentHealth = 0;
+		CurrentHP = 0;
 	}
 
+	[Obsolete]
 	public static Spaceship Load(SpaceshipData data, TacticsSet? tactics) {
 		var ship = (Spaceship)ResourceLoader.Load<PackedScene>($"res://Script/Csharp/Ships/{data.GetShipTypeName()}.tscn").Instantiate();
 		ship.ID = data.ID;
 		ship.TypeName = data.GetShipTypeName();
 		ship.CustomName = data.CustomName;
-		ship.CurrentHealth = data.CurrentHP;
+		ship.CurrentHP = data.CurrentHP;
 		ship.Range = data.Range;
 		ship.Tactics = tactics ?? new();
-		ship.AttackableArea.AreaEntered += ship.OnAttakableAreaAreaEntered;
+
 		return ship;
 	}
 
@@ -71,7 +73,6 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	[Export]
 	public Area3D AttackableArea { get; set; } = null!;
 
-	[Obsolete("Fleet GUID instead")]
 	public CombatStage.CampEnum Camp { get; set; } = CombatStage.CampEnum.None;
 
 	public GUID FromFleetID { get; set; }
@@ -80,9 +81,15 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	public IBattleEntity? TargetEntity { get; set; }
 
-	public int Health { get; set; }
+	public int HP { get; set; }
 
-	public int CurrentHealth { get; set; }
+	public int CurrentHP {
+		get => currentHP;
+		set {
+			currentHP = value;
+			OnHPChanged?.Invoke(new(this), CurrentHP);
+		}
+	}
 
 	public float Range { get; set; }
 
@@ -124,16 +131,18 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	/// <summary>
 	/// 被攻击.前者是被攻击者，后者是攻击者
 	/// </summary>
-	public event Action<SpaceshipSnapshot, SpaceshipSnapshot>? AttackedEvent;
+	public event Action<SpaceshipSnapshot, SpaceshipSnapshot?, DamageSet>? AttackedEvent;
+
+	public event Action<SpaceshipSnapshot, int>? OnHPChanged;
 
 	private void OnAttakableAreaAreaEntered(Area3D area) {
 		if (area is BulletBase bullet) {
 			var originalDamage = bullet.Damage;
-
+			Attacked(originalDamage, bullet.From);
 		}
 	}
 
-	public void Attacked(DamageSet damage, SpaceshipSnapshot from) {
+	public void Attacked(DamageSet damage, SpaceshipSnapshot? from) {
 		var finalDamage = new DamageSet() {
 			Impact = Math.Max(damage.Impact - ImpactTolerance, 0),
 			Penetrate = Math.Max(damage.Penetrate - PenetrateTolerance, 0),
@@ -141,14 +150,15 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 			Corrosion = Math.Max(damage.Corrosion - CorrosionTolerance, 0),
 			Electromagnetic = Math.Max(damage.Electromagnetic - ElectromagneticTolerance, 0)
 		};
-		CurrentHealth -= finalDamage.Sum();
-		AttackedEvent?.Invoke(new(this), from);
-		if (CurrentHealth <= 0) {
+		CurrentHP -= finalDamage.Sum();
+		AttackedEvent?.Invoke(new(this), from, damage);
+		if (CurrentHP <= 0) {
 			DeathEvent?.Invoke(new(this));
 			QueueFree();
 		}
 	}
 
+	private int currentHP;
 
 	#endregion Battle
 
@@ -160,8 +170,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	protected Timer TacticsTargetProberTimer { get; set; } = null!;
 
 	private void ProbeTarget() {
-		var targetsLs = CombatStage.ProbeShips(FromFleetID);
-		GD.Print($"try spaceship probe target: {targetsLs.Count}");
+		var targetsLs = CombatStage.ProbeShips(this.Camp);
 		switch (Tactics.Targeting) {
 			case TacticsSet.TargetingEnum.Closest:
 				targetsLs.Sort((left, right) => Mathf.RoundToInt(left.Transform.Origin.DistanceTo(GlobalTransform.Origin) - right.Transform.Origin.DistanceTo(GlobalTransform.Origin)));
@@ -202,6 +211,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 			default:
 				break;
 		}
+		GD.Print($"probe count: {targetsLs.Count}");
 		if (targetsLs.Count > 0) {
 			TargetEntity = CombatStage.GetShip(targetsLs[0].UniqueID);
 		}
@@ -383,10 +393,10 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	public override void _Ready() {
 		base._Ready();
 		Name = $"{TypeName}_{CustomName}";
-		GD.Print($"Set name as {$"{TypeName}_{CustomName}"}, but {Name} instead?");
 		TacticsTargetProberTimer.OneShot = false;
 		TacticsTargetProberTimer.Start();
 		TacticsTargetProberTimer.Timeout += ProbeTarget;
+		AttackableArea.AreaEntered += OnAttakableAreaAreaEntered;
 		// TODO:	RotateCapability, PowerCapability换算为物理值
 		AccelMap.MaxVelocity = PowerCapability;
 	}

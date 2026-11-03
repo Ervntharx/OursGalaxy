@@ -14,5 +14,5 @@ internal static class SpaceshipFactory {
 	}
 
 	private static string GetResourcePathFromTypeName(string typeName) => $"{ResPath}{typeName}.tscn";
-	private const string ResPath = "res://ResourceLib/Spaceships/";
+	private const string ResPath = "res://Scene/Spaceship/";
 }

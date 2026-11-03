@@ -31,13 +31,13 @@ internal partial class SpaceshipData : UniqueItem {
 		return new(config.ShipTypeName);
 	}
 
-	public SpaceshipData(string typeName, GUID? ID = null) : base(SpaceshipConfig.ItemCodePrefix + typeName, ID) {
+	public SpaceshipData(string typeName, GUID? ID = null) : base($"{SpaceshipConfig.ItemCodePrefix}_{typeName}", ID) {
 		// GameDataBase.Connect();
-		size = new(() => ResourceLib.QueryConfig<SpaceshipConfig>(SpaceshipConfig.ItemCodePrefix + typeName).Size);
+		size = new(() => ResourceLib.QueryConfig<SpaceshipConfig>(Code).Size);
 
-		fullHP = new(() => ResourceLib.QueryConfig<SpaceshipConfig>(SpaceshipConfig.ItemCodePrefix + typeName).HP);
+		fullHP = new(() => ResourceLib.QueryConfig<SpaceshipConfig>(Code).HP);
 
-		raid = new(() => ResourceLib.QueryConfig<SpaceshipConfig>(SpaceshipConfig.ItemCodePrefix + typeName).Raid);
+		raid = new(() => ResourceLib.QueryConfig<SpaceshipConfig>(Code).Raid);
 
 		range = new(() => {
 			var leastRange = 0f;

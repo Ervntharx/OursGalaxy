@@ -23,7 +23,7 @@ internal partial class SpaceshipConfig : ItemBaseConfig {
 	[Export(PropertyHint.Range, "1,9999,1")]
 	public int HP { get; set; }
 
-	[Export(PropertyHint.Range, "1,9999,0")]
+	[Export(PropertyHint.Range, "1,9999,1")]
 	public int Raid { get; set; }
 
 	/// <summary>

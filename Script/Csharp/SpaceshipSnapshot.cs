@@ -31,7 +31,7 @@ internal record class SpaceshipSnapshot {
 		TypeName = ship.TypeName;
 		CustomName = ship.CustomName;
 		FromFleetID = ship.FromFleetID;
-		HP = ship.CurrentHealth;
+		HP = ship.CurrentHP;
 		Transform = ship.Transform;
 		ScaleSize = ship.ScaleSize;
 		IsFlagShip = ship.IsFlagShip;

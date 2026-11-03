@@ -4,16 +4,22 @@
 [ext_resource type="Script" uid="uid://cdv2p3d4bubff" path="res://Script/Csharp/StaticsServer.cs" id="2_vb6ob"]
 [ext_resource type="PackedScene" uid="uid://wywlw6f3sftg" path="res://Scene/CombatPanel.tscn" id="3_cwefk"]
 
-[node name="CombatStage" type="Node3D" unique_id=559169952 node_paths=PackedStringArray("EndTimer", "SecondsTimer", "Statics", "LeftFleetPos", "RightFleetPos", "ActiveBoard", "CameraArm", "Camera")]
+[node name="CombatStage" type="Node3D" unique_id=559169952 node_paths=PackedStringArray("EndTimer", "SecondsTimer", "FleetPosMarkers", "ActiveBoard", "CameraArm", "Camera", "Panel")]
 script = ExtResource("1_dactg")
 EndTimer = NodePath("EndTimer")
 SecondsTimer = NodePath("SecondsTimer")
-Statics = NodePath("StaticsServer")
-LeftFleetPos = NodePath("LeftFleetPos")
-RightFleetPos = NodePath("RightFleetPos")
+FleetPosMarkers = {
+1: NodePath("LeftFleetPos"),
+2: NodePath("RightFleetPos")
+}
 ActiveBoard = NodePath("ActiveBoard")
 CameraArm = NodePath("CameraArm")
 Camera = NodePath("CameraArm/Arm/Camera3D")
+Panel = NodePath("CanvasLayer/CombatPanel")
+InitialFleetDir = Dictionary[int, Vector3]({
+1: Vector3(-1, 0, 0),
+2: Vector3(1, 0, 0)
+})
 
 [node name="EndTimer" type="Timer" parent="." unique_id=327072692]
 wait_time = 120.0

@@ -1,60 +1,7 @@
 [gd_scene format=3 uid="uid://dkdd0iya65qe7"]
 
 [ext_resource type="Script" uid="uid://4tqvolrghu4t" path="res://Test/TestLifeVar.cs" id="1_n8apm"]
-[ext_resource type="Script" uid="uid://cy8tvmp3erne5" path="res://Script/Csharp/ProduceTaskData.cs" id="2_7jhvh"]
-[ext_resource type="Script" uid="uid://ci5rkxej67u2g" path="res://Script/Csharp/DateTime.cs" id="3_6yswc"]
-[ext_resource type="Script" uid="uid://ca5hudhjlbi3o" path="res://Script/Csharp/ItemBase.cs" id="4_4cu58"]
-[ext_resource type="Script" uid="uid://4oajqxmixao5" path="res://Script/Csharp/AssignedTaskData.cs" id="5_y4tt7"]
-[ext_resource type="Script" uid="uid://el2vgvnyqoo3" path="res://Script/Csharp/AssignedTaskEvent.cs" id="6_r1p60"]
-[ext_resource type="Script" uid="uid://ccb2eskfl3a65" path="res://Script/Csharp/Archive.cs" id="7_tpl5a"]
 [ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="8_6yswc"]
-
-[sub_resource type="Texture2D" id="Texture2D_6yswc"]
-resource_local_to_scene = false
-resource_name = ""
-
-[sub_resource type="Resource" id="Resource_4cu58"]
-script = ExtResource("3_6yswc")
-Date = {
-"day": 28,
-"dst": false,
-"hour": 8,
-"minute": 20,
-"month": 10,
-"second": 27,
-"weekday": 3,
-"year": 2026
-}
-
-[sub_resource type="Resource" id="Resource_y4tt7"]
-script = ExtResource("4_4cu58")
-
-[sub_resource type="Resource" id="Resource_r1p60"]
-script = ExtResource("2_7jhvh")
-StartDate = SubResource("Resource_4cu58")
-ProgressSeconds = 5
-Target = SubResource("Resource_y4tt7")
-
-[sub_resource type="Resource" id="Resource_tpl5a"]
-script = ExtResource("5_y4tt7")
-Name = "any"
-RatingLevel = 5
-Level = 2
-
-[sub_resource type="Resource" id="Resource_33a1m"]
-script = ExtResource("5_y4tt7")
-Name = "others"
-RatingLevel = 2
-Level = 3
-
-[sub_resource type="Resource" id="Resource_tnshn"]
-script = ExtResource("5_y4tt7")
-Name = "and more?"
-Level = 5
-
-[sub_resource type="Resource" id="Resource_7jhvh"]
-script = ExtResource("7_tpl5a")
-metadata/_custom_type_script = "uid://ccb2eskfl3a65"
 
 [node name="TestLifeVar" type="Control" unique_id=1904611329]
 layout_mode = 3
@@ -68,7 +15,6 @@ offset_bottom = 68.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n8apm")
-ArchiveData = SubResource("Resource_7jhvh")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1272213129]
 texture = ExtResource("8_6yswc")

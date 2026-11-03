@@ -8,8 +8,8 @@ namespace OursGalaxy;
 internal interface IBattleEntity : ISpaceEntity {
 	public Area3D AttackableArea { get; }
 
-	public int Health { get; set; }
-	public int CurrentHealth { get; set; }
+	public int HP { get; set; }
+	public int CurrentHP { get; set; }
 
 	/// <summary>
 	/// 回避性能

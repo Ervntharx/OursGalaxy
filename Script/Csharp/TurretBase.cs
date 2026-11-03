@@ -1,3 +1,4 @@
+using System;
 using Godot;
 namespace OursGalaxy;
 
@@ -15,6 +16,15 @@ internal partial class TurretBase : EquipBase {
 	/// </summary>
 	public enum StateEnum { IsReady, OnFire, CoolDown }
 	public StateEnum State { get; set; } = StateEnum.IsReady;
+
+	// 不稳定的方法
+	public SpaceshipSnapshot FromSpaceship() {
+		Node3D? parent = GetParentNode3D();
+		while (parent is not null && parent is not Spaceship) {
+			parent = parent.GetParentNode3D();
+		}
+		return new((Spaceship)(parent!));
+	}
 
 	/// <summary>
 	/// 驱动状态机。由Turret宿主驱动
