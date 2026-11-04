@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using OursGalaxy.ResourceConfig;
 using OursGalaxy.UI;
 namespace OursGalaxy;
 
@@ -12,32 +13,21 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	public Node3D AsNode3D() => this;
 	public T ToNode<T>() where T : Node => (this as T)!;
 
+	[Obsolete]
 	public enum ScaleSizeEnum { FF = 0, DD = 1, CL = 2, CA = 3, BB = 4 }
 
 	[Export]
-	public ScaleSizeEnum ScaleSize { get; set; } = ScaleSizeEnum.FF;
+	public SpaceshipConfig.ScaleSizeEnum ScaleSize { get; set; } = SpaceshipConfig.ScaleSizeEnum.FF;
 
 	/// <summary>
 	/// 活动总开关
 	/// </summary>
-	[Obsolete("BaseStateMachine instead")]
-	public bool Active {
-		get => active;
-		set {
-			active = value;
-			if (Active) {
-				ProbeTarget();
-			}
-		}
-	}
-	[Obsolete("BaseStateMachine instead")]
-	private bool active;
-
+	public enum BaseStateEnum { Stop, Active }
+	public BaseStateEnum BaseState { get; set; } = BaseStateEnum.Stop;
 
 	[ExportGroup("Outlets Setup")]
 	[Export]
 	public Godot.Collections.Array<Outlet> Outlets { get; set; } = [];
-
 
 	public GUID ID { get; set; }
 
@@ -46,7 +36,6 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	protected Spaceship() {
 		ID = GUID.Empty;
-		FromFleetID = GUID.Empty;
 		TypeName = string.Empty;
 		CurrentHP = 0;
 	}
@@ -73,11 +62,10 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	[Export]
 	public Area3D AttackableArea { get; set; } = null!;
 
-	public CombatStage.CampEnum Camp { get; set; } = CombatStage.CampEnum.None;
-
-	public GUID FromFleetID { get; set; }
 
 	public bool IsFlagShip { get; set; }
+
+	public CombatStage.TeamEnum Team { get; set; } = CombatStage.TeamEnum.None;
 
 	public IBattleEntity? TargetEntity { get; set; }
 
@@ -86,8 +74,9 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	public int CurrentHP {
 		get => currentHP;
 		set {
+			var changed = value - currentHP;
 			currentHP = value;
-			OnHPChanged?.Invoke(new(this), CurrentHP);
+			OnHPChanged?.Invoke(new(this), CurrentHP, changed);
 		}
 	}
 
@@ -126,14 +115,14 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	/// <summary>
 	/// 死亡事件
 	/// </summary>
-	public event Action<SpaceshipSnapshot>? DeathEvent;
+	public event Action<SpaceshipSnapshot>? OnEntityDestory;
 
 	/// <summary>
 	/// 被攻击.前者是被攻击者，后者是攻击者
 	/// </summary>
 	public event Action<SpaceshipSnapshot, SpaceshipSnapshot?, DamageSet>? AttackedEvent;
 
-	public event Action<SpaceshipSnapshot, int>? OnHPChanged;
+	public event IBattleEntity.OnHPChangedEventHandler? OnHPChanged;
 
 	private void OnAttakableAreaAreaEntered(Area3D area) {
 		if (area is BulletBase bullet) {
@@ -153,7 +142,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 		CurrentHP -= finalDamage.Sum();
 		AttackedEvent?.Invoke(new(this), from, damage);
 		if (CurrentHP <= 0) {
-			DeathEvent?.Invoke(new(this));
+			OnEntityDestory?.Invoke(new(this));
 			QueueFree();
 		}
 	}
@@ -170,7 +159,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	protected Timer TacticsTargetProberTimer { get; set; } = null!;
 
 	private void ProbeTarget() {
-		var targetsLs = CombatStage.ProbeShips(this.Camp);
+		var targetsLs = CombatStageServer.ProbeShips(ID, Team).OfType<Spaceship>().ToList();
 		switch (Tactics.Targeting) {
 			case TacticsSet.TargetingEnum.Closest:
 				targetsLs.Sort((left, right) => Mathf.RoundToInt(left.Transform.Origin.DistanceTo(GlobalTransform.Origin) - right.Transform.Origin.DistanceTo(GlobalTransform.Origin)));
@@ -182,7 +171,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 				targetsLs.Sort((left, right) => (int)right.ScaleSize - (int)left.ScaleSize);
 				break;
 			case TacticsSet.TargetingEnum.MiddleThenLargest:
-				var targetSplitLs_MiddleScaleSize = targetsLs.Where(shipshot => shipshot.ScaleSize == ScaleSizeEnum.CL);
+				var targetSplitLs_MiddleScaleSize = targetsLs.Where(shipshot => shipshot.ScaleSize == SpaceshipConfig.ScaleSizeEnum.CL);
 				if (targetSplitLs_MiddleScaleSize.Count() > 0) {
 					targetsLs = [.. targetSplitLs_MiddleScaleSize];
 				}
@@ -191,7 +180,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 				}
 				break;
 			case TacticsSet.TargetingEnum.MiddleThenSmallest:
-				var targetSplitLs_MiddleScaleSize_2 = targetsLs.Where(shipshot => shipshot.ScaleSize == ScaleSizeEnum.CL);
+				var targetSplitLs_MiddleScaleSize_2 = targetsLs.Where(shipshot => shipshot.ScaleSize == SpaceshipConfig.ScaleSizeEnum.CL);
 				if (targetSplitLs_MiddleScaleSize_2.Count() > 0) {
 					targetsLs = [.. targetSplitLs_MiddleScaleSize_2];
 				}
@@ -200,20 +189,18 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 				}
 				break;
 			case TacticsSet.TargetingEnum.KillFlagship:
-				var target = targetsLs.Find(shipshot => shipshot.IsFlagShip);
-				if (target is not null) {
-					targetsLs = [target];
+				var flag = targetsLs.FirstOrDefault(shipshot => shipshot.IsFlagShip);
+				if (flag is null) {
+					Tactics.Targeting = TacticsSet.TargetingEnum.Closest;
 				}
-				else {
-					targetsLs = [];
-				}
+				targetsLs = [];
 				break;
 			default:
 				break;
 		}
-		GD.Print($"probe count: {targetsLs.Count}");
+		// GD.Print($"probe count: {targetsLs.Count}");
 		if (targetsLs.Count > 0) {
-			TargetEntity = CombatStage.GetShip(targetsLs[0].UniqueID);
+			TargetEntity = targetsLs.FirstOrDefault();
 		}
 	}
 	#endregion Tactics

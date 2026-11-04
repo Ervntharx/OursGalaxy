@@ -1,41 +1,45 @@
-﻿using Godot;
+﻿using System;
+using Godot;
+using OursGalaxy.ResourceConfig;
 using OursGalaxy.UI;
 namespace OursGalaxy;
 
 internal record class SpaceshipSnapshot {
 	public static readonly SpaceshipSnapshot Empty = new();
 
-	public GUID UniqueID { get; init; }
+	public GUID ID { get; init; }
 
 	public string TypeName { get; init; }
 
 	public string? CustomName { get; init; }
 
-	public GUID FromFleetID { get; init; }
+	public CombatStage.TeamEnum Team { get; init; }
 
 	public int HP { get; init; }
 
 	public Transform3D Transform { get; init; }
-	public Spaceship.ScaleSizeEnum ScaleSize { get; init; }
+	public SpaceshipConfig.ScaleSizeEnum ScaleSize { get; init; }
 
 	public bool IsFlagShip { get; init; }
 
 	private SpaceshipSnapshot() {
-		UniqueID = GUID.Empty;
-		FromFleetID = GUID.Empty;
+		ID = GUID.Empty;
+		Team = CombatStage.TeamEnum.None;
+		// CombatStage.TeamEnum.None;
+		// FromFleetID = GUID.Empty;
+		Team = CombatStage.TeamEnum.None;
 		TypeName = string.Empty;
 	}
 
 	public SpaceshipSnapshot(Spaceship ship) {
-		UniqueID = ship.ID;
+		ID = ship.ID;
 		TypeName = ship.TypeName;
 		CustomName = ship.CustomName;
-		FromFleetID = ship.FromFleetID;
+		Team = ship.Team;
 		HP = ship.CurrentHP;
 		Transform = ship.Transform;
 		ScaleSize = ship.ScaleSize;
-		IsFlagShip = ship.IsFlagShip;
 	}
 
-	public bool IsFrom(Spaceship ship) => UniqueID == ship.ID;
+	public bool IsFrom(Spaceship ship) => ID == ship.ID;
 }

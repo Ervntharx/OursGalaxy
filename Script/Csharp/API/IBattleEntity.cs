@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Godot;
+using OursGalaxy.UI;
 namespace OursGalaxy;
 
 /// <summary>
@@ -7,6 +9,8 @@ namespace OursGalaxy;
 /// </summary>
 internal interface IBattleEntity : ISpaceEntity {
 	public Area3D AttackableArea { get; }
+
+	public CombatStage.TeamEnum Team { get; }
 
 	public int HP { get; set; }
 	public int CurrentHP { get; set; }
@@ -46,4 +50,10 @@ internal interface IBattleEntity : ISpaceEntity {
 	/// </summary>
 	/// <param name="target">目标实体</param>
 	public void Attacked(DamageSet damageSet, SpaceshipSnapshot from);
+
+	public delegate void OnHPChangedEventHandler(SpaceshipSnapshot shot, int currentHP, int hpChanged);
+
+	public event OnHPChangedEventHandler? OnHPChanged;
+
+	public event Action<SpaceshipSnapshot>? OnEntityDestory;
 }

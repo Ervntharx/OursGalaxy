@@ -1,8 +1,6 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using OursGalaxy.ResourceConfig;
 namespace OursGalaxy.UI;
 
 /// <summary>
@@ -11,11 +9,7 @@ namespace OursGalaxy.UI;
 internal partial class CombatStage : Node3D {
 	public CombatStage Load() => (CombatStage)ResourceLoader.Load<PackedScene>("res://Scene/CombatStage.tscn").Instantiate();
 
-	public static CombatStage? Value { get; private set; }
-
-	public enum CampEnum { None, Left, Right }
-
-	public Dictionary<CampEnum, GUID> FleetID { get; } = [];
+	public enum TeamEnum { None, Left, Right }
 
 	/// <summary>
 	/// 战斗计时器
@@ -30,7 +24,7 @@ internal partial class CombatStage : Node3D {
 	protected Timer SecondsTimer { get; set; } = null!;
 
 	[Export]
-	protected Godot.Collections.Dictionary<CampEnum, Marker3D> FleetPosMarkers { get; set; } = [];
+	protected Godot.Collections.Dictionary<TeamEnum, Marker3D> FleetPosMarkers { get; set; } = [];
 
 	[Export]
 	protected Node3D ActiveBoard { get; set; } = null!;
@@ -49,37 +43,15 @@ internal partial class CombatStage : Node3D {
 
 	public CombatResult? Result { get; set; }
 
-	// statics data
-	#region Statics Data
-	public int GetFleetLeftHP(CampEnum camp) {
-		var result = 0;
-
-		foreach (var shipsLs in FleetShips[camp].Values) {
-			foreach (var ship in shipsLs) {
-				result += ship.CurrentHP;
-			}
-		}
-		return result;
-	}
-
-	public int GetShipCountInScaleSize(CampEnum camp, SpaceshipConfig.ScaleSizeEnum scaleSize) => FleetShips[camp][scaleSize].Count;
-
-	public Dictionary<CampEnum, Dictionary<SpaceshipConfig.ScaleSizeEnum, List<Spaceship>>> FleetShips { get; } = [];
-
-	public bool IsLeftFlagshipAlive { get; set; }
-	public bool IsRightFlagshipAlive { get; set; }
-	#endregion Statics Data
+	public StaticsSpawner Statics { get; set; } = new();
 
 	[Export]
-	public Godot.Collections.Dictionary<CampEnum, Vector3> InitialFleetDir { get; set; } = [];
+	public Godot.Collections.Dictionary<TeamEnum, Vector3> InitialFleetDir { get; set; } = [];
 
-	public CombatStage() {
-		if (Value is null) {
-			Value = this;
-			BulletServer.SceneRoot = ActiveBoard;
-			return;
-		}
-		throw new InvalidOperationException("mutiple Combat Stage is not allowed");
+	public override void _EnterTree() {
+		base._EnterTree();
+		CombatStageServer.Register(Name, this);
+		BulletServer.Register(Name, this);
 	}
 
 	/// <summary>
@@ -87,19 +59,18 @@ internal partial class CombatStage : Node3D {
 	/// </summary>
 	/// <param name="camp"></param>
 	/// <param name="fleet"></param>
-	public void Make(CampEnum camp, FleetData fleet) {
-		FleetID.Add(camp, fleet.ID);
+	public void Make(TeamEnum camp, FleetData fleet) {
 		foreach (var pair in fleet.Ships) {
 			var ship = CreateShip(FleetPosMarkers[camp].Position, pair.Key, pair.Value);
 			ship.Basis = Basis.LookingAt(InitialFleetDir[camp], Vector3.Up);
-			ship.FromFleetID = fleet.ID;
+			CombatStageServer.Connect(ship.ID, Name);
 			ActiveBoard.AddChild(ship);
 		}
 	}
 
 	public void Start() {
 		foreach (var ship in ActiveBoard.GetChildren().OfType<Spaceship>()) {
-			ship.Active = true;
+			ship.BaseState = Spaceship.BaseStateEnum.Active;
 		}
 		EndTimer.Start();
 	}
@@ -108,34 +79,9 @@ internal partial class CombatStage : Node3D {
 		Result = new() {
 			Time = DateTime.Now(),
 			TotalSeconds = (long)(SecondsTimer.WaitTime - SecondsTimer.TimeLeft),
-			Win = GetFleetLeftHP(CampEnum.Left) > GetFleetLeftHP(CampEnum.Right)
+			Win = Statics.FleetHP[TeamEnum.Left] > Statics.FleetHP[TeamEnum.Right]
 			// TODO:	记录舰队剩余状态
 		};
-	}
-
-	[Obsolete("用回Camp")]
-	public static List<SpaceshipSnapshot> ProbeShips(GUID filterFleetID) {
-		return [..Value?.ActiveBoard.GetChildren().OfType<Spaceship>()
-			.Where(ship=>ship.FromFleetID != filterFleetID)
-			.Select<Spaceship,SpaceshipSnapshot>(ship=>new(ship))??[]];
-	}
-
-	public static List<SpaceshipSnapshot> ProbeShips(CampEnum campFilter) {
-		return [.. Value?.ActiveBoard.GetChildren().OfType<Spaceship>()
-			.Where(ship => {
-				if(campFilter == CampEnum.Left && ship.FromFleetID == Value.FleetID[campFilter]){
-					return false;
-				}
-				else if(campFilter == CampEnum.Right && ship.FromFleetID == Value.FleetID[campFilter] ){
-					return false;
-				}
-				return true;
-			})
-			.Select<Spaceship, SpaceshipSnapshot>(ship => new(ship))??[]];
-	}
-
-	public static Spaceship? GetShip(GUID id) {
-		return Value?.ActiveBoard.GetChildren().OfType<Spaceship>().Where(ship => ship.ID == id).ToList()[0];
 	}
 
 	// Called when the node enters the scene tree for the first time.
@@ -179,9 +125,8 @@ internal partial class CombatStage : Node3D {
 	}
 
 	public override void _ExitTree() {
-		if (Value == this) {
-			Value = null;
-		}
+		CombatStageServer.Free(this.Name);
+		BulletServer.Free(this.Name);
 	}
 
 	private Spaceship CreateShip(Vector3 originPos, SpaceshipData data, TacticsSet tactics) {
@@ -191,11 +136,13 @@ internal partial class CombatStage : Node3D {
 		ship.TypeName = data.GetShipTypeName();
 		ship.CustomName = data.CustomName;
 		ship.CurrentHP = data.CurrentHP;
-		// ship.Range = data.Range;
 		ship.Tactics = tactics;
 		ship.Position = originPos + tactics.OffsetPosition;
+		BulletServer.Connect(ship.ID, this.Name);
 		return ship;
 	}
+
+	private Dictionary<string, CombatStage> servers = [];
 
 	// 摄像机
 	private const float OVERVIEW_MODE_CAMERA_CLAMP_PITCH = 70;

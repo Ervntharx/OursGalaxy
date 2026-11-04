@@ -17,8 +17,8 @@ internal partial class TestCombat : Node3D {
 		fleet.Ships.Add(mem3, new() {
 			OffsetPosition = Godot.Vector3.Back * 5
 		});
-		Stage.Make(CombatStage.CampEnum.Left, fleet);
-		Stage.Make(CombatStage.CampEnum.Right, MakeFleetData("right"));
+		Stage.Make(CombatStage.TeamEnum.Left, fleet);
+		Stage.Make(CombatStage.TeamEnum.Right, MakeFleetData("right"));
 		Stage.Start();
 	}
 

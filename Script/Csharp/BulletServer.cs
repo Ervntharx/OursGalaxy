@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
 using Godot;
 namespace OursGalaxy;
 
@@ -10,29 +13,16 @@ internal partial class BulletServer : Node {
 	/// <summary>
 	/// 场景根。⚠️期望外部对之赋值
 	/// </summary>
+	[Obsolete]
 	public static Node3D? SceneRoot { get; set; }
 
 	/// <summary>
 	/// 场景根节点是否已准备好
 	/// </summary>
+	[Obsolete]
 	public static bool ServerReady => GodotObject.IsInstanceValid(SceneRoot);
 
-	/// <summary>
-	/// 添加子弹
-	/// </summary>
-	/// <param name="from">用于联动StaticsServer</param>
-	/// <param name="bullet">子弹</param>
-	/// <param name="initGlobalTranform">初始的3D变换，位置和方向</param>
-	/// <param name="velocity">子弹速度</param>
-	[Obsolete]
-	public static void Add(ISpaceEntity from, IBullet bullet, Transform3D initGlobalTranform, Vector3 velocity) {
-		if (GodotObject.IsInstanceValid(SceneRoot)) {
-			bullet.AsArea3D().GlobalTransform = initGlobalTranform;
-			bullet.Velocity = velocity;
-			SceneRoot.AddChild(bullet.AsArea3D());
-		}
-	}
-
+	[Obsolete("Push instead")]
 	public static void Add(IBattleEntity from, BulletBase bullet, Transform3D initGlobalTransform, Vector3 initVelocity) {
 		if (ServerReady) {
 			bullet.GlobalTransform = initGlobalTransform;
@@ -40,4 +30,41 @@ internal partial class BulletServer : Node {
 			SceneRoot!.AddChild(bullet);
 		}
 	}
+
+	public static bool ContainsScene(string sceneName) => activedScene.Keys.Contains(sceneName);
+
+	public static void Register(string sceneName, Node3D scene) {
+		if (!activedScene.Keys.Contains(sceneName)) {
+			activedScene.Add(sceneName, scene);
+			return;
+		}
+		GD.PushWarning($"<BulletServer> Try to regitser scene for one more time: {sceneName}");
+	}
+
+	public static void Connect(GUID from, string toScene) {
+		if (ContainsScene(toScene)) {
+			mapCache.Add(from, toScene);
+			return;
+		}
+		GD.PushError($"<BulletServer> Try to connect guid to a non existed scene");
+	}
+
+	public static void Push(GUID from, BulletBase bullet, Transform3D initGlobalTransform, Vector3 initVelocity) {
+		bullet.GlobalTransform = initGlobalTransform;
+		bullet.LinearVelocity = initVelocity;
+		if (mapCache.Keys.Contains(from)) {
+			activedScene[mapCache[from]].AddChild(bullet);
+			return;
+		}
+		foreach (var scene in activedScene.Values) {
+			scene.GetChildren().FirstOrDefault(child => child is Spaceship ship && ship.ID == from)?.AddChild(bullet);
+		}
+	}
+
+	public static void Free(string sceneName) {
+		activedScene.Remove(sceneName);
+	}
+
+	private static Dictionary<string, Node3D> activedScene = [];
+	private static Dictionary<GUID, string> mapCache = [];
 }
