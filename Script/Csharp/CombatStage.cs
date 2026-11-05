@@ -121,7 +121,7 @@ internal partial class CombatStage : Node3D {
 	}
 
 	public override void _UnhandledInput(InputEvent @event) {
-
+		base._UnhandledInput(@event);
 	}
 
 	public override void _ExitTree() {

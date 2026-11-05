@@ -20,10 +20,26 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	public SpaceshipConfig.ScaleSizeEnum ScaleSize { get; set; } = SpaceshipConfig.ScaleSizeEnum.FF;
 
 	/// <summary>
-	/// 活动总开关
+	/// 总开关
 	/// </summary>
 	public enum BaseStateEnum { Stop, Active }
-	public BaseStateEnum BaseState { get; set; } = BaseStateEnum.Stop;
+	public BaseStateEnum BaseState {
+		get => baseState;
+		set {
+			baseState = value;
+			switch (BaseState) {
+				case BaseStateEnum.Active:
+					// 激活瞬间进行索敌
+					ProbeTarget();
+					break;
+				case BaseStateEnum.Stop:
+					break;
+				default:
+					break;
+			}
+		}
+	}
+	private BaseStateEnum baseState = BaseStateEnum.Stop;
 
 	[ExportGroup("Outlets Setup")]
 	[Export]
