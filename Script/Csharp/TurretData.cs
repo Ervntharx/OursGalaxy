@@ -7,6 +7,6 @@ internal partial class TurretData : EquipData {
 	[Obsolete]
 	[Export] public float Range { get; set; }
 
-	public string GetTurretType() => GetTableName();
-	public string GetTurretName() => GetItemName();
+	public string GetTurretType() => ITypeCode;
+	public string GetTurretName() => NameCode;
 }

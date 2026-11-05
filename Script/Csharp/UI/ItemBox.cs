@@ -32,7 +32,7 @@ internal partial class ItemBox : Button {
 		if (itemValue is not null) {
 			itemValue.PropertyChanged += Update;
 
-			NameLabel!.Text = $"[color=gold]{itemValue.Code}[/color]";
+			NameLabel!.Text = $"[color=gold]{itemValue}[/color]";
 			if (itemValue is OursGalaxy.GameItem mItem) {
 				NumLabel!.Show();
 				NumLabel!.Text = $"{mItem.Num}";
@@ -66,7 +66,7 @@ internal partial class ItemBox : Button {
 	}
 
 	private void Update(ItemBase itemBase, string _) {
-		NameLabel!.Text = itemBase.Code;
+		NameLabel!.Text = itemBase.ToString();
 		if (itemBase is GameItem gameItem) {
 			NumLabel!.Text = $"{gameItem.Num}";
 		}

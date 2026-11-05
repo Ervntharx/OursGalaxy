@@ -11,16 +11,11 @@ namespace OursGalaxy;
 internal partial class SpaceshipData : UniqueItem {
 	[Export] public string? CustomName { get; set; }
 
-	[Export(PropertyHint.Range, "1,0,99999")]
+	[Export]
 	public int CurrentHP { get; set; }
 
 	[Export]
 	public Godot.Collections.Array<EquipData> EquipsLs { get; set; } = [];
-
-	public int FullHP => fullHP.Value;
-	public int Size => size.Value;
-	public int Raid => raid.Value;
-	public float Range => range.Value;
 
 	/// <summary>
 	/// 从Config构造Data
@@ -28,47 +23,19 @@ internal partial class SpaceshipData : UniqueItem {
 	/// <param name="config"></param>
 	/// <returns></returns>
 	public static SpaceshipData From(SpaceshipConfig config) {
-		var ship = new SpaceshipData(config.ShipTypeName) {
-			fullHP = new(config.HP),
-			size = new(config.Size),
-			raid = new(config.Raid)
-		};
+		var ship = new SpaceshipData(config.ShipTypeName, ItemBaseConfig.QulityEnum.White) { };
 		return ship;
 	}
 
-	public SpaceshipData(string typeName, GUID? ID = null) : base($"{SpaceshipConfig.ItemCodePrefix}_{typeName}", ID) {
-		// GameDataBase.Connect();
-		size = new(() => ResourceLib.QueryConfig<SpaceshipConfig>(Code).Size);
+	public SpaceshipData(string typeName, ItemBaseConfig.QulityEnum qulity, GUID? ID = null, ItemLocationInf? loc = null) :
+		base("Spaceship", typeName, qulity, ID, loc) { }
 
-		fullHP = new(() => ResourceLib.QueryConfig<SpaceshipConfig>(Code).HP);
-		CurrentHP = FullHP;
-
-		raid = new(() => ResourceLib.QueryConfig<SpaceshipConfig>(Code).Raid);
-
-		range = new(() => {
-			var leastRange = 0f;
-			foreach (var turret in EquipsLs.OfType<TurretData>()) {
-				var range = TurretLib.QueryConfig(turret.GetTurretType(), turret.GetTurretName(), turret.GetQulity()).Range;
-				leastRange = leastRange == 0 ? Math.Max(leastRange, range) : Math.Min(leastRange, range);
-			}
-			return leastRange;
-		});
-	}
-
-	public string GetShipTypeName() => GetItemName();
+	public string GetShipTypeName() => NameCode;
 
 	/// <summary>
 	/// ⚠️避免使用无参构造函数构造无意义量
 	/// </summary>
 	protected SpaceshipData() : base() {
-		size = new(0);
-		fullHP = new(0);
-		raid = new(0);
-		range = new(0f);
-	}
 
-	private Lazy<int> fullHP;
-	private Lazy<int> size;
-	private Lazy<int> raid;
-	private Lazy<float> range;
+	}
 }

@@ -6,26 +6,10 @@ namespace OursGalaxy.ResourceConfig;
 internal partial class SpaceshipConfig : ItemBaseConfig {
 	public const string ItemCodePrefix = "Spaceship";
 
-	[Export]
-	public string ShipTypeName {
-		get {
-			return Code.Split("_", false)[1];
-		}
-		set {
-			var strLs = Code.Split("_", false);
-			if (strLs.Length != 3) {
-				strLs = ["Spaceship", value, "1"];
-			}
-			else {
-				strLs[1] = value;
-			}
-			Code = string.Join("_", strLs);
-		}
-	}
 
+	[Export] public string ShipTypeName { get => NameCode; set => NameCode = value; }
 	public enum ScaleSizeEnum { FF, DD, CL, CA, BB }
-	[Export]
-	public ScaleSizeEnum ScaleSize { get; set; } = ScaleSizeEnum.FF;
+	[Export] public ScaleSizeEnum ScaleSize { get; set; } = ScaleSizeEnum.FF;
 
 	[Export(PropertyHint.Range, "1,1000,1")]
 	public int Size { get; set; }

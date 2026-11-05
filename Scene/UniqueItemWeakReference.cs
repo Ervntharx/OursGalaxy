@@ -10,10 +10,10 @@ internal partial class UniqueItemWeakReference : Resource {
 	public GUID IDRefer { get; set; }
 
 	[Export]
-	public string Code { get; set; }
+	public ItemBase IBase { get; set; }
 
 	public UniqueItemWeakReference(UniqueItem uItem) {
 		IDRefer = uItem.ID;
-		Code = uItem.Code;
+		IBase = new(uItem.ITypeCode, uItem.NameCode, uItem.Qulity);
 	}
 }

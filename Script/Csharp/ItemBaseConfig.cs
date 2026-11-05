@@ -9,32 +9,27 @@ internal partial class ItemBaseConfig : Resource {
 	public enum QulityEnum { White, Green, Purple, Gold }
 
 	/// <summary>
-	/// ItemBase的物品类型Code
+	/// 物品类型code
 	/// </summary>
-	[Export] public string Code { get; set; } = TEMPLATE_CODE;
+	[Export] public string TypeCode { get; set; } = string.Empty;
 
-	[Export]
-	public QulityEnum Qulity {
-		get {
-			if (int.TryParse(Code.Split("_", false)[2], out var result)) {
-				return (QulityEnum)result;
-			}
-			GD.PushError("Invalid Code");
-			return QulityEnum.White;
-		}
-		set {
-			var codeLs = Code.Split("_", false);
-			codeLs[2] = ((int)value).ToString();
-			Code = string.Join("_", codeLs);
-		}
-	}
+	/// <summary>
+	/// 名称code
+	/// </summary>
+	[Export] public string NameCode { get; set; } = string.Empty;
 
+	/// <summary>
+	/// 品质
+	/// </summary>
+	[Export] public QulityEnum Qulity { get; set; } = QulityEnum.White;
+
+	/// <summary>
+	/// 显示名
+	/// </summary>
 	[Export] public string DisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// 简介
 	/// </summary>
 	[Export] public string Introductuon { get; set; } = string.Empty;
-
-	private const string TEMPLATE_CODE = "Template";
 }

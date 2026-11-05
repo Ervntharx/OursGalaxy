@@ -20,26 +20,12 @@ internal partial class GameItem : ItemBase {
 		}
 	}
 
-	public static GameItem FromString(string str) {
-		var ls = str.Split(":", false);
-		if (int.TryParse(ls[1], out var num)) {
-			return new(ls[0], num);
-		}
-		throw new InvalidCastException("not a string of game item");
-	}
-
 	/// <summary>
 	/// ⚠️予Godot设施提供的构造函数。继承类型中应包含，但不应主动使用以产生空值
 	/// </summary>
 	protected GameItem() : base() { }
 
-	public GameItem(string code, int num = 0) : base(code) {
-		Num = num;
-	}
-
-	public GameItem(string table, string name, ItemBaseConfig.QulityEnum qulity, int num = 0) : base(table, name, qulity) {
-		Num = num;
-	}
+	public GameItem(string typeCode, string nameCode, ItemBaseConfig.QulityEnum qulity, int num = 0) : base(typeCode, nameCode, qulity) => Num = num;
 
 	/// <summary>
 	/// 是否是临时数据。依靠数量进行判断。
@@ -47,9 +33,7 @@ internal partial class GameItem : ItemBase {
 	/// <returns></returns>
 	public bool IsTemp() => Num == 0;
 
-	public override string ToString() {
-		return $"{Code}:{Num}";
-	}
+	public override string ToString() => base.ToString() + $":{Num}";
 
 	private int num;
 }

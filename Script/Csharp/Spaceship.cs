@@ -54,7 +54,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	}
 
 	public SpaceshipData Save() {
-		return new SpaceshipData(TypeName, ID);
+		return new SpaceshipData(, );
 	}
 
 	#region Battle
@@ -383,7 +383,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	/// <param name="spaceshipData"></param>
 	public void InstallEquips(SpaceshipData spaceshipData) {
 		for (int i = 0; i < Outlets.Count; i++) {
-			var equip = EquipFactory.Load(spaceshipData.EquipsLs[i].Code);
+			var equip = EquipFactory.Load(spaceshipData.EquipsLs[i].ToString());
 			if (equip is TurretBase turret) {
 				turret.FromShipGUID = ID;
 			}

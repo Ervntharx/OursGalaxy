@@ -30,7 +30,7 @@ internal partial class CombatSpaceshipStaticsData : Resource {
 	public CombatSpaceshipStaticsData(SpaceshipData shipData) {
 		ID = shipData.ID;
 		ShipType = shipData.GetShipTypeName();
-		Qulity = shipData.GetQulity();
+		Qulity = shipData.Qulity;
 	}
 }
 

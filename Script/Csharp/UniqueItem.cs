@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Security.AccessControl;
 using Godot;
+using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
 
 /// <summary>
@@ -18,8 +20,9 @@ internal partial class UniqueItem : ItemBase {
 	/// </summary>
 	protected UniqueItem() : base() { ID = GUID.Empty; }
 
-	public UniqueItem(string code, GUID? uniqueID = null) : base(code) {
-		ID = uniqueID ?? GUID.Generate();
+	public UniqueItem(string typeCode, string nameCode, ItemBaseConfig.QulityEnum qulity, GUID? id = null, ItemLocationInf? loc = null) : base(typeCode, nameCode, qulity) {
+		ID = id ?? GUID.Generate();
+		ItemLocation = loc;
 	}
 
 	/// <summary>
@@ -33,7 +36,8 @@ internal partial class UniqueItem : ItemBase {
 	}
 
 	public static bool operator ==(UniqueItem left, UniqueItem right) => !(left != right);
-	public static bool operator !=(UniqueItem left, UniqueItem right) => left.ID != right.ID;
+	public static bool operator !=(UniqueItem left, UniqueItem right)
+		=> left.ITypeCode != right.ITypeCode || left.NameCode != right.NameCode || left.Qulity != right.Qulity || left.ID != right.ID;
 
 	public override bool Equals(object? obj) {
 		if (ReferenceEquals(this, obj)) {
@@ -42,7 +46,5 @@ internal partial class UniqueItem : ItemBase {
 		return obj is not null && obj is UniqueItem uniqueObj && uniqueObj == this;
 	}
 
-	public override int GetHashCode() => ID.GetHashCode() + base.GetHashCode() + 17;
-
-	// private long GenerateUniqueID() => Godot.Time.GetUnixTimeFromDatetimeDict(Time.GetDateDictFromSystem(true));
+	public override int GetHashCode() => base.GetHashCode() + ID.GetHashCode();
 }

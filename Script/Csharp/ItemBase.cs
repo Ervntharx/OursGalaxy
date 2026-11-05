@@ -4,45 +4,41 @@ using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
 
 /// <summary>
-/// 游戏物品基类。不具有数量/唯一性标识能力
+/// 游戏物品基类。不具有数量/唯一性标识能力.持有一个ItemBase用作校对是安全的
 /// </summary>
 [GlobalClass]
 internal partial class ItemBase : Resource {
 	/// <summary>
-	/// 辨识id码, 显式使用[表名_物品名_质量]的格式
+	/// 物品类型code
 	/// </summary>
 	[Export]
-	public string Code {
-		get => code; protected set {
-			code = value;
-			PropertyChanged?.Invoke(this, new("Code"));
-		}
-	}
+	public string ITypeCode { get; protected set; } = string.Empty;
+	/// <summary>
+	/// 名字code
+	/// </summary>
+	[Export]
+	public string NameCode { get; protected set; } = string.Empty;
+	/// <summary>
+	/// 品质
+	/// </summary>
+	[Export]
+	public ItemBaseConfig.QulityEnum Qulity { get; set; } = ItemBaseConfig.QulityEnum.White;
 
 	public Action<ItemBase, string>? PropertyChanged;
 
 	/// <summary>
 	/// ⚠️予Godot设施提供的构造函数。继承类型中应包含，但不应主动使用以产生空值
 	/// </summary>
-	protected ItemBase() { code = string.Empty; }
+	protected ItemBase() { }
 
-	public ItemBase(string code) => this.code = code;
-
-	public ItemBase(string table, string name, ItemBaseConfig.QulityEnum qulityEnum = ItemBaseConfig.QulityEnum.White) => this.code = $"{table}_{name}_{(int)qulityEnum}";
-
-	public string GetTableName() => Code.Split("_", false)[0];
-
-	public string GetItemName() => Code.Split("_", false)[1];
-
-	public ItemBaseConfig.QulityEnum GetQulity() {
-		if (int.TryParse(Code.Split("_", false)[2], out int reusult)) {
-			return (ItemBaseConfig.QulityEnum)reusult;
-		}
-		throw new ArgumentOutOfRangeException("Read Qulity Error");
+	public ItemBase(string typeCode, string nameCode, ItemBaseConfig.QulityEnum qulityEnum = ItemBaseConfig.QulityEnum.White) {
+		ITypeCode = typeCode;
+		NameCode = nameCode;
+		Qulity = qulityEnum;
 	}
 
 	public static bool operator ==(ItemBase left, ItemBase right) => !(left != right);
-	public static bool operator !=(ItemBase left, ItemBase right) => left.Code != right.Code;
+	public static bool operator !=(ItemBase left, ItemBase right) => left.ToString() != right.ToString();
 
 	public override bool Equals(object? obj) {
 		if (ReferenceEquals(this, obj)) {
@@ -52,9 +48,8 @@ internal partial class ItemBase : Resource {
 	}
 
 	// override object.GetHashCode
-	public override int GetHashCode() => Code.GetHashCode() + 17;
+	public override int GetHashCode() => ITypeCode.GetHashCode() + NameCode.GetHashCode() + Qulity.GetHashCode();
 
-	public override string ToString() => $"ItemBase: {Code}";
+	public override string ToString() => $"{ITypeCode}_{NameCode}_{(int)Qulity}";
 
-	private string code;
 }
