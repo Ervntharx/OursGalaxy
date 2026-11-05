@@ -14,7 +14,7 @@ internal partial class CombatData : Resource {
 	[Export]
 	public string? DisplayName { get; set; }
 
-	[Export(PropertyHint.Range)]
+	[Export]
 	public int Level { get; set; }
 
 	[Export]

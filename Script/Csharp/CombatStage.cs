@@ -37,13 +37,9 @@ internal partial class CombatStage : Node3D {
 	[Export]
 	protected CombatPanel Panel { get; set; } = null!;
 
-	// 战斗钟
-	public int CombatTotalTime => Mathf.RoundToInt(EndTimer.WaitTime);
-	public int CombatLeftTime => Mathf.RoundToInt(EndTimer.TimeLeft);
-
 	public CombatResult? Result { get; set; }
 
-	public StaticsSpawner Statics { get; set; } = new();
+	public StaticsData Statics { get; set; } = new();
 
 	[Export]
 	public Godot.Collections.Dictionary<TeamEnum, Vector3> InitialFleetDir { get; set; } = [];
@@ -52,20 +48,27 @@ internal partial class CombatStage : Node3D {
 		base._EnterTree();
 		CombatStageServer.Register(Name, this);
 		BulletServer.Register(Name, this);
+		SecondsTimer.Timeout += UpdateLeftTimeLabel;
 		Panel.RetreatEvent += () => End(CombatResult.EndReasonEnum.Retreat);
+		EndTimer.Timeout += () => End(CombatResult.EndReasonEnum.Timeout);
+		Statics.StaticsDataChanged += Panel.OnStaticsSpawnerUpdated;
 	}
 
 	/// <summary>
 	/// 配置舰队
 	/// </summary>
-	/// <param name="camp"></param>
+	/// <param name="team"></param>
 	/// <param name="fleet"></param>
-	public void Make(TeamEnum camp, FleetData fleet) {
+	public void PutOnFleet(TeamEnum team, FleetData fleet) {
 		foreach (var pair in fleet.Ships) {
-			var ship = CreateShip(FleetPosMarkers[camp].Position, pair.Key, pair.Value);
-			ship.Basis = Basis.LookingAt(InitialFleetDir[camp], Vector3.Up);
+			var ship = CreateShip(FleetPosMarkers[team].Position, pair.Key, pair.Value);
+			ship.Basis = Basis.LookingAt(InitialFleetDir[team], Vector3.Up);
+			ship.Team = team;
 			CombatStageServer.CacheInStage(ship.ID, Name);
+			BulletServer.CacheGUID(ship.ID, Name);
+			ship.OnEntityDestory += DecacheBulletServer;
 			ActiveBoard.AddChild(ship);
+			Statics.Track(ship);
 		}
 	}
 
@@ -81,15 +84,9 @@ internal partial class CombatStage : Node3D {
 			EndReason = reason,
 			Time = DateTime.Now(),
 			TotalSeconds = (long)(SecondsTimer.WaitTime - SecondsTimer.TimeLeft),
-			Win = Statics.FleetHP[TeamEnum.Left] > Statics.FleetHP[TeamEnum.Right]
+			Win = Statics.HP[TeamEnum.Left] / Statics.FullHP[TeamEnum.Left] > Statics.HP[TeamEnum.Right] / Statics.FullHP[TeamEnum.Right]
 			// TODO:	记录舰队剩余状态
 		};
-	}
-
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready() {
-		EndTimer.Timeout += () => End(CombatResult.EndReasonEnum.Timeout);
-		Statics.Updated += Panel.OnStaticsSpawnerUpdated;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -128,21 +125,30 @@ internal partial class CombatStage : Node3D {
 	}
 
 	public override void _ExitTree() {
-		CombatStageServer.Free(this.Name);
-		BulletServer.Free(this.Name);
+		CombatStageServer.Free(Name);
+		BulletServer.Free(Name);
+		SecondsTimer.Timeout -= UpdateLeftTimeLabel;
 	}
 
 	private Spaceship CreateShip(Vector3 originPos, SpaceshipData data, TacticsSet tactics) {
 		var ship = SpaceshipFactory.Make(data.GetShipTypeName());
-		GD.Print(data.Code);
 		ship.ID = data.ID;
+		ship.HP = data.FullHP;
+		ship.CurrentHP = data.CurrentHP;
 		ship.TypeName = data.GetShipTypeName();
 		ship.CustomName = data.CustomName;
 		ship.CurrentHP = data.CurrentHP;
 		ship.Tactics = tactics;
 		ship.Position = originPos + tactics.OffsetPosition;
-		BulletServer.Connect(ship.ID, this.Name);
 		return ship;
+	}
+
+	private void DecacheBulletServer(SpaceshipSnapshot shot) {
+		BulletServer.DecacheGUID(shot.ID);
+	}
+
+	private void UpdateLeftTimeLabel() {
+		Panel.UpdateLeftTime(EndTimer.TimeLeft);
 	}
 
 	private Dictionary<string, CombatStage> servers = [];

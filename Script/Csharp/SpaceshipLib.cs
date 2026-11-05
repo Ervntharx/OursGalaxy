@@ -11,5 +11,5 @@ internal static class SpaceshipLib {
 	public static SpaceshipConfig QueryConfig(SpaceshipData data)
 		=> SpaceshipLib.QueryConfig(data.GetShipTypeName(), data.GetQulity());
 
-	public static SpaceshipConfig GetTemplate() => ResourceLoader.Load<SpaceshipConfig>("res://ResourceLib/Spaceship/TemplateShip.tres");
+	public static SpaceshipConfig GetTemplate() => ResourceLoader.Load<SpaceshipConfig>("res://ResourceLib/Spaceship/TemplateShip_0.tres");
 }

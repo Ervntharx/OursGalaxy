@@ -383,7 +383,11 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	/// <param name="spaceshipData"></param>
 	public void InstallEquips(SpaceshipData spaceshipData) {
 		for (int i = 0; i < Outlets.Count; i++) {
-			Outlets[i].AddChild(EquipFactory.Load(spaceshipData.EquipsLs[i].Code));
+			var equip = EquipFactory.Load(spaceshipData.EquipsLs[i].Code);
+			if (equip is TurretBase turret) {
+				turret.FromShipGUID = ID;
+			}
+			Outlets[i].AddChild(equip);
 		}
 	}
 	#endregion Equip
@@ -402,6 +406,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	public override void _Process(double delta) {
 		base._Process(delta);
 		AutoSetShipMovementState(GlobalTransform, TargetEntity?.AsNode3D().GlobalTransform, ShipHeadConeAngle, KeepDistanceMin, KeepDistanceMax);
+		HandleShipMvementState(delta, this, TargetEntity);
 	}
 
 	public override void _PhysicsProcess(double delta) {

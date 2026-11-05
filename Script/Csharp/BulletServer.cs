@@ -41,7 +41,8 @@ internal partial class BulletServer : Node {
 		GD.PushWarning($"<BulletServer> Try to regitser scene for one more time: {sceneName}");
 	}
 
-	public static void Connect(GUID from, string toScene) {
+	[Obsolete]
+	public static void CacheGUID(GUID from, string toScene) {
 		if (ContainsScene(toScene)) {
 			mapCache.Add(from, toScene);
 			return;
@@ -59,6 +60,15 @@ internal partial class BulletServer : Node {
 		foreach (var scene in activedScene.Values) {
 			scene.GetChildren().FirstOrDefault(child => child is Spaceship ship && ship.ID == from)?.AddChild(bullet);
 		}
+	}
+
+	[Obsolete]
+	public static void DecacheGUID(GUID who) {
+		if (mapCache.ContainsKey(who)) {
+			mapCache.Remove(who);
+			return;
+		}
+		GD.PushError("Try to decache an non existed battleEntity");
 	}
 
 	public static void Free(string sceneName) {

@@ -28,7 +28,12 @@ internal partial class SpaceshipData : UniqueItem {
 	/// <param name="config"></param>
 	/// <returns></returns>
 	public static SpaceshipData From(SpaceshipConfig config) {
-		return new(config.ShipTypeName);
+		var ship = new SpaceshipData(config.ShipTypeName) {
+			fullHP = new(config.HP),
+			size = new(config.Size),
+			raid = new(config.Raid)
+		};
+		return ship;
 	}
 
 	public SpaceshipData(string typeName, GUID? ID = null) : base($"{SpaceshipConfig.ItemCodePrefix}_{typeName}", ID) {
@@ -36,6 +41,7 @@ internal partial class SpaceshipData : UniqueItem {
 		size = new(() => ResourceLib.QueryConfig<SpaceshipConfig>(Code).Size);
 
 		fullHP = new(() => ResourceLib.QueryConfig<SpaceshipConfig>(Code).HP);
+		CurrentHP = FullHP;
 
 		raid = new(() => ResourceLib.QueryConfig<SpaceshipConfig>(Code).Raid);
 

@@ -35,7 +35,7 @@ internal partial class CombatStageServer {
 	/// <param name="stageName"></param>
 	/// <param name="result"></param>
 	/// <returns></returns>
-	public static bool TryGetStaticsSpawner(string stageName, [NotNullWhen(true)] out StaticsSpawner? result) {
+	public static bool TryGetStaticsSpawner(string stageName, [NotNullWhen(true)] out StaticsData? result) {
 		if (Contains(stageName)) {
 			result = stages[stageName].Statics;
 			return true;
