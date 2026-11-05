@@ -11,6 +11,7 @@ internal interface IBattleEntity : ISpaceEntity {
 	public Area3D AttackableArea { get; }
 
 	public CombatStage.TeamEnum Team { get; }
+	public bool IsFlagShip { get; }
 
 	public int HP { get; set; }
 	public int CurrentHP { get; set; }

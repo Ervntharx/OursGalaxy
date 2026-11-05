@@ -13,9 +13,6 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	public Node3D AsNode3D() => this;
 	public T ToNode<T>() where T : Node => (this as T)!;
 
-	[Obsolete]
-	public enum ScaleSizeEnum { FF = 0, DD = 1, CL = 2, CA = 3, BB = 4 }
-
 	[Export]
 	public SpaceshipConfig.ScaleSizeEnum ScaleSize { get; set; } = SpaceshipConfig.ScaleSizeEnum.FF;
 
@@ -54,19 +51,6 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 		ID = GUID.Empty;
 		TypeName = string.Empty;
 		CurrentHP = 0;
-	}
-
-	[Obsolete]
-	public static Spaceship Load(SpaceshipData data, TacticsSet? tactics) {
-		var ship = (Spaceship)ResourceLoader.Load<PackedScene>($"res://Script/Csharp/Ships/{data.GetShipTypeName()}.tscn").Instantiate();
-		ship.ID = data.ID;
-		ship.TypeName = data.GetShipTypeName();
-		ship.CustomName = data.CustomName;
-		ship.CurrentHP = data.CurrentHP;
-		ship.Range = data.Range;
-		ship.Tactics = tactics ?? new();
-
-		return ship;
 	}
 
 	public SpaceshipData Save() {
@@ -342,7 +326,6 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	private readonly List<TurretBase> Turrets = [];
 
-
 	// 探测船上可用的Turret
 	private void ProbeTurret() {
 		foreach (var turret in Outlets.Select(outlet => outlet.GetChild(0)).OfType<TurretBase>()) {
@@ -392,6 +375,18 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	}
 
 	#endregion Turret
+
+	#region Equip
+	/// <summary>
+	/// 安装装备
+	/// </summary>
+	/// <param name="spaceshipData"></param>
+	public void InstallEquips(SpaceshipData spaceshipData) {
+		for (int i = 0; i < Outlets.Count; i++) {
+			Outlets[i].AddChild(EquipFactory.Load(spaceshipData.EquipsLs[i].Code));
+		}
+	}
+	#endregion Equip
 
 	public override void _Ready() {
 		base._Ready();

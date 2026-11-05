@@ -12,8 +12,9 @@ internal partial class StaticsSpawner {
 	public Dictionary<CombatStage.TeamEnum, int> ShipsFullCount { get; } = [];
 	public Dictionary<CombatStage.TeamEnum, Dictionary<SpaceshipConfig.ScaleSizeEnum, int>> ShipsCount { get; } = [];
 
-	public event Action<CombatStage.TeamEnum, int>? FleetHPChanged;
-	public event Action<CombatStage.TeamEnum, int>? ShipsCountChanged;
+	public Dictionary<CombatStage.TeamEnum, bool> FlagAliveStatus { get; set; } = [];
+
+	public event Action<StaticsSpawner>? Updated;
 
 	public void Track(IBattleEntity battleEntity) {
 		if (FleetFullHP.Keys.Contains(battleEntity.Team)) {
@@ -29,15 +30,27 @@ internal partial class StaticsSpawner {
 			ShipsFullCount.Add(battleEntity.Team, 1);
 		}
 
+		if (!FlagAliveStatus.ContainsKey(battleEntity.Team)) {
+			FlagAliveStatus[battleEntity.Team] = false;
+		}
+		if (battleEntity.IsFlagShip) {
+			FlagAliveStatus[battleEntity.Team] = true;
+		}
+
 		battleEntity.OnHPChanged += OnHPChanged;
 		battleEntity.OnEntityDestory += OnEntityDead;
 	}
 
 	private void OnHPChanged(SpaceshipSnapshot shot, int currentHP, int hpChanged) {
 		FleetHP[shot.Team] += hpChanged;
+		Updated?.Invoke(this);
 	}
 
 	private void OnEntityDead(SpaceshipSnapshot shot) {
 		ShipsCount[shot.Team][shot.ScaleSize] -= 1;
+		if (shot.IsFlagShip) {
+			FlagAliveStatus[shot.Team] = false;
+		}
+		Updated?.Invoke(this);
 	}
 }

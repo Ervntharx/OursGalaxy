@@ -30,8 +30,6 @@ internal partial class ItemBase : Resource {
 
 	public ItemBase(string table, string name, ItemBaseConfig.QulityEnum qulityEnum = ItemBaseConfig.QulityEnum.White) => this.code = $"{table}_{name}_{(int)qulityEnum}";
 
-	public ItemBase(ItemBase other) : this(other.Code) { }
-
 	public string GetTableName() => Code.Split("_", false)[0];
 
 	public string GetItemName() => Code.Split("_", false)[1];

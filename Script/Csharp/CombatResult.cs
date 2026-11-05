@@ -7,6 +7,10 @@ namespace OursGalaxy.UI;
 /// </summary>
 [GlobalClass]
 internal partial class CombatResult : Resource {
+	public enum EndReasonEnum { Timeout, Retreat }
+	[Export]
+	public EndReasonEnum EndReason { get; set; }
+
 	[Export]
 	public required DateTime Time { get; set; }
 

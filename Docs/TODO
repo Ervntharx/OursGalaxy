@@ -5,8 +5,6 @@ Blueprint,Combat,TaskEvent,Task转为Resource直接存储到Res/
 
 实现的UniqueItem的派生类（SpaceshipData,EquipBase）都需要实现Reference，且能MakeCopy()
 
-CombatStage管理战局的方式需要重新设计
-
 SpaceshipConfig的ShipTypeName需与Code联动
 
 引入ShieldConfig, ShieldData
@@ -54,6 +52,7 @@ ItemViewerPanel实现返回选择项的回调能力
 ItemViewerPanel实现无顶栏嵌入模式
 
 测试：
+	EquipData, EquipLib, EquipFactory联动方式需要测试
 	TemplateShip写入数据库，进行首轮战斗测试
 
 	debug:

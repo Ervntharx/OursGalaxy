@@ -52,6 +52,7 @@ internal partial class CombatStage : Node3D {
 		base._EnterTree();
 		CombatStageServer.Register(Name, this);
 		BulletServer.Register(Name, this);
+		Panel.RetreatEvent += () => End(CombatResult.EndReasonEnum.Retreat);
 	}
 
 	/// <summary>
@@ -63,7 +64,7 @@ internal partial class CombatStage : Node3D {
 		foreach (var pair in fleet.Ships) {
 			var ship = CreateShip(FleetPosMarkers[camp].Position, pair.Key, pair.Value);
 			ship.Basis = Basis.LookingAt(InitialFleetDir[camp], Vector3.Up);
-			CombatStageServer.Connect(ship.ID, Name);
+			CombatStageServer.CacheInStage(ship.ID, Name);
 			ActiveBoard.AddChild(ship);
 		}
 	}
@@ -75,8 +76,9 @@ internal partial class CombatStage : Node3D {
 		EndTimer.Start();
 	}
 
-	public void End() {
+	public void End(CombatResult.EndReasonEnum reason) {
 		Result = new() {
+			EndReason = reason,
 			Time = DateTime.Now(),
 			TotalSeconds = (long)(SecondsTimer.WaitTime - SecondsTimer.TimeLeft),
 			Win = Statics.FleetHP[TeamEnum.Left] > Statics.FleetHP[TeamEnum.Right]
@@ -86,7 +88,8 @@ internal partial class CombatStage : Node3D {
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
-		EndTimer.Timeout += End;
+		EndTimer.Timeout += () => End(CombatResult.EndReasonEnum.Timeout);
+		Statics.Updated += Panel.OnStaticsSpawnerUpdated;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

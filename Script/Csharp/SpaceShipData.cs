@@ -15,7 +15,7 @@ internal partial class SpaceshipData : UniqueItem {
 	public int CurrentHP { get; set; }
 
 	[Export]
-	public Godot.Collections.Array<OutletData> EquipsLs { get; set; } = [];
+	public Godot.Collections.Array<EquipData> EquipsLs { get; set; } = [];
 
 	public int FullHP => fullHP.Value;
 	public int Size => size.Value;
@@ -41,8 +41,9 @@ internal partial class SpaceshipData : UniqueItem {
 
 		range = new(() => {
 			var leastRange = 0f;
-			foreach (var turret in EquipsLs.Select(out2Equip => out2Equip.InstalledEquip).OfType<TurretData>()) {
-				leastRange = leastRange == 0 ? Math.Max(leastRange, turret.Range) : Math.Min(leastRange, turret.Range);
+			foreach (var turret in EquipsLs.OfType<TurretData>()) {
+				var range = TurretLib.QueryConfig(turret.GetTurretType(), turret.GetTurretName(), turret.GetQulity()).Range;
+				leastRange = leastRange == 0 ? Math.Max(leastRange, range) : Math.Min(leastRange, range);
 			}
 			return leastRange;
 		});
