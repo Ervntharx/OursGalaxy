@@ -1,43 +1,42 @@
 using System;
+using System.Linq;
 using Godot;
 using OursGalaxy.ResourceConfig;
 
 namespace OursGalaxy;
 
 internal static class SpaceshipFactory {
-	public static bool Exist(string typeName) => ResourceLoader.Exists(GetResourcePathFromTypeName(typeName));
-
-	public static Spaceship Make(string typeName) {
-		if (Exist(typeName)) {
-			return (Spaceship)ResourceLoader.Load<PackedScene>(GetResourcePathFromTypeName(typeName)).Instantiate();
-		}
-		throw new ArgumentNullException($"no such ship: {typeName}");
-	}
-
 	public static Spaceship Make(SpaceshipData data) {
-		if (Exist(data.GetShipTypeName())) {
-			var result = (Spaceship)ResourceLoader.Load<PackedScene>(GetResourcePathFromTypeName(data.GetShipTypeName())).Instantiate();
-			var config = SpaceshipLib.GetConfig(data);
-			result.ShipTypeName = config.ShipTypeName;
-			result.HP = config.HP;
-			result.ScaleSize = config.ScaleSize;
-			result.PreventValue = config.PreventValue;
-			result.ImpactTolerance = config.ImpactTolerance;
-			result.PenetrateTolerance = config.PenetrateTolerance;
-			result.PhotothermalTolerance = config.PhotothermalTolerance;
-			result.ElectromagneticTolerance = config.ElectromagneticTolerance;
-			result.RotateCapability = config.RotateCapability;
-			result.MicroPowrCapability = config.MicroPowerCapability;
-			result.PowerCapability = config.PowerCapability;
-			result.BackPowerCapability = config.BackPowerCapability;
+		var config = SpaceshipLib.GetConfig(data);
+		var result = (Spaceship)ResourceLoader.Load<PackedScene>(config.InstanceResourcePath).Instantiate();
+		result.ShipTypeName = config.ShipTypeName;
+		result.HP = config.HP;
+		result.ScaleSize = config.ScaleSize;
+		result.PreventValue = config.PreventValue;
+		result.ImpactTolerance = config.ImpactTolerance;
+		result.PenetrateTolerance = config.PenetrateTolerance;
+		result.PhotothermalTolerance = config.PhotothermalTolerance;
+		result.ElectromagneticTolerance = config.ElectromagneticTolerance;
+		result.RotateCapability = config.RotateCapability;
+		result.MicroPowrCapability = config.MicroPowerCapability;
+		result.PowerCapability = config.PowerCapability;
+		result.BackPowerCapability = config.BackPowerCapability;
 
-			result.CurrentHP = data.CurrentHP;
-			result.CustomName = data.CustomName;
-			return result;
+		// 安装装配配置
+		foreach (var pair in data.EquipsLs) {
+			var equipData = pair.Value;
+			if (equipData is not null) {
+				var equip = EquipFactory.Make(equipData);
+				equip.From = result.ID;
+				result.Outlets.FirstOrDefault(outlet => outlet.Name == pair.Key)?.Install(equip);
+			}
 		}
-		throw new ArgumentNullException($"no such ship: {data.GetShipTypeName()}");
+
+		result.ID = data.ID;
+		result.CurrentHP = data.CurrentHP <= 0 ? result.HP : data.CurrentHP;
+		result.CustomName = data.CustomName;
+		return result;
 	}
 
-	private static string GetResourcePathFromTypeName(string typeName) => $"{ResPath}{typeName}.tscn";
-	private const string ResPath = "res://Scene/Spaceship/";
+
 }

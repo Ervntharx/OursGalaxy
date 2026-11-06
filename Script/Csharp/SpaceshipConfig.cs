@@ -5,6 +5,7 @@ namespace OursGalaxy.ResourceConfig;
 [GlobalClass]
 internal partial class SpaceshipConfig : ItemBaseConfig {
 	public const string ITEM_CODE_PREFIX = "Spaceship";
+	public const string TEMPLATE_NAMECODE = "Template";
 
 	[Export(PropertyHint.File)] public string InstanceResourcePath { get; set; } = string.Empty;
 

@@ -1,15 +1,15 @@
 [gd_resource type="Resource" script_class="SpaceshipConfig" format=3 uid="uid://dmx51g85ulkdc"]
 
-[ext_resource type="Script" uid="uid://du6lqnnufec7u" path="res://Script/Csharp/SpaceshipConfig.cs" id="1_4frsr"]
+[ext_resource type="Script" uid="uid://du6lqnnufec7u" path="res://Script/Csharp/SpaceshipConfig.cs" id="1_skov0"]
 
 [resource]
-script = ExtResource("1_4frsr")
+script = ExtResource("1_skov0")
 InstanceResourcePath = "uid://bto3wngljf3fb"
-ShipTypeName = "TemplateShip"
+ShipTypeName = "Template"
 Size = 2
 HP = 50
 TypeCode = "Spaceship"
-NameCode = "TemplateShip"
+NameCode = "Template"
 DisplayName = "模板"
 Introductuon = "木板"
 metadata/_custom_type_script = "uid://du6lqnnufec7u"

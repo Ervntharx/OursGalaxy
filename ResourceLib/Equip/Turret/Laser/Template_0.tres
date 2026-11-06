@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bk1uh2q5oiut3" path="res://Script/Csharp/OutletSizeType.cs" id="1_63y73"]
 [ext_resource type="Script" uid="uid://w0mgp1y3fh7r" path="res://Script/Csharp/LaserConfig.cs" id="2_c0aac"]
 
-[sub_resource type="Resource" id="Resource_fmoh0"]
+[sub_resource type="Resource" id="Resource_wbrcr"]
 script = ExtResource("1_63y73")
 
 [resource]
@@ -16,6 +16,7 @@ Penetrate = 5
 Photothermal = 5
 Corrosion = 5
 Electromagnetic = 5
+InstanceResourcePath = "uid://caxwk28uhd7qg"
 TypeCode = "Equip/Turret/Laser"
 NameCode = "Template"
 DisplayName = "模板激光"

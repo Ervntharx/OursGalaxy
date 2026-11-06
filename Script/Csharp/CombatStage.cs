@@ -130,13 +130,7 @@ internal partial class CombatStage : Node3D {
 	}
 
 	private Spaceship CreateShip(Vector3 originPos, SpaceshipData data, TacticsSet tactics) {
-		var ship = SpaceshipFactory.Make(data.GetShipTypeName());
-		ship.ID = data.ID;
-		ship.HP = SpaceshipLib.GetConfig(data).HP;
-		ship.CurrentHP = data.CurrentHP;
-		ship.ShipTypeName = data.GetShipTypeName();
-		ship.CustomName = data.CustomName;
-		ship.CurrentHP = data.CurrentHP;
+		var ship = SpaceshipFactory.Make(data);
 		ship.Tactics = tactics;
 		ship.Position = originPos + tactics.OffsetPosition;
 		return ship;

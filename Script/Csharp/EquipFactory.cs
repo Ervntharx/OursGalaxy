@@ -1,17 +1,17 @@
-using System;
 using Godot;
+using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
 
 internal static class EquipFactory {
-	public static bool Exist(string name) => ResourceLoader.Exists(GetResourcePathFromName(name));
+	public static EquipBase Make(EquipData data) {
+		var config = ResourceLib.GetConfig<EquipConfig>(data);
+		var equip = (EquipBase)ResourceLoader.Load<PackedScene>(config.InstanceResourcePath).Instantiate();
+		equip.TypeCode = config.TypeCode;
+		equip.NameCode = config.NameCode;
+		equip.Qulity = config.Qulity;
+		equip.SizeType = config.SizeType;
 
-	public static EquipBase Load(string name) {
-		if (Exist(name)) {
-			return (EquipBase)ResourceLoader.Load<PackedScene>(GetResourcePathFromName(name)).Instantiate();
-		}
-		throw new ArgumentNullException($"no such equip: {name}");
+		equip.ID = data.ID;
+		return equip;
 	}
-
-	private static string GetResourcePathFromName(string name) => $"{ResPath}{name}.tscn";
-	private const string ResPath = "res://ResourceLib/Equips/";
 }

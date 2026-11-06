@@ -75,7 +75,7 @@ internal partial class FleetData : Resource {
 	/// ⚠️不要使用无参构造函数构造无意义量
 	/// </summary>
 	protected FleetData() {
-		Flagship = SpaceshipData.From(SpaceshipLib.GetTemplate());
+		Flagship = new SpaceshipData("Template", ItemBaseConfig.QulityEnum.White);
 		ID = GUID.Empty;
 
 		size = new(0);

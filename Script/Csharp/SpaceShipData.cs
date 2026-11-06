@@ -14,7 +14,7 @@ internal partial class SpaceshipData : UniqueItem {
 	[Export] public int CurrentHP { get; set; }
 
 	[Export]
-	public Godot.Collections.Array<EquipData?> EquipsLs { get; set; } = [];
+	public Godot.Collections.Dictionary<string, EquipData> EquipsLs { get; set; } = [];
 
 	public SpaceshipData(string typeName, ItemBaseConfig.QulityEnum qulity, GUID? ID = null, ItemLocationInf? loc = null) :
 		base("Spaceship", typeName, qulity, ID, loc) { }

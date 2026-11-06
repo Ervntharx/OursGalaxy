@@ -42,5 +42,5 @@ internal static class SpaceshipLib {
 	/// 取得模板船的配置
 	/// </summary>
 	/// <returns></returns>
-	public static SpaceshipConfig GetTemplate() => GetConfig("TemplateShip", ItemBaseConfig.QulityEnum.White);
+	public static SpaceshipConfig GetTemplate() => GetConfig(SpaceshipConfig.TEMPLATE_NAMECODE, ItemBaseConfig.QulityEnum.White);
 }

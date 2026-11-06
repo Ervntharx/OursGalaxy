@@ -372,22 +372,6 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	#endregion Turret
 
-	#region Equip
-	/// <summary>
-	/// 安装装备
-	/// </summary>
-	/// <param name="spaceshipData"></param>
-	public void InstallEquips(SpaceshipData spaceshipData) {
-		for (int i = 0; i < Outlets.Count; i++) {
-			var equip = EquipFactory.Load(spaceshipData.EquipsLs[i].ToString());
-			if (equip is TurretBase turret) {
-				turret.From = ID;
-			}
-			Outlets[i].AddChild(equip);
-		}
-	}
-	#endregion Equip
-
 	public override void _Ready() {
 		base._Ready();
 		Name = $"{ShipTypeName}_{CustomName}";

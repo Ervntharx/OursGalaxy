@@ -3,9 +3,14 @@ using Godot.Collections;
 using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
 
+/// <summary>
+/// 装备数据基类
+/// </summary>
 [GlobalClass]
 internal partial class EquipData : UniqueItem {
-	[Export] public OutletSizeType SizeType { get; set; } = OutletSizeType.Air;
+	/// <summary>
+	/// 强化数据
+	/// </summary>
 	[Export] public Dictionary<int, ushort> Strengthen { get; set; }
 
 	public EquipData(string typeCode, string nameCode, ItemBaseConfig.QulityEnum qulity, GUID? id = null, Dictionary<int, ushort>? strengthen = null) :
@@ -13,5 +18,8 @@ internal partial class EquipData : UniqueItem {
 		Strengthen = strengthen ?? [];
 	}
 
+	/// <summary>
+	/// ⚠️无参构造提供予godot inespector使用。应避免主动无参构造产生空值
+	/// </summary>
 	protected EquipData() : base() { Strengthen = []; }
 }

@@ -15,11 +15,9 @@ internal partial class Outlet : Marker3D {
 	[Export]
 	public OutletSizeType SizeType { get; set; } = OutletSizeType.Air;
 
-	public void Install(EquipData data) {
-		AddChild(EquipFactory.Load(data), true);
+	public void Install(EquipBase equip) {
+		AddChild(equip, true);
 	}
 
-	public EquipBase GetEquipOrNull() => GetChild<EquipBase>(0);
-
-	private const string EQUIP_NODE_NAME = "Equip";
+	public EquipBase? GetEquipOrNull() => GetChildOrNull<EquipBase?>(0);
 }

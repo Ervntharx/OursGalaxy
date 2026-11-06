@@ -11,9 +11,11 @@ internal partial class TestLifeVar : Control {
 		GD.Print("Gameitem DisplayName:\t", ResourceLib.GetConfig(item).DisplayName);
 
 		var photon = new TurretData("Equip/Turret/Photon", "Template", ItemBaseConfig.QulityEnum.White);
-		GD.Print(TurretLib.GetConfig<PhotonConfig>(photon).Range);
+		var equip = EquipFactory.Make(photon);
+		GD.Print(equip.Name);
+		// GD.Print(TurretLib.GetConfig<PhotonConfig>(photon).Range);
 
-		var ship = new SpaceshipData("TemplateShip", ItemBaseConfig.QulityEnum.White);
+		var ship = new SpaceshipData(SpaceshipConfig.TEMPLATE_NAMECODE, ItemBaseConfig.QulityEnum.White);
 		GD.Print(SpaceshipLib.GetConfig(ship).HP);
 
 		GD.Print("break test");

@@ -3,7 +3,7 @@ using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
 
 internal abstract partial class EquipBase : Node3D {
-	[Export] public string ITypeCode { get; set; } = string.Empty;
+	[Export] public string TypeCode { get; set; } = string.Empty;
 	[Export] public string NameCode { get; set; } = string.Empty;
 	[Export] public ItemBaseConfig.QulityEnum Qulity { get; set; }
 
