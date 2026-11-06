@@ -10,7 +10,7 @@ internal partial class AssignedTaskEventBox : MarginContainer {
 	[Export]
 	protected RichTextLabel BodyLabel { get; set; } = null!;
 
-	public void Make(TaskEvent taskEvent) {
+	public void Make(TaskEventData taskEvent) {
 		task = taskEvent;
 		task.TaskEventStateChanged += OnTaskStateChanged;
 		OnTaskStateChanged(taskEvent);
@@ -31,8 +31,8 @@ internal partial class AssignedTaskEventBox : MarginContainer {
 		}
 	}
 
-	private void OnTaskStateChanged(TaskEvent taskEvent) {
-		TitleLable.Text = taskEvent.Code;
+	private void OnTaskStateChanged(TaskEventData taskEvent) {
+		TitleLable.Text = taskEvent.NameCode;
 		if (taskEvent.ReactButtonName is not null) {
 			BodyLabel.Text = taskEvent.Desc + $"[right][url={taskEvent.ReactUrl}][lb] > {taskEvent.ReactButtonName} < [rb][/url][/right]";
 		}
@@ -41,5 +41,5 @@ internal partial class AssignedTaskEventBox : MarginContainer {
 		}
 	}
 
-	private TaskEvent? task;
+	private TaskEventData? task;
 }

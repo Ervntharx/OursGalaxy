@@ -3,7 +3,7 @@ using Godot;
 namespace OursGalaxy;
 
 [GlobalClass]
-internal partial class FightBackTaskEvent : TaskEvent {
+internal partial class FightBackTaskEvent : TaskEventData {
 	public override string? ReactButtonName => "击退";
 
 	public override string? ReactUrl => $"FightBack";
@@ -17,13 +17,13 @@ internal partial class FightBackTaskEvent : TaskEvent {
 
 	public FightBackTaskEvent(string code) {
 		Time = DateTime.Now();
-		Code = code;
+		NameCode = code;
 		Combat = CombatData.Template;
 	}
 
 	protected FightBackTaskEvent() {
 		Time = DateTime.Now();
-		Code = string.Empty;
+		NameCode = string.Empty;
 		Combat = CombatData.Empty;
 	}
 

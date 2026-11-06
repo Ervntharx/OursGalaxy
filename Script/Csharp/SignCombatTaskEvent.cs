@@ -4,7 +4,7 @@ using Godot;
 namespace OursGalaxy;
 
 [GlobalClass]
-internal partial class SignCombatTaskEvent : TaskEvent {
+internal partial class SignCombatTaskEvent : TaskEventData {
 	public override string? ReactButtonName => $"{(HasSign ? "已" : "")}标记";
 	public override string? ReactUrl => "Sign";
 

@@ -3,26 +3,14 @@ namespace OursGalaxy;
 
 [GlobalClass]
 internal partial class CombatData : Resource {
-	public static readonly CombatData Empty = new();
-	public static CombatData Template => ResourceLoader.Load<CombatData>("res://Res/Combats/Template.tres");
+	[Export] public string NameCode { get; set; }
 
-	public static CombatData? Load(string Code) => ResourceLoader.Exists($"res://Res/{Code}.tres") ? ResourceLoader.Load<CombatData>($"res://Res/{Code}.tres") : null;
+	[Export] public int Level { get; set; } = 1;
 
-	[Export]
-	public string Code { get; set; }
+	protected CombatData() { NameCode = string.Empty; }
 
-	[Export]
-	public string? DisplayName { get; set; }
-
-	[Export]
-	public int Level { get; set; }
-
-	[Export]
-	public string Desc { get; set; } = string.Empty;
-
-	protected CombatData() { Code = string.Empty; }
 	public CombatData(string code, int level) {
-		Code = code;
+		NameCode = code;
 		Level = Mathf.Max(1, level);
 	}
 }

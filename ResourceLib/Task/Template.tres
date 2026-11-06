@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="AssignedTaskData" format=3 uid="uid://k0otlqliuugj"]
+[gd_resource type="Resource" script_class="AssignedTaskConfig" format=3 uid="uid://ikqtry5lua4o"]
 
-[ext_resource type="Script" uid="uid://bq6nl2t36ww5j" path="res://Script/Csharp/TaskEvent.cs" id="1_cx8g3"]
-[ext_resource type="Script" uid="uid://4oajqxmixao5" path="res://Script/Csharp/AssignedTaskData.cs" id="2_4wt50"]
+[ext_resource type="Script" uid="uid://bvsl5hyfnt50e" path="res://Script/Csharp/AssignedTaskConfig.cs" id="1_714nw"]
 
 [resource]
-script = ExtResource("2_4wt50")
-metadata/_custom_type_script = "uid://4oajqxmixao5"
+script = ExtResource("1_714nw")
+TaskCode = "Template"
+DisplayName = "模板远征任务"
+Desc = "木板就是木板"
+metadata/_custom_type_script = "uid://bvsl5hyfnt50e"

@@ -15,7 +15,7 @@ internal partial class AssignedTaskBox : Button {
 	protected RichTextLabel? RatingLevelLabel { get; set; }
 
 	public void Make(AssignedTaskData missionData) {
-		NameLabel!.Text = $"[color=white]{missionData.Name}[/color]";
+		NameLabel!.Text = $"[color=white]{missionData.NameCode}[/color]";
 		RatingLevelLabel!.Text = $"{missionData.RatingLevel}";
 	}
 

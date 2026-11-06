@@ -2,8 +2,10 @@
 
 Turret类需要Pitch方向的轻度瞄准能力。否则无法打平目标（
 
-Combat,TaskEvent,Task转为Resource直接存储到Res/
-所以这几个类型的实现应转变实现，暴露所有配置项
+Combat, Task系列Config应并入ResourceLib
+
+Combat所需按难度生成舰队难度配置？
+TaskEvent所需事件发生器
 
 实现的UniqueItem的派生类（SpaceshipData,EquipBase）都需要实现Reference，且能MakeCopy()
 
@@ -61,8 +63,6 @@ ItemViewerPanel实现无顶栏嵌入模式
 
 等待研究：
 	粒子系统效果配置，发射式粒子特效
-	Export Resource 属性的赋值序.研究如何让多个Export之间的属性互相联动
 
 等待修理：
-	Data系,ResLib系,Factory系之间合作链不稳定
 

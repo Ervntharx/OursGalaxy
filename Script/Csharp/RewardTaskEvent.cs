@@ -3,7 +3,7 @@ using Godot;
 namespace OursGalaxy;
 
 [GlobalClass]
-internal partial class RewardTaskEvent : TaskEvent {
+internal partial class RewardTaskEvent : TaskEventData {
 	public override string? ReactButtonName => "领取";
 
 	public override string? ReactUrl => "Claim";

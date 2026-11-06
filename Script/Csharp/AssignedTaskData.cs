@@ -1,5 +1,6 @@
 ﻿using Godot;
 using System;
+using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
 
 /// <summary>
@@ -11,11 +12,11 @@ internal partial class AssignedTaskData : Resource {
 	/// 名称
 	/// </summary>
 	[Export]
-	public string Name { get; set; } = "Expedition";
+	public string NameCode { get; set; } = "Expedition";
 
-	public enum RatingLevelEnum { D, C, B, A, AA, S, SS }
+
 	[Export]
-	public RatingLevelEnum RatingLevel { get; set; } = RatingLevelEnum.AA;
+	public AssignedTaskConfig.RatingLevelEnum RatingLevel { get; set; } = AssignedTaskConfig.RatingLevelEnum.AA;
 
 	/// <summary>
 	/// The level of the expedition. ranges from 1 to MaxLevel
@@ -44,18 +45,16 @@ internal partial class AssignedTaskData : Resource {
 	[Export]
 	public StateEnum State { get; protected set; } = StateEnum.Unaccepted;
 
-	[Export]
 	public DateTime? StartDate { get; set; }
 
-	[Export]
 	protected long ProgressTime { get; set; }
 	public TimeSpan ProgressTimeSpan => TimeSpan.FromSeconds(ProgressTime);
 
 	[Export]
-	public Godot.Collections.Array<TaskEvent> Events { get; set; } = [];
+	public Godot.Collections.Array<TaskEventData> Events { get; set; } = [];
 
-	public AssignedTaskData(string name, RatingLevelEnum ratingLevel, ushort level) {
-		Name = name;
+	public AssignedTaskData(string name, AssignedTaskConfig.RatingLevelEnum ratingLevel, ushort level) {
+		NameCode = name;
 		RatingLevel = ratingLevel;
 		Level = level;
 	}

@@ -10,7 +10,7 @@ internal partial class TestAssignedTaskPanel : MarginContainer {
 	public override void _Ready() {
 		var taskData = new AssignedTaskData("normal", AssignedTaskData.RatingLevelEnum.AA, 4);
 		taskData.Events = [
-			new TaskEvent("normal"),
+			new TaskEventData("normal"),
 			new RepairTaskEvent("repair"),
 			new RewardTaskEvent("Reward"),
 			new SignCombatTaskEvent("Sign"),

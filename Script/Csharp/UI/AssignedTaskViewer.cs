@@ -16,7 +16,7 @@ internal partial class AssignedTaskViewer : MarginContainer {
 	protected Button? OperationButton { get; set; }
 
 	public void Make(AssignedTaskData missionData) {
-		AssignedTaskInfLabel.Text = $"{missionData.Name} {missionData.Level}";
+		AssignedTaskInfLabel.Text = $"{missionData.NameCode} {missionData.Level}";
 		foreach (var missionEvent in missionData.Events) {
 			var eventDescLabel = AssignedTaskEventBox.Load();
 			eventDescLabel.Make(missionEvent);
