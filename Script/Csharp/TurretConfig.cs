@@ -3,6 +3,8 @@ namespace OursGalaxy.ResourceConfig;
 
 [GlobalClass]
 internal partial class TurretConfig : EquipConfig {
+	public const string ITEM_CODE_PREFIX = "Equip/Turret";
+
 	[Export(PropertyHint.Range, "1,999,0")]
 	public float Range { get; set; } = 1;
 

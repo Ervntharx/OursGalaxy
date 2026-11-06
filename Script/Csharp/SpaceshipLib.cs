@@ -19,7 +19,7 @@ internal static class SpaceshipLib {
 	/// <param name="qulity"></param>
 	/// <returns></returns>
 	public static bool Exists(string shipType, ItemBaseConfig.QulityEnum qulity = ItemBaseConfig.QulityEnum.White)
-		=> ResourceLib.Exists(SpaceshipConfig.ItemCodePrefix, shipType, qulity);
+		=> ResourceLib.Exists(SpaceshipConfig.ITEM_CODE_PREFIX, shipType, qulity);
 
 	/// <summary>
 	/// 取得配置
@@ -28,7 +28,7 @@ internal static class SpaceshipLib {
 	/// <param name="qulity"></param>
 	/// <returns></returns>
 	public static SpaceshipConfig GetConfig(string shipType, ItemBaseConfig.QulityEnum qulity)
-		=> ResourceLib.GetConfig<SpaceshipConfig>(SpaceshipConfig.ItemCodePrefix, shipType, qulity);
+		=> ResourceLib.GetConfig<SpaceshipConfig>(SpaceshipConfig.ITEM_CODE_PREFIX, shipType, qulity);
 
 	/// <summary>
 	/// 取得配置

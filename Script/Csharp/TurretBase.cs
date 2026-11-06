@@ -11,8 +11,6 @@ internal partial class TurretBase : EquipBase {
 	public const float DEFAULT_LEFT_CLAMP_ANGLE = 180;
 	public const float DEFAULT_RIGHT_CLAMP_ANGLE = 180;
 
-	public GUID FromShipGUID { get; set; } = GUID.Empty;
-
 	/// <summary>
 	/// 炮台状态机枚举
 	/// </summary>
@@ -49,7 +47,7 @@ internal partial class TurretBase : EquipBase {
 				}
 				// 继续打出伤害段
 				if (Time.GetTicksMsec() - LastMakeDamageTime >= MakeDamageTimeGapMisc) {
-					BulletServer.Push(FromShipGUID, LoadBullet(), GetShootTransform(), GetShootVelocity());
+					BulletServer.Push(From, LoadBullet(), GetShootTransform(), GetShootVelocity());
 					LastMakeDamageTime = Time.GetTicksMsec();
 					HasMadeDamageCount += 1;
 					break;

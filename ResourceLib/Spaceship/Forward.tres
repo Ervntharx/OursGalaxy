@@ -4,5 +4,10 @@
 
 [resource]
 script = ExtResource("1_7udq8")
+ShipTypeName = "Forward"
 HP = 1
+TypeCode = "Spaceship"
+NameCode = "Forward"
+DisplayName = "前进!"
+Introductuon = "go go go"
 metadata/_custom_type_script = "uid://du6lqnnufec7u"

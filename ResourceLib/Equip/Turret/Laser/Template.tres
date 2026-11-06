@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="LaserConfig" format=3 uid="uid://b88a31g5hmll7"]
+
+[ext_resource type="Script" uid="uid://bk1uh2q5oiut3" path="res://Script/Csharp/OutletSizeType.cs" id="1_mojle"]
+[ext_resource type="Script" uid="uid://w0mgp1y3fh7r" path="res://Script/Csharp/LaserConfig.cs" id="2_cpnff"]
+
+[sub_resource type="Resource" id="Resource_n5rdt"]
+script = ExtResource("1_mojle")
+Type = "M"
+
+[resource]
+script = ExtResource("2_cpnff")
+DamageStepCount = 3
+Range = 25.0
+CDMisc = 5000
+Impact = 5
+Penetrate = 5
+Photothermal = 5
+Corrosion = 5
+Electromagnetic = 5
+TypeCode = "Equip/Turret/Laser"
+NameCode = "Template"
+Qulity = 1
+DisplayName = "模板激光"
+Introductuon = "木板"
+metadata/_custom_type_script = "uid://w0mgp1y3fh7r"

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using Godot;
+using OursGalaxy.UI;
 namespace OursGalaxy;
 
 /// <summary>
@@ -33,7 +34,7 @@ internal partial class BulletServer : Node {
 
 	public static bool ContainsScene(string sceneName) => activedScene.Keys.Contains(sceneName);
 
-	public static void Register(string sceneName, Node3D scene) {
+	public static void Register(string sceneName, CombatStage scene) {
 		if (!activedScene.Keys.Contains(sceneName)) {
 			activedScene.Add(sceneName, scene);
 			return;
@@ -41,40 +42,33 @@ internal partial class BulletServer : Node {
 		GD.PushWarning($"<BulletServer> Try to regitser scene for one more time: {sceneName}");
 	}
 
-	[Obsolete]
-	public static void CacheGUID(GUID from, string toScene) {
-		if (ContainsScene(toScene)) {
-			mapCache.Add(from, toScene);
-			return;
-		}
-		GD.PushError($"<BulletServer> Try to connect guid to a non existed scene");
-	}
-
 	public static void Push(GUID from, BulletBase bullet, Transform3D initGlobalTransform, Vector3 initVelocity) {
 		bullet.GlobalTransform = initGlobalTransform;
 		bullet.LinearVelocity = initVelocity;
-		if (mapCache.Keys.Contains(from)) {
+		if (mapCache.ContainsKey(from)) {
 			activedScene[mapCache[from]].AddChild(bullet);
 			return;
 		}
-		foreach (var scene in activedScene.Values) {
-			scene.GetChildren().FirstOrDefault(child => child is Spaceship ship && ship.ID == from)?.AddChild(bullet);
+		else {
+			var success = false;
+			foreach (var scene in activedScene.Values) {
+				var fromTarget = scene.GetChildren().FirstOrDefault(child => child is Spaceship ship && ship.ID == from);
+				if (fromTarget is null) {
+					continue;
+				}
+				fromTarget.AddChild(bullet);
+				success = true;
+			}
+			if (!success) {
+				GD.PushError("<BulletServer>Unknown GUID, Don't know which combat stage to push in");
+			}
 		}
-	}
-
-	[Obsolete]
-	public static void DecacheGUID(GUID who) {
-		if (mapCache.ContainsKey(who)) {
-			mapCache.Remove(who);
-			return;
-		}
-		GD.PushError("Try to decache an non existed battleEntity");
 	}
 
 	public static void Free(string sceneName) {
 		activedScene.Remove(sceneName);
 	}
 
-	private static Dictionary<string, Node3D> activedScene = [];
+	private static Dictionary<string, CombatStage> activedScene = [];
 	private static Dictionary<GUID, string> mapCache = [];
 }

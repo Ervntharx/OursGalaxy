@@ -1,6 +1,4 @@
-﻿using System;
-using System.Security.AccessControl;
-using Godot;
+﻿using Godot;
 using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
 
@@ -9,9 +7,15 @@ namespace OursGalaxy;
 /// </summary>
 [GlobalClass]
 internal partial class UniqueItem : ItemBase {
+	/// <summary>
+	/// 唯一id
+	/// </summary>
 	[Export]
 	public GUID ID { get; protected set; }
 
+	/// <summary>
+	/// 物品位置占位.如果被reference则此不为null
+	/// </summary>
 	[Export]
 	public ItemLocationInf? ItemLocation { get; set; }
 

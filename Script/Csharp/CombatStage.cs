@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using OursGalaxy.ResourceConfig;
 namespace OursGalaxy.UI;
 
 /// <summary>
@@ -131,7 +132,7 @@ internal partial class CombatStage : Node3D {
 	private Spaceship CreateShip(Vector3 originPos, SpaceshipData data, TacticsSet tactics) {
 		var ship = SpaceshipFactory.Make(data.GetShipTypeName());
 		ship.ID = data.ID;
-		ship.HP = data.HP;
+		ship.HP = SpaceshipLib.GetConfig(data).HP;
 		ship.CurrentHP = data.CurrentHP;
 		ship.TypeName = data.GetShipTypeName();
 		ship.CustomName = data.CustomName;

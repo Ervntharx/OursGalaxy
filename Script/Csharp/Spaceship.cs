@@ -381,7 +381,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 		for (int i = 0; i < Outlets.Count; i++) {
 			var equip = EquipFactory.Load(spaceshipData.EquipsLs[i].ToString());
 			if (equip is TurretBase turret) {
-				turret.FromShipGUID = ID;
+				turret.From = ID;
 			}
 			Outlets[i].AddChild(equip);
 		}

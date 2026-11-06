@@ -4,7 +4,7 @@ namespace OursGalaxy.ResourceConfig;
 
 [GlobalClass]
 internal partial class SpaceshipConfig : ItemBaseConfig {
-	public const string ItemCodePrefix = "Spaceship";
+	public const string ITEM_CODE_PREFIX = "Spaceship";
 
 
 	[Export] public string ShipTypeName { get => NameCode; set => NameCode = value; }
