@@ -59,6 +59,9 @@ internal partial class TacticsSet : Resource {
 	public TargetingEnum Targeting { get; set; } = TargetingEnum.Closest;
 
 	[Export]
+	public VigilanceEnum Vigilance { get; set; } = VigilanceEnum.Middle;
+
+	[Export]
 	public GUID? UniqueIDOfProtectedShip { get; set; }
 
 	/// <summary>

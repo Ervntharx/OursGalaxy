@@ -22,6 +22,9 @@ internal partial class FleetData : Resource {
 	public SpaceshipData Flagship { get; set; }
 
 	[Export]
+	public TacticsSet FlagshipTactics { get; set; } = new();
+
+	[Export]
 	public Dictionary<SpaceshipData, TacticsSet> Ships { get; set; } = [];
 
 	public int Size => size.Value;

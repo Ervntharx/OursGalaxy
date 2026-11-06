@@ -61,11 +61,18 @@ internal partial class CombatStage : Node3D {
 	/// <param name="team"></param>
 	/// <param name="fleet"></param>
 	public void PutOnFleet(TeamEnum team, FleetData fleet) {
+		// 旗舰
+		var flagship = CreateShip(FleetPosMarkers[team].Position, fleet.Flagship, fleet.FlagshipTactics);
+		flagship.Basis = Basis.LookingAt(InitialFleetDir[team], Vector3.Up);
+		flagship.Team = team;
+		ActiveBoard.AddChild(flagship);
+		flagship.IsFlagShip = true;
+		Statics.Track(flagship);
+		// 成员船
 		foreach (var pair in fleet.Ships) {
 			var ship = CreateShip(FleetPosMarkers[team].Position, pair.Key, pair.Value);
 			ship.Basis = Basis.LookingAt(InitialFleetDir[team], Vector3.Up);
 			ship.Team = team;
-			CombatStageServer.CacheInStage(ship.ID, Name);
 			ActiveBoard.AddChild(ship);
 			Statics.Track(ship);
 		}
@@ -77,6 +84,8 @@ internal partial class CombatStage : Node3D {
 		}
 		EndTimer.Start();
 	}
+
+	public IEnumerable<Spaceship> GetShips() => ActiveBoard.GetChildren().OfType<Spaceship>();
 
 	public void End(CombatResult.EndReasonEnum reason) {
 		Result = new() {

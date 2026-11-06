@@ -156,6 +156,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	private void ProbeTarget() {
 		var targetsLs = CombatStageServer.ProbeShips(ID, Team).OfType<Spaceship>().ToList();
+		// GD.Print("before\t", targetsLs.Count);
 		switch (Tactics.Targeting) {
 			case TacticsSet.TargetingEnum.Closest:
 				targetsLs.Sort((left, right) => Mathf.RoundToInt(left.Transform.Origin.DistanceTo(GlobalTransform.Origin) - right.Transform.Origin.DistanceTo(GlobalTransform.Origin)));
@@ -194,6 +195,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 			default:
 				break;
 		}
+		// GD.Print("after probe: ", targetsLs.Count);
 		// GD.Print($"probe count: {targetsLs.Count}");
 		if (targetsLs.Count > 0) {
 			TargetEntity = targetsLs.FirstOrDefault();

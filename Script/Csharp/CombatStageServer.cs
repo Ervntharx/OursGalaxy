@@ -45,12 +45,12 @@ internal partial class CombatStageServer {
 		return false;
 	}
 
-	/// <summary>
-	/// 把战斗单位缓存到关联战斗台
-	/// </summary>
-	/// <param name="shipGUID"></param>
-	/// <param name="stageName"></param>
-	public static void CacheInStage(GUID shipGUID, string stageName) => shipsStagesCache.Add(shipGUID, stageName);
+	// /// <summary>
+	// /// 把战斗单位缓存到关联战斗台
+	// /// </summary>
+	// /// <param name="shipGUID"></param>
+	// /// <param name="stageName"></param>
+	// public static void CacheInStage(GUID shipGUID, string stageName) => shipsStagesCache.Add(shipGUID, stageName);
 
 	/// <summary>
 	/// 探测飞船
@@ -59,25 +59,21 @@ internal partial class CombatStageServer {
 	/// <param name="filterTeam"></param>
 	/// <returns></returns>
 	public static IEnumerable<IBattleEntity> ProbeShips(GUID fromShip, CombatStage.TeamEnum filterTeam) {
-		if (shipsStagesCache.Keys.Contains(fromShip)) {
-			return stages[shipsStagesCache[fromShip]].GetChildren().OfType<IBattleEntity>().Where(ship => ship.Team != filterTeam);
-		}
 		foreach (var stage in stages.Values) {
-			if (stage.GetChildren().OfType<Spaceship>().FirstOrDefault(ship => ship.ID == fromShip) is not null) {
-				return stage.GetChildren().OfType<IBattleEntity>().Where(ship => ship.Team != filterTeam);
+			if (stage.GetShips().FirstOrDefault(ship => ship.ID == fromShip) is not null) {
+				return stage.GetShips().Where(ship => ship.Team != filterTeam);
 			}
 		}
 		return [];
 	}
 
-	/// <summary>
-	/// 取消缓存关系
-	/// </summary>
-	/// <param name="shipGUID"></param>
-	public static void Decached(GUID shipGUID) => shipsStagesCache.Remove(shipGUID);
+	// /// <summary>
+	// /// 取消缓存关系
+	// /// </summary>
+	// /// <param name="shipGUID"></param>
+	// public static void Decached(GUID shipGUID) => shipsStagesCache.Remove(shipGUID);
 
 	public static void Free(string name) => stages.Remove(name);
 
 	private static Dictionary<string, CombatStage> stages = [];
-	private static Dictionary<GUID, string> shipsStagesCache = [];
 }

@@ -50,19 +50,19 @@ internal partial class CombatPanel : Control {
 	private static string MakeStaticsShipsCountRichText(CombatStage.TeamEnum team, StaticsData statics) {
 		StringBuilder builder = new();
 		builder.AppendFormat("[color={0}]{1}[/color] |", statics.IsFlagshipAlive[team] ? "gold" : "white", statics.IsFlagshipAlive[team] ? "★" : "☆");
-		if (statics.ShipsCount[team].ContainsKey(SpaceshipConfig.ScaleSizeEnum.BB)) {
+		if (statics.ShipsCount[team][SpaceshipConfig.ScaleSizeEnum.BB] != 0) {
 			builder.AppendFormat("BB {0} [color=gold]/ {1}[/color]", statics.ShipsCount[team][SpaceshipConfig.ScaleSizeEnum.BB], statics.ShipsFullCount[team][SpaceshipConfig.ScaleSizeEnum.BB]);
 		}
-		if (statics.ShipsCount[team].ContainsKey(SpaceshipConfig.ScaleSizeEnum.CA)) {
+		if (statics.ShipsCount[team][SpaceshipConfig.ScaleSizeEnum.CA] != 0) {
 			builder.AppendFormat("CA {0} [color=gold]/ {1}[/color]", statics.ShipsCount[team][SpaceshipConfig.ScaleSizeEnum.CA], statics.ShipsFullCount[team][SpaceshipConfig.ScaleSizeEnum.CA]);
 		}
-		if (statics.ShipsCount[team].ContainsKey(SpaceshipConfig.ScaleSizeEnum.CL)) {
+		if (statics.ShipsCount[team][SpaceshipConfig.ScaleSizeEnum.CL] != 0) {
 			builder.AppendFormat("CL {0} [color=gold]/ {1}[/color]", statics.ShipsCount[team][SpaceshipConfig.ScaleSizeEnum.CL], statics.ShipsFullCount[team][SpaceshipConfig.ScaleSizeEnum.CL]);
 		}
-		if (statics.ShipsCount[team].ContainsKey(SpaceshipConfig.ScaleSizeEnum.DD)) {
+		if (statics.ShipsCount[team][SpaceshipConfig.ScaleSizeEnum.DD] != 0) {
 			builder.AppendFormat("DD {0} [color=gold]/ {1}[/color]", statics.ShipsCount[team][SpaceshipConfig.ScaleSizeEnum.DD], statics.ShipsFullCount[team][SpaceshipConfig.ScaleSizeEnum.DD]);
 		}
-		if (statics.ShipsCount[team].ContainsKey(SpaceshipConfig.ScaleSizeEnum.FF)) {
+		if (statics.ShipsCount[team][SpaceshipConfig.ScaleSizeEnum.FF] != 0) {
 			builder.AppendFormat("FF {0} [color=gold]/ {1}[/color]", statics.ShipsCount[team][SpaceshipConfig.ScaleSizeEnum.FF], statics.ShipsFullCount[team][SpaceshipConfig.ScaleSizeEnum.FF]);
 		}
 		return builder.ToString();

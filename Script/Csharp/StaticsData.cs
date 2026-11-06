@@ -70,7 +70,6 @@ internal partial class StaticsData {
 	public void Track(Spaceship ship) {
 		FullHP[ship.Team] += ship.HP;
 		HP[ship.Team] += ship.CurrentHP;
-		GD.Print("Tracking	", HP[ship.Team]);
 		ShipsFullCount[ship.Team][ship.ScaleSize] += 1;
 		ShipsCount[ship.Team][ship.ScaleSize] += 1;
 		if (ship.IsFlagShip) {
