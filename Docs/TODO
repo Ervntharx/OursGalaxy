@@ -1,11 +1,11 @@
 基础：
 
-Blueprint,Combat,TaskEvent,Task转为Resource直接存储到Res/
+EquipFactory需要行为安全
+
+Combat,TaskEvent,Task转为Resource直接存储到Res/
 所以这几个类型的实现应转变实现，暴露所有配置项
 
 实现的UniqueItem的派生类（SpaceshipData,EquipBase）都需要实现Reference，且能MakeCopy()
-
-SpaceshipConfig的ShipTypeName需与Code联动
 
 引入ShieldConfig, ShieldData
 引入DamageControlEquipConfig，DamageControlEquipData
@@ -22,8 +22,6 @@ LayyerEnum改入引擎Layer名
 
 CombatStage引入战场半径，限制尺寸
 
-StaticsServer添加按舰队筛选能力
-
 机动模式引入纯GoForward,GoBackward,Stay通用推进模式。不在船头椎内时Stay转向
 迂回机动设置目标点就在目标全局位置的相对上下左右。自动迂回模式下选择最短者。
 护卫机动设置机动目标点为相对位置。但如果过远（距离未知）使用通用机动逻辑。
@@ -31,10 +29,6 @@ StaticsServer添加按舰队筛选能力
 
 []AI逻辑行为状态机：
 	迂回以绕飞点替代跟踪目标
-
-Spaceship引入BaseStateEnum管理基础行为状态替代Active
-
-Spaceship加载Outlet配置把炮台装上先
 
 FleetEditor，实现MemShips摆放，Tactics配置
 

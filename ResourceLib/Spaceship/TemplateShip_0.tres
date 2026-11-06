@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_4frsr")
+InstanceResourcePath = "uid://bto3wngljf3fb"
 ShipTypeName = "TemplateShip"
 Size = 2
 HP = 50

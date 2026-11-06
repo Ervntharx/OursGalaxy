@@ -44,12 +44,12 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	public GUID ID { get; set; }
 
-	public string TypeName { get; set; }
+	public string ShipTypeName { get; set; }
 	public string? CustomName { get; set; }
 
 	protected Spaceship() {
 		ID = GUID.Empty;
-		TypeName = string.Empty;
+		ShipTypeName = string.Empty;
 		CurrentHP = 0;
 	}
 
@@ -390,7 +390,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	public override void _Ready() {
 		base._Ready();
-		Name = $"{TypeName}_{CustomName}";
+		Name = $"{ShipTypeName}_{CustomName}";
 		TacticsTargetProberTimer.OneShot = false;
 		TacticsTargetProberTimer.Start();
 		TacticsTargetProberTimer.Timeout += ProbeTarget;

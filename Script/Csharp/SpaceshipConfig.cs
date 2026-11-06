@@ -6,6 +6,7 @@ namespace OursGalaxy.ResourceConfig;
 internal partial class SpaceshipConfig : ItemBaseConfig {
 	public const string ITEM_CODE_PREFIX = "Spaceship";
 
+	[Export(PropertyHint.File)] public string InstanceResourcePath { get; set; } = string.Empty;
 
 	[Export] public string ShipTypeName { get => NameCode; set => NameCode = value; }
 	public enum ScaleSizeEnum { FF, DD, CL, CA, BB }

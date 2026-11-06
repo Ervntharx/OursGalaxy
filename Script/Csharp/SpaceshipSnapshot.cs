@@ -33,7 +33,7 @@ internal record class SpaceshipSnapshot {
 
 	public SpaceshipSnapshot(Spaceship ship) {
 		ID = ship.ID;
-		TypeName = ship.TypeName;
+		TypeName = ship.ShipTypeName;
 		CustomName = ship.CustomName;
 		Team = ship.Team;
 		HP = ship.CurrentHP;

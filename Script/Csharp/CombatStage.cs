@@ -134,7 +134,7 @@ internal partial class CombatStage : Node3D {
 		ship.ID = data.ID;
 		ship.HP = SpaceshipLib.GetConfig(data).HP;
 		ship.CurrentHP = data.CurrentHP;
-		ship.TypeName = data.GetShipTypeName();
+		ship.ShipTypeName = data.GetShipTypeName();
 		ship.CustomName = data.CustomName;
 		ship.CurrentHP = data.CurrentHP;
 		ship.Tactics = tactics;

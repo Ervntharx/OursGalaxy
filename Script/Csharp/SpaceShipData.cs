@@ -14,17 +14,7 @@ internal partial class SpaceshipData : UniqueItem {
 	[Export] public int CurrentHP { get; set; }
 
 	[Export]
-	public Godot.Collections.Array<EquipData> EquipsLs { get; set; } = [];
-
-	/// <summary>
-	/// 从Config构造Data
-	/// </summary>
-	/// <param name="config"></param>
-	/// <returns></returns>
-	public static SpaceshipData From(SpaceshipConfig config) {
-		var ship = new SpaceshipData(config.ShipTypeName, ItemBaseConfig.QulityEnum.White) { };
-		return ship;
-	}
+	public Godot.Collections.Array<EquipData?> EquipsLs { get; set; } = [];
 
 	public SpaceshipData(string typeName, ItemBaseConfig.QulityEnum qulity, GUID? ID = null, ItemLocationInf? loc = null) :
 		base("Spaceship", typeName, qulity, ID, loc) { }
