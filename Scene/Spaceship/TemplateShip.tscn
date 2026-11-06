@@ -17,15 +17,15 @@ AttackableArea = NodePath("AttackableArea")
 TacticsTargetProberTimer = NodePath("TacticsTimer")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=760403056]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1.1924881e-08, 1, 0, -1, 1.1924881e-08, 0, 0, 0)
 mesh = SubResource("PrismMesh_6jvjn")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=489770292]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.81504875)
+transform = Transform3D(1, 0, 0, 0, 1.1924881e-08, 1, 0, -1, 1.1924881e-08, 0, 0, -0.81504875)
 mesh = SubResource("PrismMesh_6jvjn")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=1360037140]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0.87735003)
+transform = Transform3D(1, 0, 0, 0, 1.1924881e-08, 1, 0, -1, 1.1924881e-08, 0, 0, 0.87735003)
 mesh = SubResource("PrismMesh_6jvjn")
 
 [node name="AttackableArea" type="Area3D" parent="." unique_id=1310374608]
@@ -36,11 +36,11 @@ shape = SubResource("CylinderShape3D_6jvjn")
 [node name="TacticsTimer" type="Timer" parent="." unique_id=1021734723]
 
 [node name="L0" type="Marker3D" parent="." unique_id=208583975]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21029079, -1.1436055)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21029079, 0.7555001)
 script = ExtResource("2_ny3qw")
 metadata/_custom_type_script = "uid://ccgefu38lpmc7"
 
 [node name="M0" type="Marker3D" parent="." unique_id=1263168289]
-transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 0, -0.3932273, -0.83807415)
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 0, -0.3932273, -0.331464)
 script = ExtResource("2_ny3qw")
 metadata/_custom_type_script = "uid://ccgefu38lpmc7"

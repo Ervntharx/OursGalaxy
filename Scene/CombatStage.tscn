@@ -16,8 +16,8 @@ CameraArm = NodePath("CameraArm")
 Camera = NodePath("CameraArm/Arm/Camera3D")
 Panel = NodePath("CanvasLayer/CombatPanel")
 InitialFleetDir = Dictionary[int, Vector3]({
-1: Vector3(-1, 0, 0),
-2: Vector3(1, 0, 0)
+1: Vector3(1, 0, 0),
+2: Vector3(-1, 0, 0)
 })
 
 [node name="EndTimer" type="Timer" parent="." unique_id=327072692]

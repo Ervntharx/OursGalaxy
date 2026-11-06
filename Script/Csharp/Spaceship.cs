@@ -26,6 +26,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 			baseState = value;
 			switch (BaseState) {
 				case BaseStateEnum.Active:
+					ProbeTarget();
 					// 激活瞬间进行索敌
 					ProbeTarget();
 					break;
@@ -195,8 +196,6 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 			default:
 				break;
 		}
-		// GD.Print("after probe: ", targetsLs.Count);
-		// GD.Print($"probe count: {targetsLs.Count}");
 		if (targetsLs.Count > 0) {
 			TargetEntity = targetsLs.FirstOrDefault();
 		}
@@ -228,9 +227,6 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	// TODO:	使用射程动态计算
 	public float KeepDistanceMax { get; set; } = 15;
 	public float KeepDistanceMin { get; set; } = 5;
-
-	public AccelerationMap AccelMap { get; set; } = new();
-	public AccelerationMap BrakeMap { get; set; } = new();
 
 	public enum MovePowEnum { Stay, MicroMove, Forward, Backward }
 	public MovePowEnum MovePow { get; set; } = MovePowEnum.Stay;
@@ -328,6 +324,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	private void ProbeTurret() {
 		foreach (var turret in Outlets.Select(outlet => outlet.GetChild(0)).OfType<TurretBase>()) {
 			Turrets.Add(turret);
+			GD.Print($"probe Turrets result: {Turrets.Count}");
 		}
 	}
 
@@ -382,21 +379,26 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 		TacticsTargetProberTimer.Timeout += ProbeTarget;
 		AttackableArea.AreaEntered += OnAttakableAreaAreaEntered;
 		// TODO:	RotateCapability, PowerCapability换算为物理值
-		AccelMap.MaxVelocity = PowerCapability;
+		// AccelMap.MaxVelocity = PowerCapability;
 	}
 
 	public override void _Process(double delta) {
+		if (BaseState == BaseStateEnum.Active) {
+			AutoSetShipMovementState(GlobalTransform, TargetEntity?.AsNode3D().GlobalTransform, ShipHeadConeAngle, KeepDistanceMin, KeepDistanceMax);
+			HandleShipMvementState(delta, this, TargetEntity);
+		}
 		base._Process(delta);
-		AutoSetShipMovementState(GlobalTransform, TargetEntity?.AsNode3D().GlobalTransform, ShipHeadConeAngle, KeepDistanceMin, KeepDistanceMax);
-		HandleShipMvementState(delta, this, TargetEntity);
 	}
 
 	public override void _PhysicsProcess(double delta) {
-		// 炮台朝向和状态机控制
-		foreach (var turretBase in Turrets) {
-			HandleTurretRotation(delta, turretBase, TargetEntity);
-			turretBase.DriveState(delta, this, TargetEntity);
+		if (baseState == BaseStateEnum.Active) {
+			// 炮台朝向和状态机控制
+			foreach (var turretBase in Turrets) {
+				HandleTurretRotation(delta, turretBase, TargetEntity);
+				turretBase.DriveState(delta, this, TargetEntity);
+			}
+			HandleShipMvementState(delta, this, TargetEntity);
 		}
-		HandleShipMvementState(delta, this, TargetEntity);
+		base._PhysicsProcess(delta);
 	}
 }
