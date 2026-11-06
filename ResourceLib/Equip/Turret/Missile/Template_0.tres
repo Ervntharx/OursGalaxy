@@ -1,14 +1,13 @@
 [gd_resource type="Resource" script_class="MissileConfig" format=3 uid="uid://bopt7odtyup3o"]
 
-[ext_resource type="Script" uid="uid://bk1uh2q5oiut3" path="res://Script/Csharp/OutletSizeType.cs" id="1_mxg3p"]
-[ext_resource type="Script" uid="uid://c1xhgaronewqc" path="res://Script/Csharp/MissileConfig.cs" id="2_dva7o"]
+[ext_resource type="Script" uid="uid://bk1uh2q5oiut3" path="res://Script/Csharp/OutletSizeType.cs" id="1_rhc57"]
+[ext_resource type="Script" uid="uid://c1xhgaronewqc" path="res://Script/Csharp/MissileConfig.cs" id="2_qxppm"]
 
-[sub_resource type="Resource" id="Resource_n5rdt"]
-script = ExtResource("1_mxg3p")
-Type = "M"
+[sub_resource type="Resource" id="Resource_fmoh0"]
+script = ExtResource("1_rhc57")
 
 [resource]
-script = ExtResource("2_dva7o")
+script = ExtResource("2_qxppm")
 Range = 25.0
 CDMisc = 5000
 Impact = 5
@@ -18,7 +17,6 @@ Corrosion = 5
 Electromagnetic = 5
 TypeCode = "Equip/Turret/Missile"
 NameCode = "Template"
-Qulity = 1
 DisplayName = "模板导弹舱"
 Introductuon = "木板"
 metadata/_custom_type_script = "uid://c1xhgaronewqc"

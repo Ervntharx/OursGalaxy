@@ -5,7 +5,7 @@ namespace OursGalaxy.ResourceConfig;
 internal partial class TurretConfig : EquipConfig {
 	public const string ITEM_CODE_PREFIX = "Equip/Turret";
 
-	[Export(PropertyHint.Range, "1,999,0")]
+	[Export]
 	public float Range { get; set; } = 1;
 
 	[Export]
@@ -16,30 +16,30 @@ internal partial class TurretConfig : EquipConfig {
 	/// <summary>
 	/// 冲击伤害
 	/// </summary>
-	[Export(PropertyHint.Range, "0,99,0")]
+	[Export]
 	public int Impact { get; set; } = 1;
 
 	/// <summary>
 	/// 穿透伤害
 	/// </summary>
-	[Export(PropertyHint.Range, "0,99,0")]
+	[Export]
 	public int Penetrate { get; set; }
 
 	/// <summary>
 	/// 光热伤害
 	/// </summary>
-	[Export(PropertyHint.Range, "0,99,0")]
+	[Export]
 	public int Photothermal { get; set; }
 
 	/// <summary>
 	/// 酸蚀伤害
 	/// </summary>
-	[Export(PropertyHint.Range, "0,99,0")]
+	[Export]
 	public int Corrosion { get; set; }
 
 	/// <summary>
 	/// 电磁伤害
 	/// </summary>
-	[Export(PropertyHint.Range, "0,99,0")]
+	[Export]
 	public int Electromagnetic { get; set; }
 }

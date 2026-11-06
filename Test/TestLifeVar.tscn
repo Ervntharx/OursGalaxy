@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://dkdd0iya65qe7"]
 
 [ext_resource type="Script" uid="uid://4tqvolrghu4t" path="res://Test/TestLifeVar.cs" id="1_n8apm"]
-[ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="8_6yswc"]
 
 [node name="TestLifeVar" type="Control" unique_id=1904611329]
 layout_mode = 3
@@ -15,12 +14,3 @@ offset_bottom = 68.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n8apm")
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1272213129]
-texture = ExtResource("8_6yswc")
-
-[node name="Button" type="Button" parent="." unique_id=1344246771]
-layout_mode = 0
-offset_top = 127.0
-offset_right = 137.0
-offset_bottom = 177.0

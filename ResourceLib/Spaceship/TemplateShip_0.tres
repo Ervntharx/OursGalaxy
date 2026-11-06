@@ -9,7 +9,6 @@ Size = 2
 HP = 50
 TypeCode = "Spaceship"
 NameCode = "TemplateShip"
-Qulity = 1
 DisplayName = "模板"
 Introductuon = "木板"
 metadata/_custom_type_script = "uid://du6lqnnufec7u"

@@ -6,6 +6,7 @@ namespace OursGalaxy.ResourceConfig;
 /// </summary>
 [GlobalClass]
 internal partial class BlueprintConfig : ItemBaseConfig {
+	public const string ITEM_CODE_PREFIX = "Blueprint";
 	/// <summary>
 	/// subprint合成blueprint所需的数量
 	/// </summary>

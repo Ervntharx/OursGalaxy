@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ItemBaseConfig" format=3 uid="uid://dp7gnvgp7euy8"]
+
+[ext_resource type="Script" uid="uid://b2egcjp5t27cu" path="res://Script/Csharp/ItemBaseConfig.cs" id="1_fcjli"]
+
+[resource]
+script = ExtResource("1_fcjli")
+TypeCode = "GameItem"
+NameCode = "Template"
+metadata/_custom_type_script = "uid://b2egcjp5t27cu"

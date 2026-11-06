@@ -6,7 +6,8 @@ namespace OursGalaxy.ResourceConfig;
 /// </summary>
 [GlobalClass]
 internal partial class ItemBaseConfig : Resource {
-	public enum QulityEnum { White, Green, Purple, Gold }
+	public const string GAME_ITEM_CODE_PREFIX = "GameItem";
+	public enum QulityEnum { White = 0, Green = 1, Purple = 2, Gold = 3 }
 
 	/// <summary>
 	/// 物品类型code

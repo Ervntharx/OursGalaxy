@@ -25,7 +25,8 @@ internal partial class GameItem : ItemBase {
 	/// </summary>
 	protected GameItem() : base() { }
 
-	public GameItem(string typeCode, string nameCode, ItemBaseConfig.QulityEnum qulity, int num = 0) : base(typeCode, nameCode, qulity) => Num = num;
+	public GameItem(string nameCode, ItemBaseConfig.QulityEnum qulity, int num = 0) : base(ItemBaseConfig.GAME_ITEM_CODE_PREFIX, nameCode, qulity) => Num = num;
+	public GameItem(string itemTypeCode, string nameCode, ItemBaseConfig.QulityEnum qulity, int num = 0) : base(itemTypeCode, nameCode, qulity) { Num = num; }
 
 	/// <summary>
 	/// 是否是临时数据。依靠数量进行判断。

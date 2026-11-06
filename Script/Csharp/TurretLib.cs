@@ -21,6 +21,21 @@ internal static class TurretLib {
 		=> ResourceLib.Exists(turretType, turretName, qulity);
 
 	/// <summary>
+	/// 从TurretData查询配置
+	/// </summary>
+	/// <param name="turret"></param>
+	/// <returns></returns>
+	public static TurretConfig GetConfig(TurretData turret) => GetConfig<TurretConfig>(turret);
+
+	/// <summary>
+	/// 从TurretData查询配置
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="turret"></param>
+	/// <returns></returns>
+	public static T GetConfig<T>(TurretData turret) where T : TurretConfig => ResourceLib.GetConfig<T>(turret);
+
+	/// <summary>
 	/// 取得配置
 	/// </summary>
 	/// <param name="turretType"></param>
