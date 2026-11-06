@@ -1,6 +1,6 @@
 基础：
 
-EquipFactory需要行为安全
+Turret类需要Pitch方向的轻度瞄准能力。否则无法打平目标（
 
 Combat,TaskEvent,Task转为Resource直接存储到Res/
 所以这几个类型的实现应转变实现，暴露所有配置项

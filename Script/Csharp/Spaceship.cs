@@ -26,7 +26,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 			baseState = value;
 			switch (BaseState) {
 				case BaseStateEnum.Active:
-					ProbeTarget();
+					ProbeTurret();
 					// 激活瞬间进行索敌
 					ProbeTarget();
 					break;
@@ -137,6 +137,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 			Electromagnetic = Math.Max(damage.Electromagnetic - ElectromagneticTolerance, 0)
 		};
 		CurrentHP -= finalDamage.Sum();
+		GD.Print($"<Combat> {from?.CustomName ?? "???"} ({from?.ID.ToString() ?? "???"}) Make damage {finalDamage.Sum()}");
 		AttackedEvent?.Invoke(new(this), from, damage);
 		if (CurrentHP <= 0) {
 			OnEntityDestory?.Invoke(new(this));
@@ -157,7 +158,6 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	private void ProbeTarget() {
 		var targetsLs = CombatStageServer.ProbeShips(ID, Team).OfType<Spaceship>().ToList();
-		// GD.Print("before\t", targetsLs.Count);
 		switch (Tactics.Targeting) {
 			case TacticsSet.TargetingEnum.Closest:
 				targetsLs.Sort((left, right) => Mathf.RoundToInt(left.Transform.Origin.DistanceTo(GlobalTransform.Origin) - right.Transform.Origin.DistanceTo(GlobalTransform.Origin)));
@@ -205,13 +205,13 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	#region Movement
 	// 移动能力原本参数
 	[Export]
-	public int RotateCapability { get; set; } = 15;
+	public int RotateCapability { get; set; } = 5;
 	[Export]
-	public int PowerCapability { get; set; } = 5;
+	public int PowerCapability { get; set; } = 25;
 	[Export]
-	public int BackPowerCapability { get; set; } = 2;
+	public int BackPowerCapability { get; set; } = 15;
 	[Export]
-	public int MicroPowrCapability { get; set; } = 1;
+	public int MicroPowrCapability { get; set; } = 5;
 
 	public float RotateAngleVelocity => (float)RotateCapability / 10f;
 	public float PowerVelocity => (float)PowerCapability / 10f;
@@ -237,10 +237,10 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	private void HandleShipMvementState(double delta, Spaceship ship, IBattleEntity? target) {
 		switch (MovePow) {
 			case MovePowEnum.Forward:
-				ship.Velocity = ship.Velocity.Lerp(ship.GlobalBasis.Z * ship.PowerVelocity, Mathf.Clamp(0.5f, 0f, 1f));
+				ship.Velocity = ship.Velocity.Lerp(-ship.GlobalBasis.Z.Normalized() * ship.PowerVelocity, Mathf.Clamp(0.5f, 0f, 1f));
 				break;
 			case MovePowEnum.Backward:
-				ship.Velocity = ship.Velocity.Lerp(ship.GlobalBasis.Z * ship.BackPowerVelocity, Mathf.Clamp(0.5f, 0f, 1f));
+				ship.Velocity = ship.Velocity.Lerp(-ship.GlobalBasis.Z.Normalized() * ship.BackPowerVelocity, Mathf.Clamp(0.5f, 0f, 1f));
 				break;
 			case MovePowEnum.Stay:
 				ship.Velocity = ship.Velocity.Lerp(new Vector3(), Mathf.Clamp(0.5f, 0f, 1f));
@@ -278,6 +278,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 			default:
 				break;
 		}
+		MoveAndSlide();
 	}
 
 	private void AutoSetShipMovementState(Transform3D selfTrans, Transform3D? targetTrans, float coneAngle, float keepDistanceMin, float keepDistanceMax) {
@@ -322,9 +323,10 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	// 探测船上可用的Turret
 	private void ProbeTurret() {
-		foreach (var turret in Outlets.Select(outlet => outlet.GetChild(0)).OfType<TurretBase>()) {
-			Turrets.Add(turret);
-			GD.Print($"probe Turrets result: {Turrets.Count}");
+		foreach (var equip in Outlets.Select<Outlet, EquipBase?>(outlet => outlet.GetEquipOrNull())) {
+			if (equip is not null && equip is TurretBase turret) {
+				Turrets.Add(turret);
+			}
 		}
 	}
 
@@ -335,7 +337,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 			if (GodotObject.IsInstanceValid(targetEntity?.AsNode3D())) {
 				var localDir = turretBase.GlobalTransform.Inverse() * targetEntity.AsNode3D().GlobalPosition;
 				localDir.Y = 0;
-				var targetLocalBasis = Basis.LookingAt(localDir.Normalized(), Vector3.Up);
+				var targetLocalBasis = Basis.LookingAt(-localDir.Normalized(), Vector3.Up);
 				var currentLocalQ = new Quaternion(currentLocalBasis);
 				var targetLocalQ = new Quaternion(targetLocalBasis);
 
@@ -383,15 +385,13 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	}
 
 	public override void _Process(double delta) {
-		if (BaseState == BaseStateEnum.Active) {
-			AutoSetShipMovementState(GlobalTransform, TargetEntity?.AsNode3D().GlobalTransform, ShipHeadConeAngle, KeepDistanceMin, KeepDistanceMax);
-			HandleShipMvementState(delta, this, TargetEntity);
-		}
 		base._Process(delta);
 	}
 
 	public override void _PhysicsProcess(double delta) {
 		if (baseState == BaseStateEnum.Active) {
+			AutoSetShipMovementState(GlobalTransform, TargetEntity?.AsNode3D().GlobalTransform, ShipHeadConeAngle, KeepDistanceMin, KeepDistanceMax);
+			HandleShipMvementState(delta, this, TargetEntity);
 			// 炮台朝向和状态机控制
 			foreach (var turretBase in Turrets) {
 				HandleTurretRotation(delta, turretBase, TargetEntity);

@@ -11,27 +11,6 @@ namespace OursGalaxy;
 /// </summary>
 [GlobalClass]
 internal partial class BulletServer : Node {
-	/// <summary>
-	/// 场景根。⚠️期望外部对之赋值
-	/// </summary>
-	[Obsolete]
-	public static Node3D? SceneRoot { get; set; }
-
-	/// <summary>
-	/// 场景根节点是否已准备好
-	/// </summary>
-	[Obsolete]
-	public static bool ServerReady => GodotObject.IsInstanceValid(SceneRoot);
-
-	[Obsolete("Push instead")]
-	public static void Add(IBattleEntity from, BulletBase bullet, Transform3D initGlobalTransform, Vector3 initVelocity) {
-		if (ServerReady) {
-			bullet.GlobalTransform = initGlobalTransform;
-			bullet.LinearVelocity = initVelocity;
-			SceneRoot!.AddChild(bullet);
-		}
-	}
-
 	public static bool ContainsScene(string sceneName) => activedScene.Keys.Contains(sceneName);
 
 	public static void Register(string sceneName, CombatStage scene) {
@@ -45,23 +24,19 @@ internal partial class BulletServer : Node {
 	public static void Push(GUID from, BulletBase bullet, Transform3D initGlobalTransform, Vector3 initVelocity) {
 		bullet.GlobalTransform = initGlobalTransform;
 		bullet.LinearVelocity = initVelocity;
-		if (mapCache.ContainsKey(from)) {
-			activedScene[mapCache[from]].AddChild(bullet);
-			return;
+		var success = false;
+		foreach (var scene in activedScene.Values) {
+			var fromTarget = scene.GetShips().FirstOrDefault(child => child is Spaceship ship && ship.ID == from);
+			GD.Print($"<BulletServer> try found from ship {fromTarget?.CustomName ?? "???"}");
+			if (fromTarget is null) {
+				continue;
+			}
+			GD.Print("<BulletServer> Blu!");
+			fromTarget.AddChild(bullet);
+			success = true;
 		}
-		else {
-			var success = false;
-			foreach (var scene in activedScene.Values) {
-				var fromTarget = scene.GetChildren().FirstOrDefault(child => child is Spaceship ship && ship.ID == from);
-				if (fromTarget is null) {
-					continue;
-				}
-				fromTarget.AddChild(bullet);
-				success = true;
-			}
-			if (!success) {
-				GD.PushError("<BulletServer>Unknown GUID, Don't know which combat stage to push in");
-			}
+		if (!success) {
+			GD.PushError("<BulletServer>Unknown GUID, Don't know which combat stage to push in");
 		}
 	}
 
@@ -70,5 +45,4 @@ internal partial class BulletServer : Node {
 	}
 
 	private static Dictionary<string, CombatStage> activedScene = [];
-	private static Dictionary<GUID, string> mapCache = [];
 }

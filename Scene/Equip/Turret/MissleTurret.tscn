@@ -11,10 +11,11 @@ size = Vector3(0.524, 0.117, 0.496)
 [sub_resource type="SphereShape3D" id="SphereShape3D_6jvjn"]
 radius = 25.0
 
-[node name="MissleTurret" type="Node3D" unique_id=1036382210 node_paths=PackedStringArray("RangeArea", "RangeAreaShape")]
+[node name="MissleTurret" type="Node3D" unique_id=1036382210 node_paths=PackedStringArray("RangeAreaShape", "RotatableNode", "DamageArea")]
 script = ExtResource("1_tdi3b")
-RangeArea = NodePath("RangeArea")
 RangeAreaShape = NodePath("RangeArea/CollisionShape3D")
+RotatableNode = NodePath("Base2")
+DamageArea = NodePath("RangeArea")
 
 [node name="Base" type="MeshInstance3D" parent="." unique_id=1871289591]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.096322894, 0)

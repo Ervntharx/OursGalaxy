@@ -10,6 +10,10 @@ size = Vector3(1, 1, 0.357)
 height = 0.5
 radius = 1.2
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_f227l"]
+height = 0.5
+radius = 1.5
+
 [node name="TemplateShip" type="CharacterBody3D" unique_id=760973978 node_paths=PackedStringArray("Outlets", "AttackableArea", "TacticsTargetProberTimer")]
 script = ExtResource("1_en85r")
 Outlets = [NodePath("L0"), NodePath("M0")]
@@ -44,3 +48,6 @@ metadata/_custom_type_script = "uid://ccgefu38lpmc7"
 transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 0, -0.3932273, -0.331464)
 script = ExtResource("2_ny3qw")
 metadata/_custom_type_script = "uid://ccgefu38lpmc7"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1276990660]
+shape = SubResource("CylinderShape3D_f227l")

@@ -35,6 +35,7 @@ internal partial class TurretBase : EquipBase {
 	public virtual void DriveState(double delta, IBattleEntity from, IBattleEntity? battleEntity) {
 		switch (State) {
 			case TurretBase.StateEnum.IsReady:
+				GD.Print($"<TurretBase> is ready and {IsEntityInRange(battleEntity)}");
 				if (GodotObject.IsInstanceValid(battleEntity?.AsNode3D()) && IsEntityInRange(battleEntity)) {
 					State = TurretBase.StateEnum.OnFire;
 				}
@@ -47,6 +48,7 @@ internal partial class TurretBase : EquipBase {
 				}
 				// 继续打出伤害段
 				if (Time.GetTicksMsec() - LastMakeDamageTime >= MakeDamageTimeGapMisc) {
+					GD.Print("<TurretBase> try push bullet into BulletServer");
 					BulletServer.Push(From, LoadBullet(), GetShootTransform(), GetShootVelocity());
 					LastMakeDamageTime = Time.GetTicksMsec();
 					HasMadeDamageCount += 1;

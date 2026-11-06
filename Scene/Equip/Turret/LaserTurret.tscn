@@ -18,11 +18,11 @@ size = Vector3(0.351, 0.492, 0.149)
 height = 25.0
 radius = 0.25
 
-[node name="LaserTurret" type="Node3D" unique_id=897529569 node_paths=PackedStringArray("RotatableComponent", "DamageArea", "DamageAreaShape")]
+[node name="LaserTurret" type="Node3D" unique_id=897529569 node_paths=PackedStringArray("DamageAreaShape", "RotatableNode", "DamageArea")]
 script = ExtResource("1_4f6rc")
-RotatableComponent = NodePath("MeshInstance3D")
-DamageArea = NodePath("MeshInstance3D/DamageArea")
 DamageAreaShape = NodePath("MeshInstance3D/DamageArea/CollisionShape3D")
+RotatableNode = NodePath("MeshInstance3D")
+DamageArea = NodePath("MeshInstance3D/DamageArea")
 
 [node name="Base" type="MeshInstance3D" parent="." unique_id=217188865]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.096322894, 0)
