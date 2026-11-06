@@ -1,4 +1,5 @@
 ﻿using Godot;
+using OursGalaxy.ResourceConfig;
 using OursGalaxy.UI;
 using System;
 using System.Threading.Tasks;
@@ -13,9 +14,9 @@ internal partial class TestItemViewer : Panel {
 	public override async void _Ready() {
 		OpenButton!.Pressed += () => GD.Print("her");
 
-		Viewer!.Items.Add(new GameItem("A", 2));
-		Viewer.Items.Add(new GameItem("B", 3));
-		Viewer.Items.Add(new GameItem("C", 4));
+		Viewer!.Items.Add(new GameItem("Test", "A", ItemBaseConfig.QulityEnum.Purple, 2));
+		Viewer!.Items.Add(new GameItem("Test", "B", ItemBaseConfig.QulityEnum.Purple, 2));
+		Viewer!.Items.Add(new GameItem("Test", "C", ItemBaseConfig.QulityEnum.Purple, 2));
 
 		Viewer.Show();
 

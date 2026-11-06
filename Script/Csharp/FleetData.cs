@@ -39,9 +39,9 @@ internal partial class FleetData : Resource {
 		ID = GUID.Generate();
 
 		size = new(() => {
-			var result = Flagship.Size;
+			var result = SpaceshipLib.GetConfig(flagship).Size;
 			foreach (var ship in Ships) {
-				result += ship.Key.Size;
+				result += SpaceshipLib.GetConfig(ship.Key).Size;
 			}
 			return result;
 		});
@@ -55,17 +55,17 @@ internal partial class FleetData : Resource {
 		});
 
 		fullHP = new(() => {
-			var result = Flagship.FullHP;
+			var result = SpaceshipLib.GetConfig(flagship).HP;
 			foreach (var ship in Ships) {
-				result += ship.Key.FullHP;
+				result += SpaceshipLib.GetConfig(ship.Key).HP;
 			}
 			return result;
 		});
 
 		raid = new(() => {
-			var result = Flagship.Raid;
+			var result = SpaceshipLib.GetConfig(flagship).Raid;
 			foreach (var ship in Ships) {
-				result += ship.Key.Raid;
+				result += SpaceshipLib.GetConfig(ship.Key).Raid;
 			}
 			return result;
 		});

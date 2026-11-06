@@ -36,7 +36,7 @@ internal partial class CombatFleetStaticsData : Resource {
 		FleetName = fleet.Name;
 
 		foreach (var ship in fleet.Ships.Keys) {
-			var config = SpaceshipLib.QueryConfig(ship);
+			var config = SpaceshipLib.GetConfig(ship);
 			HP += config.HP;
 			if (ShipsCount.ContainsKey(config.ScaleSize)) {
 				ShipsCount.Add(config.ScaleSize, 1);

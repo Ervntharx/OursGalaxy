@@ -53,10 +53,6 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 		CurrentHP = 0;
 	}
 
-	public SpaceshipData Save() {
-		return new SpaceshipData(, );
-	}
-
 	#region Battle
 	[ExportGroup("BattleEntity")]
 	[Export]

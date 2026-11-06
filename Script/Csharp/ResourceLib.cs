@@ -8,44 +8,64 @@ namespace OursGalaxy;
 /// </summary>
 internal static class ResourceLib {
 	/// <summary>
-	/// 查新资源配置是否存在
+	/// 从ItemBase检查配置是否存在
 	/// </summary>
-	/// <param name="code"></param>
+	/// <param name="itemBase"></param>
 	/// <returns></returns>
-	public static bool Exists(string code) => ResourceLoader.Exists(GetConfigPath(code));
+	public static bool Exists(ItemBase itemBase) => Exists(itemBase.ITypeCode, itemBase.NameCode, itemBase.Qulity);
 
-	public static bool Exists(string itemType, string itemName, ItemBaseConfig.QulityEnum qulity)
-		=> Exists($"{itemType}_{itemName}_{qulity}");
+	/// <summary>
+	/// 检查配置是否存在
+	/// </summary>
+	/// <param name="itemTypeCode"></param>
+	/// <param name="itemNameCode"></param>
+	/// <param name="qulity"></param>
+	/// <returns></returns>
+	public static bool Exists(string itemTypeCode, string itemNameCode, ItemBaseConfig.QulityEnum qulity)
+		=> ResourceLoader.Exists(GetConfigPath(itemTypeCode, itemNameCode, qulity));
+
+	/// <summary>
+	/// 按ItemBaseConfig取得配置
+	/// </summary>
+	/// <param name="itemBase"></param>
+	/// <returns></returns>
+	public static ItemBaseConfig GetConfig(ItemBase itemBase) => GetConfig<ItemBaseConfig>(itemBase);
 
 	/// <summary>
 	/// 取得配置
 	/// </summary>
-	/// <param name="code"></param>
+	/// <param name="itemTypeCode"></param>
+	/// <param name="itemNameCode"></param>
+	/// <param name="qulity"></param>
 	/// <returns></returns>
-	public static ItemBaseConfig QueryConfig(string code) => QueryConfig<ItemBaseConfig>(code);
-
-	public static ItemBaseConfig QueryConfig(string itemType, string itemName, ItemBaseConfig.QulityEnum qulity)
-		=> QueryConfig($"{itemType}_{itemName}_{qulity}");
+	/// <exception cref="ArgumentException"></exception>
+	public static ItemBaseConfig GetConfig(string itemTypeCode, string itemNameCode, ItemBaseConfig.QulityEnum qulity)
+		=> GetConfig<ItemBaseConfig>(itemTypeCode, itemNameCode, qulity);
 
 	/// <summary>
-	/// 取得配置。泛型版本
+	/// 按ItemBase直接取得数据,泛型版本
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	/// <param name="code"></param>
+	/// <param name="itemBase"></param>
 	/// <returns></returns>
-	/// <exception cref="ArgumentNullException"></exception>
-	public static T QueryConfig<T>(string code) where T : ItemBaseConfig {
-		if (Exists(GetConfigPath(code))) {
-			return ResourceLoader.Load<T>(GetConfigPath(code));
+	public static T GetConfig<T>(ItemBase itemBase) where T : ItemBaseConfig => GetConfig<T>(itemBase.ITypeCode, itemBase.NameCode, itemBase.Qulity);
+
+	/// <summary>
+	/// 取得配置,泛型版本
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="itemTypeCode"></param>
+	/// <param name="itemNameCode"></param>
+	/// <param name="qulity"></param>
+	/// <returns></returns>
+	/// <exception cref="ArgumentException"></exception>
+	public static T GetConfig<T>(string itemTypeCode, string itemNameCode, ItemBaseConfig.QulityEnum qulity) where T : ItemBaseConfig {
+		if (Exists(itemTypeCode, itemNameCode, qulity)) {
+			return ResourceLoader.Load<T>(GetConfigPath(itemTypeCode, itemNameCode, qulity));
 		}
-		throw new ArgumentNullException($"no such config: {code}");
+		throw new ArgumentException($"No such config :{itemTypeCode}_{itemNameCode}_{(int)qulity}");
 	}
 
-	public static T QueryConfig<T>(string itemType, string itemName, ItemBaseConfig.QulityEnum qulity) where T : ItemBaseConfig
-		=> QueryConfig<T>($"{itemType}_{itemName}_{qulity}");
-
-	private static string GetConfigPath(string code) {
-		var codeLs = code.Split("_", false);
-		return $"res://ResourceLib/{codeLs[0]}/{codeLs[1]}_{codeLs[2]}.tres";
-	}
+	private static string GetConfigPath(string itemTypeCode, string itemNameCode, ItemBaseConfig.QulityEnum qulity)
+		=> $"res://ResourceLib/{itemTypeCode}/{itemNameCode}_{(int)qulity}.tres";
 }

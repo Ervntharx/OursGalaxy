@@ -65,8 +65,6 @@ internal partial class CombatStage : Node3D {
 			ship.Basis = Basis.LookingAt(InitialFleetDir[team], Vector3.Up);
 			ship.Team = team;
 			CombatStageServer.CacheInStage(ship.ID, Name);
-			BulletServer.CacheGUID(ship.ID, Name);
-			ship.OnEntityDestory += DecacheBulletServer;
 			ActiveBoard.AddChild(ship);
 			Statics.Track(ship);
 		}
@@ -133,7 +131,7 @@ internal partial class CombatStage : Node3D {
 	private Spaceship CreateShip(Vector3 originPos, SpaceshipData data, TacticsSet tactics) {
 		var ship = SpaceshipFactory.Make(data.GetShipTypeName());
 		ship.ID = data.ID;
-		ship.HP = data.FullHP;
+		ship.HP = data.HP;
 		ship.CurrentHP = data.CurrentHP;
 		ship.TypeName = data.GetShipTypeName();
 		ship.CustomName = data.CustomName;
@@ -141,10 +139,6 @@ internal partial class CombatStage : Node3D {
 		ship.Tactics = tactics;
 		ship.Position = originPos + tactics.OffsetPosition;
 		return ship;
-	}
-
-	private void DecacheBulletServer(SpaceshipSnapshot shot) {
-		BulletServer.DecacheGUID(shot.ID);
 	}
 
 	private void UpdateLeftTimeLabel() {

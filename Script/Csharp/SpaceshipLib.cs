@@ -1,15 +1,46 @@
 using Godot;
 namespace OursGalaxy.ResourceConfig;
 
+/// <summary>
+/// 舰船数据库
+/// </summary>
 internal static class SpaceshipLib {
+	/// <summary>
+	/// 从spaceshipData检查数据是否存在
+	/// </summary>
+	/// <param name="data"></param>
+	/// <returns></returns>
+	public static bool Exists(SpaceshipData data) => ResourceLib.Exists(data);
+
+	/// <summary>
+	/// 是否存在配置
+	/// </summary>
+	/// <param name="shipType"></param>
+	/// <param name="qulity"></param>
+	/// <returns></returns>
 	public static bool Exists(string shipType, ItemBaseConfig.QulityEnum qulity = ItemBaseConfig.QulityEnum.White)
 		=> ResourceLib.Exists(SpaceshipConfig.ItemCodePrefix, shipType, qulity);
 
-	public static SpaceshipConfig QueryConfig(string shipType, ItemBaseConfig.QulityEnum qulity)
-		=> ResourceLib.QueryConfig<SpaceshipConfig>(SpaceshipConfig.ItemCodePrefix, shipType, qulity);
+	/// <summary>
+	/// 取得配置
+	/// </summary>
+	/// <param name="shipType"></param>
+	/// <param name="qulity"></param>
+	/// <returns></returns>
+	public static SpaceshipConfig GetConfig(string shipType, ItemBaseConfig.QulityEnum qulity)
+		=> ResourceLib.GetConfig<SpaceshipConfig>(SpaceshipConfig.ItemCodePrefix, shipType, qulity);
 
-	public static SpaceshipConfig QueryConfig(SpaceshipData data)
-		=> SpaceshipLib.QueryConfig(data.GetShipTypeName(), data.Qulity);
+	/// <summary>
+	/// 取得配置
+	/// </summary>
+	/// <param name="data"></param>
+	/// <returns></returns>
+	public static SpaceshipConfig GetConfig(SpaceshipData data)
+		=> ResourceLib.GetConfig<SpaceshipConfig>(data);
 
-	public static SpaceshipConfig GetTemplate() => ResourceLoader.Load<SpaceshipConfig>("res://ResourceLib/Spaceship/TemplateShip_0.tres");
+	/// <summary>
+	/// 取得模板船的配置
+	/// </summary>
+	/// <returns></returns>
+	public static SpaceshipConfig GetTemplate() => GetConfig("TemplateShip", ItemBaseConfig.QulityEnum.White);
 }

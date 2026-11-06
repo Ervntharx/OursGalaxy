@@ -51,7 +51,7 @@ internal partial class ProduceLineBox : Button {
 	public void UpdateUI() {
 		switch (State) {
 			case StateEnum.Producing:
-				TitleLabel!.Text = $"[color=green]{lineID}[/color] | [{taskDate?.Target.ToString() ?? "null"}] |进行中...";
+				TitleLabel!.Text = $"[color=green]{lineID}[/color] | [{taskDate?.Target?.ToString() ?? "null"}] |进行中...";
 				TimeLabel!.Show();
 				ProduceProgressBar!.Show();
 				ProduceProgressBar!.MaxValue = taskDate!.ProgressTimeSpan.TotalSeconds;

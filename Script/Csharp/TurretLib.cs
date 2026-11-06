@@ -7,7 +7,7 @@ internal static class TurretLib {
 		=> ResourceLib.Exists(turretType, turretName, qulity);
 
 	public static TurretConfig QueryConfig(string turretType, string turretName, ItemBaseConfig.QulityEnum qulity)
-		=> ResourceLib.QueryConfig<TurretConfig>(turretType, turretName, qulity);
+		=> ResourceLib.GetConfig<TurretConfig>(turretType, turretName, qulity);
 
 	public static TurretConfig GetTemplate() => ResourceLoader.Load<TurretConfig>("res://ResourceLib/Turret/Template.tres");
 }
