@@ -20,7 +20,7 @@ internal partial class FleetBox : Button {
 		// TODO
 		TrackedFleetUniqueID = fleetData.ID.ToString();
 		TitleLabel!.Text = MakeTitleString(index, fleetData.Name);
-		DescLabel!.Text = MakeDescString(fleetData.Flagship.CustomName, fleetData.Flagship.GetShipTypeName(),
+		DescLabel!.Text = MakeDescString(fleetData.LocalRepository.GetSpaceshipData(fleetData.Flagship).CustomName, fleetData.LocalRepository.GetSpaceshipData(fleetData.Flagship).GetShipTypeName(),
 			123, 321, 6, 8, 250, 256);
 	}
 

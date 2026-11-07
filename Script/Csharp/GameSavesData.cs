@@ -7,8 +7,6 @@ namespace OursGalaxy;
 /// 游戏存档数据
 /// </summary>
 internal partial class GameSavesData : Resource {
-	public const string SAVE_PATH = "user://Saves.json";
-
 	#region User Profile
 	/// <summary>
 	/// 用户Guid
@@ -41,14 +39,30 @@ internal partial class GameSavesData : Resource {
 	public long LastSaveDate { get; set; }
 	#endregion User Profile
 
+	#region PVP
+	/// <summary>
+	/// 分
+	/// </summary>
 	[Export]
-	public int[] BaseResource { get; set; } = new int[4];
+	public int RankPoint { get; set; }
+
+	/// <summary>
+	/// 防御舰队的GUID
+	/// </summary>
+	[Export]
+	public GUID DefenseFleetGUID { get; set; } = GUID.Empty;
+	#endregion PVP
+
+	[Export]
+	public int[] BaseResource { get; set; } = [45000, 45000, 45000, 45000];
 
 	[Export]
 	public int ActionPoints { get; set; }
 
 	[Export]
 	public int[] ActionCans { get; set; } = new int[4];
+
+	#region Items series
 
 	[Export]
 	public Array<GameItem> GameItems { get; set; } = [];
@@ -59,12 +73,14 @@ internal partial class GameSavesData : Resource {
 	[Export]
 	public Array<EquipData> Equips { get; set; } = [];
 
+
+	[Export]
+	public Array<FleetData> Fleets { get; set; } = [];
+	#endregion Items series
+
 	[Export]
 	public Array<CombatData> Combats { get; set; } = [];
 
 	[Export]
 	public Array<HuntData> Hunts { get; set; } = [];
-
-	[Export]
-	public Array<FleetData> Fleets { get; set; } = [];
 }

@@ -12,7 +12,7 @@ internal static class ResourceLib {
 	/// </summary>
 	/// <param name="itemBase"></param>
 	/// <returns></returns>
-	public static bool Exists(ItemBase itemBase) => Exists(itemBase.ITypeCode, itemBase.NameCode, itemBase.Qulity);
+	public static bool Exists(ItemBase itemBase) => Exists(itemBase.TypeCode, itemBase.NameCode, itemBase.Qulity);
 
 	/// <summary>
 	/// 检查配置是否存在
@@ -48,7 +48,7 @@ internal static class ResourceLib {
 	/// <typeparam name="T"></typeparam>
 	/// <param name="itemBase"></param>
 	/// <returns></returns>
-	public static T GetConfig<T>(ItemBase itemBase) where T : ItemBaseConfig => GetConfig<T>(itemBase.ITypeCode, itemBase.NameCode, itemBase.Qulity);
+	public static T GetConfig<T>(ItemBase itemBase) where T : ItemBaseConfig => GetConfig<T>(itemBase.TypeCode, itemBase.NameCode, itemBase.Qulity);
 
 	/// <summary>
 	/// 取得配置,泛型版本

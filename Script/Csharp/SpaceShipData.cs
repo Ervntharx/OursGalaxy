@@ -14,17 +14,21 @@ internal partial class SpaceshipData : UniqueItem {
 	[Export] public int CurrentHP { get; set; }
 
 	[Export]
-	public Godot.Collections.Dictionary<string, EquipData> EquipsLs { get; set; } = [];
+	public Godot.Collections.Dictionary<string, EquipReference> EquipsLs { get; set; } = [];
+
+	/// <summary>
+	/// ⚠️避免使用无参构造函数构造无意义量
+	/// </summary>
+	protected SpaceshipData() : base() { }
 
 	public SpaceshipData(string typeName, ItemBaseConfig.QulityEnum qulity, GUID? ID = null, ItemLocationInf? loc = null) :
 		base("Spaceship", typeName, qulity, ID, loc) { }
 
 	public string GetShipTypeName() => NameCode;
 
-	/// <summary>
-	/// ⚠️避免使用无参构造函数构造无意义量
-	/// </summary>
-	protected SpaceshipData() : base() {
-
+	public override SpaceshipReference MakeReference() {
+		var result = new SpaceshipReference(this);
+		ItemLocation = new();
+		return result;
 	}
 }

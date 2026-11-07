@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System;
+using Godot;
 using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
 
@@ -34,14 +35,26 @@ internal partial class UniqueItem : ItemBase {
 	/// </summary>
 	/// <param name="location"></param>
 	/// <returns></returns>
-	public UniqueItemReference MakeReference(ItemLocationInf? location = null) {
-		ItemLocation = location ?? new ItemLocationInf();
+	public virtual UniqueItemReference MakeReference() {
+		ItemLocation = new();
 		return new(this);
 	}
 
+	/// <summary>
+	/// 被占用状态
+	/// </summary>
+	/// <returns></returns>
+	public virtual bool IsOccupied() => ItemLocation is not null;
+
+	/// <summary>
+	/// 尝试清理引用。依靠派生类按照UniqueItem的类型进行定向检查占用位置。默认没有效果且不会成功
+	/// </summary>
+	/// <returns>是否清理成功</returns>
+	public virtual bool TryCleanOccupied() { return false; }
+
 	public static bool operator ==(UniqueItem left, UniqueItem right) => !(left != right);
 	public static bool operator !=(UniqueItem left, UniqueItem right)
-		=> left.ITypeCode != right.ITypeCode || left.NameCode != right.NameCode || left.Qulity != right.Qulity || left.ID != right.ID;
+		=> left.TypeCode != right.TypeCode || left.NameCode != right.NameCode || left.Qulity != right.Qulity || left.ID != right.ID;
 
 	public override bool Equals(object? obj) {
 		if (ReferenceEquals(this, obj)) {

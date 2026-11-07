@@ -13,6 +13,11 @@ internal partial class TaskEventData : Resource {
 	[Export] public string NameCode { get; set; }
 
 	/// <summary>
+	/// 标记事件有没有被处理
+	/// </summary>
+	[Export] public bool Deal { get; set; }
+
+	/// <summary>
 	/// TaskData状态变更，期望重绘UI时发出。
 	/// </summary>
 	public Action<TaskEventData>? TaskEventStateChanged;

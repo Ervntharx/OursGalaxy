@@ -24,6 +24,24 @@ ShipsCountLabel = NodePath("PanelContainer/VBoxContainer/BottomBar/ScrollContain
 FleetSizeLabel = NodePath("PanelContainer/VBoxContainer/BottomBar/ScrollContainer/HBoxContainer/FleetSize")
 FleetRaidLabel = NodePath("PanelContainer/VBoxContainer/BottomBar/ScrollContainer/HBoxContainer/Raid")
 
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=585034126]
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=651829817]
+handle_input_locally = false
+size = Vector2i(1142, 638)
+render_target_update_mode = 4
+
+[node name="Node3D" type="Node3D" parent="SubViewportContainer/SubViewport" unique_id=427007436]
+
+[node name="CameraArm" type="Node3D" parent="SubViewportContainer/SubViewport/Node3D" unique_id=916713100]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Node3D/CameraArm" unique_id=1169018184]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 25.481821, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Node3D/CameraArm/Camera3D" unique_id=120702851]
+
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=136680076]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_y6ubi")

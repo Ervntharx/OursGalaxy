@@ -62,7 +62,7 @@ internal partial class CombatStage : Node3D {
 	/// <param name="fleet"></param>
 	public void PutOnFleet(TeamEnum team, FleetData fleet) {
 		// 旗舰
-		var flagship = CreateShip(FleetPosMarkers[team].Position, fleet.Flagship, fleet.FlagshipTactics);
+		var flagship = CreateShip(FleetPosMarkers[team].Position, fleet.LocalRepository.GetSpaceshipData(fleet.Flagship), fleet.FlagshipTactics, fleet.LocalRepository);
 		flagship.Basis = Basis.LookingAt(InitialFleetDir[team], Vector3.Up);
 		flagship.Team = team;
 		ActiveBoard.AddChild(flagship);
@@ -70,7 +70,7 @@ internal partial class CombatStage : Node3D {
 		Statics.Track(flagship);
 		// 成员船
 		foreach (var pair in fleet.Ships) {
-			var ship = CreateShip(FleetPosMarkers[team].Position, pair.Key, pair.Value);
+			var ship = CreateShip(FleetPosMarkers[team].Position, fleet.LocalRepository.GetSpaceshipData(pair.Key), pair.Value, fleet.LocalRepository);
 			ship.Basis = Basis.LookingAt(InitialFleetDir[team], Vector3.Up);
 			ship.Team = team;
 			ActiveBoard.AddChild(ship);
@@ -144,8 +144,8 @@ internal partial class CombatStage : Node3D {
 		SecondsTimer.Timeout -= UpdateLeftTimeLabel;
 	}
 
-	private Spaceship CreateShip(Vector3 originPos, SpaceshipData data, TacticsSet tactics) {
-		var ship = SpaceshipFactory.Make(data);
+	private Spaceship CreateShip(Vector3 originPos, SpaceshipData data, TacticsSet tactics, SubRepository repository) {
+		var ship = SpaceshipFactory.Make(data, repository);
 		ship.Tactics = tactics;
 		ship.Position = originPos + tactics.OffsetPosition;
 		return ship;

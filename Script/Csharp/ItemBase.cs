@@ -4,25 +4,25 @@ using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
 
 /// <summary>
-/// 游戏物品基类。不具有数量/唯一性标识能力.持有一个ItemBase用作校对是安全的
+/// 游戏物品基类。不具有数量/唯一性标识能力.持有一个ItemBase用作校对是安全的。
+/// ⚠️但没有测试过裸ItemBase与ResourceLib,Factory系的交互能力
 /// </summary>
 [GlobalClass]
 internal partial class ItemBase : Resource {
 	/// <summary>
 	/// 物品类型code
 	/// </summary>
-	[Export]
-	public string ITypeCode { get; protected set; } = string.Empty;
+	[Export] public string TypeCode { get; protected set; } = string.Empty;
+
 	/// <summary>
 	/// 名字code
 	/// </summary>
-	[Export]
-	public string NameCode { get; protected set; } = string.Empty;
+	[Export] public string NameCode { get; protected set; } = string.Empty;
+
 	/// <summary>
 	/// 品质
 	/// </summary>
-	[Export]
-	public ItemBaseConfig.QulityEnum Qulity { get; set; } = ItemBaseConfig.QulityEnum.White;
+	[Export] public ItemBaseConfig.QulityEnum Qulity { get; set; } = ItemBaseConfig.QulityEnum.White;
 
 	public Action<ItemBase, string>? PropertyChanged;
 
@@ -32,7 +32,7 @@ internal partial class ItemBase : Resource {
 	protected ItemBase() { }
 
 	public ItemBase(string typeCode, string nameCode, ItemBaseConfig.QulityEnum qulityEnum = ItemBaseConfig.QulityEnum.White) {
-		ITypeCode = typeCode;
+		TypeCode = typeCode;
 		NameCode = nameCode;
 		Qulity = qulityEnum;
 	}
@@ -48,8 +48,8 @@ internal partial class ItemBase : Resource {
 	}
 
 	// override object.GetHashCode
-	public override int GetHashCode() => ITypeCode.GetHashCode() + NameCode.GetHashCode() + Qulity.GetHashCode();
+	public override int GetHashCode() => TypeCode.GetHashCode() + NameCode.GetHashCode() + Qulity.GetHashCode();
 
-	public override string ToString() => $"{ITypeCode}_{NameCode}_{(int)Qulity}";
+	public override string ToString() => $"{TypeCode}_{NameCode}_{(int)Qulity}";
 
 }

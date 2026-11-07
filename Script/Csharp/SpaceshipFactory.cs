@@ -6,7 +6,7 @@ using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
 
 internal static class SpaceshipFactory {
-	public static Spaceship Make(SpaceshipData data) {
+	public static Spaceship Make(SpaceshipData data, SubRepository repository) {
 		var config = SpaceshipLib.GetConfig(data);
 		var result = (Spaceship)ResourceLoader.Load<PackedScene>(config.InstanceResourcePath).Instantiate();
 		result.ShipTypeName = config.ShipTypeName;
@@ -26,7 +26,7 @@ internal static class SpaceshipFactory {
 		foreach (var pair in data.EquipsLs) {
 			var equipData = pair.Value;
 			if (equipData is not null) {
-				var equip = EquipFactory.Make(equipData);
+				var equip = EquipFactory.Make(repository.GetEquipData(pair.Value));
 				equip.From = result.ID;
 				result.Outlets.FirstOrDefault(outlet => outlet.Name == pair.Key)?.Install(equip);
 			}

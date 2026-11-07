@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using Godot;
 using Godot.Collections;
 using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
+
 /// <summary>
 /// 舰队数据类, 用于存储舰队的基本信息和状态
 /// </summary>
@@ -13,19 +13,26 @@ internal partial class FleetData : Resource {
 	/// <summary>
 	/// 舰队ID
 	/// </summary>
-	[Export]
-	public GUID ID { get; set; }
-	[Export]
-	public string Name { get; set; } = DEFAULT_NAME;
+	[Export] public GUID ID { get; set; }
 
-	[Export]
-	public SpaceshipData Flagship { get; set; }
+	/// <summary>
+	/// 舰队名
+	/// </summary>
+	[Export] public string Name { get; set; } = DEFAULT_NAME;
 
-	[Export]
-	public TacticsSet FlagshipTactics { get; set; } = new();
+	[Export] public SubRepository LocalRepository { get; set; } = new();
 
-	[Export]
-	public Dictionary<SpaceshipData, TacticsSet> Ships { get; set; } = [];
+	/// <summary>
+	/// 旗舰引用
+	/// </summary>
+	[Export] public SpaceshipReference Flagship { get; set; }
+
+	/// <summary>
+	/// 旗舰战术
+	/// </summary>
+	[Export] public TacticsSet FlagshipTactics { get; set; } = new();
+
+	[Export] public Dictionary<SpaceshipReference, TacticsSet> Ships { get; set; } = [];
 
 	public int Size => size.Value;
 
@@ -38,21 +45,22 @@ internal partial class FleetData : Resource {
 	public int Raid => raid.Value;
 
 	public FleetData(SpaceshipData flagship) {
-		Flagship = flagship;
+		Flagship = new(flagship);
+		LocalRepository.Ships.Add(flagship);
 		ID = GUID.Generate();
 
 		size = new(() => {
 			var result = SpaceshipLib.GetConfig(flagship).Size;
 			foreach (var ship in Ships) {
-				result += SpaceshipLib.GetConfig(ship.Key).Size;
+				result += SpaceshipLib.GetConfig(LocalRepository.GetSpaceshipData(ship.Key)).Size;
 			}
 			return result;
 		});
 
 		hp = new(() => {
-			var result = Flagship.CurrentHP;
+			var result = LocalRepository.GetSpaceshipData(Flagship).CurrentHP;
 			foreach (var ship in Ships) {
-				result += ship.Key.CurrentHP;
+				result += LocalRepository.GetSpaceshipData(Flagship).CurrentHP;
 			}
 			return result;
 		});
@@ -60,7 +68,7 @@ internal partial class FleetData : Resource {
 		fullHP = new(() => {
 			var result = SpaceshipLib.GetConfig(flagship).HP;
 			foreach (var ship in Ships) {
-				result += SpaceshipLib.GetConfig(ship.Key).HP;
+				result += SpaceshipLib.GetConfig(LocalRepository.GetSpaceshipData(ship.Key)).HP;
 			}
 			return result;
 		});
@@ -68,7 +76,7 @@ internal partial class FleetData : Resource {
 		raid = new(() => {
 			var result = SpaceshipLib.GetConfig(flagship).Raid;
 			foreach (var ship in Ships) {
-				result += SpaceshipLib.GetConfig(ship.Key).Raid;
+				result += SpaceshipLib.GetConfig(LocalRepository.GetSpaceshipData(ship.Key)).Raid;
 			}
 			return result;
 		});
@@ -78,7 +86,9 @@ internal partial class FleetData : Resource {
 	/// ⚠️不要使用无参构造函数构造无意义量
 	/// </summary>
 	protected FleetData() {
-		Flagship = new SpaceshipData("Template", ItemBaseConfig.QulityEnum.White);
+		var shipT = new SpaceshipData(SpaceshipConfig.TEMPLATE_NAMECODE, ItemBaseConfig.QulityEnum.White);
+		LocalRepository.Ships.Add(shipT);
+		Flagship = new(shipT);
 		ID = GUID.Empty;
 
 		size = new(0);

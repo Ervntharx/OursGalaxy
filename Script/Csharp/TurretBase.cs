@@ -33,6 +33,9 @@ internal partial class TurretBase : EquipBase {
 	/// <param name="from">Turret宿主</param>
 	/// <param name="battleEntity"></param>
 	public virtual void DriveState(double delta, IBattleEntity from, IBattleEntity? battleEntity) {
+		if (battleEntity is null) {
+			return;
+		}
 		switch (State) {
 			case TurretBase.StateEnum.IsReady:
 				GD.Print($"<TurretBase> is ready and {IsEntityInRange(battleEntity)}");

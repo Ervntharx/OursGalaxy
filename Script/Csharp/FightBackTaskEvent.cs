@@ -9,16 +9,6 @@ internal partial class FightBackTaskEvent : TaskEventData {
 	[Export]
 	public CombatConfig CBConfig { get; set; }
 
-	[Export]
-	public bool HasFightBack {
-		get => _hasFightBack;
-		set {
-			_hasFightBack = value;
-			TaskEventStateChanged?.Invoke(this);
-		}
-	}
-
-
 	public FightBackTaskEvent(string code) {
 		Time = DateTime.Now();
 		NameCode = code;

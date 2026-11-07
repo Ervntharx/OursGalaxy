@@ -9,6 +9,18 @@ namespace OursGalaxy;
 internal partial class GUID : Resource {
 	public readonly static GUID Empty = new(Guid.Empty);
 
+	[Export]
+	public string GUIDStr {
+		get => raw.ToString();
+		set {
+			if (Guid.TryParse(value, out var result)) {
+				raw = result;
+				return;
+			}
+			GD.PushError("<GUID> Parse GUID Failed");
+		}
+	}
+
 	/// <summary>
 	/// ⚠️使用Generate
 	/// </summary>

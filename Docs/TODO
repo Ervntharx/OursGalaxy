@@ -1,5 +1,7 @@
 基础：
 
+SubRepository具备ElementChangedEvent发射能力, 检测元素增减
+
 引入MissionData类型，可能需要引入ChallengeStaticsServer
 
 Turret类需要Pitch方向的轻度瞄准能力。否则无法打平目标（
@@ -22,8 +24,6 @@ TurretBase的三派生类各自需要From(config)能力
 实现LongProgressTask类型以覆盖远征，生产制造所需的长离线过程任务
 远征的Tasks堆积让远征vb自行解引
 
-存档增加PropertyChanged追踪和MD5校验能力
-
 LayyerEnum改入引擎Layer名
 
 CombatStage引入战场半径，限制尺寸
@@ -40,23 +40,10 @@ FleetEditor，实现MemShips摆放，Tactics配置
 
 UI:
 
-新增对舰船/装备的查看面板
-
-ItemViewerPanel实现用户过滤能力
-
-ItemViewerPanel实现多选能力
-
-ItemViewerPanel实现返回选择项的回调能力
-
-ItemViewerPanel实现无顶栏嵌入模式
 
 测试：
 
 问题：
-	迂回机动迂回多远的距离问题如何计算
-		按自身射程向外方向走射程距离
-	船头椎是否依赖某些计算自动生成，还是写死？
-		按转向能力计算。但迂回对对方机动能力判断使用的船头椎默认25
 
 等待研究：
 	粒子系统效果配置，发射式粒子特效

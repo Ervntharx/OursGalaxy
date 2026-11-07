@@ -116,13 +116,13 @@ internal partial class MainPanel : Control {
 	}
 
 	private void UpdateBaseResourceLabel() {
-		SolidsLabel.Text = $"[x] [color={(GlobalViewModel.Data.Solids == GlobalViewModel.Data.SolidsLimit ? "gold" : "white")}]{GlobalViewModel.Data.Solids}[/color] [color=gold]/ {GlobalViewModel.Data.SolidsLimit}[/color]";
-		LiquidLabel.Text = $"[x] [color={(GlobalViewModel.Data.Liquid == GlobalViewModel.Data.LiquidLimit ? "gold" : "white")}]{GlobalViewModel.Data.Liquid}[/color] [color=gold]/ {GlobalViewModel.Data.LiquidLimit}[/color]";
-		IndustrialProductsLabel.Text = $"[x] [color={(GlobalViewModel.Data.IndustrialProducts == GlobalViewModel.Data.IndustralProductsLimit ? "gold" : "white")}]{GlobalViewModel.Data.IndustrialProducts}[/color] [color=gold]/ {GlobalViewModel.Data.IndustralProductsLimit}[/color]";
-		HonorLabel.Text = $"[x] [color={(GlobalViewModel.Data.Honors == GlobalViewModel.Data.HonorsLimit ? "gold" : "white")}]{GlobalViewModel.Data.Honors}[/color] [color=gold]/ {GlobalViewModel.Data.HonorsLimit}[/color]";
+		SolidsLabel.Text = $"[x] [color={(GlobalViewModel.Solids == GlobalViewModel.SolidsLimit ? "gold" : "white")}]{GlobalViewModel.Solids}[/color] [color=gold]/ {GlobalViewModel.SolidsLimit}[/color]";
+		LiquidLabel.Text = $"[x] [color={(GlobalViewModel.Liquid == GlobalViewModel.LiquidLimit ? "gold" : "white")}]{GlobalViewModel.Liquid}[/color] [color=gold]/ {GlobalViewModel.LiquidLimit}[/color]";
+		IndustrialProductsLabel.Text = $"[x] [color={(GlobalViewModel.IndustrialProducts == GlobalViewModel.IndustralProductsLimit ? "gold" : "white")}]{GlobalViewModel.IndustrialProducts}[/color] [color=gold]/ {GlobalViewModel.IndustralProductsLimit}[/color]";
+		HonorLabel.Text = $"[x] [color={(GlobalViewModel.Honors == GlobalViewModel.HonorsLimit ? "gold" : "white")}]{GlobalViewModel.Honors}[/color] [color=gold]/ {GlobalViewModel.HonorsLimit}[/color]";
 	}
 
 	private void UpdateActionPointsLabel() {
-		ActionPointsLabel.Text = $"[color={(GlobalViewModel.Data.ActionPoints == GlobalViewModel.Data.ActionPointsLimit ? "gold" : "white")}]{GlobalViewModel.Data.ActionPoints}[/color] [color=gold]/ {GlobalViewModel.Data.ActionPointsLimit}[/color]";
+		ActionPointsLabel.Text = $"[color={(GlobalViewModel.ActionPoints == GlobalViewModel.ActionPointsLimit ? "gold" : "white")}]{GlobalViewModel.ActionPoints}[/color] [color=gold]/ {GlobalViewModel.ActionPointsLimit}[/color]";
 	}
 }

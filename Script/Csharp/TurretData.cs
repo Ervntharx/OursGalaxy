@@ -12,6 +12,6 @@ internal partial class TurretData : EquipData {
 	/// <param name="qulity"></param>
 	public TurretData(string turretTypeCode, string turretNameCode, ItemBaseConfig.QulityEnum qulity) : base(turretTypeCode, turretNameCode, qulity) { }
 	protected TurretData() : base() { }
-	public string GetTurretType() => ITypeCode;
+	public string GetTurretType() => TypeCode;
 	public string GetTurretName() => NameCode;
 }

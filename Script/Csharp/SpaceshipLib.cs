@@ -38,6 +38,7 @@ internal static class SpaceshipLib {
 	public static SpaceshipConfig GetConfig(SpaceshipData data)
 		=> ResourceLib.GetConfig<SpaceshipConfig>(data);
 
+
 	/// <summary>
 	/// 取得模板船的配置
 	/// </summary>

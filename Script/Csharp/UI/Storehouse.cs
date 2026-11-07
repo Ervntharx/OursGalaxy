@@ -18,7 +18,7 @@ internal partial class Storehouse : MarginContainer {
 		foreach (var child in ItemsListPanel.GetChildren()) {
 			child.QueueFree();
 		}
-		foreach (var item in GlobalViewModel.Data.GameItems) {
+		foreach (var item in GlobalViewModel.GameItems) {
 			var box = GameItemBox.Load();
 			box.Make(item);
 			ItemsListPanel.AddChild(box);
