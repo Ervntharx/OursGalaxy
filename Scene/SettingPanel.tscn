@@ -43,12 +43,17 @@ vertical_alignment = 1
 [node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer" unique_id=1164286915]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 1
+current_tab = 0
+tab_0/title = "一般"
+tab_1/title = "外观"
+tab_2/title = "声音"
+tab_3/title = "不高级"
+tab_4/title = "大概"
 
 [node name="General" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=28600571]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
+metadata/_tab_name = "一般"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/General" unique_id=1749545799]
 layout_mode = 2
@@ -58,8 +63,10 @@ layout_mode = 2
 text = "正在施工..."
 
 [node name="Apperance" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=488118948]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
+metadata/_tab_name = "外观"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Apperance" unique_id=603638358]
 layout_mode = 2
@@ -196,18 +203,30 @@ allow_greater = true
 visible = false
 layout_mode = 2
 metadata/_tab_index = 2
+metadata/_tab_name = "声音"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Sound" unique_id=1293711850]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Sound/VBoxContainer" unique_id=359527284]
+[node name="MainSwitch" type="HSplitContainer" parent="PanelContainer/VBoxContainer/TabContainer/Sound/VBoxContainer" unique_id=875018893]
 layout_mode = 2
-text = "正在施工..."
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Sound/VBoxContainer/MainSwitch" unique_id=356192074]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "声音"
+vertical_alignment = 1
+
+[node name="CheckButton" type="CheckButton" parent="PanelContainer/VBoxContainer/TabContainer/Sound/VBoxContainer/MainSwitch" unique_id=1858468085]
+layout_mode = 2
 
 [node name="Advance" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer" unique_id=946700391]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 3
+metadata/_tab_name = "不高级"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Advance" unique_id=1505549223]
 layout_mode = 2
@@ -229,3 +248,4 @@ text = "[color=gold]该项目仅用作学习目的！[/color]
 [right]powered by Godot Engine!		[img=50bottom]res://icon.svg[/img]
 项目地址：	[url=open_url:https://github.com/Ervntharx/OursGalaxy][hint=\"点击去往Github网站\"]GitHub仓库[/hint][/url][/right]"
 metadata/_tab_index = 4
+metadata/_tab_name = "大概"

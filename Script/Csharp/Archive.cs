@@ -2,6 +2,7 @@
 using Godot;
 using System;
 using OursGalaxy.ResourceConfig;
+using OursGalaxy.UI;
 namespace OursGalaxy;
 
 /// <summary>
@@ -167,6 +168,7 @@ internal partial class Archive : Resource {
 
 	#endregion Base Resource
 
+	#region Action Points
 	/// <summary>
 	/// 体力点
 	/// </summary>
@@ -189,6 +191,14 @@ internal partial class Archive : Resource {
 	public event Action? ActionPointsChangedEvent;
 	private int actionPoints = 200;
 	private int actionPointsLimit = 400;
+
+	[Export]
+	public Godot.Collections.Dictionary<ActionPointsPanel.ActionPointsCansEnum, int> ActionPointsCans { get; protected set; } = new() {
+		{ActionPointsPanel.ActionPointsCansEnum.Big,3},
+		{ActionPointsPanel.ActionPointsCansEnum.Middle,2},
+		{ActionPointsPanel.ActionPointsCansEnum.Little,1}
+	};
+	#endregion Action Points
 
 	#region Produce Tasks
 	[ExportGroup("Produce Tasks")]

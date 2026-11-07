@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://gldtkfevywgq"]
+
+[ext_resource type="Script" uid="uid://bflmsda7hm34o" path="res://Script/Csharp/UI/MissionPanel.cs" id="1_bytmf"]
+
+[node name="MissionPanel" type="MarginContainer" unique_id=234368301 node_paths=PackedStringArray("QuitButton", "MissionsListPanel", "MissionTitleLabel", "MissionDesc", "RewardListPanel", "ClaimButton")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_bytmf")
+QuitButton = NodePath("PanelContainer/VBoxContainer/TopBar/Quit")
+MissionsListPanel = NodePath("PanelContainer/VBoxContainer")
+MissionTitleLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer/Title")
+MissionDesc = NodePath("PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer/VSplitContainer/RichTextLabel")
+RewardListPanel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer/VSplitContainer/VBoxContainer/ScrollContainer/RewardList")
+ClaimButton = NodePath("PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer/VSplitContainer/VBoxContainer/HBoxContainer/Control/Claim")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=2113432238]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1189514320]
+layout_mode = 2
+
+[node name="TopBar" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1343908551]
+layout_mode = 2
+
+[node name="Quit" type="Button" parent="PanelContainer/VBoxContainer/TopBar" unique_id=475197729]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "《"
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer/TopBar" unique_id=1558393457]
+layout_mode = 2
+text = "任务"
+vertical_alignment = 1
+
+[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/VBoxContainer" unique_id=1529196990]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=520488600]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="MissionList" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/ScrollContainer" unique_id=918633282]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=1062277204]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer" unique_id=1491759578]
+layout_mode = 2
+text = "点击一个任务查看"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="VSplitContainer" type="VSplitContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer" unique_id=614499118]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer/VSplitContainer" unique_id=1556192099]
+layout_mode = 2
+size_flags_vertical = 3
+text = "文本描述"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer/VSplitContainer" unique_id=1662808224]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer/VSplitContainer/VBoxContainer" unique_id=443952040]
+layout_mode = 2
+text = "奖励"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer/VSplitContainer/VBoxContainer" unique_id=909837373]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="RewardList" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer/VSplitContainer/VBoxContainer/ScrollContainer" unique_id=982563259]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer/VSplitContainer/VBoxContainer" unique_id=1411830502]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Control" type="Control" parent="PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer/VSplitContainer/VBoxContainer/HBoxContainer" unique_id=1601831574]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="Claim" type="Button" parent="PanelContainer/VBoxContainer/HSplitContainer/VBoxContainer/VSplitContainer/VBoxContainer/HBoxContainer/Control" unique_id=1605050470]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "领取"

@@ -1,5 +1,7 @@
 基础：
 
+引入MissionData类型，可能需要引入ChallengeStaticsServer
+
 Turret类需要Pitch方向的轻度瞄准能力。否则无法打平目标（
 
 Combat, Task系列Config应并入ResourceLib

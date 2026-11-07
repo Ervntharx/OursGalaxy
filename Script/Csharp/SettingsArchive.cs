@@ -156,4 +156,17 @@ internal partial class SettingsArchive : Resource {
 	};
 	#endregion Apperance UI
 
+	#region Sound
+	public bool SoundMainSwitch {
+		get => _soundMainSwitch;
+		set {
+			_soundMainSwitch = value;
+			SoundMainToggledEvent?.Invoke(value);
+		}
+	}
+	public event Action<bool>? SoundMainToggledEvent;
+
+	private bool _soundMainSwitch;
+	#endregion Sound
+
 }

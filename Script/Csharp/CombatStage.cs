@@ -113,9 +113,15 @@ internal partial class CombatStage : Node3D {
 			}
 			else if (mbEvent.ButtonIndex == MouseButton.WheelUp) {
 				cameraDistance = Mathf.Clamp(cameraDistance + SettingsArchive.Data.Camera_Distance_ChangsStep, SettingsArchive.Data.Camera_Distance_Min, SettingsArchive.Data.Camera_Distance_Max);
+				var pos = CameraArm.Position;
+				pos.Y = cameraDistance;
+				CameraArm.Position = pos;
 			}
 			else if (mbEvent.ButtonIndex == MouseButton.WheelDown) {
 				cameraDistance = Mathf.Clamp(cameraDistance - SettingsArchive.Data.Camera_Distance_ChangsStep, SettingsArchive.Data.Camera_Distance_Min, SettingsArchive.Data.Camera_Distance_Max);
+				var pos = CameraArm.Position;
+				pos.Y = cameraDistance;
+				CameraArm.Position = pos;
 			}
 		}
 		if (touchingnScreen && @event is InputEventMouseMotion mmotion) {

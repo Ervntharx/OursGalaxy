@@ -3,7 +3,7 @@ using System;
 namespace OursGalaxy.UI;
 
 internal partial class AlliancePanel : MarginContainer {
-	public AlliancePanel Load() => (AlliancePanel)ResourceLoader.Load<PackedScene>("res://Scene/AlliancePanel.tscn").Instantiate();
+	public static AlliancePanel Load() => (AlliancePanel)ResourceLoader.Load<PackedScene>("res://Scene/AlliancePanel.tscn").Instantiate();
 
 	[Export]
 	protected Button QuitButton { get; set; } = null!;

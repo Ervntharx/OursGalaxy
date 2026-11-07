@@ -45,6 +45,10 @@ internal partial class SettingPanel : MarginContainer {
 	protected SpinBox? PanelsMarginBottomBox { get; set; }
 	#endregion Apperance
 
+	#region Sound
+	protected CheckButton SoundMainSwitchButton { get; set; } = null!;
+	#endregion Sound
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
 		base._Ready();
@@ -72,6 +76,10 @@ internal partial class SettingPanel : MarginContainer {
 		PanelsMarginTopBox!.ValueChanged += (newValue) => { SettingsArchive.Data.Apperance_UI_Panels_Margin_Top = (int)newValue; };
 		PanelsMarginBottomBox!.ValueChanged += (newValue) => { SettingsArchive.Data.Apperance_UI_Panels_Margin_Bottom = (int)newValue; };
 		#endregion Apperance
+
+		#region Sound
+		SoundMainSwitchButton.Toggled += (toggle) => SettingsArchive.Data.SoundMainSwitch = toggle;
+		#endregion Sound
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -40,7 +40,7 @@ internal partial class PanelsStack : CanvasLayer {
 			GD.Print(value.ActivePanelIdx);
 			return;
 		}
-		throw new InvalidOperationException("PanelsStack is null");
+		GD.PushError("<PanelStack> Panel Stack is missing");
 	}
 
 	public static void PopPanel(Control oldPanel) {
@@ -52,7 +52,7 @@ internal partial class PanelsStack : CanvasLayer {
 			}
 			return;
 		}
-		throw new InvalidOperationException("PanelsStack is null");
+		GD.PushError("<PanelStack> Panel Stack is missing");
 	}
 
 	public static void PushExcludsivePanel(Control excludsivePanel) {
@@ -60,7 +60,7 @@ internal partial class PanelsStack : CanvasLayer {
 			value.ExcludsiveLayer.AddChild(excludsivePanel);
 			return;
 		}
-		throw new InvalidOperationException("PanelsStack is null");
+		GD.PushError("<PanelStack> Panel Stack is missing");
 	}
 
 	public static void RequireQuitGame() {
@@ -68,7 +68,7 @@ internal partial class PanelsStack : CanvasLayer {
 			value.QuitGameDialog.Show();
 			return;
 		}
-		throw new InvalidOperationException("PanelsStack is null");
+		GD.PushError("<PanelStack> Panel Stack is missing");
 	}
 
 	// Called when the node enters the scene tree for the first time.

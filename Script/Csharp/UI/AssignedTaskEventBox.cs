@@ -12,34 +12,34 @@ internal partial class AssignedTaskEventBox : MarginContainer {
 
 	public void Make(TaskEventData taskEvent) {
 		task = taskEvent;
-		task.TaskEventStateChanged += OnTaskStateChanged;
-		OnTaskStateChanged(taskEvent);
+		// task.TaskEventStateChanged += OnTaskStateChanged;
+		// OnTaskStateChanged(taskEvent);
 	}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
-		BodyLabel.MetaClicked += OnUrlPressed;
+		// BodyLabel.MetaClicked += OnUrlPressed;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta) {
 	}
 
-	private void OnUrlPressed(Variant variant) {
-		if (variant.ToString() == task?.ReactUrl) {
-			task.OnMatchUrl(variant);
-		}
-	}
+	// private void OnUrlPressed(Variant variant) {
+	// 	if (variant.ToString() == task?.ReactUrl) {
+	// 		task.OnMatchUrl(variant);
+	// 	}
+	// }
 
-	private void OnTaskStateChanged(TaskEventData taskEvent) {
-		TitleLable.Text = taskEvent.NameCode;
-		if (taskEvent.ReactButtonName is not null) {
-			BodyLabel.Text = taskEvent.Desc + $"[right][url={taskEvent.ReactUrl}][lb] > {taskEvent.ReactButtonName} < [rb][/url][/right]";
-		}
-		else {
-			BodyLabel.Text = taskEvent.Desc;
-		}
-	}
+	// private void OnTaskStateChanged(TaskEventData taskEvent) {
+	// 	TitleLable.Text = taskEvent.NameCode;
+	// 	if (taskEvent.ReactButtonName is not null) {
+	// 		BodyLabel.Text = taskEvent.Desc + $"[right][url={taskEvent.ReactUrl}][lb] > {taskEvent.ReactButtonName} < [rb][/url][/right]";
+	// 	}
+	// 	else {
+	// 		BodyLabel.Text = taskEvent.Desc;
+	// 	}
+	// }
 
 	private TaskEventData? task;
 }

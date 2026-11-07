@@ -47,7 +47,7 @@ internal partial class MainPanel : Control {
 	[Export]
 	protected Button? MissionButton { get; set; }
 	[Export]
-	protected Button? AllianceButton { get; set; }
+	protected Button AllianceButton { get; set; } = null!;
 	[Export]
 	protected Button SimulatedCombatButton { get; set; } = null!;
 	[Export]
@@ -63,7 +63,7 @@ internal partial class MainPanel : Control {
 	// bottom panels
 	[ExportGroup("Bottom Panel Overview")]
 	[Export]
-	protected Button? TechnologyButton { get; set; }
+	protected Button TechnologyButton { get; set; } = null!;
 	[Export]
 	protected Button StoreButton { get; set; } = null!;
 	[Export]
@@ -71,6 +71,7 @@ internal partial class MainPanel : Control {
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
+		// UI init
 		MsgViewPanel!.Quit += OnMsgViewPanelQuit;
 		MsgBoxesListPanel!.OpenMessage += OnMsgOpen;
 
@@ -83,6 +84,9 @@ internal partial class MainPanel : Control {
 		CombatButton.Pressed += () => PanelsStack.PushPanel(CombatsOverviewPanel.Load());
 		HangerButton.Pressed += () => PanelsStack.PushPanel(ItemViewerPanel.Load());
 		StoreButton.Pressed += () => PanelsStack.PushPanel(ItemViewerPanel.Load());
+		AllianceButton.Pressed += () => PanelsStack.PushPanel(AlliancePanel.Load());
+
+		TechnologyButton.Pressed += () => PanelsStack.PushPanel(TechnologyPanel.Load());
 
 		// base resource relatived to archive data
 		// init base resource label

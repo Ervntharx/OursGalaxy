@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cqr85xfq5owxd"]
+
+[ext_resource type="Script" uid="uid://dcra60ge50t5n" path="res://Script/Csharp/UI/MissionBox.cs" id="1_4uxdd"]
+
+[node name="MissionBox" type="Button" unique_id=1446294550 node_paths=PackedStringArray("TitleLabel")]
+custom_minimum_size = Vector2(250, 50)
+mouse_filter = 1
+script = ExtResource("1_4uxdd")
+TitleLabel = NodePath("RichTextLabel")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=302290127]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+text = "舰队任务名称"
+horizontal_alignment = 1
+vertical_alignment = 1

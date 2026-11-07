@@ -1,0 +1,125 @@
+[gd_scene format=3 uid="uid://bjaf5wuqf6md3"]
+
+[ext_resource type="Script" uid="uid://kvr25b6xm4cm" path="res://Script/Csharp/UI/ActionPointsPanel.cs" id="1_m4inj"]
+
+[node name="ActionPointsPanel" type="MarginContainer" unique_id=182996638 node_paths=PackedStringArray("QuitButton", "ActionPointsOverviewLabel", "CanssSpinBox", "CanssComfirmButton")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_m4inj")
+QuitButton = NodePath("PanelContainer/VBoxContainer/TopBar/Quir")
+ActionPointsOverviewLabel = NodePath("PanelContainer/VBoxContainer/ActionPointsOverview")
+CanssSpinBox = {
+0: NodePath("PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/LittleBag/SpinBox"),
+1: NodePath("PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/MiddelBag/SpinBox"),
+2: NodePath("PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/BigBag/SpinBox")
+}
+CanssComfirmButton = {
+0: NodePath("PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/LittleBag/Comfirm"),
+1: NodePath("PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/MiddelBag/Comfirm"),
+2: NodePath("PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/BigBag/Comfirm")
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=776383072]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=452659230]
+layout_mode = 2
+
+[node name="TopBar" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=257406320]
+layout_mode = 2
+
+[node name="Quir" type="Button" parent="PanelContainer/VBoxContainer/TopBar" unique_id=313876419]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "<"
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer/TopBar" unique_id=1536335106]
+layout_mode = 2
+text = "体力"
+horizontal_alignment = 1
+
+[node name="ActionPointsOverview" type="RichTextLabel" parent="PanelContainer/VBoxContainer" unique_id=2110511316]
+layout_mode = 2
+bbcode_enabled = true
+text = "[font_size=120]⚡ [/font_size][font_size=35]1200[/font_size] [font_size=25][color=gold]/ 1200[/color][/font_size]"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer" unique_id=702374690]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 350
+theme_override_constants/margin_right = 350
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/MarginContainer" unique_id=1462543378]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer" unique_id=607835167]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BigBag" type="HSplitContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1415222720]
+layout_mode = 2
+split_offsets = PackedInt32Array(0, 0)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/BigBag" unique_id=1194319937]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+text = "大罐"
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/BigBag" unique_id=266209844]
+layout_mode = 2
+suffix = "/ 0"
+
+[node name="Comfirm" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/BigBag" unique_id=845916103]
+layout_mode = 2
+disabled = true
+text = "确定"
+
+[node name="MiddelBag" type="HSplitContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer" unique_id=992558385]
+layout_mode = 2
+split_offsets = PackedInt32Array(0, 0)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/MiddelBag" unique_id=1553528582]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+text = "中罐"
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/MiddelBag" unique_id=491653515]
+layout_mode = 2
+suffix = "/ 0"
+
+[node name="Comfirm" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/MiddelBag" unique_id=753558845]
+layout_mode = 2
+disabled = true
+text = "确定"
+
+[node name="LittleBag" type="HSplitContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer" unique_id=428169909]
+layout_mode = 2
+split_offsets = PackedInt32Array(0, 0)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/LittleBag" unique_id=1608292494]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+text = "小罐"
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/LittleBag" unique_id=800830261]
+layout_mode = 2
+suffix = "/ 0"
+
+[node name="Comfirm" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/LittleBag" unique_id=581524508]
+layout_mode = 2
+disabled = true
+text = "确定"
