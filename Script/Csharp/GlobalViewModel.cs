@@ -3,48 +3,55 @@ using Godot;
 using System;
 using OursGalaxy.ResourceConfig;
 using OursGalaxy.UI;
+using System.Collections.ObjectModel;
 namespace OursGalaxy;
 
 /// <summary>
-/// 存档数据。同时作为游戏ViewModel使用
+///游戏ViewModel
 /// </summary>
-[GlobalClass]
-internal partial class Archive : Resource {
-	public const string SAVE_PATH = "user://Archive.tres";
-	public static Archive Data { get; protected set; } = new();
+internal partial class GlobalViewModel {
+	public static GlobalViewModel Data { get; protected set; } = new();
 
-	protected Archive() {
-		// 修改时都会触发最新修改日期
-		LastSaveTime = DateTime.Now();
+	public static void Read(GameSavesData saves) {
+		Data = new();
+		#region User Profile
+		Data.UserID = saves.UserID;
+		Data.UserName = saves.UserName;
+
+		var avaterImage = new Image();
+		var err = avaterImage.LoadWebpFromBuffer(Convert.FromBase64String(saves.AvaterBase64));
+		if (err != Error.Ok) {
+			GD.PushError($"<GlobalViewModel> Load avater failed: {err}");
+			avaterImage = new();
+		}
+		else {
+			Data.Avatar = avaterImage;
+		}
+
+		Data.RegisterTime = new DateTime(saves.RegisterDate);
+		Data.LastSaveTime = new DateTime(saves.LastSaveDate);
+		#endregion User Profile
+
+		#region Base Resource
+		Data.baseResource = saves.BaseResource;
+		#endregion Base Resource
 	}
 
-	public static void Load() {
-		if (FileAccess.FileExists(SAVE_PATH)) {
-			Data = ResourceLoader.Load<Archive>(SAVE_PATH);
-		}
-	}
-
-	public static void Save() {
-		var err = ResourceSaver.Save(Archive.Data, SAVE_PATH);
-		if (err is not Error.Ok) {
-			GD.PushError(err);
-		}
+	public static GameSavesData Save() {
+		var saves = new GameSavesData();
+		return saves;
 	}
 
 	/// <summary>
 	/// 存档最后编辑时间
 	/// </summary>
 	[Export]
-	public DateTime LastSaveTime { get; set; }
+	public DateTime LastSaveTime { get; set; } = DateTime.Now();
 
 	#region User Profiles
 	[ExportGroup("User Profiles")]
 
-	/// <summary>
-	/// 用户ID
-	/// </summary>
-	[Export]
-	public int UserID { get; set; }
+	public Guid UserID { get; set; }
 
 	/// <summary>
 	/// 用户名
@@ -56,7 +63,7 @@ internal partial class Archive : Resource {
 	/// 头像
 	/// </summary>
 	[Export]
-	public Texture2D Avatar { get; set; } = new();
+	public Image Avatar { get; set; } = new();
 
 	/// <summary>
 	/// 注册时间
@@ -74,19 +81,19 @@ internal partial class Archive : Resource {
 	/// </summary>
 	[Export]
 	public int Solids {
-		get => solids;
+		get => baseResource[(int)BaseResourceEnum.Solids];
 		set {
-			solids = Math.Clamp(value, 0, SolidsLimit);
-			BaseResourceChangedEvent?.Invoke(BaseResourceEnum.Solids);
+			baseResource[(int)BaseResourceEnum.Solids] = Math.Clamp(value, 0, SolidsLimit);
+			BaseResourceUpdatedEvent?.Invoke();
 		}
 	}
 
 	[Export]
 	public int SolidsLimit {
-		get => solidsLimit;
+		get => baseResourceLimit[(int)BaseResourceEnum.Solids];
 		set {
-			solidsLimit = value;
-			BaseResourceLimitChangedEvent?.Invoke(BaseResourceEnum.Solids);
+			baseResourceLimit[(int)BaseResourceEnum.Solids] = value;
+			BaseResourceUpdatedEvent?.Invoke();
 		}
 	}
 
@@ -95,19 +102,19 @@ internal partial class Archive : Resource {
 	/// </summary>
 	[Export]
 	public int Liquid {
-		get => liquid;
+		get => baseResource[(int)BaseResourceEnum.Liquid];
 		set {
-			liquid = Math.Clamp(value, 0, LiquidLimit);
-			BaseResourceChangedEvent?.Invoke(BaseResourceEnum.Liquid);
+			baseResource[(int)BaseResourceEnum.Liquid] = Math.Clamp(value, 0, LiquidLimit);
+			BaseResourceUpdatedEvent?.Invoke();
 		}
 	}
 
 	[Export]
 	public int LiquidLimit {
-		get => liquidLimit;
+		get => baseResourceLimit[(int)BaseResourceEnum.Liquid];
 		set {
-			liquidLimit = value;
-			BaseResourceLimitChangedEvent?.Invoke(BaseResourceEnum.Liquid);
+			baseResourceLimit[(int)BaseResourceEnum.Liquid] = value;
+			BaseResourceUpdatedEvent?.Invoke();
 		}
 	}
 
@@ -116,19 +123,19 @@ internal partial class Archive : Resource {
 	/// </summary>
 	[Export]
 	public int IndustrialProducts {
-		get => industrialProducts;
+		get => baseResource[(int)BaseResourceEnum.IndustralProducts];
 		set {
-			industrialProducts = Math.Clamp(value, 0, IndustralProductsLimit);
-			BaseResourceChangedEvent?.Invoke(BaseResourceEnum.IndustralProducts);
+			baseResource[(int)BaseResourceEnum.IndustralProducts] = Math.Clamp(value, 0, IndustralProductsLimit);
+			BaseResourceUpdatedEvent?.Invoke();
 		}
 	}
 
 	[Export]
 	public int IndustralProductsLimit {
-		get => industralProductsLimit;
+		get => baseResourceLimit[(int)BaseResourceEnum.IndustralProducts];
 		set {
-			industralProductsLimit = value;
-			BaseResourceLimitChangedEvent?.Invoke(BaseResourceEnum.IndustralProducts);
+			baseResourceLimit[(int)BaseResourceEnum.IndustralProducts] = value;
+			BaseResourceUpdatedEvent?.Invoke();
 		}
 	}
 
@@ -137,34 +144,28 @@ internal partial class Archive : Resource {
 	/// </summary>
 	[Export]
 	public int Honors {
-		get => honors;
+		get => baseResource[(int)BaseResourceEnum.Honors];
 		set {
-			honors = Math.Clamp(value, 0, HonorsLimit);
-			BaseResourceLimitChangedEvent?.Invoke(BaseResourceEnum.Honors);
+			baseResource[(int)BaseResourceEnum.Honors] = Math.Clamp(value, 0, HonorsLimit);
+			BaseResourceUpdatedEvent?.Invoke();
 		}
 	}
 
 	[Export]
 	public int HonorsLimit {
-		get => honorsLimit;
+		get => baseResourceLimit[(int)BaseResourceEnum.Honors];
 		set {
-			honorsLimit = value;
-			BaseResourceLimitChangedEvent?.Invoke(BaseResourceEnum.Honors);
+			baseResourceLimit[(int)BaseResourceEnum.Honors] = value;
+			BaseResourceUpdatedEvent?.Invoke();
 		}
 	}
 
-	public enum BaseResourceEnum { Solids, Liquid, IndustralProducts, Honors }
-	public static event Action<BaseResourceEnum>? BaseResourceChangedEvent;
-	public static event Action<BaseResourceEnum>? BaseResourceLimitChangedEvent;
+	public enum BaseResourceEnum { Solids = 0, Liquid = 1, IndustralProducts = 2, Honors = 3 }
 
-	private int solids = 45000;
-	private int liquid = 45000;
-	private int industrialProducts = 45000;
-	private int honors = 45000;
-	private int solidsLimit = 50000;
-	private int liquidLimit = 50000;
-	private int industralProductsLimit = 50000;
-	private int honorsLimit = 50000;
+	public static event Action? BaseResourceUpdatedEvent;
+
+	private int[] baseResource = [45000, 45000, 45000, 45000];
+	private int[] baseResourceLimit = [50000, 50000, 50000, 5000];
 
 	#endregion Base Resource
 
@@ -232,9 +233,12 @@ internal partial class Archive : Resource {
 
 	#region Battle and Combat
 	[Export]
-	public Array<CombatData> PunitiveCombatList { get; set; } = [];
+	public Array<CombatData> PunitiveCombatList { get; protected set; } = [];
 
 	[Export]
-	public Array<HuntData> TrackedHuntList { get; set; } = [];
+	public Array<HuntData> TrackedHuntList { get; protected set; } = [];
 	#endregion Battle and Combat
+
+	public ObservableCollection<SpaceshipData> Ships { get; } = [];
+	public ObservableCollection<GameItem> GameItems { get; } = [];
 }

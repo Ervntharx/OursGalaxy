@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://b15oix8iiv3a4"]
+
+[ext_resource type="Script" uid="uid://dccfftx123o5m" path="res://Script/Csharp/UI/Storehouse.cs" id="1_vux73"]
+
+[node name="Storehouse" type="MarginContainer" unique_id=663373868 node_paths=PackedStringArray("QuitButton", "ItemsListPanel")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_vux73")
+QuitButton = NodePath("PanelContainer/VBoxContainer/TopBar/Quit")
+ItemsListPanel = NodePath("PanelContainer/VBoxContainer/ScrollContainer/ItemsListPanel")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=597951013]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=966581308]
+layout_mode = 2
+
+[node name="TopBar" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1379007356]
+layout_mode = 2
+
+[node name="Quit" type="Button" parent="PanelContainer/VBoxContainer/TopBar" unique_id=1148385233]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "<"
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer/TopBar" unique_id=59672362]
+layout_mode = 2
+text = "仓库"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer" unique_id=280145293]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ItemsListPanel" type="HFlowContainer" parent="PanelContainer/VBoxContainer/ScrollContainer" unique_id=1735654651]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+last_wrap_alignment = 1

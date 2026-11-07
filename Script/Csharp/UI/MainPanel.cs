@@ -82,22 +82,17 @@ internal partial class MainPanel : Control {
 		AssignedTaskButton.Pressed += () => PanelsStack.PushPanel(AssignedTaskPanel.Load());
 		FactoryButton.Pressed += () => PanelsStack.PushPanel(FactoryPanel.Load());
 		CombatButton.Pressed += () => PanelsStack.PushPanel(CombatsOverviewPanel.Load());
-		HangerButton.Pressed += () => PanelsStack.PushPanel(ItemViewerPanel.Load());
-		StoreButton.Pressed += () => PanelsStack.PushPanel(ItemViewerPanel.Load());
+		HangerButton.Pressed += () => PanelsStack.PushPanel(HangerPanel.Load());
+		StoreButton.Pressed += () => PanelsStack.PushPanel(Storehouse.Load());
 		AllianceButton.Pressed += () => PanelsStack.PushPanel(AlliancePanel.Load());
 
 		TechnologyButton.Pressed += () => PanelsStack.PushPanel(TechnologyPanel.Load());
 
 		// base resource relatived to archive data
 		// init base resource label
-		UpdateBaseResourceLabel(Archive.BaseResourceEnum.Solids);
-		UpdateBaseResourceLabel(Archive.BaseResourceEnum.Liquid);
-		UpdateBaseResourceLabel(Archive.BaseResourceEnum.IndustralProducts);
-		UpdateBaseResourceLabel(Archive.BaseResourceEnum.Honors);
-		Archive.BaseResourceChangedEvent += UpdateBaseResourceLabel;
-		Archive.BaseResourceLimitChangedEvent += UpdateBaseResourceLabel;
-
-		//action points
+		UpdateBaseResourceLabel();
+		GlobalViewModel.BaseResourceUpdatedEvent += UpdateBaseResourceLabel;
+		// action points
 		UpdateActionPointsLabel();
 	}
 
@@ -120,14 +115,14 @@ internal partial class MainPanel : Control {
 		FuncPanelTab.TabsVisible = false;
 	}
 
-	private void UpdateBaseResourceLabel(Archive.BaseResourceEnum _) {
-		SolidsLabel.Text = $"[x] [color={(Archive.Data.Solids == Archive.Data.SolidsLimit ? "gold" : "white")}]{Archive.Data.Solids}[/color] [color=gold]/ {Archive.Data.SolidsLimit}[/color]";
-		LiquidLabel.Text = $"[x] [color={(Archive.Data.Liquid == Archive.Data.LiquidLimit ? "gold" : "white")}]{Archive.Data.Liquid}[/color] [color=gold]/ {Archive.Data.LiquidLimit}[/color]";
-		IndustrialProductsLabel.Text = $"[x] [color={(Archive.Data.IndustrialProducts == Archive.Data.IndustralProductsLimit ? "gold" : "white")}]{Archive.Data.IndustrialProducts}[/color] [color=gold]/ {Archive.Data.IndustralProductsLimit}[/color]";
-		HonorLabel.Text = $"[x] [color={(Archive.Data.Honors == Archive.Data.HonorsLimit ? "gold" : "white")}]{Archive.Data.Honors}[/color] [color=gold]/ {Archive.Data.HonorsLimit}[/color]";
+	private void UpdateBaseResourceLabel() {
+		SolidsLabel.Text = $"[x] [color={(GlobalViewModel.Data.Solids == GlobalViewModel.Data.SolidsLimit ? "gold" : "white")}]{GlobalViewModel.Data.Solids}[/color] [color=gold]/ {GlobalViewModel.Data.SolidsLimit}[/color]";
+		LiquidLabel.Text = $"[x] [color={(GlobalViewModel.Data.Liquid == GlobalViewModel.Data.LiquidLimit ? "gold" : "white")}]{GlobalViewModel.Data.Liquid}[/color] [color=gold]/ {GlobalViewModel.Data.LiquidLimit}[/color]";
+		IndustrialProductsLabel.Text = $"[x] [color={(GlobalViewModel.Data.IndustrialProducts == GlobalViewModel.Data.IndustralProductsLimit ? "gold" : "white")}]{GlobalViewModel.Data.IndustrialProducts}[/color] [color=gold]/ {GlobalViewModel.Data.IndustralProductsLimit}[/color]";
+		HonorLabel.Text = $"[x] [color={(GlobalViewModel.Data.Honors == GlobalViewModel.Data.HonorsLimit ? "gold" : "white")}]{GlobalViewModel.Data.Honors}[/color] [color=gold]/ {GlobalViewModel.Data.HonorsLimit}[/color]";
 	}
 
 	private void UpdateActionPointsLabel() {
-		ActionPointsLabel.Text = $"[color={(Archive.Data.ActionPoints == Archive.Data.ActionPointsLimit ? "gold" : "white")}]{Archive.Data.ActionPoints}[/color] [color=gold]/ {Archive.Data.ActionPointsLimit}[/color]";
+		ActionPointsLabel.Text = $"[color={(GlobalViewModel.Data.ActionPoints == GlobalViewModel.Data.ActionPointsLimit ? "gold" : "white")}]{GlobalViewModel.Data.ActionPoints}[/color] [color=gold]/ {GlobalViewModel.Data.ActionPointsLimit}[/color]";
 	}
 }

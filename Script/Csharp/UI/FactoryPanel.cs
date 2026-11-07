@@ -23,14 +23,14 @@ internal partial class FactoryPanel : Panel {
 		base._Ready();
 		QuitButton.Pressed += () => PanelsStack.PopPanel(this);
 
-		var tasks = Archive.Data.ShipsProduceTasks;
+		var tasks = GlobalViewModel.Data.ShipsProduceTasks;
 		for (var i = 0; i < tasks.Count; i++) {
 			var line = ProduceLineBox.Load();
 			line!.Make(i, tasks[i]);
 			ShipsProduceLinesPanel!.AddChild(line);
 		}
 
-		tasks = Archive.Data.EquipProduceTasks;
+		tasks = GlobalViewModel.Data.EquipProduceTasks;
 		for (var i = 0; i < tasks.Count; i++) {
 			var line = ProduceLineBox.Load();
 			line!.Make(i, tasks[i]);

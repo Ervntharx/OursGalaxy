@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://750feo7ocfb0"]
 
 [ext_resource type="Script" uid="uid://cdeuid74b1xse" path="res://Script/Csharp/UI/ShipConfigPanel.cs" id="1_cti5s"]
-[ext_resource type="PackedScene" uid="uid://b5opwcdvp8ftf" path="res://Scene/ItemViewerPanel.tscn" id="1_yqs27"]
+[ext_resource type="PackedScene" uid="uid://bto3wngljf3fb" path="res://Scene/Spaceship/TemplateShip.tscn" id="2_3ekwn"]
 
-[node name="ShipConfigPanel" type="MarginContainer" unique_id=2131798070 node_paths=PackedStringArray("QuitButton", "IVPanel", "ShipOverview")]
+[node name="ShipConfigPanel" type="MarginContainer" unique_id=2131798070 node_paths=PackedStringArray("QuitButton", "ShipOverview", "ShipStage", "EquipsListPanel")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -15,8 +15,9 @@ theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 script = ExtResource("1_cti5s")
 QuitButton = NodePath("PanelContainer/VBoxContainer/TopBar/Quit")
-IVPanel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/ItemViewer")
 ShipOverview = NodePath("PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer/SubViewport")
+ShipStage = NodePath("PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer/SubViewport/ShipStage")
+EquipsListPanel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/ScrollContainer/EquipPanel")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1717783387]
 layout_mode = 2
@@ -46,8 +47,26 @@ size_flags_horizontal = 3
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer" unique_id=1473934275]
+handle_input_locally = false
 size = Vector2i(565, 603)
+render_target_update_mode = 4
 
-[node name="ItemViewer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=1079582908 instance=ExtResource("1_yqs27")]
+[node name="ShipStage" type="Node3D" parent="PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer/SubViewport" unique_id=1233618957]
+
+[node name="CameraArm" type="Node3D" parent="PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer/SubViewport/ShipStage" unique_id=1069153188]
+
+[node name="CameraArm" type="Node3D" parent="PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer/SubViewport/ShipStage/CameraArm" unique_id=335713098]
+
+[node name="Camera3D" type="Camera3D" parent="PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer/SubViewport/ShipStage/CameraArm/CameraArm" unique_id=1977075629]
+transform = Transform3D(-0.6965293, 0, 0.7175284, 0, 1, 0, -0.7175284, 0, -0.6965293, 2.1964126, 1.284678, -2.7170725)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer/SubViewport/ShipStage/CameraArm/CameraArm/Camera3D" unique_id=1854738292]
+
+[node name="TemplateShip" parent="PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer/SubViewport/ShipStage" unique_id=760973978 instance=ExtResource("2_3ekwn")]
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=250718719]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="EquipPanel" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/ScrollContainer" unique_id=836425265]
+layout_mode = 2

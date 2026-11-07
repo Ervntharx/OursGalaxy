@@ -39,7 +39,6 @@ CombatStage引入战场半径，限制尺寸
 FleetEditor，实现MemShips摆放，Tactics配置
 
 UI:
-新增通用的”恭喜获得物品界面“
 
 新增对舰船/装备的查看面板
 

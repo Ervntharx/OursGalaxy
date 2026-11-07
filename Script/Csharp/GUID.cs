@@ -1,34 +1,28 @@
-﻿using Godot;
+﻿using System;
+using Godot;
 namespace OursGalaxy;
 
 /// <summary>
-/// unique id方案。不包速度效率。是不可变类型
+/// System.Guid的封装。支持Godot Resource进行序列化
 /// </summary>
 [GlobalClass]
 internal partial class GUID : Resource {
-	public readonly static GUID Empty = new();
+	public readonly static GUID Empty = new(Guid.Empty);
 
 	/// <summary>
 	/// ⚠️使用Generate
 	/// </summary>
 	protected GUID() { }
+	public GUID(Guid guid) { raw = guid; }
+	public static GUID Generate() => new() { raw = Guid.NewGuid() };
 
-	public static GUID Generate() => new() { raw = Time.GetUnixTimeFromSystem(), randCode = GD.Randi() };
-
-	public static bool operator !=(GUID left, GUID right) => left.raw != right.raw || left.randCode != right.randCode;
+	public static bool operator !=(GUID left, GUID right) => left.raw != right.raw;
 	public static bool operator ==(GUID left, GUID right) => !(left != right);
 
-	public override bool Equals(object? obj) {
-		if (ReferenceEquals(this, obj)) {
-			return true;
-		}
-		return obj is not null && obj is GUID gUID && gUID == this;
-	}
+	public override bool Equals(object? obj) => obj is not null && obj is GUID guid && this == guid;
+	public override int GetHashCode() => raw.GetHashCode();
 
-	public override int GetHashCode() => raw.GetHashCode() + randCode.GetHashCode() + 3;
+	public override string ToString() => raw.ToString();
 
-	public override string ToString() => $"{raw.ToString()}_{randCode.ToString()}";
-
-	private double raw;
-	private long randCode;
+	private Guid raw;
 }
