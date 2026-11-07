@@ -4,9 +4,6 @@ namespace OursGalaxy;
 
 [GlobalClass]
 internal partial class RewardTaskEvent : TaskEventData {
-	public override string? ReactButtonName => "领取";
-
-	public override string? ReactUrl => "Claim";
 	[Export]
 	public Godot.Collections.Array<ItemBase> Items { get; set; } = [];
 
@@ -17,9 +14,5 @@ internal partial class RewardTaskEvent : TaskEventData {
 
 	public RewardTaskEvent(string code) : base(code) {
 		// TODO:	生成奖励
-	}
-
-	public override void OnMatchUrl(Variant variant) {
-		// TODO:	放入存档
 	}
 }

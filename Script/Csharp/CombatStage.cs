@@ -112,16 +112,16 @@ internal partial class CombatStage : Node3D {
 				touchingnScreen = mbEvent.Pressed;
 			}
 			else if (mbEvent.ButtonIndex == MouseButton.WheelUp) {
-				cameraDistance = Mathf.Clamp(cameraDistance + CAMERA_DISTANCE_MOVE_STEP, CAMERA_DISTANCE_MIN, CAMERA_DISTANCE_MAX);
+				cameraDistance = Mathf.Clamp(cameraDistance + SettingsArchive.Data.Camera_Distance_ChangsStep, SettingsArchive.Data.Camera_Distance_Min, SettingsArchive.Data.Camera_Distance_Max);
 			}
 			else if (mbEvent.ButtonIndex == MouseButton.WheelDown) {
-				cameraDistance = Mathf.Clamp(cameraDistance - CAMERA_DISTANCE_MOVE_STEP, CAMERA_DISTANCE_MIN, CAMERA_DISTANCE_MAX);
+				cameraDistance = Mathf.Clamp(cameraDistance - SettingsArchive.Data.Camera_Distance_ChangsStep, SettingsArchive.Data.Camera_Distance_Min, SettingsArchive.Data.Camera_Distance_Max);
 			}
 		}
 		if (touchingnScreen && @event is InputEventMouseMotion mmotion) {
 			if (OverviewMode) {
 				var pos = CameraArm.Position;
-				pos = new Vector3(pos.X - mmotion.Relative.X * CAMERA_MOVE_STEP, 0, pos.Z - mmotion.Relative.Y * CAMERA_MOVE_STEP);
+				pos = new Vector3(pos.X - mmotion.Relative.X * SettingsArchive.Data.Camera_Move_Velocity, 0, pos.Z - mmotion.Relative.Y * SettingsArchive.Data.Camera_Move_Velocity);
 				CameraArm.Position = pos;
 			}
 		}
@@ -154,14 +154,14 @@ internal partial class CombatStage : Node3D {
 	// 摄像机
 	private const float OVERVIEW_MODE_CAMERA_CLAMP_PITCH = 70;
 	private const float CAMERA_CLAMP_PITCH_ANGLE = 85;
-	private const float DEFAULT_CAMERA_DISTANCE = 20;
-	private const float CAMERA_DISTANCE_MOVE_STEP = 2;
-	private const float CAMERA_MOVE_STEP = 0.2f;
-	private const float CAMERA_DISTANCE_MIN = 2;
-	private const float CAMERA_DISTANCE_MAX = 50;
+	// private const float DEFAULT_CAMERA_DISTANCE = 20;
+	// private const float CAMERA_DISTANCE_MOVE_STEP = 2;
+	// private const float CAMERA_MOVE_STEP = 0.2f;
+	// private const float CAMERA_DISTANCE_MIN = 2;
+	// private const float CAMERA_DISTANCE_MAX = 50;
 	private float cameraYawAngle;
 	private float cameraPitchAngle;
-	private float cameraDistance = DEFAULT_CAMERA_DISTANCE;
+	private float cameraDistance = SettingsArchive.Data.Camera_Default_Distance;
 	private bool touchingnScreen;
 
 	private bool OverviewMode = true;

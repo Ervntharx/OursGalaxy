@@ -20,7 +20,7 @@ internal partial class MainPanel : Control {
 	[Export]
 	protected Button? ActionPointsButton { get; set; }
 	[Export]
-	protected RichTextLabel? ActionPointsLabel { get; set; }
+	protected RichTextLabel ActionPointsLabel { get; set; } = null!;
 
 	// Resource overviews
 	[ExportGroup("Resource Overview")]
@@ -29,14 +29,14 @@ internal partial class MainPanel : Control {
 	[Export]
 	protected RichTextLabel? EquipsCountLabel { get; set; }
 	[Export]
-	protected RichTextLabel? SolidsLabel { get; set; }
+	protected RichTextLabel SolidsLabel { get; set; } = null!;
 	[Export]
-	protected RichTextLabel? LiquidLabel { get; set; }
+	protected RichTextLabel LiquidLabel { get; set; } = null!;
 	[Export]
-	protected RichTextLabel? IndustrialProductsLabel { get; set; }
+	protected RichTextLabel IndustrialProductsLabel { get; set; } = null!;
 
 	[Export]
-	protected RichTextLabel? HonorLabel { get; set; }
+	protected RichTextLabel HonorLabel { get; set; } = null!;
 
 	// function panel
 	[ExportGroup("Function Panel Overview")]
@@ -83,24 +83,47 @@ internal partial class MainPanel : Control {
 		CombatButton.Pressed += () => PanelsStack.PushPanel(CombatsOverviewPanel.Load());
 		HangerButton.Pressed += () => PanelsStack.PushPanel(ItemViewerPanel.Load());
 		StoreButton.Pressed += () => PanelsStack.PushPanel(ItemViewerPanel.Load());
+
+		// base resource relatived to archive data
+		// init base resource label
+		UpdateBaseResourceLabel(Archive.BaseResourceEnum.Solids);
+		UpdateBaseResourceLabel(Archive.BaseResourceEnum.Liquid);
+		UpdateBaseResourceLabel(Archive.BaseResourceEnum.IndustralProducts);
+		UpdateBaseResourceLabel(Archive.BaseResourceEnum.Honors);
+		Archive.BaseResourceChangedEvent += UpdateBaseResourceLabel;
+		Archive.BaseResourceLimitChangedEvent += UpdateBaseResourceLabel;
+
+		//action points
+		UpdateActionPointsLabel();
 	}
 
 	public override void _ExitTree() {
-		MsgBoxesListPanel!.OpenMessage -= OnMsgOpen;
-		MsgViewPanel!.Quit -= OnMsgViewPanelQuit;
+		// MsgBoxesListPanel!.OpenMessage -= OnMsgOpen;
+		// MsgViewPanel!.Quit -= OnMsgViewPanelQuit;
 		base._ExitTree();
 	}
 
 	private void OnMsgOpen(MessageData msg) {
-		MsgViewPanel!.Make(msg);
+		MsgViewPanel.Make(msg);
 		var msgViewerIdx = FuncPanelTab!.GetTabIdxFromControl(MsgViewPanel);
-		FuncPanelTab!.SetTabHidden(msgViewerIdx, false);
-		FuncPanelTab!.CurrentTab = msgViewerIdx;
-		FuncPanelTab!.TabsVisible = true;
+		FuncPanelTab.SetTabHidden(msgViewerIdx, false);
+		FuncPanelTab.CurrentTab = msgViewerIdx;
+		FuncPanelTab.TabsVisible = true;
 	}
 
 	private void OnMsgViewPanelQuit(MessageViewerPanel messageViewerPanel) {
-		FuncPanelTab!.SetTabHidden(FuncPanelTab.GetTabIdxFromControl(messageViewerPanel), true);
-		FuncPanelTab!.TabsVisible = false;
+		FuncPanelTab.SetTabHidden(FuncPanelTab.GetTabIdxFromControl(messageViewerPanel), true);
+		FuncPanelTab.TabsVisible = false;
+	}
+
+	private void UpdateBaseResourceLabel(Archive.BaseResourceEnum _) {
+		SolidsLabel.Text = $"[x] [color={(Archive.Data.Solids == Archive.Data.SolidsLimit ? "gold" : "white")}]{Archive.Data.Solids}[/color] [color=gold]/ {Archive.Data.SolidsLimit}[/color]";
+		LiquidLabel.Text = $"[x] [color={(Archive.Data.Liquid == Archive.Data.LiquidLimit ? "gold" : "white")}]{Archive.Data.Liquid}[/color] [color=gold]/ {Archive.Data.LiquidLimit}[/color]";
+		IndustrialProductsLabel.Text = $"[x] [color={(Archive.Data.IndustrialProducts == Archive.Data.IndustralProductsLimit ? "gold" : "white")}]{Archive.Data.IndustrialProducts}[/color] [color=gold]/ {Archive.Data.IndustralProductsLimit}[/color]";
+		HonorLabel.Text = $"[x] [color={(Archive.Data.Honors == Archive.Data.HonorsLimit ? "gold" : "white")}]{Archive.Data.Honors}[/color] [color=gold]/ {Archive.Data.HonorsLimit}[/color]";
+	}
+
+	private void UpdateActionPointsLabel() {
+		ActionPointsLabel.Text = $"[color={(Archive.Data.ActionPoints == Archive.Data.ActionPointsLimit ? "gold" : "white")}]{Archive.Data.ActionPoints}[/color] [color=gold]/ {Archive.Data.ActionPointsLimit}[/color]";
 	}
 }

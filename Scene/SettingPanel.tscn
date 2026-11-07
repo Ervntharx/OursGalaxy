@@ -66,6 +66,76 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="CameraDefaultDistance" type="HSplitContainer" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer" unique_id=1005006604]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/CameraDefaultDistance" unique_id=192140636]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "摄像机默认距离"
+vertical_alignment = 1
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/CameraDefaultDistance" unique_id=194854715]
+layout_mode = 2
+rounded = true
+allow_greater = true
+
+[node name="CameraMaxDistance" type="HSplitContainer" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer" unique_id=1099294936]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/CameraMaxDistance" unique_id=715621872]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "摄像机最远距离"
+vertical_alignment = 1
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/CameraMaxDistance" unique_id=89792147]
+layout_mode = 2
+rounded = true
+allow_greater = true
+
+[node name="CameraMinDistance" type="HSplitContainer" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer" unique_id=1547082874]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/CameraMinDistance" unique_id=837203476]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "摄像机最小距离"
+vertical_alignment = 1
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/CameraMinDistance" unique_id=128735268]
+layout_mode = 2
+rounded = true
+allow_greater = true
+
+[node name="CameraMoveVelocity" type="HSplitContainer" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer" unique_id=1765605983]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/CameraMoveVelocity" unique_id=311454764]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "摄像机移动速度"
+vertical_alignment = 1
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/CameraMoveVelocity" unique_id=69289621]
+layout_mode = 2
+rounded = true
+allow_greater = true
+
+[node name="CameraDistanceChangeStep" type="HSplitContainer" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer" unique_id=50744719]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/CameraDistanceChangeStep" unique_id=1204209779]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "摄像机距离变化速度"
+vertical_alignment = 1
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer/CameraDistanceChangeStep" unique_id=1917026535]
+layout_mode = 2
+rounded = true
+allow_greater = true
+
 [node name="PanelMarginLeft" type="HSplitContainer" parent="PanelContainer/VBoxContainer/TabContainer/Apperance/VBoxContainer" unique_id=9858133]
 layout_mode = 2
 

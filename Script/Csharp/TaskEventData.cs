@@ -26,6 +26,4 @@ internal partial class TaskEventData : Resource {
 		this.Time = DateTime.Now();
 		NameCode = string.Empty;
 	}
-
-	public virtual void OnMatchUrl(Variant variant) { }
 }

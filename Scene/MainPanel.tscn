@@ -275,19 +275,28 @@ text = "制造工厂"
 layout_mode = 0
 offset_left = 483.0
 offset_top = 1.0
-offset_right = 636.0
+offset_right = 602.0
 offset_bottom = 490.0
 mouse_filter = 1
 text = "远征"
 
 [node name="Combat" type="Button" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/FuncPanelTab/FuncPanel/Panel" unique_id=1163302865]
 layout_mode = 0
-offset_left = 646.0
-offset_top = 6.0
-offset_right = 828.0
-offset_bottom = 480.0
+offset_left = 608.0
+offset_top = 9.0
+offset_right = 739.0
+offset_bottom = 483.0
 mouse_filter = 1
 text = "讨伐"
+
+[node name="Execrise" type="Button" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/FuncPanelTab/FuncPanel/Panel" unique_id=840998223]
+layout_mode = 0
+offset_left = 746.0
+offset_top = 5.0
+offset_right = 871.0
+offset_bottom = 479.0
+mouse_filter = 1
+text = "演习"
 
 [node name="MessageViewerPanel" parent="PanelContainer/VSplitContainer/Panels/MarginContainer/FuncPanelTab" unique_id=305670453 instance=ExtResource("4_0ky6a")]
 visible = false

@@ -30,16 +30,61 @@ internal partial class SettingsArchive : Resource {
 	public static SettingsArchive Data { get; protected set; } = new();
 	#region Camera
 	public event Action<float>? CameraDistanceMaxChanged;
-	public event Action<float>? CameraDiatanceMinChanged;
+	public event Action<float>? CameraDistanceMinChanged;
 	public event Action<float>? CameraDefaultDistanceChanged;
 	public event Action<float>? CameraMoveVelocityChanged;
 	public event Action<float>? CameraDistanceChangeStepChanged;
 
-	public float Camera_Distance_Max { get; set; }
-	public float Camera_Distance_Min { get; set; }
-	public float Camera_Default_Distance { get; set; }
-	public float Camera_Move_Velocity { get; set; }
-	public float Camera_Distance_ChangsStep { get; set; }
+	[Export]
+	public float Camera_Distance_Max {
+		get => _camera_Distance_Max;
+		set {
+			_camera_Distance_Max = value;
+			CameraDistanceMaxChanged?.Invoke(Camera_Distance_Max);
+		}
+	}
+
+	[Export]
+	public float Camera_Distance_Min {
+		get => _camera_Distance_Min;
+		set {
+			_camera_Distance_Min = value;
+			CameraDistanceMinChanged?.Invoke(Camera_Distance_Min);
+		}
+	}
+
+	[Export]
+	public float Camera_Default_Distance {
+		get => _camera_Default_Distance;
+		set {
+			_camera_Default_Distance = value;
+			CameraDefaultDistanceChanged?.Invoke(Camera_Default_Distance);
+		}
+	}
+
+	[Export]
+	public float Camera_Move_Velocity {
+		get => _camera_Move_Velocity;
+		set {
+			_camera_Move_Velocity = value;
+			CameraMoveVelocityChanged?.Invoke(Camera_Move_Velocity);
+		}
+	}
+
+	[Export]
+	public float Camera_Distance_ChangsStep {
+		get => _camera_Distance_ChangsStep;
+		set {
+			_camera_Distance_ChangsStep = value;
+			CameraDistanceChangeStepChanged?.Invoke(Camera_Distance_ChangsStep);
+		}
+	}
+
+	private float _camera_Distance_Max = 50;
+	private float _camera_Distance_Min = 2;
+	private float _camera_Default_Distance = 35;
+	private float _camera_Move_Velocity = 0.2f;
+	private float _camera_Distance_ChangsStep = 2;
 	#endregion Camera
 
 	#region Apperance UI

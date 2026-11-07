@@ -6,8 +6,6 @@ namespace OursGalaxy;
 /// </summary>
 [GlobalClass]
 internal partial class HuntData : CombatData {
-	public new static readonly HuntData Empty = new();
-
 	[Export]
 	public int TrackProgress { get; set; } = 0;
 

@@ -1,33 +1,32 @@
 ﻿using Godot.Collections;
 using Godot;
-using System.ComponentModel;
+using System;
+using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
 
 /// <summary>
-/// 存档数据。计划同时作为游戏ViewModel使用
+/// 存档数据。同时作为游戏ViewModel使用
 /// </summary>
 [GlobalClass]
-internal partial class Archive : Resource, INotifyPropertyChanged {
+internal partial class Archive : Resource {
+	public const string SAVE_PATH = "user://Archive.tres";
 	public static Archive Data { get; protected set; } = new();
-
-	public event PropertyChangedEventHandler? PropertyChanged;
 
 	protected Archive() {
 		// 修改时都会触发最新修改日期
 		LastSaveTime = DateTime.Now();
-		PropertyChanged += (_, _) => LastSaveTime = DateTime.Now();
 	}
 
 	public static void Load() {
-		if (FileAccess.FileExists("user://Archive.tscn")) {
-			Data = ResourceLoader.Load<Archive>("user://Archive.tscn");
+		if (FileAccess.FileExists(SAVE_PATH)) {
+			Data = ResourceLoader.Load<Archive>(SAVE_PATH);
 		}
 	}
 
 	public static void Save() {
-		var err = ResourceSaver.Save(Archive.Data, "user://Archive.tscn");
+		var err = ResourceSaver.Save(Archive.Data, SAVE_PATH);
 		if (err is not Error.Ok) {
-			GD.PrintErr(err);
+			GD.PushError(err);
 		}
 	}
 
@@ -39,17 +38,22 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 
 	#region User Profiles
 	[ExportGroup("User Profiles")]
+
 	/// <summary>
 	/// 用户ID
 	/// </summary>
 	[Export]
 	public int UserID { get; set; }
+
 	/// <summary>
 	/// 用户名
 	/// </summary>
 	[Export]
 	public string UserName { get; set; } = string.Empty;
 
+	/// <summary>
+	/// 头像
+	/// </summary>
 	[Export]
 	public Texture2D Avatar { get; set; } = new();
 
@@ -57,7 +61,7 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 	/// 注册时间
 	/// </summary>
 	[Export]
-	public Dictionary RegisterTime { get; set; } = [];
+	public DateTime RegisterTime { get; set; } = DateTime.Now();
 
 	#endregion User Profiles
 
@@ -69,10 +73,19 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 	/// </summary>
 	[Export]
 	public int Solids {
-		get => _solids;
+		get => solids;
 		set {
-			_solids = value;
-			PropertyChanged?.Invoke(this, new("Solids"));
+			solids = Math.Clamp(value, 0, SolidsLimit);
+			BaseResourceChangedEvent?.Invoke(BaseResourceEnum.Solids);
+		}
+	}
+
+	[Export]
+	public int SolidsLimit {
+		get => solidsLimit;
+		set {
+			solidsLimit = value;
+			BaseResourceLimitChangedEvent?.Invoke(BaseResourceEnum.Solids);
 		}
 	}
 
@@ -81,10 +94,19 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 	/// </summary>
 	[Export]
 	public int Liquid {
-		get => _liquid;
+		get => liquid;
 		set {
-			_liquid = value;
-			PropertyChanged?.Invoke(this, new("Liquid"));
+			liquid = Math.Clamp(value, 0, LiquidLimit);
+			BaseResourceChangedEvent?.Invoke(BaseResourceEnum.Liquid);
+		}
+	}
+
+	[Export]
+	public int LiquidLimit {
+		get => liquidLimit;
+		set {
+			liquidLimit = value;
+			BaseResourceLimitChangedEvent?.Invoke(BaseResourceEnum.Liquid);
 		}
 	}
 
@@ -93,10 +115,19 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 	/// </summary>
 	[Export]
 	public int IndustrialProducts {
-		get => _industrialProducts;
+		get => industrialProducts;
 		set {
-			_industrialProducts = value;
-			PropertyChanged?.Invoke(this, new("IndustralProducts"));
+			industrialProducts = Math.Clamp(value, 0, IndustralProductsLimit);
+			BaseResourceChangedEvent?.Invoke(BaseResourceEnum.IndustralProducts);
+		}
+	}
+
+	[Export]
+	public int IndustralProductsLimit {
+		get => industralProductsLimit;
+		set {
+			industralProductsLimit = value;
+			BaseResourceLimitChangedEvent?.Invoke(BaseResourceEnum.IndustralProducts);
 		}
 	}
 
@@ -105,19 +136,59 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 	/// </summary>
 	[Export]
 	public int Honors {
-		get => _honors;
+		get => honors;
 		set {
-			_honors = value;
-			PropertyChanged?.Invoke(this, new("Honor"));
+			honors = Math.Clamp(value, 0, HonorsLimit);
+			BaseResourceLimitChangedEvent?.Invoke(BaseResourceEnum.Honors);
 		}
 	}
 
-	private int _solids;
-	private int _liquid;
-	private int _industrialProducts;
-	private int _honors;
+	[Export]
+	public int HonorsLimit {
+		get => honorsLimit;
+		set {
+			honorsLimit = value;
+			BaseResourceLimitChangedEvent?.Invoke(BaseResourceEnum.Honors);
+		}
+	}
+
+	public enum BaseResourceEnum { Solids, Liquid, IndustralProducts, Honors }
+	public static event Action<BaseResourceEnum>? BaseResourceChangedEvent;
+	public static event Action<BaseResourceEnum>? BaseResourceLimitChangedEvent;
+
+	private int solids = 45000;
+	private int liquid = 45000;
+	private int industrialProducts = 45000;
+	private int honors = 45000;
+	private int solidsLimit = 50000;
+	private int liquidLimit = 50000;
+	private int industralProductsLimit = 50000;
+	private int honorsLimit = 50000;
 
 	#endregion Base Resource
+
+	/// <summary>
+	/// 体力点
+	/// </summary>
+	[Export]
+	public int ActionPoints {
+		get => actionPoints; set {
+			actionPoints = Math.Clamp(value, 0, actionPointsLimit);
+			ActionPointsChangedEvent?.Invoke();
+		}
+	}
+
+	public int ActionPointsLimit {
+		get => actionPointsLimit;
+		set {
+			actionPointsLimit = value;
+			ActionPointsChangedEvent?.Invoke();
+		}
+	}
+
+	public event Action? ActionPointsChangedEvent;
+	private int actionPoints = 200;
+	private int actionPointsLimit = 400;
 
 	#region Produce Tasks
 	[ExportGroup("Produce Tasks")]
@@ -143,9 +214,9 @@ internal partial class Archive : Resource, INotifyPropertyChanged {
 	[Export]
 	public Array<AssignedTaskData> TasksList { get; set; } = [
 		// for test only
-		new AssignedTaskData("any", AssignedTaskData.RatingLevelEnum.S, 2),
-		new AssignedTaskData("others",AssignedTaskData.RatingLevelEnum.B, 3),
-		new AssignedTaskData("and more?", AssignedTaskData.RatingLevelEnum.AA, 5)
+		new AssignedTaskData("any", AssignedTaskConfig.RatingLevelEnum.S, 2),
+		new AssignedTaskData("others",AssignedTaskConfig.RatingLevelEnum.B, 3),
+		new AssignedTaskData("and more?", AssignedTaskConfig.RatingLevelEnum.AA, 5)
 	];
 	#endregion Produce Tasks
 

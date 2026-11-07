@@ -28,6 +28,13 @@ internal partial class SettingPanel : MarginContainer {
 	#endregion Combat Stage
 
 	#region Apperance
+	[Export] protected SpinBox CameraDefaultDistance { get; set; } = null!;
+	[Export] protected SpinBox CameraDistanceMax { get; set; } = null!;
+	[Export] protected SpinBox CameraDistanceMin { get; set; } = null!;
+	[Export] protected SpinBox CameraMoveVelocity { get; set; } = null!;
+	[Export] protected SpinBox CameraDistanceChangeVelocity { get; set; } = null!;
+
+	// panels margin
 	[Export]
 	protected SpinBox? PanelsMarginLeftBox { get; set; }
 	[Export]
@@ -50,6 +57,14 @@ internal partial class SettingPanel : MarginContainer {
 		AboutPage!.MetaClicked += OnAboutPageMetaClicked;
 
 		#region Apperance
+		// camera
+		CameraDefaultDistance.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Default_Distance = (float)newValue;
+		CameraDistanceMax.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Distance_Max = (float)newValue;
+		CameraDistanceMin.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Distance_Min = (float)newValue;
+		CameraMoveVelocity.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Move_Velocity = (float)newValue;
+		CameraDistanceChangeVelocity.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Distance_ChangsStep = (float)newValue;
+
+		// panels margin
 		PanelsMarginLeftBox!.ValueChanged += (newValue) => {
 			SettingsArchive.Data.Apperance_UI_Panels_Margin_Left = (int)newValue;
 		};
