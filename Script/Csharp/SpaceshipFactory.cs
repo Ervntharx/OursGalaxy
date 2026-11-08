@@ -38,5 +38,7 @@ internal static class SpaceshipFactory {
 		return result;
 	}
 
-
+	public static Spaceship Make(SpaceshipReference refer, SubRepository repository) {
+		return Make(repository.GetSpaceshipData(refer), repository);
+	}
 }

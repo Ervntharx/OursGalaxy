@@ -1,0 +1,305 @@
+[gd_scene format=3 uid="uid://b7whhhgiygpma"]
+
+[ext_resource type="Script" uid="uid://3tictt2ad8y8" path="res://Script/Csharp/UI/ShipEditorBox.cs" id="1_ihkwo"]
+
+[node name="ShipEditorBox" type="Button" unique_id=1171018087]
+custom_minimum_size = Vector2(100, 100)
+script = ExtResource("1_ihkwo")
+
+[node name="Control" type="Control" parent="." unique_id=2007137071]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="Control" unique_id=2103141270]
+layout_mode = 1
+offset_right = 310.0
+offset_bottom = 166.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer" unique_id=1464251500]
+layout_mode = 2
+
+[node name="ShipTitle" type="RichTextLabel" parent="Control/PanelContainer/VBoxContainer" unique_id=234348854]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "[font_size=35]舰船名字[/font_size]
+舰船型号名称"
+fit_content = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer" unique_id=1236431025]
+layout_mode = 2
+theme_override_constants/separation = 5
+alignment = 2
+
+[node name="Control3" type="Control" parent="Control/PanelContainer/VBoxContainer/HBoxContainer" unique_id=548483993]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+
+[node name="SetAsFlagship" type="Button" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/Control3" unique_id=193358573]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "设为旗舰"
+
+[node name="Control2" type="Control" parent="Control/PanelContainer/VBoxContainer/HBoxContainer" unique_id=192756247]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+
+[node name="SetAssemble" type="Button" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/Control2" unique_id=1871869084]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "修改装配"
+
+[node name="Control" type="Control" parent="Control/PanelContainer/VBoxContainer/HBoxContainer" unique_id=286993200]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+
+[node name="Remove" type="Button" parent="Control/PanelContainer/VBoxContainer/HBoxContainer/Control" unique_id=358085373]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "移出舰队"
+
+[node name="Tactics" type="FoldableContainer" parent="Control/PanelContainer/VBoxContainer" unique_id=7233073]
+layout_mode = 2
+folded = true
+title = "战术设置"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/Tactics" unique_id=1652308540]
+visible = false
+layout_mode = 2
+
+[node name="MoveMode" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer" unique_id=1534422613]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/MoveMode" unique_id=117572376]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FoldableContainer" type="FoldableContainer" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/MoveMode/Control" unique_id=987154697]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+folded = true
+title = "战术类型"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/MoveMode/Control/FoldableContainer" unique_id=862887461]
+visible = false
+layout_mode = 2
+bbcode_enabled = true
+text = "[font_size=16]本舰船的战术类型.[/font_size]
+[font_size=14]-强袭[/font_size]	[font_size=12]本将将勇往直前[/font_size]
+[font_size=14]-迂回[/font_size]	[font_size=12]本舰将尝试从侧面攻击敌舰[/font_size]
+[font_size=14]-保护[/font_size]	[font_size=12]本舰将跟随并保护目标[/font_size]"
+fit_content = true
+
+[node name="OptionButton" type="OptionButton" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/MoveMode" unique_id=877199203]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "强袭"
+popup/item_0/id = 0
+popup/item_1/text = "迂回"
+popup/item_1/id = 1
+popup/item_2/text = "保护"
+popup/item_2/id = 2
+
+[node name="RoundbatMode" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer" unique_id=1620960551]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/RoundbatMode" unique_id=1663312349]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FoldableContainer" type="FoldableContainer" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/RoundbatMode/Control" unique_id=302639011]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+folded = true
+title = "迂回方向"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/RoundbatMode/Control/FoldableContainer" unique_id=661619017]
+visible = false
+layout_mode = 2
+bbcode_enabled = true
+text = "[font_size=16]本舰迂回机动方向.[/font_size]
+[font_size=14]-随机[/font_size]	[font_size=12]本舰将从任意方向绕行[/font_size]
+[font_size=14]-水平[/font_size]	[font_size=12]本舰将从水平方向绕行[/font_size]
+[font_size=14]-垂直[/font_size]	[font_size=12]本舰将从垂直方向绕行[/font_size]
+[font_size=14]-左[/font_size]	[font_size=12]本舰将从左方绕行[/font_size]
+[font_size=14]-右[/font_size]	[font_size=12]本舰将从左方绕行[/font_size]
+[font_size=14]-上[/font_size]	[font_size=12]本舰将从左方绕行[/font_size]
+[font_size=14]-下[/font_size]	[font_size=12]本舰将从左方绕行[/font_size]"
+fit_content = true
+
+[node name="OptionButton" type="OptionButton" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/RoundbatMode" unique_id=1818055348]
+layout_mode = 2
+selected = 0
+item_count = 7
+popup/item_0/text = "随机"
+popup/item_0/id = 0
+popup/item_1/text = "水平"
+popup/item_1/id = 1
+popup/item_2/text = "垂直"
+popup/item_2/id = 2
+popup/item_3/text = "向上"
+popup/item_3/id = 3
+popup/item_4/text = "向下"
+popup/item_4/id = 4
+popup/item_5/text = "向左"
+popup/item_5/id = 5
+popup/item_6/text = "向右"
+popup/item_6/id = 6
+
+[node name="ProtectTarget" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer" unique_id=1339482936]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/ProtectTarget" unique_id=1503809246]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FoldableContainer" type="FoldableContainer" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/ProtectTarget/Control" unique_id=1542143697]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+folded = true
+title = "保护目标"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/ProtectTarget/Control/FoldableContainer" unique_id=1239088801]
+visible = false
+layout_mode = 2
+bbcode_enabled = true
+text = "[font_size=16]本舰保护的目标.[/font_size]"
+fit_content = true
+
+[node name="ProtectedShip" type="OptionButton" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/ProtectTarget" unique_id=659052910]
+layout_mode = 2
+selected = 0
+item_count = 1
+popup/item_0/text = "旗舰"
+popup/item_0/id = 0
+
+[node name="Targeting" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer" unique_id=250692495]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/Targeting" unique_id=532807918]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FoldableContainer" type="FoldableContainer" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/Targeting/Control" unique_id=837965798]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+folded = true
+title = "锁定目标"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/Targeting/Control/FoldableContainer" unique_id=1795876569]
+visible = false
+layout_mode = 2
+bbcode_enabled = true
+text = "[font_size=16]本舰锁定目标的优先级.[/font_size]
+[font_size=14]-最近[/font_size]	[font_size=12]锁定最近的目标[/font_size]
+[font_size=14]-小型[/font_size]	[font_size=12]锁定小型目标[/font_size]
+[font_size=14]-中小型[/font_size]	[font_size=12]锁定中型,然后锁定小型目标[/font_size]
+[font_size=14]-中大型[/font_size]	[font_size=12]锁定中型,然后锁定大型目标[/font_size]
+[font_size=14]-大型[/font_size]	[font_size=12]锁定大型目标[/font_size]
+[font_size=14]-旗舰[/font_size]	[font_size=12]斩首行动[/font_size]"
+fit_content = true
+
+[node name="ProtectedShip" type="OptionButton" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/Targeting" unique_id=606226299]
+layout_mode = 2
+selected = 0
+item_count = 6
+popup/item_0/text = "最近目标"
+popup/item_0/id = 0
+popup/item_1/text = "小型目标"
+popup/item_1/id = 1
+popup/item_2/text = "中小型目标"
+popup/item_2/id = 2
+popup/item_3/text = "中大型目标"
+popup/item_3/id = 3
+popup/item_4/text = "大型目标"
+popup/item_4/id = 4
+popup/item_5/text = "敌方旗舰"
+popup/item_5/id = 5
+
+[node name="Vigilance" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer" unique_id=1546158066]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/Vigilance" unique_id=522978225]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FoldableContainer" type="FoldableContainer" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/Vigilance/Control" unique_id=1121452836]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+folded = true
+title = "警惕度"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/Vigilance/Control/FoldableContainer" unique_id=1865875503]
+visible = false
+layout_mode = 2
+bbcode_enabled = true
+text = "[font_size=16]本舰更换锁定目标的频率.[/font_size]
+[font_size=14]-最低[/font_size]	[font_size=12]本将直到击毁目标之前都不会更换目标[/font_size]
+[font_size=14]-低[/font_size]	[font_size=12]本舰不怎么更换目标[/font_size]
+[font_size=14]-中[/font_size]	[font_size=12]本舰将适度更换目标[/font_size]
+[font_size=14]-高[/font_size]	[font_size=12]本舰将经常更换目标[/font_size]"
+fit_content = true
+
+[node name="ProtectedShip" type="OptionButton" parent="Control/PanelContainer/VBoxContainer/Tactics/VBoxContainer/Vigilance" unique_id=1058776417]
+layout_mode = 2
+selected = 2
+item_count = 4
+popup/item_0/text = "最低"
+popup/item_0/id = 0
+popup/item_1/text = "低"
+popup/item_1/id = 1
+popup/item_2/text = "中"
+popup/item_2/id = 2
+popup/item_3/text = "高"
+popup/item_3/id = 3

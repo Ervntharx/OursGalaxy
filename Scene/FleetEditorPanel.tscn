@@ -4,7 +4,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y6ubi"]
 
-[node name="MarginContainer" type="MarginContainer" unique_id=1207734174 node_paths=PackedStringArray("QuitButton", "FleetNameEdit", "ChangeFlagShip", "AddShip", "ShipsOverviewsPanel", "ShipsCountLabel", "FleetSizeLabel", "FleetRaidLabel")]
+[node name="MarginContainer" type="MarginContainer" unique_id=1207734174 node_paths=PackedStringArray("QuitButton", "FleetNameEdit", "ChangeFlagShip", "AddShip", "ShipsOverviewsPanel", "ShipsCountLabel", "FleetSizeLabel", "FleetRaidLabel", "CameraArm", "Camera", "FleetPreview", "FleetStage")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -23,6 +23,10 @@ ShipsOverviewsPanel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/Fle
 ShipsCountLabel = NodePath("PanelContainer/VBoxContainer/BottomBar/ScrollContainer/HBoxContainer/ShipsCount")
 FleetSizeLabel = NodePath("PanelContainer/VBoxContainer/BottomBar/ScrollContainer/HBoxContainer/FleetSize")
 FleetRaidLabel = NodePath("PanelContainer/VBoxContainer/BottomBar/ScrollContainer/HBoxContainer/Raid")
+CameraArm = NodePath("SubViewportContainer/SubViewport/Node3D/CameraArm")
+Camera = NodePath("SubViewportContainer/SubViewport/Node3D/CameraArm/Camera3D")
+FleetPreview = NodePath("SubViewportContainer/SubViewport")
+FleetStage = NodePath("SubViewportContainer/SubViewport/Node3D")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=585034126]
 layout_mode = 2
@@ -41,6 +45,8 @@ render_target_update_mode = 4
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 25.481821, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Node3D/CameraArm/Camera3D" unique_id=120702851]
+
+[node name="FlyPanels" type="CanvasLayer" parent="SubViewportContainer/SubViewport/Node3D" unique_id=354674106]
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=136680076]
 layout_mode = 2
@@ -156,3 +162,13 @@ text = "[color=gold]舰队奇袭 [/color] 400"
 fit_content = true
 autowrap_mode = 0
 vertical_alignment = 1
+
+[node name="SaveDialog" type="ConfirmationDialog" parent="." unique_id=185089838]
+oversampling_override = 1.0
+title = "OursGalaxy:FleetEditor"
+initial_position = 2
+size = Vector2i(206, 100)
+borderless = true
+ok_button_text = "保存"
+dialog_text = "当前进度未保存,是否保存?"
+cancel_button_text = "不保存"
