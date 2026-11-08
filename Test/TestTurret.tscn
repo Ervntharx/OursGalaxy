@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://csxsacoj67bvo"]
 
 [ext_resource type="Script" uid="uid://ccib4rrkno2ui" path="res://Test/TestTurret.cs" id="1_c218q"]
-[ext_resource type="PackedScene" uid="uid://caxwk28uhd7qg" path="res://Scene/Equip/Turret/LaserTurret.tscn" id="2_8axc0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c218q"]
 
@@ -17,12 +16,22 @@ size = Vector3(1, 0.199, 0.977)
 [sub_resource type="PrismMesh" id="PrismMesh_lmmig"]
 size = Vector3(1, 1.524, 0.304)
 
-[node name="TestTurret" type="Node3D" unique_id=2018173609 node_paths=PackedStringArray("Laser", "CameraBase", "CamerArm", "Camera")]
+[sub_resource type="BoxMesh" id="BoxMesh_f227l"]
+size = Vector3(1, 0.313, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lmmig"]
+size = Vector3(1.491, 0.311, 1.337)
+
+[sub_resource type="BoxMesh" id="BoxMesh_80gg2"]
+size = Vector3(0.288, 0.243, 3.029)
+
+[node name="TestTurret" type="Node3D" unique_id=2018173609 node_paths=PackedStringArray("CameraBase", "CamerArm", "Camera", "TurretBaseNode", "TurretRotatableNode")]
 script = ExtResource("1_c218q")
-Laser = NodePath("LaserTurret")
-CameraBase = NodePath("Node3D")
-CamerArm = NodePath("Node3D/Node3D")
-Camera = NodePath("Node3D/Node3D/Camera3D")
+CameraBase = NodePath("CameraArm")
+CamerArm = NodePath("CameraArm/Node3D")
+Camera = NodePath("CameraArm/Node3D/Camera3D")
+TurretBaseNode = NodePath("MeshInstance3D")
+TurretRotatableNode = NodePath("MeshInstance3D/MeshInstance3D")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=212640886]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22833443, 0, 7.1494884)
@@ -90,12 +99,22 @@ mesh = SubResource("BoxMesh_6jvjn")
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.332, 0)
 mesh = SubResource("PrismMesh_lmmig")
 
-[node name="Node3D" type="Node3D" parent="." unique_id=2039680244]
+[node name="CameraArm" type="Node3D" parent="." unique_id=2039680244]
 
-[node name="Node3D" type="Node3D" parent="Node3D" unique_id=251107419]
+[node name="Node3D" type="Node3D" parent="CameraArm" unique_id=251107419]
 
-[node name="Camera3D" type="Camera3D" parent="Node3D/Node3D" unique_id=875295221]
+[node name="Camera3D" type="Camera3D" parent="CameraArm/Node3D" unique_id=875295221]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.891)
 
-[node name="LaserTurret" parent="." unique_id=897529569 node_paths=PackedStringArray("TargetEntity") instance=ExtResource("2_8axc0")]
-TargetEntity = NodePath("../Area3D2")
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="CameraArm/Node3D/Camera3D" unique_id=457437758]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=867208232]
+mesh = SubResource("BoxMesh_f227l")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D" unique_id=495965341]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4345703, 0.36203003)
+mesh = SubResource("BoxMesh_lmmig")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D/MeshInstance3D" unique_id=237839147]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.8305054)
+mesh = SubResource("BoxMesh_80gg2")

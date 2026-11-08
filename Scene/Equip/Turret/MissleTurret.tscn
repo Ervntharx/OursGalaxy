@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c3dhobxchp03c"]
 
-[ext_resource type="Script" uid="uid://dk084a26s0r06" path="res://Script/Csharp/Equipments/MissleTurret.cs" id="1_tdi3b"]
+[ext_resource type="Script" uid="uid://dk084a26s0r06" path="res://Script/Csharp/Equipments/MissileTurret.cs" id="1_tdi3b"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_1bc55"]
 size = Vector3(0.6, 0.22, 0.656)

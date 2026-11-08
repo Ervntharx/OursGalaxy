@@ -3,6 +3,7 @@ namespace OursGalaxy.ResourceConfig;
 
 [GlobalClass]
 internal partial class MissileConfig : TurretConfig {
+	public const float DEFAULT_LINEAR_VELOCITY = 2;
 	[Export] public bool VLF { get; set; } = false;
 
 	[Export] public int ShootTime { get; set; } = 1;

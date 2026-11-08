@@ -46,11 +46,7 @@ internal interface IBattleEntity : ISpaceEntity {
 	/// </summary>
 	public int ElectromagneticTolerance { get; set; }
 
-	/// <summary>
-	/// 被攻击
-	/// </summary>
-	/// <param name="target">目标实体</param>
-	public void Attacked(DamageSet damageSet, SpaceshipSnapshot from);
+	public void Attacked(DamageSet damage, GUID from);
 
 	public delegate void OnHPChangedEventHandler(SpaceshipSnapshot shot, int currentHP, int hpChanged);
 

@@ -4,20 +4,18 @@ using System;
 namespace OursGalaxy.Test;
 
 internal partial class TestTurret : Node3D {
-	[Export]
-	protected LaserTurret Laser { get; set; } = null!;
-	[Export]
-	protected Node3D? CameraBase { get; set; }
-	[Export]
-	protected Node3D? CamerArm { get; set; }
+	[Export] protected Node3D? CameraBase { get; set; }
+	[Export] protected Node3D? CamerArm { get; set; }
+	[Export] protected Camera3D Camera { get; set; } = null!;
 
-	[Export]
-	protected Camera3D Camera { get; set; } = null!;
+	[Export] protected MeshInstance3D TurretBaseNode { get; set; } = null!;
+	[Export] protected MeshInstance3D TurretRotatableNode { get; set; } = null!;
 
-	// [Export]
-	// protected Node3D TurretBase { get; set; } = null!;
-	// [Export]
-	// protected Node3D Turret { get; set; } = null!;
+	[Export] public float RotateAngleVelocity { get; set; } = 35;
+	[Export] public float MinYaw { get; set; } = 30;
+	[Export] public float MaxYaw { get; set; } = 30;
+	[Export] public float MinPitch { get; set; } = 15;
+	[Export] public float MaxPitch { get; set; } = 15;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
@@ -25,9 +23,26 @@ internal partial class TestTurret : Node3D {
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta) {
-		// ProcessRotate(delta);
-		// Laser.TargetBasis = Camera.GlobalBasis;
 		_delta = delta;
+	}
+
+	public override void _PhysicsProcess(double delta) {
+		// 构造目标旋转：先算目标 Quaternion
+		var lookQ = new Quaternion(Basis.LookingAt(-(TurretBaseNode.GlobalTransform.Inverse() * Camera.GlobalPosition), Vector3.Up));
+
+		// 限制俯仰：把目标四元数转欧拉角，夹住 Pitch
+		Vector3 euler = lookQ.GetEuler();
+		euler.X = Mathf.Clamp(euler.X, -Mathf.DegToRad(MaxPitch), Mathf.DegToRad(MaxPitch));
+		euler.Y = Mathf.Clamp(euler.Y, -Mathf.DegToRad(MinYaw), Mathf.DegToRad(MaxYaw));
+		euler.Z = 0; // 不滚转
+
+		var clampedQ = Quaternion.FromEuler(euler);
+
+		// 固定转速 Slerp
+		var angleDiff = new Quaternion(TurretRotatableNode!.Basis).AngleTo(clampedQ);
+		var maxAngle = Mathf.DegToRad(RotateAngleVelocity) * (float)delta;
+
+		TurretRotatableNode.Basis = new Basis(new Quaternion(TurretRotatableNode!.Basis).Slerp(clampedQ, (float)(angleDiff > 0.001f ? Mathf.Min(maxAngle / angleDiff, 1.0f) : 1.0f)));
 	}
 
 	public override void _UnhandledInput(InputEvent @event) {
@@ -40,37 +55,6 @@ internal partial class TestTurret : Node3D {
 		}
 		base._UnhandledInput(@event);
 	}
-
-	// private void ProcessRotate(double delta) {
-	// 	var rotateAngleVelocity = 45;
-	// 	// Turret.Basis = (TurretBase.GlobalBasis.Inverse() * Camera.GlobalBasis);
-
-	// 	var currentLocalBasis = Turret.Basis;
-	// 	var localDir = (TurretBase.GlobalBasis.Inverse() * Camera.GlobalBasis).Z;
-	// 	localDir.Y = 0;
-	// 	if (localDir.Length() <= 0.005f) {
-	// 		return;
-	// 	}
-	// 	var targetLocalBasis = Basis.LookingAt(localDir, Vector3.Up);
-	// 	var currentLocalQ = new Quaternion(currentLocalBasis);
-	// 	var targetLocalQ = new Quaternion(targetLocalBasis);
-
-	// 	targetLocalQ = Clamp(targetLocalQ, 45, 45);
-
-	// 	if (currentLocalQ.AngleTo(targetLocalQ) > float.DegreesToRadians(rotateAngleVelocity) * (float)delta) {
-	// 		currentLocalQ = currentLocalQ.Slerp(targetLocalQ, float.DegreesToRadians(rotateAngleVelocity) * (float)delta / currentLocalQ.AngleTo(targetLocalQ));
-	// 	}
-	// 	else {
-	// 		currentLocalQ = targetLocalQ;
-	// 	}
-	// 	Turret.Basis = new Basis(currentLocalQ);
-	// }
-
-	// private Quaternion Clamp(Quaternion dir, float leftClampAngle, float rightClampAngle) {
-	// 	var euler = dir.GetEuler(EulerOrder.Yxz);
-	// 	euler.Y = Mathf.Clamp(euler.Y, float.DegreesToRadians(-leftClampAngle), float.DegreesToRadians(rightClampAngle));
-	// 	return Quaternion.FromEuler(euler);
-	// }
 
 	private bool touching = false;
 	private double _delta;

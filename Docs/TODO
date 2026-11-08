@@ -13,13 +13,8 @@ TaskEvent所需事件发生器
 
 TaskEventData们需要连接运行时UI类型
 
-实现的UniqueItem的派生类（SpaceshipData,EquipBase）都需要实现Reference，且能MakeCopy()
-
 引入ShieldConfig, ShieldData
 引入DamageControlEquipConfig，DamageControlEquipData
-
-TurretConfig的三派生类各自需要实现GetTemplate()
-TurretBase的三派生类各自需要From(config)能力
 
 实现LongProgressTask类型以覆盖远征，生产制造所需的长离线过程任务
 远征的Tasks堆积让远征vb自行解引

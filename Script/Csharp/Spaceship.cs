@@ -117,7 +117,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	/// <summary>
 	/// 被攻击.前者是被攻击者，后者是攻击者
 	/// </summary>
-	public event Action<SpaceshipSnapshot, SpaceshipSnapshot?, DamageSet>? AttackedEvent;
+	public event Action<SpaceshipSnapshot, GUID, DamageSet>? AttackedEvent;
 
 	public event IBattleEntity.OnHPChangedEventHandler? OnHPChanged;
 
@@ -128,7 +128,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 		}
 	}
 
-	public void Attacked(DamageSet damage, SpaceshipSnapshot? from) {
+	public void Attacked(DamageSet damage, GUID from) {
 		var finalDamage = new DamageSet() {
 			Impact = Math.Max(damage.Impact - ImpactTolerance, 0),
 			Penetrate = Math.Max(damage.Penetrate - PenetrateTolerance, 0),
@@ -137,7 +137,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 			Electromagnetic = Math.Max(damage.Electromagnetic - ElectromagneticTolerance, 0)
 		};
 		CurrentHP -= finalDamage.Sum();
-		GD.Print($"<Combat> {from?.CustomName ?? "???"} ({from?.ID.ToString() ?? "???"}) Make damage {finalDamage.Sum()}");
+		GD.Print($"<Combat> {from} Make damage {finalDamage.Sum()}");
 		AttackedEvent?.Invoke(new(this), from, damage);
 		if (CurrentHP <= 0) {
 			OnEntityDestory?.Invoke(new(this));
@@ -198,6 +198,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 		}
 		if (targetsLs.Count > 0) {
 			TargetEntity = targetsLs.FirstOrDefault();
+			UpdateTurretTarget();
 		}
 	}
 	#endregion Tactics
@@ -330,44 +331,9 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 		}
 	}
 
-	// 代理炮台旋转算法
-	private static void HandleTurretRotation(double delta, TurretBase turretBase, IBattleEntity? targetEntity) {
-		if (turretBase.IsRotatble) {
-			var currentLocalBasis = turretBase.RotatableNode!.Basis;
-			if (GodotObject.IsInstanceValid(targetEntity?.AsNode3D())) {
-				var localDir = turretBase.GlobalTransform.Inverse() * targetEntity.AsNode3D().GlobalPosition;
-				localDir.Y = 0;
-				var targetLocalBasis = Basis.LookingAt(-localDir.Normalized(), Vector3.Up);
-				var currentLocalQ = new Quaternion(currentLocalBasis);
-				var targetLocalQ = new Quaternion(targetLocalBasis);
-
-				targetLocalQ = ClampAngle(targetLocalQ, turretBase.LeftClampAngle, turretBase.RightClampAngle);
-
-				if (currentLocalQ.AngleTo(targetLocalQ) > float.DegreesToRadians(turretBase.RotateAngleVelocity) * (float)delta) {
-					currentLocalQ = currentLocalQ.Slerp(targetLocalQ, float.DegreesToRadians(turretBase.RotateAngleVelocity) * (float)delta / currentLocalQ.AngleTo(targetLocalQ));
-				}
-				else {
-					currentLocalQ = targetLocalQ;
-				}
-				turretBase.RotatableNode.Basis = new Basis(currentLocalQ);
-			}
-			else {
-				var currentLocalQ = new Quaternion(currentLocalBasis);
-				var targetLocalQ = new Quaternion(Basis.Identity);
-				if (currentLocalQ.AngleTo(targetLocalQ) > float.DegreesToRadians(turretBase.RotateAngleVelocity) * (float)delta) {
-					currentLocalQ = currentLocalQ.Slerp(targetLocalQ, float.DegreesToRadians(turretBase.RotateAngleVelocity) * (float)delta / currentLocalQ.AngleTo(targetLocalQ));
-				}
-				else {
-					currentLocalQ = targetLocalQ;
-				}
-				turretBase.RotatableNode.Basis = new Basis(currentLocalQ);
-			}
-		}
-
-		Quaternion ClampAngle(Quaternion dir, float leftClampAngle, float rightClampAngle) {
-			var euler = dir.GetEuler(EulerOrder.Yxz);
-			euler.Y = Mathf.Clamp(euler.Y, float.DegreesToRadians(-leftClampAngle), float.DegreesToRadians(rightClampAngle));
-			return Quaternion.FromEuler(euler);
+	private void UpdateTurretTarget() {
+		foreach (var turret in Turrets) {
+			turret.Target = TargetEntity;
 		}
 	}
 
@@ -392,12 +358,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 		if (baseState == BaseStateEnum.Active) {
 			AutoSetShipMovementState(GlobalTransform, TargetEntity?.AsNode3D().GlobalTransform, ShipHeadConeAngle, KeepDistanceMin, KeepDistanceMax);
 			HandleShipMvementState(delta, this, TargetEntity);
-			// 炮台朝向和状态机控制
-			foreach (var turretBase in Turrets) {
-				HandleTurretRotation(delta, turretBase, TargetEntity);
-				turretBase.DriveState(delta, this, TargetEntity);
-			}
-			HandleShipMvementState(delta, this, TargetEntity);
+			// HandleShipMvementState(delta, this, TargetEntity;
 		}
 		base._PhysicsProcess(delta);
 	}
