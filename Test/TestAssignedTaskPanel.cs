@@ -5,19 +5,17 @@ using System;
 namespace OursGalaxy;
 
 internal partial class TestAssignedTaskPanel : MarginContainer {
-	[Export]
-	protected AssignedTaskViewer Viewer { get; set; } = null!;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
-		var taskData = new AssignedTaskData("normal", AssignedTaskConfig.RatingLevelEnum.AA, 4);
+		var taskData = new AssignedTaskData("Template", AssignedTaskConfig.RatingLevelEnum.AA, 4);
 		taskData.Events = [
-			new TaskEventData("normal"),
-			new RepairTaskEvent("repair"),
-			new RewardTaskEvent("Reward"),
-			new SignCombatTaskEvent("Sign"),
-			new FightBackTaskEvent("FightBack")
+			new TaskEventData(TaskEventConfig.EventTypeEnum.Genearal,TaskEventConfig.TEMPLATE_EVENT_NAME_CODE),
+			new TaskEventData(TaskEventConfig.EventTypeEnum.SignCombat,TaskEventConfig.TEMPLATE_EVENT_NAME_CODE),
+			new TaskEventData(TaskEventConfig.EventTypeEnum.Genearal,TaskEventConfig.TEMPLATE_EVENT_NAME_CODE),
+			new TaskEventData(TaskEventConfig.EventTypeEnum.SignCombat,TaskEventConfig.TEMPLATE_EVENT_NAME_CODE),
 		];
-		Viewer.Make(taskData);
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

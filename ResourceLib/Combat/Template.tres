@@ -1,10 +1,34 @@
 [gd_resource type="Resource" script_class="CombatConfig" format=3 uid="uid://dk4dg2hj6u4md"]
 
+[ext_resource type="Script" uid="uid://gacvq0l42r3c" path="res://Script/Csharp/TacticsSet.cs" id="1_1emhq"]
 [ext_resource type="Script" uid="uid://ca8ftceu3or5f" path="res://Script/Csharp/CombatConfig.cs" id="1_7aoku"]
+[ext_resource type="Script" uid="uid://bmrx8ugy4vihe" path="res://Script/Csharp/EquipData.cs" id="2_dxsik"]
+[ext_resource type="Script" uid="uid://73vueobukmfo" path="res://Script/Csharp/GUID.cs" id="3_bgfw4"]
+[ext_resource type="Script" uid="uid://bx1kcpn8v11u4" path="res://Script/Csharp/SubRepository.cs" id="4_ihgxc"]
+[ext_resource type="Script" uid="uid://bdxyjx4durnon" path="res://Script/Csharp/SpaceshipReference.cs" id="5_pnaem"]
+[ext_resource type="Script" uid="uid://ckbbls7g8c6ds" path="res://Script/Csharp/FleetData.cs" id="6_n25r6"]
+
+[sub_resource type="Resource" id="Resource_s5b7e"]
+script = ExtResource("1_1emhq")
+
+[sub_resource type="Resource" id="Resource_dab1d"]
+script = ExtResource("3_bgfw4")
+GUIDStr = "0bc697c7-08b4-4713-b7fc-1511752ccedf"
+
+[sub_resource type="CSharpScript" id="CSharpScript_0kat3"]
+
+[sub_resource type="Resource" id="Resource_g0yoi"]
+script = ExtResource("4_ihgxc")
+ID = SubResource("Resource_dab1d")
+
+[sub_resource type="Resource" id="Resource_deww7"]
+script = ExtResource("6_n25r6")
+metadata/_custom_type_script = "uid://ckbbls7g8c6ds"
 
 [resource]
 script = ExtResource("1_7aoku")
 NameCode = "Template"
 DisplayName = "模板"
+Fleet = SubResource("Resource_deww7")
 Desc = "木板讨伐"
 metadata/_custom_type_script = "uid://ca8ftceu3or5f"

@@ -6,6 +6,7 @@ namespace OursGalaxy.ResourceConfig;
 /// </summary>
 [GlobalClass]
 internal partial class TaskEventConfig : Resource {
+	public const string TEMPLATE_EVENT_NAME_CODE = "Template";
 	public static TaskEventConfig GetConfig(TaskEventData data) => ResourceLoader.Load<TaskEventConfig>($"res://ResourceLib/TaskEvent/{data.NameCode}.tres");
 
 	public enum EventTypeEnum { Genearal, SignCombat, FightBack, Reward, Repair }

@@ -28,7 +28,7 @@ CombatStage引入战场半径，限制尺寸
 FleetEditor，实现MemShips摆放，Tactics配置
 
 UI:
-
+	TasksPanel接入存档
 
 测试：
 

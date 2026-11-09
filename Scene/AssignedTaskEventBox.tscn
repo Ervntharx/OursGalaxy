@@ -37,7 +37,7 @@ text = "正文
 "
 fit_content = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer" unique_id=1169244438]
+[node name="ReactRich" type="RichTextLabel" parent="PanelContainer/VBoxContainer" unique_id=1169244438]
 layout_mode = 2
 bbcode_enabled = true
 text = "[right][url=Event:Sign][lb] > 标记 < [rb][/url][/right]"
