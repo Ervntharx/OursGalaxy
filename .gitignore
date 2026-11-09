@@ -6,9 +6,3 @@
 .vscode/
 
 addons/
-
-*.uid
-**/*.uid
-
-*.import
-**/*.import
