@@ -17,18 +17,27 @@ LayyerEnum改入引擎Layer名
 
 CombatStage引入战场半径，限制尺寸
 
-机动模式引入纯GoForward,GoBackward,Stay通用推进模式。不在船头椎内时Stay转向
-迂回机动设置目标点就在目标全局位置的相对上下左右。自动迂回模式下选择最短者。
-护卫机动设置机动目标点为相对位置。但如果过远（距离未知）使用通用机动逻辑。
-护卫机动下如果有目标，仍然先尝试旋转攻击目标
-
 []AI逻辑行为状态机：
-	迂回以绕飞点替代跟踪目标
+	引入MicroClone, PushClone, FaceClone三种船头椎
+	MicroClone用于对准目标的闸限
+	PushClone用于判定机动目标点,在椎内施加推力,否则不给推力
+	FaceClone用于在迂回模式下判定目标有没有在迂回范围判定内
 
-FleetEditor，实现MemShips摆放，Tactics配置
+	迂回机动:分为第一机动阶段,第二机动阶段,第三机动阶段,
+		判定目标在FaceClone内,2倍射程外,则进入第一阶段
+		目标在FaceClone内,2倍射程内,则进入第二阶段
+		目标不在FaceClone内,则进入第三阶段
+
+		第一机动阶段:	朝向两舰相对位置连线中点的迂回朝向方向延伸射程距离点前进
+		第二机动阶段:	朝向目标位置的迂回朝向防线延伸射程距离点前进
+		第三机动阶段:	朝向目标位置前进,和forward一致
+
 
 UI:
+	FleetEditor，实现MemShips摆放，Tactics配置
+	SpaceshipConfigPanel对Spaceship装配的编辑能力
 	TasksPanel接入存档
+	FleetEditor接入存档
 
 测试：
 

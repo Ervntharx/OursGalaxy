@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://scwyiekuefkw"]
+
+[ext_resource type="Script" uid="uid://dgqbrhbr7bnfh" path="res://Script/Csharp/UI/ShipConfigOutletBox.cs" id="1_ngitx"]
+
+[node name="ShipConfigOutletBox" type="Button" unique_id=547705172 node_paths=PackedStringArray("EquipContainer", "OutletLabel")]
+custom_minimum_size = Vector2(300, 100)
+offset_right = 300.0
+offset_bottom = 80.0
+script = ExtResource("1_ngitx")
+EquipContainer = NodePath("VBoxContainer/EquipOutlet")
+OutletLabel = NodePath("VBoxContainer/OutLetSizeType")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=501544531]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EquipOutlet" type="MarginContainer" parent="VBoxContainer" unique_id=1453155048]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+
+[node name="OutLetSizeType" type="RichTextLabel" parent="VBoxContainer" unique_id=13962611]
+layout_mode = 2
+text = "槽位名"
+fit_content = true
+horizontal_alignment = 2
+vertical_alignment = 2

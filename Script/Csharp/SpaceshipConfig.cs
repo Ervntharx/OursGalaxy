@@ -87,4 +87,7 @@ internal partial class SpaceshipConfig : ItemBaseConfig {
 	/// </summary>
 	[Export(PropertyHint.Range, "1, 999, 1")]
 	public int BackPowerCapability { get; set; } = 2;
+
+	[Export]
+	public Godot.Collections.Dictionary<string, OutletSizeType> OutletSet { get; set; } = [];
 }

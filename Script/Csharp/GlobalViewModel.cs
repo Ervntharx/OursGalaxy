@@ -222,7 +222,11 @@ internal partial class GlobalViewModel {
 	public static Array<HuntData> TrackedHuntList { get; protected set; } = [];
 	#endregion Battle and Combat
 
+	public static SubRepository MainRepository { get; } = new();
+
+	[Obsolete]
 	public static ObservableCollection<SpaceshipData> Ships { get; } = [];
+	[Obsolete]
 	public static ObservableCollection<EquipData> Equips { get; } = [];
 	public static ObservableCollection<GameItem> GameItems { get; } = [];
 }

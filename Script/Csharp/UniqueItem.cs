@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Design.Serialization;
 using Godot;
 using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
@@ -38,6 +39,15 @@ internal partial class UniqueItem : ItemBase {
 	public virtual UniqueItemReference MakeReference() {
 		ItemLocation = new();
 		return new(this);
+	}
+
+	/// <summary>
+	/// 回收引用关系
+	/// </summary>
+	/// <param name="refer"></param>
+	public virtual void RecycleReference(in UniqueItemReference refer) {
+		refer.IDReference = GUID.Empty;
+		ItemLocation = null;
 	}
 
 	/// <summary>

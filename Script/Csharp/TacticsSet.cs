@@ -11,9 +11,9 @@ internal partial class TacticsSet : Resource {
 	/// 战术模式枚举
 	/// </summary>
 	public enum ModeEnum {
-		Forward,    // 强袭
-		Roundabot,  // 迂回
-		Protect     // 护卫
+		Forward = 0,    // 强袭
+		Roundabot = 1,  // 迂回
+		Protect = 2     // 护卫
 	}
 
 	/// <summary>

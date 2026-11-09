@@ -8,7 +8,7 @@ namespace OursGalaxy;
 /// </summary>
 [GlobalClass]
 internal partial class UniqueItemReference : Resource {
-	[Export] public GUID IDReference { get; protected set; }
+	[Export] public GUID IDReference { get; set; }
 
 	public UniqueItemReference(UniqueItem uItem) {
 		IDReference = uItem.ID;
