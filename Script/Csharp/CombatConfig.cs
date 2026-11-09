@@ -9,15 +9,11 @@ internal partial class CombatConfig : Resource {
 	public const string TEMPLATE_NAME_CODE = "Template";
 	public static CombatConfig GetConfig(CombatData data) => ResourceLoader.Load<CombatConfig>($"res://ResourceLib/Combat/{data.NameCode}.tres");
 
-	[Export]
-	public string NameCode { get; set; } = string.Empty;
+	[Export] public string NameCode { get; set; } = string.Empty;
 
-	[Export]
-	public string DisplayName { get; set; } = string.Empty;
+	[Export] public string DisplayName { get; set; } = string.Empty;
 
-	[Export]
-	public FleetData? Fleet { get; set; }
+	[Export] public FleetData? Fleet { get; set; }
 
-	[Export]
-	public string Desc { get; set; } = string.Empty;
+	[Export] public string Desc { get; set; } = string.Empty;
 }

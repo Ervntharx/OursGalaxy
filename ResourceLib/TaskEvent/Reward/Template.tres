@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="RewardTaskEvent" format=3 uid="uid://drvr2gtkgnyol"]
+
+[ext_resource type="Script" uid="uid://ca5hudhjlbi3o" path="res://Script/Csharp/ItemBase.cs" id="1_vyn2s"]
+[ext_resource type="Script" uid="uid://dewxr1je7linq" path="res://Script/Csharp/RewardTaskEvent.cs" id="2_rcaht"]
+
+[resource]
+script = ExtResource("2_rcaht")
+metadata/_custom_type_script = "uid://dewxr1je7linq"

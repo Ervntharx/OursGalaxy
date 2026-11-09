@@ -5,14 +5,10 @@ namespace OursGalaxy.UI;
 internal partial class AssignedTaskBox : Button {
 	public AssignedTaskBox Load() => (AssignedTaskBox)ResourceLoader.Load<PackedScene>("res://Scene/MissionBox.tscn").Instantiate();
 
-	[Export]
-	protected RichTextLabel? NameLabel { get; set; }
-	[Export]
-	protected Label? TimeLabel { get; set; }
-	[Export]
-	protected ProgressBar? TimeProgressBar { get; set; }
-	[Export]
-	protected RichTextLabel? RatingLevelLabel { get; set; }
+	[Export] private RichTextLabel? NameLabel { get; set; }
+	[Export] private Label? TimeLabel { get; set; }
+	[Export] private ProgressBar? TimeProgressBar { get; set; }
+	[Export] private RichTextLabel? RatingLevelLabel { get; set; }
 
 	public void Make(AssignedTaskData missionData) {
 		NameLabel!.Text = $"[color=white]{missionData.NameCode}[/color]";

@@ -1,45 +1,43 @@
 using Godot;
-using System;
+using OursGalaxy.ResourceConfig;
 namespace OursGalaxy.UI;
 
 internal partial class AssignedTaskEventBox : MarginContainer {
 	public static AssignedTaskEventBox Load() => (AssignedTaskEventBox)ResourceLoader.Load<PackedScene>("res://Scene/AssignedTaskEventBox.tscn").Instantiate();
 
-	[Export]
-	protected RichTextLabel TitleLable { get; set; } = null!;
-	[Export]
-	protected RichTextLabel BodyLabel { get; set; } = null!;
+	[Export] private RichTextLabel TitleLable { get; set; } = null!;
+	[Export] private RichTextLabel BodyLabel { get; set; } = null!;
+	[Export] private RichTextLabel ReactLabel { get; set; } = null!;
 
 	public void Make(TaskEventData taskEvent) {
-		task = taskEvent;
-		// task.TaskEventStateChanged += OnTaskStateChanged;
-		// OnTaskStateChanged(taskEvent);
+		config = TaskEventLib.GetConfig(taskEvent);
+		TitleLable.Text = config.DisplayName;
+		BodyLabel.Text = config.Desc;
+		UpdateTaskStateDisplay(taskEvent.Deal);
 	}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
-		// BodyLabel.MetaClicked += OnUrlPressed;
+		ReactLabel.MetaClicked += OnUrlPressed;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta) {
+	private void OnUrlPressed(Variant variant) {
+		if (config is not null && variant.ToString() == config.DealUrl) {
+			config.Deal();
+			UpdateTaskStateDisplay(true);
+		}
 	}
 
-	// private void OnUrlPressed(Variant variant) {
-	// 	if (variant.ToString() == task?.ReactUrl) {
-	// 		task.OnMatchUrl(variant);
-	// 	}
-	// }
+	private void UpdateTaskStateDisplay(bool deal) {
+		if (config is not null) {
+			if (!deal) {
+				ReactLabel.Text = $"[right][url={config.DealUrl}][lb] > {config.DealButtonName} < [rb][/url][/right]";
+			}
+			else {
+				ReactLabel.Text = $"[right][lb] > {config.HandledButtonName} < [rb][/right]";
+			}
+		}
+	}
 
-	// private void OnTaskStateChanged(TaskEventData taskEvent) {
-	// 	TitleLable.Text = taskEvent.NameCode;
-	// 	if (taskEvent.ReactButtonName is not null) {
-	// 		BodyLabel.Text = taskEvent.Desc + $"[right][url={taskEvent.ReactUrl}][lb] > {taskEvent.ReactButtonName} < [rb][/url][/right]";
-	// 	}
-	// 	else {
-	// 		BodyLabel.Text = taskEvent.Desc;
-	// 	}
-	// }
-
-	private TaskEventData? task;
+	private TaskEventConfig? config;
 }

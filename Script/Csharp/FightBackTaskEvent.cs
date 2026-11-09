@@ -4,6 +4,7 @@ using OursGalaxy.ResourceConfig;
 namespace OursGalaxy;
 
 [GlobalClass]
+[Obsolete]
 internal partial class FightBackTaskEvent : TaskEventData {
 
 	[Export]

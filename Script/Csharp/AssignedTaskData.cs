@@ -11,41 +11,23 @@ internal partial class AssignedTaskData : Resource {
 	/// <summary>
 	/// 名称
 	/// </summary>
-	[Export]
-	public string NameCode { get; set; } = "Expedition";
+	[Export] public string NameCode { get; set; } = "Expedition";
 
-
-	[Export]
-	public AssignedTaskConfig.RatingLevelEnum RatingLevel { get; set; } = AssignedTaskConfig.RatingLevelEnum.AA;
+	[Export] public AssignedTaskConfig.RatingLevelEnum RatingLevel { get; set; } = AssignedTaskConfig.RatingLevelEnum.AA;
 
 	/// <summary>
 	/// The level of the expedition. ranges from 1 to MaxLevel
 	/// </summary>
-	[Export]
-	public ushort Level { get; set; } = 1;
+	[Export] public int Level { get; set; } = 1;
+
+	[Export] public AssignedTaskConfig.StateEnum State { get; protected set; } = AssignedTaskConfig.StateEnum.Unaccepted;
+
+	[Export] public DateTime? StartDate { get; set; }
 
 	/// <summary>
-	/// The minimum level of the expedition
+	/// 上一次任务事件刷新的时间
 	/// </summary>
-	public const ushort MinLevel = 1;
-	/// <summary>
-	/// The maximum level of the expedition
-	/// </summary>
-	public const ushort MaxLevel = 30;
-
-	// [Export]
-	// public GameTimeSpan Duration { get; set; } = new(TimeSpan.FromHours(1));
-
-	public enum StateEnum {
-		Unaccepted,  // 未接受任务的状态
-		Running,   // 正在跑任务
-		Completed //已完成
-	}
-
-	[Export]
-	public StateEnum State { get; protected set; } = StateEnum.Unaccepted;
-
-	public DateTime? StartDate { get; set; }
+	[Export] public DateTime? LastEventUpdatedTime { get; set; }
 
 	protected long ProgressTime { get; set; }
 	public TimeSpan ProgressTimeSpan => TimeSpan.FromSeconds(ProgressTime);

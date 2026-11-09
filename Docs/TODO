@@ -4,14 +4,8 @@ SubRepository具备ElementChangedEvent发射能力, 检测元素增减
 
 引入MissionData类型，可能需要引入ChallengeStaticsServer
 
-Turret类需要Pitch方向的轻度瞄准能力。否则无法打平目标（
-
-Combat, Task系列Config应并入ResourceLib
-
 Combat所需按难度生成舰队难度配置？
 TaskEvent所需事件发生器
-
-TaskEventData们需要连接运行时UI类型
 
 引入ShieldConfig, ShieldData
 引入DamageControlEquipConfig，DamageControlEquipData

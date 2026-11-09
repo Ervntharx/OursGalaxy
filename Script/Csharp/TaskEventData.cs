@@ -10,6 +10,8 @@ namespace OursGalaxy;
 internal partial class TaskEventData : Resource {
 	[Export] public DateTime Time { get; set; }
 
+	[Export] public TaskEventConfig.EventTypeEnum EventType { get; set; } = TaskEventConfig.EventTypeEnum.Genearal;
+
 	[Export] public string NameCode { get; set; }
 
 	/// <summary>
@@ -17,12 +19,8 @@ internal partial class TaskEventData : Resource {
 	/// </summary>
 	[Export] public bool Deal { get; set; }
 
-	/// <summary>
-	/// TaskData状态变更，期望重绘UI时发出。
-	/// </summary>
-	public Action<TaskEventData>? TaskEventStateChanged;
-
-	public TaskEventData(string code) {
+	public TaskEventData(TaskEventConfig.EventTypeEnum eventType, string code) {
+		EventType = eventType;
 		this.Time = DateTime.Now();
 		NameCode = code;
 	}

@@ -8,14 +8,19 @@ namespace OursGalaxy.ResourceConfig;
 internal partial class TaskEventConfig : Resource {
 	public static TaskEventConfig GetConfig(TaskEventData data) => ResourceLoader.Load<TaskEventConfig>($"res://ResourceLib/TaskEvent/{data.NameCode}.tres");
 
-	[Export]
-	public string EventCode { get; set; } = string.Empty;
+	public enum EventTypeEnum { Genearal, SignCombat, FightBack, Reward, Repair }
+	[Export] public EventTypeEnum EventType { get; set; } = EventTypeEnum.Genearal;
 
-	[Export]
-	public string DisplayName { get; set; } = string.Empty;
+	[Export] public string EventCode { get; set; } = string.Empty;
 
-	[Export]
-	public string Desc { get; set; } = string.Empty;
+	[Export] public string DisplayName { get; set; } = string.Empty;
 
+	[Export] public string Desc { get; set; } = string.Empty;
 
+	[Export] public virtual string DealButtonName { get; set; } = string.Empty;
+	[Export] public virtual string HandledButtonName { get; set; } = string.Empty;
+
+	[Export] public virtual string DealUrl { get; set; } = string.Empty;
+
+	public virtual void Deal() { }
 }
