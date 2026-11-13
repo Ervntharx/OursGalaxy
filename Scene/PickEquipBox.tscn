@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://cvjpoog4ukkjr"]
+
+[ext_resource type="Script" uid="uid://ck5rddum3xafd" path="res://Script/Csharp/UI/PickEquipBox.cs" id="1_vu61m"]
+[ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="1_vxtpu"]
+
+[node name="PickEquipBox" type="Button" unique_id=375651162]
+custom_minimum_size = Vector2(280, 65)
+script = ExtResource("1_vu61m")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1853216932]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 69.0
+grow_vertical = 2
+texture = ExtResource("1_vxtpu")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="EquipName" type="RichTextLabel" parent="." unique_id=1120771272]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -71.0
+offset_right = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "装备名称"
+horizontal_alignment = 2
+
+[node name="Pick" type="Button" parent="." unique_id=125779906]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -37.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "=>"

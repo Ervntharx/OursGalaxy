@@ -44,7 +44,7 @@ internal partial class ShipEditorBox : Button {
 		EditAssemble.Pressed += () => {
 			var configPanel = ShipConfigPanel.Load();
 			PanelsStack.PushPanel(configPanel);
-			configPanel.Make(fleet, shipRefer);
+			configPanel.Render(fleet, shipRefer);
 		};
 
 		Remove.Pressed += () => {

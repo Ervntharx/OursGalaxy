@@ -30,6 +30,11 @@ internal partial class ItemBaseConfig : Resource {
 	[Export] public string DisplayName { get; set; } = string.Empty;
 
 	/// <summary>
+	/// 图标
+	/// </summary>
+	[Export] public Texture2D? Texture { get; set; }
+
+	/// <summary>
 	/// 简介
 	/// </summary>
 	[Export] public string Introductuon { get; set; } = string.Empty;

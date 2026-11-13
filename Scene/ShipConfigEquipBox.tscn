@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="1_utuap"]
 
 [node name="ShipConfigEquipBox" type="Button" unique_id=375651162 node_paths=PackedStringArray("ICONDisplayer", "EquipNameLabel", "InfEquipLabel", "UninstallButton")]
-custom_minimum_size = Vector2(300, 100)
+custom_minimum_size = Vector2(280, 65)
 script = ExtResource("1_gd62c")
 ICONDisplayer = NodePath("TextureRect")
 EquipNameLabel = NodePath("EquipName")
@@ -13,24 +13,25 @@ UninstallButton = NodePath("Uninstall")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1853216932]
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 14.0
-offset_top = -39.0
-offset_right = 90.0
-offset_bottom = 38.0
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 69.0
 grow_vertical = 2
 texture = ExtResource("1_utuap")
 expand_mode = 1
 stretch_mode = 4
 
 [node name="EquipName" type="RichTextLabel" parent="." unique_id=1120771272]
-layout_mode = 0
-offset_left = 91.0
-offset_top = 15.0
-offset_right = 259.0
-offset_bottom = 87.0
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -71.0
+offset_right = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 text = "装备名称"
 horizontal_alignment = 2
 

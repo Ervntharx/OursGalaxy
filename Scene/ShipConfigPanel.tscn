@@ -15,9 +15,9 @@ theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 script = ExtResource("1_cti5s")
 QuitButton = NodePath("PanelContainer/VBoxContainer/TopBar/Quit")
-ShipOverview = NodePath("PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer/SubViewport")
-ShipStage = NodePath("PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer/SubViewport/ShipStage")
-EquipsListPanel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/ScrollContainer/EquipPanel")
+ShipOverview = NodePath("PanelContainer/VBoxContainer/HSplitContainer/Control/SubViewportContainer/SubViewport")
+ShipStage = NodePath("PanelContainer/VBoxContainer/HSplitContainer/Control/SubViewportContainer/SubViewport/ShipStage")
+EquipsListPanel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/TabContainer/InstalledEquips/EquipPanel")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1717783387]
 layout_mode = 2
@@ -40,33 +40,73 @@ text = "舰船装配"
 [node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/VBoxContainer" unique_id=823755406]
 layout_mode = 2
 size_flags_vertical = 3
+split_offsets = PackedInt32Array(-8)
+split_offset = -8
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=1142010588]
+[node name="Control" type="Control" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=329060742]
 layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/Control" unique_id=1142010588]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer" unique_id=1473934275]
+[node name="SubViewport" type="SubViewport" parent="PanelContainer/VBoxContainer/HSplitContainer/Control/SubViewportContainer" unique_id=1473934275]
 handle_input_locally = false
-size = Vector2i(565, 603)
+size = Vector2i(557, 603)
 render_target_update_mode = 4
 
-[node name="ShipStage" type="Node3D" parent="PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer/SubViewport" unique_id=1233618957]
+[node name="ShipStage" type="Node3D" parent="PanelContainer/VBoxContainer/HSplitContainer/Control/SubViewportContainer/SubViewport" unique_id=1233618957]
 
-[node name="CameraArm" type="Node3D" parent="PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer/SubViewport/ShipStage" unique_id=1069153188]
+[node name="CameraArm" type="Node3D" parent="PanelContainer/VBoxContainer/HSplitContainer/Control/SubViewportContainer/SubViewport/ShipStage" unique_id=1069153188]
 
-[node name="CameraArm" type="Node3D" parent="PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer/SubViewport/ShipStage/CameraArm" unique_id=335713098]
+[node name="CameraArm" type="Node3D" parent="PanelContainer/VBoxContainer/HSplitContainer/Control/SubViewportContainer/SubViewport/ShipStage/CameraArm" unique_id=335713098]
 
-[node name="Camera3D" type="Camera3D" parent="PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer/SubViewport/ShipStage/CameraArm/CameraArm" unique_id=1977075629]
+[node name="Camera3D" type="Camera3D" parent="PanelContainer/VBoxContainer/HSplitContainer/Control/SubViewportContainer/SubViewport/ShipStage/CameraArm/CameraArm" unique_id=1977075629]
 transform = Transform3D(-0.6965293, 0, 0.7175284, 0, 1, 0, -0.7175284, 0, -0.6965293, 2.1964126, 1.284678, -2.7170725)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer/SubViewport/ShipStage/CameraArm/CameraArm/Camera3D" unique_id=1854738292]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="PanelContainer/VBoxContainer/HSplitContainer/Control/SubViewportContainer/SubViewport/ShipStage/CameraArm/CameraArm/Camera3D" unique_id=1854738292]
 
-[node name="TemplateShip" parent="PanelContainer/VBoxContainer/HSplitContainer/SubViewportContainer/SubViewport/ShipStage" unique_id=760973978 instance=ExtResource("2_3ekwn")]
+[node name="TemplateShip" parent="PanelContainer/VBoxContainer/HSplitContainer/Control/SubViewportContainer/SubViewport/ShipStage" unique_id=760973978 instance=ExtResource("2_3ekwn")]
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=250718719]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/Control" unique_id=450690341]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HFlowContainer" type="HFlowContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/Control/ScrollContainer" unique_id=36508833]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="EquipPanel" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/ScrollContainer" unique_id=836425265]
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=564047351]
+layout_mode = 2
+size_flags_horizontal = 3
+current_tab = 0
+
+[node name="InstalledEquips" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/TabContainer" unique_id=250718719]
+layout_mode = 2
+size_flags_horizontal = 3
+metadata/_tab_index = 0
+
+[node name="EquipPanel" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/TabContainer/InstalledEquips" unique_id=836425265]
+layout_mode = 2
+
+[node name="PickEquips" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/TabContainer" unique_id=843715182]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+metadata/_tab_index = 1
+
+[node name="EquipPanel" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/TabContainer/PickEquips" unique_id=862105022]
 layout_mode = 2
