@@ -10,7 +10,7 @@
 
 [sub_resource type="Resource" id="Resource_1emhq"]
 script = ExtResource("3_bgfw4")
-GUIDStr = "7c0982b6-686e-41bc-a46e-dea2bf0d6e73"
+GUIDStr = "222663bd-3d50-4f61-8388-ee7f14f95466"
 
 [sub_resource type="CSharpScript" id="CSharpScript_dxsik"]
 
