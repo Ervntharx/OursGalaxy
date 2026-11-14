@@ -11,28 +11,23 @@ namespace OursGalaxy;
 ///游戏ViewModel
 /// </summary>
 internal partial class GlobalViewModel {
-	private static GameSavesData Data = new();
-
 	public static void Read(GameSavesData saves) => Data = saves;
 	public static GameSavesData Save() => Data;
 
 	/// <summary>
 	/// 存档最后编辑时间
 	/// </summary>
-	[Export]
-	public static DateTime LastSaveTime { get => new(Data.LastSaveDate); set => Data.LastSaveDate = value.ToUnix(); }
+	[Export] public static DateTime LastSaveTime { get => new(Data.LastSaveDate); set => Data.LastSaveDate = value.ToUnix(); }
 
 	#region User Profiles
 	[ExportGroup("User Profiles")]
 
-	[Export]
-	public static GUID UserID { get => Data.UserID; set => Data.UserID = value; }
+	[Export] public static GUID UserID { get => Data.UserID; set => Data.UserID = value; }
 
 	/// <summary>
 	/// 用户名
 	/// </summary>
-	[Export]
-	public static string UserName { get => Data.UserName; set => Data.UserName = value; }
+	[Export] public static string UserName { get => Data.UserName; set => Data.UserName = value; }
 
 	/// <summary>
 	/// 头像
@@ -54,10 +49,11 @@ internal partial class GlobalViewModel {
 	/// <summary>
 	/// 注册时间
 	/// </summary>
-	[Export]
-	public static DateTime RegisterTime { get => new(Data.RegisterDate); set => Data.RegisterDate = value.ToUnix(); }
+	[Export] public static DateTime RegisterTime { get => new(Data.RegisterDate); set => Data.RegisterDate = value.ToUnix(); }
 
 	#endregion User Profiles
+
+	[Export] public Array<MessageData> Messages { get => Data.Messages; set => Data.Messages = value; }
 
 	#region Base Resource
 	[ExportGroup("Base Resource")]
@@ -222,9 +218,12 @@ internal partial class GlobalViewModel {
 	public static Array<HuntData> TrackedHuntList { get; protected set; } = [];
 	#endregion Battle and Combat
 
-	public static ObservableCollection<FleetData> Fleets { get; } = [];
+	public static ObservableCollection<FleetData> Fleets { get; set; } = [];
 
-	public static SubRepository MainRepository { get => Data.Repository; }
+	public static SubRepository MainRepository { get => Data.Repository; set => Data.Repository = value; }
 
-	public static ObservableCollection<GameItem> GameItems { get; } = [];
+	public static Array<GameItem> GameItems { get => Data.GameItems; set => Data.GameItems = value; }
+
+
+	private static GameSavesData Data = new();
 }

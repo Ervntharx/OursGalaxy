@@ -15,6 +15,10 @@ run/main_scene="uid://rt38b5iwvqw8"
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameSavesDataMgr="*uid://bfqvui5a6mivl"
+
 [display]
 
 window/subwindows/embed_subwindows=false

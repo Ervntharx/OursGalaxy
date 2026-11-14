@@ -33,11 +33,9 @@ internal partial class PanelsStack : CanvasLayer {
 			value.PanelsRoot.AddChild(newPanel);
 			newPanel.Show();
 			if (GodotObject.IsInstanceValid(value.ActivePanel)) {
-				GD.Print(value.ActivePanelIdx);
 				value.ActivePanel.Hide();
 			}
 			value.ActivePanelIdx += 1;
-			GD.Print(value.ActivePanelIdx);
 			return;
 		}
 		GD.PushError("<PanelStack> Panel Stack is missing");

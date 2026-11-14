@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemBaseConfig" format=3 uid="uid://cr8y4tq4aydmq"]
+
+[ext_resource type="Script" uid="uid://b2egcjp5t27cu" path="res://Script/Csharp/ItemBaseConfig.cs" id="1_81s5y"]
+
+[resource]
+script = ExtResource("1_81s5y")
+TypeCode = "GameItem"
+NameCode = "IDCard"
+Qulity = 3
+DisplayName = "身份证"
+Introductuon = "身份证明"
+metadata/_custom_type_script = "uid://b2egcjp5t27cu"

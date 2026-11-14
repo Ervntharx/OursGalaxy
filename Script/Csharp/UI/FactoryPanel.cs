@@ -1,7 +1,7 @@
 ﻿using Godot;
 namespace OursGalaxy.UI;
 
-internal partial class FactoryPanel : Panel {
+internal partial class FactoryPanel : MarginContainer {
 	public static FactoryPanel Load() => (FactoryPanel)ResourceLoader.Load<PackedScene>("res://Scene/FactoryPanel.tscn").Instantiate();
 
 	[Export]

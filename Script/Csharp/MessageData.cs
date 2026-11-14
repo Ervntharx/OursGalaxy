@@ -8,27 +8,19 @@ namespace OursGalaxy;
 /// </summary>
 [GlobalClass]
 internal partial class MessageData : Resource {
-	[Export]
-	public bool HasRead { get; set; }
+	[Export] public string MessageTabType { get; set; } = "Genearal";
 
-	[Export]
-	public string Head { get; set; } = string.Empty;
+	[Export] public bool HasRead { get; set; }
 
-	[Export]
-	public string Content { get; set; } = string.Empty;
+	[Export] public string Head { get; set; } = string.Empty;
 
-	[Export]
-	public int RewardSolid { get; set; }
+	[Export] public string Content { get; set; } = string.Empty;
 
-	[Export]
-	public int RewardLiquid { get; set; }
+	[Export] public int RewardSolid { get; set; }
 
-	[Export]
-	public int RewardIndustrialProduct { get; set; }
+	[Export] public int RewardLiquid { get; set; }
 
-	[Export]
-	public int RewardHonor { get; set; }
+	[Export] public int RewardIndustrialProduct { get; set; }
 
-	[Export]
-	public Array Reward { get; set; } = [];
+	[Export] public int RewardHonor { get; set; }
 }

@@ -1,4 +1,6 @@
-﻿using Godot;
+﻿using System.Diagnostics.Tracing;
+using System.Net;
+using Godot;
 namespace OursGalaxy.UI;
 
 /// <summary>
@@ -7,16 +9,23 @@ namespace OursGalaxy.UI;
 internal partial class GameItemBox : Button {
 	public static GameItemBox Load() => (GameItemBox)ResourceLoader.Load<PackedScene>("res://Scene/GameItemBox.tscn").Instantiate();
 
-	[Export]
-	protected TextureRect PicTexture { get; set; } = null!;
-	[Export]
-	protected RichTextLabel NameLabel { get; set; } = null!;
-	[Export]
-	protected Label NumLabel { get; set; } = null!;
+	[Export] private TextureRect PicTexture { get; set; } = null!;
+	[Export] private RichTextLabel NameLabel { get; set; } = null!;
+	[Export] private Label NumLabel { get; set; } = null!;
 
-	public GameItem? Item { get; private set; }
+	public GameItem? Item {
+		get => item; set {
+			if (item is not null) {
+				item.PropertyChanged -= Update;
+			}
+			item = value;
+			if (item is not null) {
+				item.PropertyChanged += Update;
+			}
+		}
+	}
 
-	public void Make(GameItem item) {
+	public void Render(GameItem item) {
 		Item = item;
 		Update(Item, string.Empty);
 		Item.PropertyChanged += Update;
@@ -26,4 +35,6 @@ internal partial class GameItemBox : Button {
 		NameLabel.Text = itemBs.NameCode;
 		NumLabel.Text = $"{((GameItem)itemBs).Num}";
 	}
+
+	private GameItem? item;
 }

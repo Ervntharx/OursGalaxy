@@ -7,13 +7,10 @@ namespace OursGalaxy.UI;
 /// </summary>
 internal partial class MessageViewerPanel : MarginContainer {
 	public MessageViewerPanel Load() => (MessageViewerPanel)ResourceLoader.Load<PackedScene>("res://Scene/MessageViewPanel.tscn").Instantiate();
-	[Export]
-	protected Button? QuitButton { get; set; }
+	[Export] private Button QuitButton { get; set; } = null!;
 
-	[Export]
-	protected RichTextLabel? MsgHeadLabel { get; set; }
-	[Export]
-	protected RichTextLabel? MsgBodyLabel { get; set; }
+	[Export] private RichTextLabel MsgHeadLabel { get; set; } = null!;
+	[Export] private RichTextLabel MsgBodyLabel { get; set; } = null!;
 
 	/// <summary>
 	/// 加载了消息或没有
@@ -22,7 +19,7 @@ internal partial class MessageViewerPanel : MarginContainer {
 
 	public event Action<MessageViewerPanel>? Quit;
 
-	public void Make(MessageData msg) {
+	public void Render(MessageData msg) {
 		Head = msg.Head;
 		Body = msg.Content;
 		IsLoadedMessgae = true;

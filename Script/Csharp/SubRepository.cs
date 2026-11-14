@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Godot;
 namespace OursGalaxy;
@@ -13,32 +12,18 @@ internal sealed partial class SubRepository : Resource {
 	[Export] public GUID ID { get; private set; }
 
 	/// <summary>
-	/// 只读,且需要赋值一次
+	/// 只读
 	/// </summary>
-	public IReadOnlyCollection<SpaceshipData> Ships {
-		get => ships ?? throw new InvalidOperationException("<SubRepository> Ships isnt reaay");
-		set {
-			ships = new(value);
-			ships.CollectionChanged += (obj, args) => ElementsChangedEvent?.Invoke(obj, args);
-		}
-	}
+	public IReadOnlyCollection<SpaceshipData> Ships => shipSource.AsReadOnly();
 
 	/// <summary>
-	/// 只读,且需要赋值一次
+	/// 只读
 	/// </summary>
-	public IReadOnlyCollection<EquipData> Equips {
-		get => equips ?? throw new InvalidOperationException("<SubRepository> Equips isnt reaay");
-		set {
-			equips = new(value);
-			equips.CollectionChanged += (obj, args) => ElementsChangedEvent?.Invoke(obj, args);
-		}
-	}
+	public IReadOnlyCollection<EquipData> Equips => equipsSource.AsReadOnly();
 
-	public event System.Collections.Specialized.NotifyCollectionChangedEventHandler? ElementsChangedEvent;
+	public event Action<SubRepository, UniqueItem?>? ElementsChangedEvent;
 
-	public SubRepository() {
-		ID = GUID.Generate();
-	}
+	public SubRepository() { ID = GUID.Generate(); }
 
 	public SpaceshipData this[SpaceshipReference reference] => Ships?.FirstOrDefault(ship => ship.ID == reference.IDReference)
 		?? throw new NullReferenceException($"<SubRepository> Can't find spaceship refer: {reference.IDReference}");
@@ -48,18 +33,14 @@ internal sealed partial class SubRepository : Resource {
 
 	public void Add(SpaceshipData data) {
 		ThrowIfOccupied(data);
-		if (ships is null) {
-			throw new InvalidOperationException("<SubRepository> Ships isnt reaay");
-		}
-		ships.Add(data);
+		shipSource.Add(data);
+		ElementsChangedEvent?.Invoke(this, data);
 	}
 
 	public void Add(EquipData data) {
 		ThrowIfOccupied(data);
-		if (equips is null) {
-			throw new InvalidOperationException("<SubRepository> Equips isnt reaay");
-		}
-		equips.Add(data);
+		equipsSource.Add(data);
+		ElementsChangedEvent?.Invoke(this, data);
 	}
 
 	public void Move(SpaceshipData data, SubRepository to) {
@@ -76,68 +57,25 @@ internal sealed partial class SubRepository : Resource {
 
 	public void Remove(SpaceshipData data) {
 		ThrowIfOccupied(data);
-		if (ships is null) {
-			throw new InvalidOperationException("<SubRepository> Ships isnt reaay");
-		}
-		if (!ships.Remove(data)) {
+		if (!shipSource.Remove(data)) {
 			throw new InvalidOperationException("<SubRepository> unqiueitem isnt in repository");
 		}
+		ElementsChangedEvent?.Invoke(this, data);
 	}
 
 	public void Remove(EquipData data) {
 		ThrowIfOccupied(data);
-		if (equips is null) {
-			throw new InvalidOperationException("<SubRepository> Equips isnt reaay");
-		}
-		if (!equips.Remove(data)) {
+		if (!equipsSource.Remove(data)) {
 			throw new InvalidOperationException("<SubRepository> unqiueitem isnt in repository");
 		}
+		ElementsChangedEvent?.Invoke(this, data);
 	}
 
 	private void ThrowIfOccupied(UniqueItem item) {
 		if (item.IsOccupied()) throw new ArgumentException("<SubRepository> UniqueItem is occupied");
 	}
 
-	private ObservableCollection<SpaceshipData>? ships;
-	private ObservableCollection<EquipData>? equips;
+	[Export] private Godot.Collections.Array<SpaceshipData> shipSource { get; set; } = [];
 
-	/// <summary>
-	/// 仅用于Godot Resource使用的序列化接口.在Godot Array和ObservaleCollection之间转换
-	/// </summary>
-	[Export]
-	private Godot.Collections.Array<SpaceshipData> shipSource {
-		get {
-			var result = new Godot.Collections.Array<SpaceshipData>();
-			foreach (var ship in ships ?? []) {
-				result.Add(ship);
-			}
-			return result;
-		}
-		set {
-			ships = [];
-			foreach (var ship in value) {
-				ships.Add(ship);
-			}
-		}
-	}
-
-	/// <summary>
-	/// 仅用于Godot Resource使用的序列化接口.在Godot Array和ObservaleCollection之间转换
-	/// </summary>
-	[Export]
-	private Godot.Collections.Array<EquipData> equipsSource {
-		get {
-			var result = new Godot.Collections.Array<EquipData>();
-			foreach (var equip in equips ?? []) {
-				result.Add(equip);
-			}
-			return result;
-		}
-		set {
-			equips = [];
-			foreach (var equip in value) {
-				equips.Add(equip);
-			}
-		}
-	}
+	[Export] private Godot.Collections.Array<EquipData> equipsSource { get; set; } = [];
 }

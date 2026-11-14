@@ -204,6 +204,7 @@ split_offset = 100
 layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
+tabs_visible = false
 tab_0/title = "主功能区"
 tab_1/title = "查看消息"
 

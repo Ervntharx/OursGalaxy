@@ -1,92 +1,55 @@
-﻿using Godot;
+﻿using System.Runtime.CompilerServices;
+using Godot;
 namespace OursGalaxy.UI;
 
-internal partial class MainPanel : Control {
+internal sealed partial class MainPanel : Control {
 	public static MainPanel Load() => (MainPanel)ResourceLoader.Load<PackedScene>("res://Scene/MainPanel.tscn").Instantiate();
 
-	[Export]
-	protected Button QuitButton { get; set; } = null!;
-	[Export]
-	protected MessageBoxPanel MsgBoxesListPanel { get; set; } = null!;
-	[Export]
-	protected MessageViewerPanel MsgViewPanel { get; set; } = null!;
+	[Export] private Button QuitButton { get; set; } = null!;
+	[Export] private MessageBoxPanel MsgBoxesListPanel { get; set; } = null!;
+	[Export] private MessageViewerPanel MsgViewPanel { get; set; } = null!;
 
 	// top bar
 	[ExportGroup("Top Bar Overview")]
-	[Export]
-	protected Button? PersonalArchiveButton { get; set; }
-	[Export]
-	protected Button SettingButton { get; set; } = null!;
-	[Export]
-	protected Button? ActionPointsButton { get; set; }
-	[Export]
-	protected RichTextLabel ActionPointsLabel { get; set; } = null!;
+	[Export] private Button? PersonalArchiveButton { get; set; }
+	[Export] private Button SettingButton { get; set; } = null!;
+	[Export] private Button? ActionPointsButton { get; set; }
+	[Export] private RichTextLabel ActionPointsLabel { get; set; } = null!;
 
 	// Resource overviews
 	[ExportGroup("Resource Overview")]
+	[Export] private RichTextLabel ShipsCountLabel { get; set; } = null!;
+	[Export] private RichTextLabel EquipsCountLabel { get; set; } = null!;
+	[Export] private RichTextLabel SolidsLabel { get; set; } = null!;
+	[Export] private RichTextLabel LiquidLabel { get; set; } = null!;
 	[Export]
-	protected RichTextLabel? ShipsCountLabel { get; set; }
-	[Export]
-	protected RichTextLabel? EquipsCountLabel { get; set; }
-	[Export]
-	protected RichTextLabel SolidsLabel { get; set; } = null!;
-	[Export]
-	protected RichTextLabel LiquidLabel { get; set; } = null!;
-	[Export]
-	protected RichTextLabel IndustrialProductsLabel { get; set; } = null!;
+	private RichTextLabel IndustrialProductsLabel { get; set; } = null!;
 
-	[Export]
-	protected RichTextLabel HonorLabel { get; set; } = null!;
+	[Export] private RichTextLabel HonorLabel { get; set; } = null!;
 
 	// function panel
 	[ExportGroup("Function Panel Overview")]
-	[Export]
-	protected TabContainer FuncPanelTab { get; set; } = null!;
-	[Export]
-	protected Button FleetsEditButton { get; set; } = null!;
-	[Export]
-	protected Button? MissionButton { get; set; }
-	[Export]
-	protected Button AllianceButton { get; set; } = null!;
-	[Export]
-	protected Button SimulatedCombatButton { get; set; } = null!;
-	[Export]
-	protected Button HangerButton { get; set; } = null!;
-	[Export]
-	protected Button FactoryButton { get; set; } = null!;
-	[Export]
-	protected Button AssignedTaskButton { get; set; } = null!;
-	[Export]
-	protected Button CombatButton { get; set; } = null!;
+	[Export] private TabContainer FuncPanelTab { get; set; } = null!;
+	[Export] private Button FleetsEditButton { get; set; } = null!;
+	[Export] private Button? MissionButton { get; set; }
+	[Export] private Button AllianceButton { get; set; } = null!;
+	[Export] private Button SimulatedCombatButton { get; set; } = null!;
+	[Export] private Button HangerButton { get; set; } = null!;
+	[Export] private Button FactoryButton { get; set; } = null!;
+	[Export] private Button AssignedTaskButton { get; set; } = null!;
+	[Export] private Button CombatButton { get; set; } = null!;
 
 
 	// bottom panels
 	[ExportGroup("Bottom Panel Overview")]
-	[Export]
-	protected Button TechnologyButton { get; set; } = null!;
-	[Export]
-	protected Button StoreButton { get; set; } = null!;
-	[Export]
-	protected Button? ConnectionButton { get; set; }
+	[Export] private Button TechnologyButton { get; set; } = null!;
+	[Export] private Button StoreButton { get; set; } = null!;
+	[Export] private Button? ConnectionButton { get; set; }
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
 		// UI init
-		MsgViewPanel!.Quit += OnMsgViewPanelQuit;
-		MsgBoxesListPanel!.OpenMessage += OnMsgOpen;
 
-		SettingButton.Pressed += () => PanelsStack.PushPanel(SettingPanel.Load());
-		QuitButton.Pressed += PanelsStack.RequireQuitGame;
-		FleetsEditButton.Pressed += () => PanelsStack.PushPanel(FleetEditorPanel.Load());
-		SimulatedCombatButton.Pressed += () => PanelsStack.PushPanel(ReadyCombatPanel.Load());
-		AssignedTaskButton.Pressed += () => PanelsStack.PushPanel(AssignedTaskPanel.Load());
-		FactoryButton.Pressed += () => PanelsStack.PushPanel(FactoryPanel.Load());
-		CombatButton.Pressed += () => PanelsStack.PushPanel(CombatsOverviewPanel.Load());
-		HangerButton.Pressed += () => PanelsStack.PushPanel(HangerPanel.Load());
-		StoreButton.Pressed += () => PanelsStack.PushPanel(Storehouse.Load());
-		AllianceButton.Pressed += () => PanelsStack.PushPanel(AlliancePanel.Load());
-
-		TechnologyButton.Pressed += () => PanelsStack.PushPanel(TechnologyPanel.Load());
 
 		// base resource relatived to archive data
 		// init base resource label
@@ -94,25 +57,74 @@ internal partial class MainPanel : Control {
 		GlobalViewModel.BaseResourceUpdatedEvent += UpdateBaseResourceLabel;
 		// action points
 		UpdateActionPointsLabel();
+		GlobalViewModel.ActionPointsChangedEvent += UpdateActionPointsLabel;
+		// Repository statics
+		UpdateRepositoryStatics(GlobalViewModel.MainRepository);
+		GlobalViewModel.MainRepository.ElementsChangedEvent += UpdateRepositoryStatics;
+	}
+
+	public override void _EnterTree() {
+		base._EnterTree();
+		MsgViewPanel!.Quit += OnMsgViewPanelQuit;
+		MsgBoxesListPanel!.OpenMessage += OnMsgOpen;
+		SettingButton.Pressed += OnSettingsPressed;
+		QuitButton.Pressed += OnQuitPressed;
+		FleetsEditButton.Pressed += OnFleetsEditPressed;
+		SimulatedCombatButton.Pressed += OnSimulateCombatPressed;
+		AssignedTaskButton.Pressed += OnAssignedTaskPressed;
+		FactoryButton.Pressed += OnFactoryPressed;
+		CombatButton.Pressed += OnCombatPressed;
+		HangerButton.Pressed += OnHangerPressed;
+		StoreButton.Pressed += OnStorePressed;
+		AllianceButton.Pressed += OnAlliancePressed;
+		TechnologyButton.Pressed += OnTechnologyPressed;
 	}
 
 	public override void _ExitTree() {
-		// MsgBoxesListPanel!.OpenMessage -= OnMsgOpen;
-		// MsgViewPanel!.Quit -= OnMsgViewPanelQuit;
+		MsgBoxesListPanel!.OpenMessage -= OnMsgOpen;
+		MsgViewPanel!.Quit -= OnMsgViewPanelQuit;
+		SettingButton.Pressed -= OnSettingsPressed;
+		QuitButton.Pressed -= OnQuitPressed;
+		FleetsEditButton.Pressed -= OnFleetsEditPressed;
+		SimulatedCombatButton.Pressed -= OnSimulateCombatPressed;
+		AssignedTaskButton.Pressed -= OnAssignedTaskPressed;
+		FactoryButton.Pressed -= OnFactoryPressed;
+		CombatButton.Pressed -= OnCombatPressed;
+		HangerButton.Pressed -= OnHangerPressed;
+		StoreButton.Pressed -= OnStorePressed;
+		AllianceButton.Pressed -= OnAlliancePressed;
+		TechnologyButton.Pressed -= OnTechnologyPressed;
 		base._ExitTree();
 	}
 
 	private void OnMsgOpen(MessageData msg) {
-		MsgViewPanel.Make(msg);
+		MsgViewPanel.Render(msg);
 		var msgViewerIdx = FuncPanelTab!.GetTabIdxFromControl(MsgViewPanel);
 		FuncPanelTab.SetTabHidden(msgViewerIdx, false);
 		FuncPanelTab.CurrentTab = msgViewerIdx;
-		FuncPanelTab.TabsVisible = true;
+		// FuncPanelTab.TabsVisible = true;
 	}
 
 	private void OnMsgViewPanelQuit(MessageViewerPanel messageViewerPanel) {
 		FuncPanelTab.SetTabHidden(FuncPanelTab.GetTabIdxFromControl(messageViewerPanel), true);
-		FuncPanelTab.TabsVisible = false;
+		// FuncPanelTab.TabsVisible = false;
+	}
+
+	private void OnSettingsPressed() => PanelsStack.PushPanel(SettingPanel.Load());
+	private void OnQuitPressed() => PanelsStack.RequireQuitGame();
+	private void OnFleetsEditPressed() => PanelsStack.PushPanel(FleetEditorPanel.Load());
+	private void OnSimulateCombatPressed() => PanelsStack.PushPanel(ReadyCombatPanel.Load());
+	private void OnAssignedTaskPressed() => PanelsStack.PushPanel(AssignedTaskPanel.Load());
+	private void OnFactoryPressed() => PanelsStack.PushPanel(FactoryPanel.Load());
+	private void OnCombatPressed() => PanelsStack.PushPanel(CombatsOverviewPanel.Load());
+	private void OnHangerPressed() => PanelsStack.PushPanel(HangerPanel.Load());
+	private void OnStorePressed() => PanelsStack.PushPanel(Storehouse.Load());
+	private void OnAlliancePressed() => PanelsStack.PushPanel(AlliancePanel.Load());
+	private void OnTechnologyPressed() => PanelsStack.PushPanel(TechnologyPanel.Load());
+
+	private void UpdateRepositoryStatics(SubRepository repository, UniqueItem? _ = null) {
+		ShipsCountLabel.Text = $"[x] [color=white]{repository.Ships.Count}[/color] [color=gold]/ 2000[/color]";
+		EquipsCountLabel.Text = $"[x] [color=white]{repository.Equips.Count}[/color] [color=gold]/ 2000[/color]";
 	}
 
 	private void UpdateBaseResourceLabel() {

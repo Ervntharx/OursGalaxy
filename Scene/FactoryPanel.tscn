@@ -2,13 +2,14 @@
 
 [ext_resource type="Script" uid="uid://btwcw7v4rcl1i" path="res://Script/Csharp/UI/FactoryPanel.cs" id="1_i3dag"]
 
-[node name="MarginContainer" type="MarginContainer" unique_id=1201786128 node_paths=PackedStringArray("ShipsProduceLinesPanel", "EquipProduceLinePanel")]
+[node name="MarginContainer" type="MarginContainer" unique_id=1201786128 node_paths=PackedStringArray("QuitButton", "ShipsProduceLinesPanel", "EquipProduceLinePanel")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_i3dag")
+QuitButton = NodePath("PanelContainer/VBoxContainer/TopBar/Quit")
 ShipsProduceLinesPanel = NodePath("PanelContainer/VBoxContainer/TabContainer/EquipFactory/HFlowContainer")
 EquipProduceLinePanel = NodePath("PanelContainer/VBoxContainer/TabContainer/ShipFactory/HFlowContainer")
 

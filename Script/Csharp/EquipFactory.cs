@@ -14,4 +14,8 @@ internal static class EquipFactory {
 		equip.ID = data.ID;
 		return equip;
 	}
+
+	public static EquipBase Make(EquipReference reference, SubRepository repository) {
+		return Make(repository[reference]);
+	}
 }

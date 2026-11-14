@@ -40,6 +40,7 @@ UI:
 	FleetEditor行为
 
 问题：
+	GlobalViewModel的ObservableCollection和SavesData相合性不佳
 
 等待研究：
 	粒子系统效果配置，发射式粒子特效

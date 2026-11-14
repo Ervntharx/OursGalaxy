@@ -9,11 +9,10 @@ internal partial class TestLifeVar : Control {
 	public override void _Ready() {
 		var shipData = new SpaceshipData(SpaceshipConfig.TEMPLATE_NAMECODE, ItemBaseConfig.QulityEnum.White);
 		var turretData = new TurretData("Equip/Turret/Photon", "Template", ItemBaseConfig.QulityEnum.White);
-		var mainRp = new SubRepository() {
-			Ships = new ReadOnlyCollection<SpaceshipData>([shipData]),
-			Equips = new ReadOnlyCollection<EquipData>([turretData])
-		};
-		var otherRp = new SubRepository() { Ships = [], Equips = [] };
+		var mainRp = new SubRepository();
+		mainRp.Add(shipData);
+		mainRp.Add(turretData);
+		var otherRp = new SubRepository();
 
 		shipData.EquipsLs.Add("L_0", turretData.MakeReference());
 		GD.Print(turretData.IsOccupied());

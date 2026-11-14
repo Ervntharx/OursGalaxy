@@ -8,46 +8,31 @@ namespace OursGalaxy.UI;
 internal partial class SettingPanel : MarginContainer {
 	public static SettingPanel Load() => (SettingPanel)ResourceLoader.Load<PackedScene>("res://Scene/SettingPanel.tscn").Instantiate();
 
-	[Export]
-	protected Button QuitButton { get; set; } = null!;
+	[Export] private Button QuitButton { get; set; } = null!;
 
-	[Export]
-	protected RichTextLabel? AboutPage { get; set; }
-
-	#region Combat Stage
-	[Export]
-	protected LineEdit? CameraMoveVelocityEdit { get; set; }
-	[Export]
-	protected LineEdit? CameraOverviewModePitchAngleEdit { get; set; }
-	[Export]
-	protected LineEdit? CameraDistanceMaxEdit { get; set; }
-	[Export]
-	protected LineEdit? CameraDistanceMinEdit { get; set; }
-
-
-	#endregion Combat Stage
+	[Export] private RichTextLabel AboutPage { get; set; } = null!;
 
 	#region Apperance
-	[Export] protected SpinBox CameraDefaultDistance { get; set; } = null!;
-	[Export] protected SpinBox CameraDistanceMax { get; set; } = null!;
-	[Export] protected SpinBox CameraDistanceMin { get; set; } = null!;
-	[Export] protected SpinBox CameraMoveVelocity { get; set; } = null!;
-	[Export] protected SpinBox CameraDistanceChangeVelocity { get; set; } = null!;
+	[Export] private SpinBox CameraDefaultDistanceEdit { get; set; } = null!;
+	[Export] private SpinBox CameraDistanceMaxEdit { get; set; } = null!;
+	[Export] private SpinBox CameraDistanceMinEdit { get; set; } = null!;
+	[Export] private SpinBox CameraMoveVelocityEdit { get; set; } = null!;
+	[Export] private SpinBox CameraDistanceChangeVelocityEdit { get; set; } = null!;
 
 	// panels margin
-	[Export]
-	protected SpinBox? PanelsMarginLeftBox { get; set; }
-	[Export]
-	protected SpinBox? PanelsMarginRightBox { get; set; }
-	[Export]
-	protected SpinBox? PanelsMarginTopBox { get; set; }
-	[Export]
-	protected SpinBox? PanelsMarginBottomBox { get; set; }
+	[Export] private SpinBox PanelsMarginLeftBox { get; set; } = null!;
+	[Export] private SpinBox PanelsMarginRightBox { get; set; } = null!;
+	[Export] private SpinBox PanelsMarginTopBox { get; set; } = null!;
+	[Export] private SpinBox PanelsMarginBottomBox { get; set; } = null!;
 	#endregion Apperance
 
 	#region Sound
-	protected CheckButton SoundMainSwitchButton { get; set; } = null!;
+	[Export] private CheckButton SoundMainSwitchButton { get; set; } = null!;
 	#endregion Sound
+
+	#region Advance
+	[Export] private Button ClearSavesData { get; set; } = null!;
+	#endregion Advance
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
@@ -57,29 +42,33 @@ internal partial class SettingPanel : MarginContainer {
 		SettingsArchive.Data.PanelsMarginChanged += OnMarginChanged;
 
 
-		QuitButton!.Pressed += QueueFree;
-		AboutPage!.MetaClicked += OnAboutPageMetaClicked;
+		QuitButton.Pressed += QueueFree;
+		AboutPage.MetaClicked += OnAboutPageMetaClicked;
 
 		#region Apperance
 		// camera
-		CameraDefaultDistance.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Default_Distance = (float)newValue;
-		CameraDistanceMax.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Distance_Max = (float)newValue;
-		CameraDistanceMin.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Distance_Min = (float)newValue;
-		CameraMoveVelocity.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Move_Velocity = (float)newValue;
-		CameraDistanceChangeVelocity.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Distance_ChangsStep = (float)newValue;
+		CameraDefaultDistanceEdit.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Default_Distance = (float)newValue;
+		CameraDistanceMaxEdit.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Distance_Max = (float)newValue;
+		CameraDistanceMinEdit.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Distance_Min = (float)newValue;
+		CameraMoveVelocityEdit.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Move_Velocity = (float)newValue;
+		CameraDistanceChangeVelocityEdit.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Distance_ChangsStep = (float)newValue;
 
 		// panels margin
-		PanelsMarginLeftBox!.ValueChanged += (newValue) => {
+		PanelsMarginLeftBox.ValueChanged += (newValue) => {
 			SettingsArchive.Data.Apperance_UI_Panels_Margin_Left = (int)newValue;
 		};
-		PanelsMarginRightBox!.ValueChanged += (newValue) => { SettingsArchive.Data.Apperance_UI_Panels_Margin_Right = (int)newValue; };
-		PanelsMarginTopBox!.ValueChanged += (newValue) => { SettingsArchive.Data.Apperance_UI_Panels_Margin_Top = (int)newValue; };
-		PanelsMarginBottomBox!.ValueChanged += (newValue) => { SettingsArchive.Data.Apperance_UI_Panels_Margin_Bottom = (int)newValue; };
+		PanelsMarginRightBox.ValueChanged += (newValue) => { SettingsArchive.Data.Apperance_UI_Panels_Margin_Right = (int)newValue; };
+		PanelsMarginTopBox.ValueChanged += (newValue) => { SettingsArchive.Data.Apperance_UI_Panels_Margin_Top = (int)newValue; };
+		PanelsMarginBottomBox.ValueChanged += (newValue) => { SettingsArchive.Data.Apperance_UI_Panels_Margin_Bottom = (int)newValue; };
 		#endregion Apperance
 
 		#region Sound
 		SoundMainSwitchButton.Toggled += (toggle) => SettingsArchive.Data.SoundMainSwitch = toggle;
 		#endregion Sound
+
+		#region Advance
+		ClearSavesData.Pressed += () => GameSavesDataMgr.Clear();
+		#endregion Advance
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -87,7 +76,7 @@ internal partial class SettingPanel : MarginContainer {
 	}
 
 	public override void _ExitTree() {
-		QuitButton!.Pressed -= QueueFree;
+		QuitButton.Pressed -= QueueFree;
 		base._ExitTree();
 	}
 
