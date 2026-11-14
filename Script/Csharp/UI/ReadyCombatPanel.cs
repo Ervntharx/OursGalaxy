@@ -48,14 +48,14 @@ internal partial class ReadyCombatPanel : MarginContainer {
 			LeftUserNameLabel!.Text = leftCamp.Name;
 			LeftFleetPointsLabel!.Text = $"{leftCamp.Points}";
 
-			LeftFleetInformationLabel!.Text = MakeStringFleetInformation(leftFleet.Name, leftFleet.Size, leftFleet.ShipsCount, leftFleet.HP, leftFleet.Raid);
+			// LeftFleetInformationLabel!.Text = MakeStringFleetInformation(leftFleet.Name, leftFleet.Size, leftFleet.ShipsCount, leftFleet.HP, leftFleet.Raid);
 		}
 		if (rightCamp is not null && rightFleet is not null) {
 			RightAvatar!.Texture = rightCamp.Avatar;
 			RightUserNameLabel!.Text = rightCamp.Name;
 			RightFleetPointsLabel!.Text = $"{rightCamp.Points}";
 
-			RightFleetInformationLabel!.Text = MakeStringFleetInformation(rightFleet.Name, rightFleet.Size, rightFleet.ShipsCount, rightFleet.HP, rightFleet.Raid);
+			// RightFleetInformationLabel!.Text = MakeStringFleetInformation(rightFleet.Name, rightFleet.Size, rightFleet.ShipsCount, rightFleet.HP, rightFleet.Raid);
 		}
 	}
 

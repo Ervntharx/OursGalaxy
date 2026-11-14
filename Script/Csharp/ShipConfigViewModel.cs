@@ -6,7 +6,7 @@ namespace OursGalaxy.UI;
 internal sealed class ShipConfigViewModel {
 	public ShipConfigPanel Panel { get; set; }
 	public SubRepository? Repository { get; private set; }
-	public SpaceshipReference? Ship { get; private set; }
+	public SpaceshipReference? ShipReference { get; private set; }
 
 	public string? PendingEditOutletName { get; private set; }
 
@@ -19,13 +19,13 @@ internal sealed class ShipConfigViewModel {
 
 	public void Load(SubRepository repository, SpaceshipReference shipRefer) {
 		Repository = repository;
-		Ship = shipRefer;
+		ShipReference = shipRefer;
 	}
 
 	public void PushOutletIntoPending(string outletName) {
-		if (Repository is not null && Ship is not null) {
+		if (Repository is not null && ShipReference is not null) {
 			PendingEditOutletName = outletName;
-			var shipData = Repository.GetSpaceshipData(Ship);
+			var shipData = Repository[ShipReference];
 			var shipConfig = SpaceshipLib.GetConfig(shipData);
 			PushPendingEditOutletEvent?.Invoke(shipConfig.OutletSet[outletName]);
 		}
@@ -35,16 +35,16 @@ internal sealed class ShipConfigViewModel {
 	}
 
 	public void CLearOutlet(string outletName) {
-		if (Repository is not null && Ship is not null) {
+		if (Repository is not null && ShipReference is not null) {
 			PendingEditOutletName = outletName;
-			var data = Repository.GetSpaceshipData(Ship);
+			var data = Repository[ShipReference];
 			if (data.EquipsLs.ContainsKey(outletName)) {
 				// 先清理引用,后移出资产到主资产库
 				var equipReference = data.EquipsLs[outletName];
-				var equipData = Repository.GetEquipData(equipReference);
+				var equipData = Repository[equipReference];
 				equipData.RecycleReference(equipReference);
 				data.EquipsLs.Remove(outletName);
-				RepositoryMap.Move(equipData, GlobalViewModel.MainRepository.ID);
+				Repository.Move(equipData, GlobalViewModel.MainRepository);
 
 				OutletUPdatedEvent?.Invoke(PendingEditOutletName, null);
 			}
@@ -56,10 +56,10 @@ internal sealed class ShipConfigViewModel {
 	}
 
 	public void Install(EquipData equipData) {
-		if (Repository is not null && Ship is not null && PendingEditOutletName is not null) {
+		if (Repository is not null && ShipReference is not null && PendingEditOutletName is not null) {
 			if (equipData.ItemLocation is null) {
-				var data = Repository.GetSpaceshipData(Ship);
-				RepositoryMap.Move(equipData, Repository.ID);
+				var data = Repository[ShipReference];
+				Repository.Move(equipData, GlobalViewModel.MainRepository);
 				var reference = equipData.MakeReference();
 				data.EquipsLs.Add(PendingEditOutletName, reference);
 

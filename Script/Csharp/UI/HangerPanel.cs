@@ -19,7 +19,7 @@ internal partial class HangerPanel : MarginContainer {
 			foreach (var child in ShipsPanel.GetChildren()) {
 				child.QueueFree();
 			}
-			foreach (var ship in GlobalViewModel.Ships) {
+			foreach (var ship in GlobalViewModel.MainRepository.Ships) {
 				var shipBox = SpaceshipBox.Load();
 				shipBox.Make(ship);
 				ShipsPanel.AddChild(shipBox);

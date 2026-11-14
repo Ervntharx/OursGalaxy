@@ -24,15 +24,15 @@ internal partial class ShipConfigPanel : MarginContainer {
 		ViewModel = new(this);
 	}
 
-	public void Render(SpaceshipReference ship, SubRepository subRepository) {
-		var shipData = subRepository.GetSpaceshipData(ship);
+	public void Render(SpaceshipReference shipReference, SubRepository subRepository) {
+		var shipData = subRepository[shipReference];
 		var shipConfig = SpaceshipLib.GetConfig(shipData);
 		foreach (var outletSet in shipConfig.OutletSet) {
 			var outletUI = ShipConfigOutletBox.Load();
-			outletUI.Render(outletSet.Key, outletSet.Value, shipData.EquipsLs.ContainsKey(outletSet.Key) ? subRepository.GetEquipData(shipData.EquipsLs[outletSet.Key]) : null);
+			outletUI.Render(outletSet.Key, outletSet.Value, shipData.EquipsLs.ContainsKey(outletSet.Key) ? subRepository[shipData.EquipsLs[outletSet.Key]] : null);
 		}
 
-		ViewModel.Load(subRepository, ship);
+		ViewModel.Load(subRepository, shipReference);
 	}
 
 

@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using Godot;
 namespace OursGalaxy;
 
@@ -12,5 +13,23 @@ internal partial class UniqueItemReference : Resource {
 
 	public UniqueItemReference(UniqueItem uItem) {
 		IDReference = uItem.ID;
+	}
+
+	public UniqueItemReference() {
+		IDReference = GUID.Empty;
+	}
+
+	public static bool operator !=(UniqueItemReference left, UniqueItemReference right) => left.IDReference != right.IDReference;
+	public static bool operator ==(UniqueItemReference left, UniqueItemReference right) => !(left != right);
+
+	public override bool Equals(object? obj) {
+		if (ReferenceEquals(obj, this)) {
+			return true;
+		}
+		return obj is UniqueItemReference refer && refer == this;
+	}
+
+	public override int GetHashCode() {
+		return HashCode.Combine(IDReference.GetHashCode(), "Reference");
 	}
 }

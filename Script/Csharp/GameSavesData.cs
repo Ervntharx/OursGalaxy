@@ -67,12 +67,7 @@ internal partial class GameSavesData : Resource {
 	[Export]
 	public Array<GameItem> GameItems { get; set; } = [];
 
-	[Export]
-	public Array<SpaceshipData> Ships { get; set; } = [];
-
-	[Export]
-	public Array<EquipData> Equips { get; set; } = [];
-
+	[Export] public SubRepository Repository { get; set; } = new();
 
 	[Export]
 	public Array<FleetData> Fleets { get; set; } = [];

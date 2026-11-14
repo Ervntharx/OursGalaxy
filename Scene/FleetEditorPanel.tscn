@@ -4,7 +4,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y6ubi"]
 
-[node name="MarginContainer" type="MarginContainer" unique_id=1207734174 node_paths=PackedStringArray("QuitButton", "FleetNameEdit", "ChangeFlagShip", "AddShip", "ShipsOverviewsPanel", "ShipsCountLabel", "FleetSizeLabel", "FleetRaidLabel", "CameraArm", "Camera", "FleetPreview", "FleetStage")]
+[node name="MarginContainer" type="MarginContainer" unique_id=1207734174 node_paths=PackedStringArray("QuitButton", "SaveDialog", "FleetNameEdit", "ChangeFlagShip", "AddShip", "ShipsOverviewsPanel", "ShipsCountLabel", "FleetSizeLabel", "FleetRaidLabel", "CameraArm", "Camera", "FleetPreview", "FleetStage")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -16,6 +16,7 @@ theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 script = ExtResource("1_qhvpf")
 QuitButton = NodePath("PanelContainer/VBoxContainer/TopBar/Quit")
+SaveDialog = NodePath("SaveDialog")
 FleetNameEdit = NodePath("PanelContainer/VBoxContainer/TopBar/LineEdit")
 ChangeFlagShip = NodePath("PanelContainer/VBoxContainer/BottomBar/Control/ChangeFlagship")
 AddShip = NodePath("PanelContainer/VBoxContainer/BottomBar/Control2/AddShip")

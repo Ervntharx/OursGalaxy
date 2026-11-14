@@ -13,7 +13,7 @@ internal partial class TestCombat : Node3D {
 		var mem3 = new SpaceshipData(SpaceshipConfig.TEMPLATE_NAMECODE, ItemBaseConfig.QulityEnum.White) {
 			CustomName = $"{fleet.Name} mem 3"
 		};
-		fleet.LocalRepository.Ships.Add(mem3);
+		fleet.Repository.Add(mem3);
 		fleet.Ships.Add(mem3.MakeReference(), new() {
 			OffsetPosition = Godot.Vector3.Back * 5
 		});
@@ -45,11 +45,11 @@ internal partial class TestCombat : Node3D {
 			Name = fleetName
 		};
 
-		fleet.LocalRepository.Ships.Add(mem1);
-		fleet.LocalRepository.Ships.Add(mem2);
+		fleet.Repository.Add(mem1);
+		fleet.Repository.Add(mem2);
 
-		fleet.LocalRepository.Equips.Add(ph1);
-		fleet.LocalRepository.Equips.Add(ph2);
+		fleet.Repository.Add(ph1);
+		fleet.Repository.Add(ph2);
 
 		mem1.EquipsLs.Add("L0", ph1.MakeReference());
 		fleet.Ships.Add(mem1.MakeReference(), new() {
