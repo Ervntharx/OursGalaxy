@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cdeuid74b1xse" path="res://Script/Csharp/UI/ShipConfigPanel.cs" id="1_cti5s"]
 [ext_resource type="PackedScene" uid="uid://bto3wngljf3fb" path="res://Scene/Spaceship/TemplateShip.tscn" id="2_3ekwn"]
 
-[node name="ShipConfigPanel" type="MarginContainer" unique_id=2131798070 node_paths=PackedStringArray("QuitButton", "ShipOverview", "ShipStage", "EquipsListPanel")]
+[node name="ShipConfigPanel" type="MarginContainer" unique_id=2131798070 node_paths=PackedStringArray("QuitButton", "ShipOverview", "ShipStage")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -17,7 +17,6 @@ script = ExtResource("1_cti5s")
 QuitButton = NodePath("PanelContainer/VBoxContainer/TopBar/Quit")
 ShipOverview = NodePath("PanelContainer/VBoxContainer/HSplitContainer/Control/SubViewportContainer/SubViewport")
 ShipStage = NodePath("PanelContainer/VBoxContainer/HSplitContainer/Control/SubViewportContainer/SubViewport/ShipStage")
-EquipsListPanel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/TabContainer/InstalledEquips/EquipPanel")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1717783387]
 layout_mode = 2

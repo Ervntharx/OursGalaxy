@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ShieldConfig" format=3 uid="uid://d3wr7lwycsqu8"]
+
+[ext_resource type="Script" uid="uid://bk1uh2q5oiut3" path="res://Script/Csharp/OutletSizeType.cs" id="1_foe72"]
+[ext_resource type="Script" uid="uid://bj4ye8ikswu5y" path="res://Script/Csharp/ShieldConfig.cs" id="2_dxde5"]
+
+[sub_resource type="Resource" id="Resource_hxhdo"]
+script = ExtResource("1_foe72")
+Type = "M"
+
+[resource]
+script = ExtResource("2_dxde5")
+HP = 500
+CDMisc = 5
+TypeCode = "Equip/Shield"
+NameCode = "Template"
+DisplayName = "模板"
+Introductuon = "木板"
+metadata/_custom_type_script = "uid://bj4ye8ikswu5y"

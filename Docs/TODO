@@ -1,14 +1,9 @@
 基础：
 
-SubRepository具备ElementChangedEvent发射能力, 检测元素增减
-
 引入MissionData类型，可能需要引入ChallengeStaticsServer
 
 Combat所需按难度生成舰队难度配置？
 TaskEvent所需事件发生器
-
-引入ShieldConfig, ShieldData
-引入DamageControlEquipConfig，DamageControlEquipData
 
 实现LongProgressTask类型以覆盖远征，生产制造所需的长离线过程任务
 远征的Tasks堆积让远征vb自行解引
@@ -40,7 +35,9 @@ UI:
 	FleetEditor接入存档
 
 测试：
+	AssignedTask
 	Ship Config装配行为
+	FleetEditor行为
 
 问题：
 

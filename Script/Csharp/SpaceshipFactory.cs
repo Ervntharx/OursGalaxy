@@ -39,7 +39,7 @@ internal static class SpaceshipFactory {
 	/// <param name="data"></param>
 	/// <param name="repository"></param>
 	/// <returns></returns>
-	public static Spaceship Make(SpaceshipData data, SubRepository? repository = null) {
+	public static Spaceship Make(SpaceshipData data, SubRepository repository) {
 		var result = Make(data);
 		// 安装装配配置
 		foreach (var pair in data.EquipsLs) {

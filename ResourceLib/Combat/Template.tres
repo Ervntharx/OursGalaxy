@@ -8,18 +8,17 @@
 [ext_resource type="Script" uid="uid://bdxyjx4durnon" path="res://Script/Csharp/SpaceshipReference.cs" id="5_pnaem"]
 [ext_resource type="Script" uid="uid://ckbbls7g8c6ds" path="res://Script/Csharp/FleetData.cs" id="6_n25r6"]
 
-[sub_resource type="Resource" id="Resource_s5b7e"]
-script = ExtResource("1_1emhq")
-
-[sub_resource type="Resource" id="Resource_dab1d"]
+[sub_resource type="Resource" id="Resource_1emhq"]
 script = ExtResource("3_bgfw4")
-GUIDStr = "0bc697c7-08b4-4713-b7fc-1511752ccedf"
+GUIDStr = "7c0982b6-686e-41bc-a46e-dea2bf0d6e73"
 
-[sub_resource type="CSharpScript" id="CSharpScript_0kat3"]
+[sub_resource type="CSharpScript" id="CSharpScript_dxsik"]
 
-[sub_resource type="Resource" id="Resource_g0yoi"]
+[sub_resource type="Resource" id="Resource_bgfw4"]
 script = ExtResource("4_ihgxc")
-ID = SubResource("Resource_dab1d")
+ID = SubResource("Resource_1emhq")
+shipSource = Array[SubResource("CSharpScript_dxsik")]([])
+equipsSource = Array[ExtResource("2_dxsik")]([])
 
 [sub_resource type="Resource" id="Resource_deww7"]
 script = ExtResource("6_n25r6")
