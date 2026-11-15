@@ -1,10 +1,9 @@
 using Godot.Collections;
 using Godot;
-using System.Net.Http;
 namespace OursGalaxy;
 
 /// <summary>
-/// 游戏存档数据
+/// 游戏存档数据. DTO
 /// </summary>
 internal partial class GameSavesData : Resource {
 	#region User Profile

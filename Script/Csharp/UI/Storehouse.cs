@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using OursGalaxy.ViewModel;
 namespace OursGalaxy.UI;
 
 /// <summary>
@@ -11,51 +12,52 @@ internal partial class Storehouse : MarginContainer {
 
 	[Export] private Button QuitButton { get; set; } = null!;
 	[Export] private HFlowContainer ItemsListPanel { get; set; } = null!;
+	[Export] private PanelContainer ItemInfoPanel { get; set; } = null!;
+	[Export] private TextureRect TextureDisplayer { get; set; } = null!;
+	[Export] private RichTextLabel ItemNameLabel { get; set; } = null!;
+	[Export] private RichTextLabel ItemIntroLabel { get; set; } = null!;
 
 	public override void _EnterTree() {
 		base._EnterTree();
-		QuitButton.Pressed += () => PanelsStack.PopPanel(this);
-		// GlobalViewModel.GameItems.CollectionChanged += Render;
+		QuitButton.Pressed += OnQuitPressed;
+		ItemRepositoryVM.SelectElementEvent += RenderSelectedItem;
 		Render();
 	}
 
 	public override void _ExitTree() {
-		// GlobalViewModel.GameItems.CollectionChanged -= Render;
+		QuitButton.Pressed -= OnQuitPressed;
+		ItemRepositoryVM.SelectElementEvent -= RenderSelectedItem;
 		base._ExitTree();
 	}
 
 	private void Render() {
-		GD.Print(GlobalViewModel.GameItems.Count);
-		foreach (var item in GlobalViewModel.GameItems) {
+		foreach (var item in ItemRepositoryVM.GetGameItems()) {
 			var box = GameItemBox.Load();
 			box.Render(item);
 			ItemsListPanel.AddChild(box);
 		}
 	}
 
-	private void Render(object? _, System.Collections.Specialized.NotifyCollectionChangedEventArgs args) {
-		if (args.NewItems is not null) {
-			foreach (var newItem in args.NewItems.OfType<GameItem>()) {
-				var box = GameItemBox.Load();
-				box.Render(newItem);
-				ItemsListPanel.AddChild(box);
-			}
+	private void RenderAppend(GameItem item) {
+		var box = GameItemBox.Load();
+		box.Render(item);
+		ItemsListPanel.AddChild(box);
+	}
+
+	private void RenderRemoved(GameItem item) => ItemsListPanel.GetChildren()
+		.FirstOrDefault(child => child is GameItemBox box && box.Item?.Equals(item) is true)
+		?.QueueFree();
+
+	private void RenderSelectedItem(GameItem? item) {
+		ItemInfoPanel.Visible = item is not null;
+		if (item is not null) {
+			var config = ResourceLib.GetConfig(item);
+			ItemNameLabel.Text = config.DisplayName;
+			ItemIntroLabel.Text = config.Introductuon;
 		}
-		if (args.OldItems is not null) {
-			var oldItemsLs = new LinkedList<GameItem>();
-			foreach (var oldItem in args.OldItems.OfType<GameItem>()) {
-				oldItemsLs.AddLast(oldItem);
-			}
-			foreach (var box in ItemsListPanel.GetChildren().OfType<GameItemBox>()) {
-				if (box.Item is not null) {
-					if (oldItemsLs.Contains(box.Item)) {
-						box.QueueFree();
-					}
-				}
-				else {
-					GD.PushError("<Storehouse> GameItemBox.Item is null");
-				}
-			}
-		}
+	}
+
+	private void OnQuitPressed() {
+		PanelsStack.PopPanel(this);
 	}
 }

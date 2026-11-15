@@ -6,6 +6,8 @@ namespace OursGalaxy;
 /// 存档管理器,是AutoLoad的
 /// </summary>
 internal partial class GameSavesDataMgr : Node {
+	public static GameSavesData Data { get => data; }
+
 	public static void Read() {
 		if (FileAccess.FileExists(SAVE_PATH)) {
 			var data = ResourceLoader.Load<GameSavesData>(SAVE_PATH);
@@ -17,7 +19,7 @@ internal partial class GameSavesDataMgr : Node {
 	}
 
 	public static void Save() {
-		var data = GlobalViewModel.Save();
+		var data = Data;
 		var err = ResourceSaver.Save(data, SAVE_PATH);
 		if (err != Error.Ok) {
 			GD.PushError(err);
@@ -76,5 +78,8 @@ internal partial class GameSavesDataMgr : Node {
 
 		return data;
 	}
+
+	private static GameSavesData data = new();
+
 	private const string SAVE_PATH = "user://Saves.tres";
 }

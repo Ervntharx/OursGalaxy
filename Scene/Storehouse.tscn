@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://b15oix8iiv3a4"]
 
 [ext_resource type="Script" uid="uid://dccfftx123o5m" path="res://Script/Csharp/UI/Storehouse.cs" id="1_vux73"]
+[ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="2_4m61v"]
 
-[node name="Storehouse" type="MarginContainer" unique_id=663373868 node_paths=PackedStringArray("QuitButton", "ItemsListPanel")]
+[node name="Storehouse" type="MarginContainer" unique_id=663373868 node_paths=PackedStringArray("QuitButton", "ItemsListPanel", "ItemInfoPanel", "TextureDisplayer", "ItemNameLabel", "ItemIntroLabel")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -14,7 +15,11 @@ theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 script = ExtResource("1_vux73")
 QuitButton = NodePath("PanelContainer/VBoxContainer/TopBar/Quit")
-ItemsListPanel = NodePath("PanelContainer/VBoxContainer/ScrollContainer/ItemsListPanel")
+ItemsListPanel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/ScrollContainer/ItemsListPanel")
+ItemInfoPanel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/PanelContainer")
+TextureDisplayer = NodePath("PanelContainer/VBoxContainer/HSplitContainer/PanelContainer/VBoxContainer/TextureRect")
+ItemNameLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/PanelContainer/VBoxContainer/Title")
+ItemIntroLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/PanelContainer/VBoxContainer/RichTextLabel")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=597951013]
 layout_mode = 2
@@ -34,11 +39,40 @@ text = "<"
 layout_mode = 2
 text = "仓库"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer" unique_id=280145293]
+[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/VBoxContainer" unique_id=1188166838]
+layout_mode = 2
+size_flags_vertical = 3
+drag_area_highlight_in_editor = true
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=214885861]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/PanelContainer" unique_id=433969156]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/HSplitContainer/PanelContainer/VBoxContainer" unique_id=511657544]
+layout_mode = 2
+texture = ExtResource("2_4m61v")
+stretch_mode = 3
+
+[node name="Title" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HSplitContainer/PanelContainer/VBoxContainer" unique_id=1796591980]
+layout_mode = 2
+text = "物品名称"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HSplitContainer/PanelContainer/VBoxContainer" unique_id=726803870]
+layout_mode = 2
+size_flags_vertical = 3
+text = "物品描述"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=280145293]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ItemsListPanel" type="HFlowContainer" parent="PanelContainer/VBoxContainer/ScrollContainer" unique_id=1735654651]
+[node name="ItemsListPanel" type="HFlowContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/ScrollContainer" unique_id=1735654651]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

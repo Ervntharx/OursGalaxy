@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://dkdd0iya65qe7"]
 
 [ext_resource type="Script" uid="uid://4tqvolrghu4t" path="res://Test/TestLifeVar.cs" id="1_n8apm"]
+[ext_resource type="PackedScene" uid="uid://b15oix8iiv3a4" path="res://Scene/Storehouse.tscn" id="2_1dp48"]
 
-[node name="TestLifeVar" type="Control" unique_id=1904611329]
+[node name="TestLifeVar" type="Control" unique_id=1904611329 node_paths=PackedStringArray("here")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,3 +15,19 @@ offset_bottom = 68.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n8apm")
+here = NodePath("Button")
+
+[node name="Storehouse" parent="." unique_id=663373868 instance=ExtResource("2_1dp48")]
+layout_mode = 1
+offset_left = -85.0
+offset_top = -36.0
+offset_right = -436.0
+offset_bottom = -221.0
+
+[node name="Button" type="Button" parent="." unique_id=961562561]
+layout_mode = 0
+offset_left = 231.0
+offset_top = 514.0
+offset_right = 275.0
+offset_bottom = 545.0
+text = "here"

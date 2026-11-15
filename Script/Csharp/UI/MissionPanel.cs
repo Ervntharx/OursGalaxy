@@ -10,13 +10,4 @@ internal partial class MissionPanel : MarginContainer {
 	[Export] protected RichTextLabel MissionDesc { get; set; } = null!;
 	[Export] protected HBoxContainer RewardListPanel { get; set; } = null!;
 	[Export] protected Button ClaimButton { get; set; } = null!;
-
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready() {
-		QuitButton.Pressed += () => PanelsStack.PopPanel(this);
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta) {
-	}
 }

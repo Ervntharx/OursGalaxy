@@ -8,7 +8,7 @@ namespace OursGalaxy;
 /// ⚠️但没有测试过裸ItemBase与ResourceLib,Factory系的交互能力
 /// </summary>
 [GlobalClass]
-internal partial class ItemBase : Resource {
+internal partial class ItemBase : Resource, IEquatable<ItemBase> {
 	/// <summary>
 	/// 物品类型code
 	/// </summary>
@@ -24,8 +24,6 @@ internal partial class ItemBase : Resource {
 	/// </summary>
 	[Export] public ItemBaseConfig.QulityEnum Qulity { get; set; } = ItemBaseConfig.QulityEnum.White;
 
-	public Action<ItemBase, string>? PropertyChanged;
-
 	/// <summary>
 	/// ⚠️予Godot设施提供的构造函数。继承类型中应包含，但不应主动使用以产生空值
 	/// </summary>
@@ -40,15 +38,11 @@ internal partial class ItemBase : Resource {
 	public static bool operator ==(ItemBase left, ItemBase right) => !(left != right);
 	public static bool operator !=(ItemBase left, ItemBase right) => left.ToString() != right.ToString();
 
-	public override bool Equals(object? obj) {
-		if (ReferenceEquals(this, obj)) {
-			return true;
-		}
-		return obj is not null && obj is ItemBase objItemBase && this == objItemBase;
-	}
+	public bool Equals(ItemBase? other) => other is not null && other.TypeCode == TypeCode && other.NameCode == NameCode && other.Qulity == Qulity;
+	public override bool Equals(object? obj) => Equals(obj as ItemBase);
 
 	// override object.GetHashCode
-	public override int GetHashCode() => TypeCode.GetHashCode() + NameCode.GetHashCode() + Qulity.GetHashCode();
+	public override int GetHashCode() => HashCode.Combine(TypeCode.GetHashCode(), NameCode.GetHashCode(), Qulity.GetHashCode());
 
 	public override string ToString() => $"{TypeCode}_{NameCode}_{(int)Qulity}";
 

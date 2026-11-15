@@ -3,18 +3,14 @@ using Godot;
 using System;
 using OursGalaxy.ResourceConfig;
 using OursGalaxy.UI;
-using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-using System.Security.Principal;
-using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data;
 namespace OursGalaxy;
 
 /// <summary>
 ///游戏ViewModel
 /// </summary>
+[Obsolete("delived into sub viewmodels")]
 internal partial class GlobalViewModel {
 	public static void Read(GameSavesData saves) => Data = saves;
 	public static GameSavesData Save() => Data;

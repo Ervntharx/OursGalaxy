@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Godot;
+﻿using Godot;
 namespace OursGalaxy.UI;
 
 internal sealed partial class MainPanel : MarginContainer {
@@ -31,7 +30,7 @@ internal sealed partial class MainPanel : MarginContainer {
 	[ExportGroup("Function Panel Overview")]
 	[Export] private TabContainer FuncPanelTab { get; set; } = null!;
 	[Export] private Button FleetsEditButton { get; set; } = null!;
-	[Export] private Button? MissionButton { get; set; }
+	[Export] private Button MissionButton { get; set; } = null!;
 	[Export] private Button AllianceButton { get; set; } = null!;
 	[Export] private Button SimulatedCombatButton { get; set; } = null!;
 	[Export] private Button HangerButton { get; set; } = null!;
@@ -65,39 +64,49 @@ internal sealed partial class MainPanel : MarginContainer {
 
 	public override void _EnterTree() {
 		base._EnterTree();
+		// topbar 
 		ProfileButton.Pressed += OnProfilePressed;
 		ActionPointsButton.Pressed += OnActionPointPressed;
-		MsgViewPanel.Quit += OnMsgViewPanelQuit;
-		MsgBoxesListPanel!.OpenMessage += OnMsgOpen;
 		SettingButton.Pressed += OnSettingsPressed;
-		QuitButton.Pressed += OnQuitPressed;
+		// func panel
+		MissionButton.Pressed += OnMissionPressed;
+		AllianceButton.Pressed += OnAlliancePressed;
 		FleetsEditButton.Pressed += OnFleetsEditPressed;
 		SimulatedCombatButton.Pressed += OnSimulateCombatPressed;
 		AssignedTaskButton.Pressed += OnAssignedTaskPressed;
 		FactoryButton.Pressed += OnFactoryPressed;
 		CombatButton.Pressed += OnCombatPressed;
 		HangerButton.Pressed += OnHangerPressed;
-		StoreButton.Pressed += OnStorePressed;
-		AllianceButton.Pressed += OnAlliancePressed;
+		// bottom bar
 		TechnologyButton.Pressed += OnTechnologyPressed;
+		StoreButton.Pressed += OnStorePressed;
+		QuitButton.Pressed += OnQuitPressed;
+		// msg panel
+		MsgViewPanel.Quit += OnMsgViewPanelQuit;
+		MsgBoxesListPanel!.OpenMessage += OnMsgOpen;
 	}
 
 	public override void _ExitTree() {
+		// topbar
 		ProfileButton.Pressed -= OnProfilePressed;
 		ActionPointsButton.Pressed -= OnActionPointPressed;
-		MsgBoxesListPanel!.OpenMessage -= OnMsgOpen;
-		MsgViewPanel!.Quit -= OnMsgViewPanelQuit;
 		SettingButton.Pressed -= OnSettingsPressed;
-		QuitButton.Pressed -= OnQuitPressed;
+		// func panel
+		MissionButton.Pressed -= OnMissionPressed;
+		AllianceButton.Pressed -= OnAlliancePressed;
 		FleetsEditButton.Pressed -= OnFleetsEditPressed;
 		SimulatedCombatButton.Pressed -= OnSimulateCombatPressed;
 		AssignedTaskButton.Pressed -= OnAssignedTaskPressed;
 		FactoryButton.Pressed -= OnFactoryPressed;
 		CombatButton.Pressed -= OnCombatPressed;
 		HangerButton.Pressed -= OnHangerPressed;
-		StoreButton.Pressed -= OnStorePressed;
-		AllianceButton.Pressed -= OnAlliancePressed;
+		// bottom panel
 		TechnologyButton.Pressed -= OnTechnologyPressed;
+		StoreButton.Pressed -= OnStorePressed;
+		QuitButton.Pressed -= OnQuitPressed;
+		// msg panel
+		MsgBoxesListPanel!.OpenMessage -= OnMsgOpen;
+		MsgViewPanel!.Quit -= OnMsgViewPanelQuit;
 		base._ExitTree();
 	}
 
@@ -137,6 +146,7 @@ internal sealed partial class MainPanel : MarginContainer {
 
 	private void OnAssignedTaskPressed() => PanelsStack.PushPanel(AssignedTaskPanel.Load());
 	private void OnFactoryPressed() => PanelsStack.PushPanel(FactoryPanel.Load());
+	private void OnMissionPressed() => PanelsStack.PushPanel(MissionPanel.Load());
 	private void OnCombatPressed() => PanelsStack.PushPanel(CombatsOverviewPanel.Load());
 	private void OnHangerPressed() => PanelsStack.PushPanel(HangerPanel.Load());
 	private void OnStorePressed() => PanelsStack.PushPanel(Storehouse.Load());

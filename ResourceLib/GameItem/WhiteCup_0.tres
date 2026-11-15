@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemBaseConfig" format=3 uid="uid://dauc7fbvnmb28"]
+
+[ext_resource type="Script" uid="uid://b2egcjp5t27cu" path="res://Script/Csharp/ItemBaseConfig.cs" id="1_ql0n0"]
+
+[resource]
+script = ExtResource("1_ql0n0")
+TypeCode = "GameItem"
+NameCode = "WhiteCup"
+DisplayName = "白奖杯"
+Introductuon = "介绍白奖杯"
+metadata/_custom_type_script = "uid://b2egcjp5t27cu"

@@ -8,7 +8,7 @@ namespace OursGalaxy;
 /// 唯一性游戏物品，具备唯一id识别能力
 /// </summary>
 [GlobalClass]
-internal partial class UniqueItem : ItemBase {
+internal partial class UniqueItem : ItemBase, IEquatable<UniqueItem> {
 	/// <summary>
 	/// 唯一id
 	/// </summary>
@@ -66,12 +66,8 @@ internal partial class UniqueItem : ItemBase {
 	public static bool operator !=(UniqueItem left, UniqueItem right)
 		=> left.TypeCode != right.TypeCode || left.NameCode != right.NameCode || left.Qulity != right.Qulity || left.ID != right.ID;
 
-	public override bool Equals(object? obj) {
-		if (ReferenceEquals(this, obj)) {
-			return true;
-		}
-		return obj is not null && obj is UniqueItem uniqueObj && uniqueObj == this;
-	}
+	public bool Equals(UniqueItem? other) => base.Equals(other) && other.ID == ID;
+	public override bool Equals(object? obj) => Equals(obj as UniqueItem);
 
-	public override int GetHashCode() => base.GetHashCode() + ID.GetHashCode();
+	public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), ID.GetHashCode());
 }

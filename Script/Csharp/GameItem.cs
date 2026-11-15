@@ -15,10 +15,12 @@ internal partial class GameItem : ItemBase {
 	[Export]
 	public int Num {
 		get => num; set {
-			num = value;
-			PropertyChanged?.Invoke(this, new("Num"));
+			num = Math.Max(value, 0);
+			NumChangedEvent?.Invoke(this, num);
 		}
 	}
+
+	public event Action<GameItem, int>? NumChangedEvent;
 
 	/// <summary>
 	/// ⚠️予Godot设施提供的构造函数。继承类型中应包含，但不应主动使用以产生空值

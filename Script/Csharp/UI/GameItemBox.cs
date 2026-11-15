@@ -1,6 +1,5 @@
-﻿using System.Diagnostics.Tracing;
-using System.Net;
-using Godot;
+﻿using Godot;
+using OursGalaxy.ViewModel;
 namespace OursGalaxy.UI;
 
 /// <summary>
@@ -16,24 +15,34 @@ internal partial class GameItemBox : Button {
 	public GameItem? Item {
 		get => item; set {
 			if (item is not null) {
-				item.PropertyChanged -= Update;
+				item.NumChangedEvent -= UpdateNum;
 			}
 			item = value;
 			if (item is not null) {
-				item.PropertyChanged += Update;
+				item.NumChangedEvent += UpdateNum;
 			}
 		}
 	}
 
 	public void Render(GameItem item) {
 		Item = item;
-		Update(Item, string.Empty);
-		Item.PropertyChanged += Update;
+		var config = ResourceLib.GetConfig(item);
+		NameLabel.Text = config.DisplayName;
+		NumLabel.Text = $"{item.Num}";
+		Pressed += OnPressed;
 	}
 
-	private void Update(ItemBase itemBs, string _) {
-		NameLabel.Text = itemBs.NameCode;
-		NumLabel.Text = $"{((GameItem)itemBs).Num}";
+	private void UpdateNum(GameItem _, int num) {
+		if (num > 0) {
+			NumLabel.Text = $"{num}";
+		}
+		else {
+			QueueFree();
+		}
+	}
+
+	private void OnPressed() {
+		ItemRepositoryVM.SelectedItem = Item;
 	}
 
 	private GameItem? item;
