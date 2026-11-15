@@ -4,37 +4,13 @@ namespace OursGalaxy;
 
 [GlobalClass]
 internal partial class ProduceTaskData : Resource {
-	public static readonly ProduceTaskData Empty = new();
-	[Export]
-	public DateTime StartDate { get; set; }
+	[Export] public DateTime? StartDate { get; set; }
+	[Export] public int ProgressSeconds { get; set; }
 
-	[Export]
-	protected long ProgressSeconds { get; set; }
-	public TimeSpan ProgressTimeSpan => TimeSpan.FromSeconds(ProgressSeconds);
+	public bool IsEmpty => StartDate is null;
 
-	[Export]
-	public ItemBase? Target { get; set; }
-
-	protected ProduceTaskData() {
-		Target = null;
-		StartDate = DateTime.Now();
-		ProgressSeconds = 5;
-	}
-
-	public ProduceTaskData(DateTime startDate, TimeSpan progressTimeSpan, ItemBase target) {
-		StartDate = startDate;
-		ProgressSeconds = (long)progressTimeSpan.TotalSeconds;
-		Target = target;
-	}
-
-	public ProduceTaskData(ProduceTaskData other) {
-		StartDate = other.StartDate;
-		ProgressSeconds = other.ProgressSeconds;
-		Target = other.Target;
-	}
-
-	public DateTime EndDate() {
-		return new(StartDate.ToUnix() + ProgressSeconds);
+	public DateTime? EndDate() {
+		return StartDate is not null ? new(StartDate.ToUnix() + ProgressSeconds) : null;
 	}
 
 	public override string ToString() {

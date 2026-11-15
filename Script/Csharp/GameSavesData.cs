@@ -55,6 +55,22 @@ internal partial class GameSavesData : Resource {
 
 	[Export] public int[] ActionCans { get; set; } = new int[4];
 
+	#region ProduceLines
+	[Export] public Array<ShipProduceTaskData> ShipsProduceLines { get; set; } = [];
+	[Export] public Array<EquipProduceTaskData> EquipsProduceLines { get; set; } = [];
+	#endregion ProduceLines
+
+	#region AssignedTask
+	[Export] public DateTime? LastUpdateAcceptableTasks { get; set; }
+	[Export] public Array<AssignedTaskData> AcceptedTasks { get; set; } = [];
+	[Export] public Array<AssignedTaskData> AcceptableTasks { get; set; } = [];
+	#endregion AssignedTask
+
+	#region Combat
+	[Export] public Array<CombatData> Combats { get; set; } = [];
+	[Export] public Array<HuntData> Hunts { get; set; } = [];
+	#endregion Combat
+
 	#region Items series
 
 	[Export] public Array<GameItem> GameItems { get; set; } = [];
@@ -63,8 +79,4 @@ internal partial class GameSavesData : Resource {
 
 	[Export] public Array<FleetData> Fleets { get; set; } = [];
 	#endregion Items series
-
-	[Export] public Array<CombatData> Combats { get; set; } = [];
-
-	[Export] public Array<HuntData> Hunts { get; set; } = [];
 }

@@ -23,17 +23,15 @@ internal partial class FactoryPanel : MarginContainer {
 		base._Ready();
 		QuitButton.Pressed += () => PanelsStack.PopPanel(this);
 
-		var tasks = GlobalViewModel.ShipsProduceTasks;
-		for (var i = 0; i < tasks.Count; i++) {
-			var line = ProduceLineBox.Load();
-			line!.Make(i, tasks[i]);
+		for (var i = 0; i < GlobalViewModel.GetShipProduceLine().Count; i++) {
+			var line = EquipProduceLineBox.Load();
+			line!.Render(i);
 			ShipsProduceLinesPanel!.AddChild(line);
 		}
 
-		tasks = GlobalViewModel.EquipProduceTasks;
-		for (var i = 0; i < tasks.Count; i++) {
-			var line = ProduceLineBox.Load();
-			line!.Make(i, tasks[i]);
+		for (var i = 0; i < GlobalViewModel.GetEquipProduceLine().Count; i++) {
+			var line = EquipProduceLineBox.Load();
+			line!.Render(i);
 			EquipProduceLinePanel!.AddChild(line);
 		}
 

@@ -5,6 +5,11 @@ using OursGalaxy.ResourceConfig;
 using OursGalaxy.UI;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Principal;
+using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
+using System.Linq;
+using System.Data;
 namespace OursGalaxy;
 
 /// <summary>
@@ -181,49 +186,143 @@ internal partial class GlobalViewModel {
 	#endregion Action Points
 
 	#region Produce Tasks
-	[ExportGroup("Produce Tasks")]
-	[Export]
-	public static Array<ProduceTaskData> ShipsProduceTasks { get; set; } = [
-		//	for test only
-		ProduceTaskData.Empty,
-		ProduceTaskData.Empty,
-		ProduceTaskData.Empty,
-		ProduceTaskData.Empty,
-		ProduceTaskData.Empty,
+	public static IReadOnlyList<ShipProduceTaskData> GetShipProduceLine() => Data.ShipsProduceLines;
+	public static IReadOnlyList<EquipProduceTaskData> GetEquipProduceLine() => Data.EquipsProduceLines;
+	public static ShipProduceTaskData GetShipProduceLine(int idx) => GetShipProduceLine()[idx];
+	public static EquipProduceTaskData GetEquipProduceLine(int idx) => GetEquipProduceLine()[idx];
+	/// <summary>
+	/// 提交生产任务
+	/// </summary>
+	/// <param name="idx"></param>
+	/// <param name="data"></param>
+	/// <exception cref="InvalidOperationException"></exception>
+	/// <exception cref="ArgumentOutOfRangeException"></exception>
+	public static void SubmitProduceTask(int idx, ShipProduceTaskData data) {
+		if (idx >= 0 && idx < Data.ShipsProduceLines.Count) {
+			if (Data.ShipsProduceLines[idx].IsEmpty) {
+				Data.ShipsProduceLines[idx] = data;
+				return;
+			}
+			throw new InvalidOperationException("<GlobalViewModel-ProduceTask> target produceline isnt empty");
+		}
+		throw new ArgumentOutOfRangeException("<GlobalViewModel-ProduceTask> Submit task index out of range or line is not empty");
+	}
 
-	];
+	/// <summary>
+	/// 完成生产任务
+	/// </summary>
+	/// <param name="idx"></param>
+	/// <param name="data"></param>
+	/// <exception cref="Exception"></exception>
+	/// <exception cref="ArgumentOutOfRangeException"></exception>
+	public static void ClaimProduceTask(int idx, out SpaceshipData data) {
+		if (idx >= 0 && idx < Data.ShipsProduceLines.Count) {
+			if (!Data.ShipsProduceLines[idx].IsEmpty) {
+				data = Data.ShipsProduceLines[idx].Target ?? throw new Exception("<GlobalViewModel-ProduceTask> target produceline is empty");
+				MainRepository.Add(data);
+				Data.ShipsProduceLines[idx] = new();
+			}
+		}
+		throw new ArgumentOutOfRangeException("<GlobalViewModel-ProduceTask> Claim task index out of range");
+	}
 
-	[Export]
-	public static Array<ProduceTaskData> EquipProduceTasks { get; set; } = [
-		// for text only
-		ProduceTaskData.Empty,
-		ProduceTaskData.Empty,
-		ProduceTaskData.Empty,
-	];
+	/// <summary>
+	///  提交生产任务
+	/// </summary>
+	/// <param name="idx"></param>
+	/// <param name="data"></param>
+	/// <exception cref="InvalidOperationException"></exception>
+	/// <exception cref="ArgumentOutOfRangeException"></exception>
+	public static void SubmitProduceTask(int idx, EquipProduceTaskData data) {
+		if (idx >= 0 && idx < Data.EquipsProduceLines.Count) {
+			if (Data.EquipsProduceLines[idx].IsEmpty) {
+				Data.EquipsProduceLines[idx] = data;
+				return;
+			}
+			throw new InvalidOperationException("<GlobalViewModel-ProduceTask> target produceline isnt empty");
+		}
+		throw new ArgumentOutOfRangeException("<GlobalViewModel-ProduceTask> Submit task index out of range or line is not empty");
+	}
 
-	[Export]
-	public static Array<AssignedTaskData> TasksList { get; set; } = [
-		// for test only
-		new AssignedTaskData("any", AssignedTaskConfig.RatingLevelEnum.S, 2),
-		new AssignedTaskData("others",AssignedTaskConfig.RatingLevelEnum.B, 3),
-		new AssignedTaskData("and more?", AssignedTaskConfig.RatingLevelEnum.AA, 5)
-	];
+	/// <summary>
+	/// 完成生产任务
+	/// </summary>
+	/// <param name="idx"></param>
+	/// <param name="data"></param>
+	/// <exception cref="Exception"></exception>
+	public static void ClaimProduceTask(int idx, out EquipData data) {
+		if (idx >= 0 && idx < Data.EquipsProduceLines.Count) {
+			if (!Data.EquipsProduceLines[idx].IsEmpty) {
+				data = Data.EquipsProduceLines[idx].Target ?? throw new Exception("<GlobalViewModel-ProduceTask> target produceline is empty");
+				MainRepository.Add(data);
+				Data.EquipsProduceLines[idx] = new();
+			}
+		}
+		throw new Exception("<GlobalViewModel-ProduceTask> Claim task index out of range");
+	}
+
 	#endregion Produce Tasks
 
-	#region Battle and Combat
-	[Export]
-	public static Array<CombatData> PunitiveCombatList { get; protected set; } = [];
+	#region AssignedTask
+	public static IReadOnlyList<AssignedTaskData> GetAcceptedTasks() => Data.AcceptedTasks;
 
-	[Export]
-	public static Array<HuntData> TrackedHuntList { get; protected set; } = [];
+	public static void UpdateAcceptableTask() {
+		// 检查30分钟刷新
+		if (Data.LastUpdateAcceptableTasks?.To(DateTime.Now()).TotalMinutes >= 30) {
+			// TODO: 刷新任务算法
+			Data.AcceptableTasks.Clear();
+			// 刷新6个任务
+			var tasksLs = ResourceLoader.ListDirectory("res://ResourceLib/Task/");
+			var randRating = (AssignedTaskConfig.RatingLevelEnum)GD.RandRange((int)AssignedTaskConfig.RatingLevelEnum.D, (int)AssignedTaskConfig.RatingLevelEnum.SS);
+			var randLevel = GD.RandRange(AssignedTaskConfig.MinLevel, AssignedTaskConfig.MaxLevel);
+			for (var i = 0; i < 6; i++) {
+				var randTaskName = tasksLs[GD.RandRange(0, tasksLs.Count() - 1)];
+				Data.AcceptableTasks.Add(new(randTaskName, randRating, randLevel));
+			}
+		}
+	}
+
+	public static void AcceptTask(AssignedTaskData data) {
+		if (Data.AcceptableTasks.Contains(data)) {
+			// 接受任务并启动时间记录
+			data.AcceptedTime = DateTime.Now();
+			data.LastEventUpdatedTime = DateTime.Now();
+			Data.AcceptedTasks.Add(data);
+			Data.AcceptableTasks.Remove(data);
+			return;
+		}
+		throw new ArgumentOutOfRangeException("<GlobalViewModel-AssignedTask> Accepted task must be acceptable");
+	}
+
+	public static void ClaimTask(AssignedTaskData data) {
+		if (Data.AcceptedTasks.Contains(data) && data.AcceptedTime is not null) {
+			if (new DateTime(data.AcceptedTime.ToUnix() + data.Time).Over(data.AcceptedTime)) {
+				Solids += data.RewardSolids;
+				Liquid += data.RewardLiquids;
+				IndustrialProducts += data.RewardIndustrialProduct;
+				Data.AcceptedTasks.Remove(data);
+				return;
+			}
+			throw new Exception("<GlobalViewModel-AssignedTask> Claim task failed, task isnt finished");
+		}
+		throw new Exception("<GlobalViewModel-AssignedTask> Claim task failed, task isnt accepted");
+	}
+	#endregion AssignedTask
+
+	#region Battle and Combat
+	public static IReadOnlyList<CombatData> GetCombats() => Data.Combats;
+	public static IReadOnlyList<HuntData> GetHunts() => Data.Hunts;
+
+	public static void CompleteComnbat(CombatData data) => Data.Combats.Remove(data);
+	public static void CompleteHunt(HuntData data) => Data.Hunts.Remove(data);
 	#endregion Battle and Combat
 
-	public static ObservableCollection<FleetData> Fleets { get; set; } = [];
-
+	#region Repository
+	public static Array<FleetData> Fleets { get => Data.Fleets; set => Data.Fleets = value; }
 	public static SubRepository MainRepository { get => Data.Repository; set => Data.Repository = value; }
 
 	public static Array<GameItem> GameItems { get => Data.GameItems; set => Data.GameItems = value; }
-
+	#endregion Repository
 
 	private static GameSavesData Data = new();
 }

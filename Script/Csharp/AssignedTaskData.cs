@@ -20,28 +20,34 @@ internal partial class AssignedTaskData : Resource {
 	/// </summary>
 	[Export] public int Level { get; set; } = 1;
 
-	[Export] public AssignedTaskConfig.StateEnum State { get; protected set; } = AssignedTaskConfig.StateEnum.Unaccepted;
+	/// <summary>
+	/// 接受任务的时间
+	/// </summary>
+	[Export] public DateTime? AcceptedTime { get; set; }
 
-	[Export] public DateTime? StartDate { get; set; }
+	/// <summary>
+	/// 任务时长
+	/// </summary>
+	[Export] public long Time { get; set; }
 
 	/// <summary>
 	/// 上一次任务事件刷新的时间
 	/// </summary>
 	[Export] public DateTime? LastEventUpdatedTime { get; set; }
 
-	protected long ProgressTime { get; set; }
-	public TimeSpan ProgressTimeSpan => TimeSpan.FromSeconds(ProgressTime);
+	[Export] public Godot.Collections.Array<TaskEventData> Events { get; set; } = [];
 
-	[Export]
-	public Godot.Collections.Array<TaskEventData> Events { get; set; } = [];
+	[Export] public int RewardSolids { get; set; }
+	[Export] public int RewardLiquids { get; set; }
+	[Export] public int RewardIndustrialProduct { get; set; }
 
-	public AssignedTaskData(string name, AssignedTaskConfig.RatingLevelEnum ratingLevel, ushort level) {
+	// 不允许无参构造
+	protected AssignedTaskData() { }
+
+	public AssignedTaskData(string name, AssignedTaskConfig.RatingLevelEnum ratingLevel, int level) {
 		NameCode = name;
 		RatingLevel = ratingLevel;
 		Level = level;
 	}
-
-	//不允许无参构造
-	private AssignedTaskData() { }
 }
 

@@ -25,7 +25,7 @@ internal partial class AssignedTaskConfig : Resource {
 
 	public static AssignedTaskConfig GetConfig(AssignedTaskData data) => ResourceLoader.Load<AssignedTaskConfig>($"res://ResourceLib/Task/{data.NameCode}.tres");
 
-	public enum RatingLevelEnum { D, C, B, A, AA, S, SS }
+	public enum RatingLevelEnum { D = 0, C = 1, B = 2, A = 3, AA = 4, S = 5, SS = 6 }
 
 	[Export] public string TaskCode { get; set; } = string.Empty;
 
