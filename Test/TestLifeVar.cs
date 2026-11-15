@@ -44,10 +44,10 @@ internal partial class TestLifeVar : Control {
 
 	public override void _EnterTree() {
 		base._EnterTree();
-		ItemRepositoryVM.Add(new("WhiteCup", ItemBaseConfig.QulityEnum.White, 3));
-		ItemRepositoryVM.Add(new("BlueCup", ItemBaseConfig.QulityEnum.Green, 4));
-		ItemRepositoryVM.Add(new("GoldCup", ItemBaseConfig.QulityEnum.Gold, 5));
+		StorehouseVM.Add(new("WhiteCup", ItemBaseConfig.QulityEnum.White, 3));
+		StorehouseVM.Add(new("BlueCup", ItemBaseConfig.QulityEnum.Green, 4));
+		StorehouseVM.Add(new("GoldCup", ItemBaseConfig.QulityEnum.Gold, 5));
 
-		here.Pressed += () => ItemRepositoryVM.GetGameItems(item => item.NameCode == "WhiteCup").First().Num -= 1;
+		here.Pressed += () => StorehouseVM.GetGameItems(item => item.NameCode == "WhiteCup").First().Num -= 1;
 	}
 }

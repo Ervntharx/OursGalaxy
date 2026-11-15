@@ -20,18 +20,18 @@ internal partial class Storehouse : MarginContainer {
 	public override void _EnterTree() {
 		base._EnterTree();
 		QuitButton.Pressed += OnQuitPressed;
-		ItemRepositoryVM.SelectElementEvent += RenderSelectedItem;
+		StorehouseVM.SelectElementEvent += RenderSelectedItem;
 		Render();
 	}
 
 	public override void _ExitTree() {
 		QuitButton.Pressed -= OnQuitPressed;
-		ItemRepositoryVM.SelectElementEvent -= RenderSelectedItem;
+		StorehouseVM.SelectElementEvent -= RenderSelectedItem;
 		base._ExitTree();
 	}
 
 	private void Render() {
-		foreach (var item in ItemRepositoryVM.GetGameItems()) {
+		foreach (var item in StorehouseVM.GetGameItems()) {
 			var box = GameItemBox.Load();
 			box.Render(item);
 			ItemsListPanel.AddChild(box);
@@ -49,6 +49,7 @@ internal partial class Storehouse : MarginContainer {
 		?.QueueFree();
 
 	private void RenderSelectedItem(GameItem? item) {
+		GD.Print(item?.ToString() ?? "null");
 		ItemInfoPanel.Visible = item is not null;
 		if (item is not null) {
 			var config = ResourceLib.GetConfig(item);

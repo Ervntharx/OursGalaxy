@@ -8,7 +8,7 @@ namespace OursGalaxy.ViewModel;
 /// <summary>
 /// Item资产VM
 /// </summary>
-internal partial class ItemRepositoryVM : Node {
+internal partial class StorehouseVM : Node {
 	/// <summary>
 	/// 新增元素
 	/// </summary>
@@ -96,6 +96,9 @@ internal partial class ItemRepositoryVM : Node {
 	private static void OnItemElementChanged(GameItem item, int num) {
 		if (num == 0) {
 			Remove(item);
+			if (item.Equals(SelectedItem)) {
+				SelectedItem = null;
+			}
 		}
 	}
 

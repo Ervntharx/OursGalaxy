@@ -42,7 +42,13 @@ internal partial class GameItemBox : Button {
 	}
 
 	private void OnPressed() {
-		ItemRepositoryVM.SelectedItem = Item;
+		if (StorehouseVM.SelectedItem?.Equals(Item) is true) {
+			StorehouseVM.SelectedItem = null;
+			return;
+		}
+
+		StorehouseVM.SelectedItem = Item;
+
 	}
 
 	private GameItem? item;
