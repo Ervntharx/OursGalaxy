@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://v1ctoeg35112" path="res://Script/Csharp/UI/ReadyCombatPanel.cs" id="1_u7bi5"]
 [ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="2_jyjt5"]
 
-[node name="ReadyCombat" type="MarginContainer" unique_id=923970619 node_paths=PackedStringArray("LeftAvatar", "LeftUserNameLabel", "LeftFleetPointsLabel", "LeftFleetInformationLabel", "RightAvatar", "RightUserNameLabel", "RightFleetPointsLabel", "RightFleetInformationLabel", "QuitButton", "ChangeFleetButton", "EditFleetButtton", "StartButton")]
+[node name="ReadyCombat" type="MarginContainer" unique_id=923970619 node_paths=PackedStringArray("LeftAvatar", "LeftUserNameLabel", "LeftFleetPointsLabel", "LeftFleetInformationLabel", "ChangeLeftFleetButton", "EditLeftFleetButton", "RightAvatar", "RightUserNameLabel", "RightFleetPointsLabel", "RightFleetInformationLabel", "ChangeRightFleetButton", "EditRightFleetButton", "QuitButton", "StartButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -18,13 +18,15 @@ LeftAvatar = NodePath("PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/HB
 LeftUserNameLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/HBoxContainer/VBoxContainer/Name")
 LeftFleetPointsLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/HBoxContainer/VBoxContainer/Points")
 LeftFleetInformationLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/RichTextLabel")
+ChangeLeftFleetButton = NodePath("PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/Edit/ChangeFleet")
+EditLeftFleetButton = NodePath("PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/Edit/EditFleet")
 RightAvatar = NodePath("PanelContainer/VBoxContainer/HSplitContainer/RightFleet/HBoxContainer/Avatar")
 RightUserNameLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/RightFleet/HBoxContainer/VBoxContainer/Name")
 RightFleetPointsLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/RightFleet/HBoxContainer/VBoxContainer/Points")
 RightFleetInformationLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/RightFleet/RichTextLabel")
+ChangeRightFleetButton = NodePath("PanelContainer/VBoxContainer/HSplitContainer/RightFleet/Edit/ChangeFleet")
+EditRightFleetButton = NodePath("PanelContainer/VBoxContainer/HSplitContainer/RightFleet/Edit/EditFleet")
 QuitButton = NodePath("PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control/Cancel")
-ChangeFleetButton = NodePath("PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control2/ChangeFleet")
-EditFleetButtton = NodePath("PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control3/EditFleet")
 StartButton = NodePath("PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control4/Start")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1674938818]
@@ -72,7 +74,7 @@ size_flags_vertical = 8
 
 [node name="Name" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/HBoxContainer/VBoxContainer" unique_id=449741831]
 layout_mode = 2
-text = "Left User Name"
+text = "未指定用户名"
 fit_content = true
 autowrap_mode = 0
 horizontal_alignment = 2
@@ -80,7 +82,7 @@ vertical_alignment = 1
 
 [node name="Points" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/HBoxContainer/VBoxContainer" unique_id=1381093934]
 layout_mode = 2
-text = "Points"
+text = "?"
 fit_content = true
 horizontal_alignment = 2
 vertical_alignment = 1
@@ -94,16 +96,28 @@ stretch_mode = 4
 [node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HSplitContainer/LeftFleet" unique_id=1480155178]
 layout_mode = 2
 bbcode_enabled = true
-text = "舰队名 [color=gold]舰队[/color]
+text = "未知 [color=gold]舰队[/color]
 
-[color=gold]舰队规模[/color]		280 [color=gold]/ 300[/color]
-[color=gold]舰船数量[/color]		18 [color=gold]/ 20[/color]
-[color=gold]舰队HP[/color]		15000 [color=gold]/ 20000[/color]
+[color=gold]舰队规模[/color]		?? [color=gold]/ ??[/color]
+[color=gold]舰船数量[/color]		?? [color=gold]/ ??[/color]
+[color=gold]舰队HP[/color]		?? [color=gold]/ ??[/color]
 
-[color=gold]舰队奇袭[/color]		140
+[color=gold]舰队奇袭[/color]		??
 "
 fit_content = true
 autowrap_mode = 0
+
+[node name="Edit" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/LeftFleet" unique_id=2014917761]
+layout_mode = 2
+alignment = 1
+
+[node name="ChangeFleet" type="Button" parent="PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/Edit" unique_id=1481063957]
+layout_mode = 2
+text = "更改舰队"
+
+[node name="EditFleet" type="Button" parent="PanelContainer/VBoxContainer/HSplitContainer/LeftFleet/Edit" unique_id=1676126693]
+layout_mode = 2
+text = "更改舰队"
 
 [node name="VSeparator" type="VSeparator" parent="PanelContainer/VBoxContainer/HSplitContainer" unique_id=1094909377]
 layout_mode = 2
@@ -129,7 +143,7 @@ size_flags_vertical = 8
 
 [node name="Name" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HSplitContainer/RightFleet/HBoxContainer/VBoxContainer" unique_id=458869165]
 layout_mode = 2
-text = "Left User Name"
+text = "未指定用户名"
 fit_content = true
 autowrap_mode = 0
 horizontal_alignment = 2
@@ -137,23 +151,35 @@ vertical_alignment = 1
 
 [node name="Points" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HSplitContainer/RightFleet/HBoxContainer/VBoxContainer" unique_id=470130081]
 layout_mode = 2
-text = "Points"
+text = "?"
 fit_content = true
 vertical_alignment = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/HSplitContainer/RightFleet" unique_id=342241209]
 layout_mode = 2
 bbcode_enabled = true
-text = "舰队名 [color=gold]舰队[/color]
+text = "未知 [color=gold]舰队[/color]
 
-[color=gold]舰队规模[/color]		280 [color=gold]/ 300[/color]
-[color=gold]舰船数量[/color]		18 [color=gold]/ 20[/color]
-[color=gold]舰队HP[/color]		15000 [color=gold]/ 20000[/color]
+[color=gold]舰队规模[/color]		?? [color=gold]/ ??[/color]
+[color=gold]舰船数量[/color]		?? [color=gold]/ ??[/color]
+[color=gold]舰队HP[/color]		?? [color=gold]/ ??[/color]
 
-[color=gold]舰队奇袭[/color]		140
+[color=gold]舰队奇袭[/color]		??
 "
 fit_content = true
 autowrap_mode = 0
+
+[node name="Edit" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/RightFleet" unique_id=170132234]
+layout_mode = 2
+alignment = 1
+
+[node name="ChangeFleet" type="Button" parent="PanelContainer/VBoxContainer/HSplitContainer/RightFleet/Edit" unique_id=140757890]
+layout_mode = 2
+text = "更改舰队"
+
+[node name="EditFleet" type="Button" parent="PanelContainer/VBoxContainer/HSplitContainer/RightFleet/Edit" unique_id=326329160]
+layout_mode = 2
+text = "更改舰队"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=44870032]
 layout_mode = 2
@@ -179,38 +205,6 @@ offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "返回"
-
-[node name="Control2" type="Control" parent="PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1318752224]
-custom_minimum_size = Vector2(120, 75)
-layout_mode = 2
-
-[node name="ChangeFleet" type="Button" parent="PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control2" unique_id=648826372]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -16.0
-offset_bottom = 16.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "更改出战舰队"
-
-[node name="Control3" type="Control" parent="PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1657547863]
-custom_minimum_size = Vector2(120, 75)
-layout_mode = 2
-
-[node name="EditFleet" type="Button" parent="PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/Control3" unique_id=101020879]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -16.0
-offset_bottom = 16.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "编辑舰队"
 
 [node name="Control4" type="Control" parent="PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1052581361]
 custom_minimum_size = Vector2(120, 75)

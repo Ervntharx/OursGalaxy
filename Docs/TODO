@@ -1,6 +1,9 @@
 基础：
 
-引入MissionData类型，可能需要引入ChallengeStaticsServer
+GlobalViewModel的Fleets封装,添加FleetsChangedEvent并留给FleetViewerPanel订阅
+GlobalViewModel直接添加操作步骤的上下文信息,例如一个枚举量
+
+[?]引入MissionData类型，可能需要引入ChallengeStaticsServer
 
 Combat所需按难度生成舰队难度配置？
 TaskEvent所需事件发生器
@@ -18,14 +21,16 @@ CombatStage引入战场半径，限制尺寸
 	PushClone用于判定机动目标点,在椎内施加推力,否则不给推力
 	FaceClone用于在迂回模式下判定目标有没有在迂回范围判定内
 
-	迂回机动:分为第一机动阶段,第二机动阶段,第三机动阶段,
+	迂回机动:分为第一绕行阶段,第二接近阶段,第三压入阶段,第四脱离阶段
 		判定目标在FaceClone内,2倍射程外,则进入第一阶段
 		目标在FaceClone内,2倍射程内,则进入第二阶段
 		目标不在FaceClone内,则进入第三阶段
+		自己在目标FaceClone内，则进入第四阶段
 
 		第一机动阶段:	朝向两舰相对位置连线中点的迂回朝向方向延伸射程距离点前进
 		第二机动阶段:	朝向目标位置的迂回朝向防线延伸射程距离点前进
 		第三机动阶段:	朝向目标位置前进,和forward一致
+		第四机动阶段:	直接推进直到距离拉开2倍射程，方向朝向目标侧向（迂回方向的侧向）
 
 
 UI:
@@ -35,12 +40,13 @@ UI:
 	FleetEditor接入存档
 
 测试：
+	在TestMovement单独测试迂回机动行为
+
 	AssignedTask
 	Ship Config装配行为
 	FleetEditor行为
 
 问题：
-	GlobalViewModel的ObservableCollection和SavesData相合性不佳
 
 等待研究：
 	粒子系统效果配置，发射式粒子特效

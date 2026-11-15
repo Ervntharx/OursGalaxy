@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System;
+using Godot;
 namespace OursGalaxy;
 
 /// <summary>
@@ -7,36 +8,32 @@ namespace OursGalaxy;
 /// </summary>
 [GlobalClass]
 internal partial class ProfileData : Resource {
+	[Obsolete]
 	public readonly static ProfileData Empty = new();
 	/// <summary>
 	/// 所属组织归属
 	/// </summary>
-	[Export]
-	public string? Alliance { get; set; }
+	[Export] public string? Alliance { get; set; }
 
 	/// <summary>
 	/// 头像
 	/// </summary>
-	[Export]
-	public Texture2D? Avatar { get; set; }
+	[Export] public Texture2D? Avatar { get; set; }
 
 	/// <summary>
 	/// 名字
 	/// </summary>
-	[Export]
-	public string Name { get; set; }
+	[Export] public string Name { get; set; }
 
 	/// <summary>
 	/// 点数
 	/// </summary>
-	[Export]
-	public int Points { get; set; }
+	[Export] public int RankPoints { get; set; }
 
 	/// <summary>
 	/// 等级
 	/// </summary>
-	[Export]
-	public int Level { get; set; }
+	[Export] public int Level { get; set; }
 
 	/// <summary>
 	/// ⚠️避免主动调用无参构造函数

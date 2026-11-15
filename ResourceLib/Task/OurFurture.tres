@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AssignedTaskConfig" format=3 uid="uid://dpypywu6forxn"]
+
+[ext_resource type="Script" uid="uid://bvsl5hyfnt50e" path="res://Script/Csharp/AssignedTaskConfig.cs" id="1_fb6rl"]
+
+[resource]
+script = ExtResource("1_fb6rl")
+TaskCode = "OurFurture"
+DisplayName = "我们的未来"
+Desc = "一个远征任务"
+metadata/_custom_type_script = "uid://bvsl5hyfnt50e"

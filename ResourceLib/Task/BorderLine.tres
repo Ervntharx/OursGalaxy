@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AssignedTaskConfig" format=3 uid="uid://va7emxfwp3c4"]
+
+[ext_resource type="Script" uid="uid://bvsl5hyfnt50e" path="res://Script/Csharp/AssignedTaskConfig.cs" id="1_leqk5"]
+
+[resource]
+script = ExtResource("1_leqk5")
+TaskCode = "BorderLine"
+DisplayName = "边境线"
+Desc = "一个远征任务"
+metadata/_custom_type_script = "uid://bvsl5hyfnt50e"

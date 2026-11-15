@@ -2,7 +2,7 @@
 using Godot;
 namespace OursGalaxy.UI;
 
-internal sealed partial class MainPanel : Control {
+internal sealed partial class MainPanel : MarginContainer {
 	public static MainPanel Load() => (MainPanel)ResourceLoader.Load<PackedScene>("res://Scene/MainPanel.tscn").Instantiate();
 
 	[Export] private Button QuitButton { get; set; } = null!;
@@ -11,9 +11,9 @@ internal sealed partial class MainPanel : Control {
 
 	// top bar
 	[ExportGroup("Top Bar Overview")]
-	[Export] private Button? PersonalArchiveButton { get; set; }
+	[Export] private Button ProfileButton { get; set; } = null!;
 	[Export] private Button SettingButton { get; set; } = null!;
-	[Export] private Button? ActionPointsButton { get; set; }
+	[Export] private Button ActionPointsButton { get; set; } = null!;
 	[Export] private RichTextLabel ActionPointsLabel { get; set; } = null!;
 
 	// Resource overviews
@@ -65,7 +65,9 @@ internal sealed partial class MainPanel : Control {
 
 	public override void _EnterTree() {
 		base._EnterTree();
-		MsgViewPanel!.Quit += OnMsgViewPanelQuit;
+		ProfileButton.Pressed += OnProfilePressed;
+		ActionPointsButton.Pressed += OnActionPointPressed;
+		MsgViewPanel.Quit += OnMsgViewPanelQuit;
 		MsgBoxesListPanel!.OpenMessage += OnMsgOpen;
 		SettingButton.Pressed += OnSettingsPressed;
 		QuitButton.Pressed += OnQuitPressed;
@@ -81,6 +83,8 @@ internal sealed partial class MainPanel : Control {
 	}
 
 	public override void _ExitTree() {
+		ProfileButton.Pressed -= OnProfilePressed;
+		ActionPointsButton.Pressed -= OnActionPointPressed;
 		MsgBoxesListPanel!.OpenMessage -= OnMsgOpen;
 		MsgViewPanel!.Quit -= OnMsgViewPanelQuit;
 		SettingButton.Pressed -= OnSettingsPressed;
@@ -95,6 +99,14 @@ internal sealed partial class MainPanel : Control {
 		AllianceButton.Pressed -= OnAlliancePressed;
 		TechnologyButton.Pressed -= OnTechnologyPressed;
 		base._ExitTree();
+	}
+
+	private void OnProfilePressed() {
+		PanelsStack.PushPanel(ProfilePanel.Load());
+	}
+
+	private void OnActionPointPressed() {
+		PanelsStack.PushPanel(ActionPointsPanel.Load());
 	}
 
 	private void OnMsgOpen(MessageData msg) {
@@ -112,8 +124,17 @@ internal sealed partial class MainPanel : Control {
 
 	private void OnSettingsPressed() => PanelsStack.PushPanel(SettingPanel.Load());
 	private void OnQuitPressed() => PanelsStack.RequireQuitGame();
-	private void OnFleetsEditPressed() => PanelsStack.PushPanel(FleetEditorPanel.Load());
-	private void OnSimulateCombatPressed() => PanelsStack.PushPanel(ReadyCombatPanel.Load());
+	private void OnFleetsEditPressed() {
+		var viewer = FleetsViewerPanel.Load();
+		viewer.Render();
+		PanelsStack.PushPanel(viewer);
+	}
+
+	private void OnSimulateCombatPressed() {
+		var readypanel = ReadyCombatPanel.Load();
+		PanelsStack.PushPanel(readypanel);
+	}
+
 	private void OnAssignedTaskPressed() => PanelsStack.PushPanel(AssignedTaskPanel.Load());
 	private void OnFactoryPressed() => PanelsStack.PushPanel(FactoryPanel.Load());
 	private void OnCombatPressed() => PanelsStack.PushPanel(CombatsOverviewPanel.Load());

@@ -156,6 +156,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	[Export]
 	protected Timer TacticsTargetProberTimer { get; set; } = null!;
 
+	// 探测目标，并按索敌设定选敌
 	private void ProbeTarget() {
 		var targetsLs = CombatStageServer.ProbeShips(ID, Team).OfType<Spaceship>().ToList();
 		switch (Tactics.Targeting) {
@@ -205,34 +206,61 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	#region Movement
 	// 移动能力原本参数
-	[Export]
-	public int RotateCapability { get; set; } = 5;
-	[Export]
-	public int PowerCapability { get; set; } = 25;
-	[Export]
-	public int BackPowerCapability { get; set; } = 15;
-	[Export]
-	public int MicroPowrCapability { get; set; } = 5;
+	[Export] public int RotateCapability { get; set; } = 5;
+	[Export] public int PowerCapability { get; set; } = 25;
+	[Export] public int BackPowerCapability { get; set; } = 15;
+	[Export] public int MicroPowrCapability { get; set; } = 5;
 
-	public float RotateAngleVelocity => (float)RotateCapability / 10f;
-	public float PowerVelocity => (float)PowerCapability / 10f;
-	public float BackPowerVelocity => (float)BackPowerCapability / 10f;
-	public float MicroPowerVelocity => (float)MicroPowrCapability / 10f;
+	public float RotateAngleVelocity => RotateCapability / 10f;
+	public float PowerVelocity => PowerCapability / 10f;
+	public float BackPowerVelocity => BackPowerCapability / 10f;
+	public float MicroPowerVelocity => MicroPowrCapability / 10f;
 
 	/// <summary>
-	/// 船头椎体角度
+	/// 航点. 是船航行的目标位置
 	/// </summary>
-	public float ShipHeadConeAngle { get; set; } = 25;
+	public Vector3 ChannelPoint { get; private set; }
+
+	/// <summary>
+	/// 默认迂回绕行点相对射程的距离
+	/// </summary>
+	public static readonly float DefaultRoundabotDistanceScale = 2;
+
+	/// <summary>
+	/// 迂回绕行点相对射程的距离,会受随机数影响产生变动
+	/// </summary>
+	public float RoundabotDistanceScale { get; private set; }
+
+	/// <summary>
+	/// 船头椎椎角，接近在此椎体内的航点时加速
+	/// </summary>
+	public static readonly float PushCloneAngle = 25;
+
+	/// <summary>
+	/// 微机动椎椎角，接近此椎体内的航点时使用MicroRotateVelocity防止抖动
+	/// </summary>
+	public static readonly float MicroCloneAngle = 5;
+
+	/// <summary>
+	/// 面椎椎角，用于迂回机动判断是否应该结束迂回
+	/// </summary>
+	public static readonly float FaceCloneAngle = 50;
 
 	// 保持的距离
 	// TODO:	使用射程动态计算
-	public float KeepDistanceMax { get; set; } = 15;
-	public float KeepDistanceMin { get; set; } = 5;
+	public float KeepDistanceMax { get; private set; } = 15;
+	public float KeepDistanceMin { get; private set; } = 5;
 
+	/// <summary>
+	/// 推进机动枚举
+	/// </summary>
 	public enum MovePowEnum { Stay, MicroMove, Forward, Backward }
 	public MovePowEnum MovePow { get; set; } = MovePowEnum.Stay;
 
-	public enum RotateModeEnum { Stay, Rest, RotateToTarget }
+	/// <summary>
+	/// 转向机动枚举
+	/// </summary>
+	public enum RotateModeEnum { Stay, Rest, RotateToChannelPoint, MicroRotateToChannelPoint }
 	public RotateModeEnum RotateMode { get; set; } = RotateModeEnum.Stay;
 
 	private void HandleShipMvementState(double delta, Spaceship ship, IBattleEntity? target) {
@@ -251,7 +279,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 		}
 
 		switch (RotateMode) {
-			case RotateModeEnum.RotateToTarget:
+			case RotateModeEnum.RotateToChannelPoint:
 				if (GodotObject.IsInstanceValid(target?.AsNode3D())) {
 					var targetOffPos = target.AsNode3D().GlobalTransform.Origin - ship.GlobalTransform.Origin;
 					var targetQ = new Quaternion(Vector3.Forward, targetOffPos.Normalized());
@@ -302,7 +330,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 				else {
 					// 不在船头椎内，停止推进，先旋转
 					MovePow = MovePowEnum.Stay;
-					RotateMode = RotateModeEnum.RotateToTarget;
+					RotateMode = RotateModeEnum.RotateToChannelPoint;
 				}
 			}
 			else {
@@ -356,7 +384,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	public override void _PhysicsProcess(double delta) {
 		if (baseState == BaseStateEnum.Active) {
-			AutoSetShipMovementState(GlobalTransform, TargetEntity?.AsNode3D().GlobalTransform, ShipHeadConeAngle, KeepDistanceMin, KeepDistanceMax);
+			AutoSetShipMovementState(GlobalTransform, TargetEntity?.AsNode3D().GlobalTransform, PushCloneAngle, KeepDistanceMin, KeepDistanceMax);
 			HandleShipMvementState(delta, this, TargetEntity);
 			// HandleShipMvementState(delta, this, TargetEntity;
 		}

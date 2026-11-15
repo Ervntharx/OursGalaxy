@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://piirroopvbpp" path="res://Script/Csharp/UI/FleetsViewerPanel.cs" id="1_eomdo"]
 
-[node name="MarginContainer" type="MarginContainer" unique_id=1550251244 node_paths=PackedStringArray("FleetsPanel", "Quit")]
+[node name="MarginContainer" type="MarginContainer" unique_id=1550251244 node_paths=PackedStringArray("QuitButton", "FleetsPanel")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -13,8 +13,8 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 script = ExtResource("1_eomdo")
-FleetsPanel = NodePath("PanelContainer/ScrollContainer/FleetsPanel")
-Quit = NodePath("PanelContainer/VBoxContainer/Topbar/Quit")
+QuitButton = NodePath("PanelContainer/VBoxContainer/Topbar/Quit")
+FleetsPanel = NodePath("PanelContainer/VBoxContainer/ScrollContainer/FleetsPanel")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=2011616678]
 layout_mode = 2
@@ -35,11 +35,12 @@ layout_mode = 2
 text = "舰队"
 vertical_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer" unique_id=1261728957]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer" unique_id=1261728957]
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="FleetsPanel" type="HBoxContainer" parent="PanelContainer/ScrollContainer" unique_id=994752517]
+[node name="FleetsPanel" type="HBoxContainer" parent="PanelContainer/VBoxContainer/ScrollContainer" unique_id=994752517]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

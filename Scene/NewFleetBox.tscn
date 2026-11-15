@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://ds0byabbg75pe"]
+
+[ext_resource type="Script" uid="uid://j72envle3asm" path="res://Script/Csharp/UI/NewFleetBox.cs" id="1_erni1"]
+
+[node name="FleetBox" type="Button" unique_id=1345532312]
+custom_minimum_size = Vector2(360, 0)
+offset_left = 32.0
+offset_top = 30.0
+offset_right = 392.0
+offset_bottom = 530.0
+mouse_filter = 1
+script = ExtResource("1_erni1")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=924776357]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "[font_size=64][+][/font_size]
+新建舰队"
+horizontal_alignment = 1
+vertical_alignment = 1

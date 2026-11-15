@@ -6,16 +6,13 @@ internal partial class FleetBox : Button {
 	public static FleetBox Load() => (FleetBox)ResourceLoader.Load<PackedScene>("res://Scene/FleetBox.tscn").Instantiate();
 
 	[Export] private RichTextLabel TitleLabel { get; set; } = null!;
-
 	[Export] private RichTextLabel DescLabel { get; set; } = null!;
-
 	[Export] private TextureRect Pic { get; set; } = null!;
 
-	public string TrackedFleetUniqueID { get; private set; } = string.Empty;
+	public FleetData? Fleet { get; set; }
 
-	public void Make(int index, FleetData fleetData) {
-		// TODO:
-		TrackedFleetUniqueID = fleetData.ID.ToString();
+	public void Render(int index, FleetData fleetData) {
+		Fleet = fleetData;
 		TitleLabel!.Text = MakeTitleString(index, fleetData.Name);
 		DescLabel.Text = new RichTextBuilder("\n")
 			.Add("旗舰", fleetData.Repository[fleetData.FlagshipReference].CustomName + " " + fleetData.Repository[fleetData.FlagshipReference].GetShipTypeName())
@@ -23,17 +20,19 @@ internal partial class FleetBox : Button {
 			.Add("舰船数量", 10.ToString() + " / " + 20.ToString(), ":")
 			.Add("舰队规模", 180.ToString() + " / " + 200.ToString(), ":")
 			.ToString();
+
+		Pressed += OnPressed;
 	}
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready() {
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta) {
+	public override void _ExitTree() {
+		Pressed -= OnPressed;
 	}
 
 	private string MakeTitleString(long index, string name) {
 		return $"[color=gold]{index}[/color] | {name}";
+	}
+
+	private void OnPressed() {
+		GlobalViewModel.CachedSelectFleet = Fleet;
 	}
 }

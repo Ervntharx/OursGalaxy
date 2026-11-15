@@ -315,6 +315,22 @@ internal partial class GlobalViewModel {
 
 	public static void CompleteComnbat(CombatData data) => Data.Combats.Remove(data);
 	public static void CompleteHunt(HuntData data) => Data.Hunts.Remove(data);
+
+	// 缓存的在FleetViewer选中的舰队
+	public static FleetData? CachedSelectFleet { get; set; }
+
+	/// <summary>
+	/// 准备战斗的舰队配置更新
+	/// </summary>
+	public static event Action? UpdatedReady2CombatFleetEvent;
+
+	public static FleetData GetReady2CombatFleet(CombatStage.TeamEnum team) => Ready2CombatFleets[team];
+	public static void PushReady2CombatFleet(CombatStage.TeamEnum team, FleetData fleet) {
+		Ready2CombatFleets[team] = fleet;
+		UpdatedReady2CombatFleetEvent?.Invoke();
+	}
+
+	private static System.Collections.Generic.Dictionary<CombatStage.TeamEnum, FleetData> Ready2CombatFleets = [];
 	#endregion Battle and Combat
 
 	#region Repository
