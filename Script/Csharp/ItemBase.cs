@@ -38,11 +38,7 @@ internal partial class ItemBase : Resource, IEquatable<ItemBase> {
 	public static bool operator ==(ItemBase left, ItemBase right) => !(left != right);
 	public static bool operator !=(ItemBase left, ItemBase right) => left.ToString() != right.ToString();
 
-	public bool Equals(ItemBase? other) {
-		GD.Print($"test-Equals itembase:{NameCode} and {other?.NameCode} {base.Equals(other)}");
-		return other is not null && other.TypeCode == TypeCode && other.NameCode == NameCode && other.Qulity == Qulity;
-	}
-
+	public bool Equals(ItemBase? other) => other is not null && other.TypeCode == TypeCode && other.NameCode == NameCode && other.Qulity == Qulity;
 	public override bool Equals(object? obj) => Equals(obj as ItemBase);
 
 	// override object.GetHashCode

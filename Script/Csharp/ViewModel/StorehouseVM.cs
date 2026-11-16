@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Godot;
 
 namespace OursGalaxy.ViewModel;
@@ -25,85 +23,22 @@ internal partial class StorehouseVM : Node {
 		}
 	}
 
-	// /// <summary>
-	// /// 取得所有GameItem
-	// /// </summary>
-	// /// <returns></returns>
-	// public IReadOnlyList<GameItem> GetGameItems() => GlobalDataSource.Source.GetGameItems();
-
-	// /// <summary>
-	// /// 过滤的取得GameItem
-	// /// </summary>
-	// /// <param name="predict"></param>
-	// /// <returns></returns>
-	// public IReadOnlyList<GameItem> GetGameItems(Func<GameItem, bool> predict) => GlobalDataSource.Source.GetGameItems(predict);
-
-	// /// <summary>
-	// /// 增加元素
-	// /// </summary>
-	// /// <param name="item"></param>
-	// public void Add(GameItem item) {
-	// 	GlobalDataSource.Source.GameItemsAppend(item);
-	// 	// var it = GlobalDataSource.GameItems.FirstOrDefault(it => it.Equals(item));
-	// 	// if (it is not null) {
-	// 	// 	it.Num += item.Num;
-	// 	// }
-	// 	// else {
-	// 	// 	item.NumChangedEvent += OnElementNumChanged;
-	// 	// 	items.Add(item);
-	// 	// 	Save();
-	// 	// }
-	// 	// ElementAppendEvent?.Invoke(item);
-	// }
-
-	// /// <summary>
-	// /// 去除元素
-	// /// </summary>
-	// /// <param name="item"></param>
-	// /// <exception cref="ArgumentOutOfRangeException"></exception>
-	// public void Remove(GameItem item) {
-	// 	GlobalDataSource.Source.GameItemsRemove(item);
-	// 	// item.NumChangedEvent -= OnElementNumChanged;
-	// 	// if (!items.Remove(item)) {
-	// 	// 	throw new ArgumentOutOfRangeException("<ItemRepositoryVM> item not in gameitems");
-	// 	// }
-	// 	// Save();
-	// 	// ELementRemovedEvent?.Invoke(item);
-	// }
-
-	// // public override void _EnterTree() {
-	// // 	base._EnterTree();
-	// // 	// 从存档注入
-	// // 	foreach (var item in GlobalDataSource.GameItems) {
-	// // 		item.NumChangedEvent += OnElementNumChanged;
-	// // 		items.Add(item);
-	// // 	}
-	// // }
-
-	// // public override void _ExitTree() {
-	// // 	foreach (var item in items) {
-	// // 		item.NumChangedEvent -= OnElementNumChanged;
-	// // 	}
-	// // }
-
-	// // // 零数量检查
-	// // private void OnElementNumChanged(GameItem item, int num) {
-	// // 	if (num == 0) {
-	// // 		Remove(item);
-	// // 		if (item.Equals(SelectedItem)) {
-	// // 			SelectedItem = null;
-	// // 		}
-	// // 		GD.Print(string.Join(",", GetGameItems()));
-	// // 	}
-	// // }
-
-	private void Save() {
-		GlobalDataSource.Source.Save();
-		// GlobalDataSource.GameItems = [.. items];
-		// GlobalDataSource.Source.Save();
+	public override void _EnterTree() {
+		base._EnterTree();
+		GlobalDataSource.Source.GameItemRemovedEvent += OnGameItemRemovedEvent;
 	}
 
-	// private List<GameItem> items = [];
+	public override void _ExitTree() {
+		GlobalDataSource.Source.GameItemRemovedEvent -= OnGameItemRemovedEvent;
+		base._ExitTree();
+	}
+
+	private void OnGameItemRemovedEvent(GameItem item) {
+		if (item.Equals(SelectedItem)) {
+			GD.Print("<StorehouseVM> auto canel selected");
+			SelectedItem = null;
+		}
+	}
 
 	private GameItem? selectItem;
 }

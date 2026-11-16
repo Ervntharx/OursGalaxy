@@ -6,6 +6,7 @@ using OursGalaxy.UI;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
 namespace OursGalaxy;
 
 /// <summary>
@@ -337,51 +338,44 @@ internal partial class GlobalDataSource : Node {
 	public IReadOnlyList<GameItem> GetGameItems(Func<GameItem, bool> predict) => [.. Source.savesData.GameItems.Where(predict)];
 
 	public void GameItemsAppend(GameItem item) {
-		// GD.Print("before append:" + string.Join(",", GetGameItems()));
-		GD.Print($"<GameDataSource-Test> Contains? {GetGameItems().Any(it => it.Equals(item))}");
 		if (GetGameItems().Any(it => it.Equals(item))) {
-			GD.Print("<GameDataSource-Test> GameItem already exist");
 			GameItemsChangeNum(item, item.Num);
 			return;
 		}
-		Source.savesData.GameItems.Add(item);
-		item.NumChangedEvent += CheckGameItemNum;
+		Source.savesData.GameItems.Add(new GameItem(item.NameCode, item.Qulity, item.Num));
 		GameItemAppendEvent?.Invoke(item);
 		Save();
 	}
 
 	public void GameItemsRemove(GameItem item) {
-		Source.savesData.GameItems.Remove(item);
-		item.NumChangedEvent -= CheckGameItemNum;
+		if (!Source.savesData.GameItems.Remove(item)) {
+			GD.PushError("<GlobalDataSource> Remove failed?");
+			return;
+		}
 		GameItemRemovedEvent?.Invoke(item);
 		Save();
 	}
 
 	public void GameItemsChangeNum(GameItem item, int numChange) {
 		if (GetGameItems().Any(it => it.Equals(item))) {
-			var num = item.Num + numChange;
+			var storedItem = GetGameItems().First(it => it.Equals(item));
+			var num = storedItem.Num + numChange;
 			if (num < 0) {
 				GD.PushError("<GameDataSource> GameItem num can't less than 0");
+				return;
 			}
-			GetGameItems().First(it => it.Equals(item)).Num += numChange;
-			GameItemNumChangedEvent?.Invoke(item, numChange);
+			else if (num == 0) {
+				GameItemsRemove(storedItem);
+			}
+			else {
+				storedItem.Num += numChange;
+				GameItemNumChangedEvent?.Invoke(storedItem, numChange);
+			}
 			Save();
 			return;
 		}
-		GD.PushError("<GameDataSource> GameItem not found in GameItems");
+		GameItemsAppend(new(item.NameCode, item.Qulity, numChange));
 	}
-
-	private void CheckGameItemNum(GameItem item, int num) {
-		if (num == 0) {
-			GameItemsRemove(item);
-		}
-	}
-
-	// private void InitGameItemSource() {
-	// 	foreach (var item in Source.savesData.GameItems) {
-	// 		item.NumChangedEvent += CheckGameItemNum;
-	// 	}
-	// }
 
 	#endregion Gameitems
 
@@ -389,7 +383,6 @@ internal partial class GlobalDataSource : Node {
 	public event Action? SavedEvent;
 
 	public void Save() {
-		GD.Print(string.Join(",", Source.savesData.GameItems));
 		var err = ResourceSaver.Save(Source.savesData, SAVE_PATH);
 		if (err != Error.Ok) {
 			GD.PushError(err);

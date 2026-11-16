@@ -7,8 +7,10 @@ using OursGalaxy.ViewModel;
 namespace OursGalaxy;
 
 internal partial class TestLifeVar : Control {
-	[Export] Button here { get; set; } = null!;
-	[Export] Storehouse Storehouse { get; set; } = null!;
+	[Export] Button reduceA { get; set; } = null!;
+	[Export] Button increaseA { get; set; } = null!;
+	[Export] Storehouse StorehouseA { get; set; } = null!;
+	[Export] Storehouse StorehouseB { get; set; } = null!;
 	// // test Resourcelib
 	// public override void _Ready() {
 	// 	var shipData = new SpaceshipData(SpaceshipConfig.TEMPLATE_NAMECODE, ItemBaseConfig.QulityEnum.White);
@@ -53,10 +55,14 @@ internal partial class TestLifeVar : Control {
 		// ls.Add(a);
 		// GD.Print(ls.Contains(b));
 		base._Ready();
-		GlobalDataSource.Source.GameItemsAppend(new("WhiteCup", ItemBaseConfig.QulityEnum.White, 3));
-		GlobalDataSource.Source.GameItemsAppend(new("BlueCup", ItemBaseConfig.QulityEnum.Green, 4));
-		GlobalDataSource.Source.GameItemsAppend(new("GoldCup", ItemBaseConfig.QulityEnum.Gold, 5));
+		var w = new GameItem("WhiteCup", ItemBaseConfig.QulityEnum.White, 2);
+		var b = new GameItem("BlueCup", ItemBaseConfig.QulityEnum.Green, 1);
+		var g = new GameItem("GoldCup", ItemBaseConfig.QulityEnum.Gold, 1);
+		GlobalDataSource.Source.GameItemsAppend(w);
+		GlobalDataSource.Source.GameItemsAppend(b);
+		GlobalDataSource.Source.GameItemsAppend(g);
 
-		here.Pressed += () => GlobalDataSource.Source.GameItemsChangeNum(GlobalDataSource.Source.GetGameItems(it => it.NameCode == "WhiteCup").First(), -1);
+		increaseA.Pressed += () => GlobalDataSource.Source.GameItemsChangeNum(w, 2);
+		reduceA.Pressed += () => GlobalDataSource.Source.GameItemsChangeNum(w, -1);
 	}
 }

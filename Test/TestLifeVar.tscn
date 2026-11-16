@@ -3,32 +3,45 @@
 [ext_resource type="Script" uid="uid://4tqvolrghu4t" path="res://Test/TestLifeVar.cs" id="1_n8apm"]
 [ext_resource type="PackedScene" uid="uid://b15oix8iiv3a4" path="res://Scene/Storehouse.tscn" id="2_1dp48"]
 
-[node name="TestLifeVar" type="Control" unique_id=1904611329 node_paths=PackedStringArray("here", "Storehouse")]
+[node name="TestLifeVar" type="Control" unique_id=1904611329 node_paths=PackedStringArray("reduceA", "increaseA", "StorehouseA", "StorehouseB")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 134.0
-offset_top = 68.0
-offset_right = 134.0
-offset_bottom = 68.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n8apm")
-here = NodePath("Button")
-Storehouse = NodePath("Storehouse")
+reduceA = NodePath("Button")
+increaseA = NodePath("Button2")
+StorehouseA = NodePath("Storehouse")
+StorehouseB = NodePath("Storehouse2")
 
 [node name="Storehouse" parent="." unique_id=663373868 instance=ExtResource("2_1dp48")]
 layout_mode = 1
-offset_left = -85.0
-offset_top = -36.0
-offset_right = -436.0
-offset_bottom = -221.0
+offset_left = 4.0
+offset_top = 5.0
+offset_right = -561.0
+offset_bottom = -102.0
+
+[node name="Storehouse2" parent="." unique_id=31954893 instance=ExtResource("2_1dp48")]
+layout_mode = 1
+offset_left = 602.0
+offset_top = 32.0
+offset_right = -14.0
+offset_bottom = -115.0
 
 [node name="Button" type="Button" parent="." unique_id=961562561]
 layout_mode = 0
-offset_left = 231.0
-offset_top = 514.0
-offset_right = 275.0
-offset_bottom = 545.0
+offset_left = 401.0
+offset_top = 586.0
+offset_right = 445.0
+offset_bottom = 617.0
+text = "here"
+
+[node name="Button2" type="Button" parent="." unique_id=1334878435]
+layout_mode = 0
+offset_left = 617.0
+offset_top = 593.0
+offset_right = 661.0
+offset_bottom = 624.0
 text = "here"

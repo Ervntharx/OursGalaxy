@@ -12,17 +12,7 @@ internal partial class GameItemBox : Button {
 	[Export] private RichTextLabel NameLabel { get; set; } = null!;
 	[Export] private Label NumLabel { get; set; } = null!;
 
-	public GameItem? Item {
-		get => item; set {
-			if (item is not null) {
-				item.NumChangedEvent -= UpdateNum;
-			}
-			item = value;
-			if (item is not null) {
-				item.NumChangedEvent += UpdateNum;
-			}
-		}
-	}
+	public GameItem? Item { get => item; set { item = value; } }
 
 	public void Render(StorehouseVM vm, GameItem item) {
 		this.vm = vm;
@@ -31,10 +21,25 @@ internal partial class GameItemBox : Button {
 		NameLabel.Text = config.DisplayName;
 		NumLabel.Text = $"{item.Num}";
 		Pressed += OnPressed;
+		GlobalDataSource.Source.GameItemNumChangedEvent += UpdateNum;
+		GlobalDataSource.Source.GameItemRemovedEvent += OnRemove;
 	}
 
-	private void UpdateNum(GameItem _, int num) {
-		NumLabel.Text = $"{num}";
+	public override void _ExitTree() {
+		GlobalDataSource.Source.GameItemNumChangedEvent -= UpdateNum;
+		GlobalDataSource.Source.GameItemRemovedEvent -= OnRemove;
+	}
+
+	private void UpdateNum(GameItem item, int _) {
+		if (item.Equals(this.item)) {
+			NumLabel.Text = $"{item.Num}";
+		}
+	}
+
+	private void OnRemove(GameItem item) {
+		if (item.Equals(this.item)) {
+			QueueFree();
+		}
 	}
 
 	private void OnPressed() {
