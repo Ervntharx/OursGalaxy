@@ -52,7 +52,7 @@ internal partial class ShipEditorBox : Button {
 			fleet.Ships.Remove(shipRefer);
 			var data = fleet.Repository[shipRefer];
 			data.RecycleReference(shipRefer);
-			fleet.Repository.Move(data, GlobalViewModel.MainRepository);
+			fleet.Repository.Move(data, GlobalDataSource.MainRepository);
 		};
 
 		var tactics = fleet.Ships[shipRefer];

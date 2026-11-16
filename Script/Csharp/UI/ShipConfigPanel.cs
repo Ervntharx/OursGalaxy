@@ -52,7 +52,7 @@ internal partial class ShipConfigPanel : MarginContainer {
 	// 加载可装备的装备
 	private void OnPushPendingEditOutletEvent(OutletSizeType size) {
 		EquipsTabs.TabsVisible = true;
-		foreach (var equip in GlobalViewModel.MainRepository.Equips.Where(equip => ResourceLib.GetConfig<EquipConfig>(equip).SizeType == size)) {
+		foreach (var equip in GlobalDataSource.MainRepository.Equips.Where(equip => ResourceLib.GetConfig<EquipConfig>(equip).SizeType == size)) {
 			var equipUI = PickEquipBox.Load();
 			equipUI.Render(equip, ViewModel);
 			PickEquipsPanel.AddChild(equipUI);

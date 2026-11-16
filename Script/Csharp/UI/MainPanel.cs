@@ -53,13 +53,13 @@ internal sealed partial class MainPanel : MarginContainer {
 		// base resource relatived to archive data
 		// init base resource label
 		UpdateBaseResourceLabel();
-		GlobalViewModel.BaseResourceUpdatedEvent += UpdateBaseResourceLabel;
+		GlobalDataSource.BaseResourceUpdatedEvent += UpdateBaseResourceLabel;
 		// action points
 		UpdateActionPointsLabel();
-		GlobalViewModel.ActionPointsChangedEvent += UpdateActionPointsLabel;
+		GlobalDataSource.ActionPointsChangedEvent += UpdateActionPointsLabel;
 		// Repository statics
-		UpdateRepositoryStatics(GlobalViewModel.MainRepository);
-		GlobalViewModel.MainRepository.ElementsChangedEvent += UpdateRepositoryStatics;
+		UpdateRepositoryStatics(GlobalDataSource.MainRepository);
+		GlobalDataSource.MainRepository.ElementsChangedEvent += UpdateRepositoryStatics;
 	}
 
 	public override void _EnterTree() {
@@ -159,13 +159,13 @@ internal sealed partial class MainPanel : MarginContainer {
 	}
 
 	private void UpdateBaseResourceLabel() {
-		SolidsLabel.Text = $"[x] [color={(GlobalViewModel.Solids == GlobalViewModel.SolidsLimit ? "gold" : "white")}]{GlobalViewModel.Solids}[/color] [color=gold]/ {GlobalViewModel.SolidsLimit}[/color]";
-		LiquidLabel.Text = $"[x] [color={(GlobalViewModel.Liquid == GlobalViewModel.LiquidLimit ? "gold" : "white")}]{GlobalViewModel.Liquid}[/color] [color=gold]/ {GlobalViewModel.LiquidLimit}[/color]";
-		IndustrialProductsLabel.Text = $"[x] [color={(GlobalViewModel.IndustrialProducts == GlobalViewModel.IndustralProductsLimit ? "gold" : "white")}]{GlobalViewModel.IndustrialProducts}[/color] [color=gold]/ {GlobalViewModel.IndustralProductsLimit}[/color]";
-		HonorLabel.Text = $"[x] [color={(GlobalViewModel.Honors == GlobalViewModel.HonorsLimit ? "gold" : "white")}]{GlobalViewModel.Honors}[/color] [color=gold]/ {GlobalViewModel.HonorsLimit}[/color]";
+		SolidsLabel.Text = $"[x] [color={(GlobalDataSource.Solids == GlobalDataSource.SolidsLimit ? "gold" : "white")}]{GlobalDataSource.Solids}[/color] [color=gold]/ {GlobalDataSource.SolidsLimit}[/color]";
+		LiquidLabel.Text = $"[x] [color={(GlobalDataSource.Liquid == GlobalDataSource.LiquidLimit ? "gold" : "white")}]{GlobalDataSource.Liquid}[/color] [color=gold]/ {GlobalDataSource.LiquidLimit}[/color]";
+		IndustrialProductsLabel.Text = $"[x] [color={(GlobalDataSource.IndustrialProducts == GlobalDataSource.IndustralProductsLimit ? "gold" : "white")}]{GlobalDataSource.IndustrialProducts}[/color] [color=gold]/ {GlobalDataSource.IndustralProductsLimit}[/color]";
+		HonorLabel.Text = $"[x] [color={(GlobalDataSource.Honors == GlobalDataSource.HonorsLimit ? "gold" : "white")}]{GlobalDataSource.Honors}[/color] [color=gold]/ {GlobalDataSource.HonorsLimit}[/color]";
 	}
 
 	private void UpdateActionPointsLabel() {
-		ActionPointsLabel.Text = $"[color={(GlobalViewModel.ActionPoints == GlobalViewModel.ActionPointsLimit ? "gold" : "white")}]{GlobalViewModel.ActionPoints}[/color] [color=gold]/ {GlobalViewModel.ActionPointsLimit}[/color]";
+		ActionPointsLabel.Text = $"[color={(GlobalDataSource.ActionPoints == GlobalDataSource.ActionPointsLimit ? "gold" : "white")}]{GlobalDataSource.ActionPoints}[/color] [color=gold]/ {GlobalDataSource.ActionPointsLimit}[/color]";
 	}
 }

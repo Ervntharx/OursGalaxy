@@ -19,22 +19,22 @@ internal partial class ActionPointsPanel : MarginContainer {
 		foreach (var pair in CanssComfirmButton) {
 			pair.Value.Pressed += () => {
 				var intendSpend = (int)CanssSpinBox[pair.Key].Value;
-				if (GlobalViewModel.ActionPointsCans[pair.Key] >= intendSpend) {
-					GlobalViewModel.ActionPointsCans[pair.Key] -= intendSpend;
-					GlobalViewModel.ActionPoints += provePoints[pair.Key];
+				if (GlobalDataSource.ActionPointsCans[pair.Key] >= intendSpend) {
+					GlobalDataSource.ActionPointsCans[pair.Key] -= intendSpend;
+					GlobalDataSource.ActionPoints += provePoints[pair.Key];
 					Update();
 					return;
 				}
-				GD.PushError($"<ActionPointsPanel> Try to restore action points via non existen action cans:\n {pair.Key} required {intendSpend} but {GlobalViewModel.ActionPointsCans[pair.Key]} left");
+				GD.PushError($"<ActionPointsPanel> Try to restore action points via non existen action cans:\n {pair.Key} required {intendSpend} but {GlobalDataSource.ActionPointsCans[pair.Key]} left");
 			};
 		}
 		Update();
-		GlobalViewModel.ActionPointsChangedEvent += Update;
+		GlobalDataSource.ActionPointsChangedEvent += Update;
 	}
 
 	private void Update() {
 		foreach (var pair in CanssSpinBox) {
-			var leftActionPointCanss = GlobalViewModel.ActionPointsCans[pair.Key];
+			var leftActionPointCanss = GlobalDataSource.ActionPointsCans[pair.Key];
 			pair.Value.Suffix = $"/ {leftActionPointCanss}";
 			pair.Value.MaxValue = leftActionPointCanss;
 
@@ -45,7 +45,7 @@ internal partial class ActionPointsPanel : MarginContainer {
 	}
 
 	private static string MakeActionPointsOverviewRichText() {
-		return $"[font_size=120]⚡[/font_size]  [font_size=35]{GlobalViewModel.ActionPoints}[/font_size] [font_size=25][color=gold]/ {GlobalViewModel.ActionPointsLimit}[/color][/font_size]";
+		return $"[font_size=120]⚡[/font_size]  [font_size=35]{GlobalDataSource.ActionPoints}[/font_size] [font_size=25][color=gold]/ {GlobalDataSource.ActionPointsLimit}[/color][/font_size]";
 	}
 
 	private static readonly Dictionary<ActionPointsCansEnum, int> provePoints = new() {

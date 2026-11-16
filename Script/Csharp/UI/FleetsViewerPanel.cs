@@ -9,7 +9,7 @@ internal partial class FleetsViewerPanel : MarginContainer {
 
 	public void Render() {
 		var i = 0;
-		foreach (var fleet in GlobalViewModel.Fleets) {
+		foreach (var fleet in GlobalDataSource.Fleets) {
 			var box = FleetBox.Load();
 			box.Render(i, fleet);
 			FleetsPanel.AddChild(box, true);

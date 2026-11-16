@@ -44,7 +44,7 @@ internal sealed class ShipConfigViewModel {
 				var equipData = Repository[equipReference];
 				equipData.RecycleReference(equipReference);
 				data.EquipsLs.Remove(outletName);
-				Repository.Move(equipData, GlobalViewModel.MainRepository);
+				Repository.Move(equipData, GlobalDataSource.MainRepository);
 
 				OutletUPdatedEvent?.Invoke(PendingEditOutletName, null);
 			}
@@ -59,7 +59,7 @@ internal sealed class ShipConfigViewModel {
 		if (Repository is not null && ShipReference is not null && PendingEditOutletName is not null) {
 			if (equipData.ItemLocation is null) {
 				var data = Repository[ShipReference];
-				Repository.Move(equipData, GlobalViewModel.MainRepository);
+				Repository.Move(equipData, GlobalDataSource.MainRepository);
 				var reference = equipData.MakeReference();
 				data.EquipsLs.Add(PendingEditOutletName, reference);
 

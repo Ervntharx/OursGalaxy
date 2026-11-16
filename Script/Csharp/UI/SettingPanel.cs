@@ -39,7 +39,7 @@ internal partial class SettingPanel : MarginContainer {
 		base._Ready();
 		QuitButton.Pressed += () => PanelsStack.PopPanel(this);
 
-		SettingsArchive.Data.PanelsMarginChanged += OnMarginChanged;
+		SettingsDataSource.PanelsMarginChanged += OnMarginChanged;
 
 
 		QuitButton.Pressed += QueueFree;
@@ -47,23 +47,23 @@ internal partial class SettingPanel : MarginContainer {
 
 		#region Apperance
 		// camera
-		CameraDefaultDistanceEdit.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Default_Distance = (float)newValue;
-		CameraDistanceMaxEdit.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Distance_Max = (float)newValue;
-		CameraDistanceMinEdit.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Distance_Min = (float)newValue;
-		CameraMoveVelocityEdit.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Move_Velocity = (float)newValue;
-		CameraDistanceChangeVelocityEdit.ValueChanged += (newValue) => SettingsArchive.Data.Camera_Distance_ChangsStep = (float)newValue;
+		CameraDefaultDistanceEdit.ValueChanged += (newValue) => SettingsDataSource.Camera_Default_Distance = (float)newValue;
+		CameraDistanceMaxEdit.ValueChanged += (newValue) => SettingsDataSource.Camera_Distance_Max = (float)newValue;
+		CameraDistanceMinEdit.ValueChanged += (newValue) => SettingsDataSource.Camera_Distance_Min = (float)newValue;
+		CameraMoveVelocityEdit.ValueChanged += (newValue) => SettingsDataSource.Camera_Move_Velocity = (float)newValue;
+		CameraDistanceChangeVelocityEdit.ValueChanged += (newValue) => SettingsDataSource.Camera_Distance_ChangsStep = (float)newValue;
 
 		// panels margin
 		PanelsMarginLeftBox.ValueChanged += (newValue) => {
-			SettingsArchive.Data.Apperance_UI_Panels_Margin_Left = (int)newValue;
+			SettingsDataSource.Apperance_UI_Panels_Margin_Left = (int)newValue;
 		};
-		PanelsMarginRightBox.ValueChanged += (newValue) => { SettingsArchive.Data.Apperance_UI_Panels_Margin_Right = (int)newValue; };
-		PanelsMarginTopBox.ValueChanged += (newValue) => { SettingsArchive.Data.Apperance_UI_Panels_Margin_Top = (int)newValue; };
-		PanelsMarginBottomBox.ValueChanged += (newValue) => { SettingsArchive.Data.Apperance_UI_Panels_Margin_Bottom = (int)newValue; };
+		PanelsMarginRightBox.ValueChanged += (newValue) => { SettingsDataSource.Apperance_UI_Panels_Margin_Right = (int)newValue; };
+		PanelsMarginTopBox.ValueChanged += (newValue) => { SettingsDataSource.Apperance_UI_Panels_Margin_Top = (int)newValue; };
+		PanelsMarginBottomBox.ValueChanged += (newValue) => { SettingsDataSource.Apperance_UI_Panels_Margin_Bottom = (int)newValue; };
 		#endregion Apperance
 
 		#region Sound
-		SoundMainSwitchButton.Toggled += (toggle) => SettingsArchive.Data.SoundMainSwitch = toggle;
+		SoundMainSwitchButton.Toggled += (toggle) => SettingsDataSource.SoundMainSwitch = toggle;
 		#endregion Sound
 
 		#region Advance
@@ -80,18 +80,18 @@ internal partial class SettingPanel : MarginContainer {
 		base._ExitTree();
 	}
 
-	private void OnMarginChanged(SettingsArchive.PanelsMarginEnum panelsMarginEnum, int newValue) {
+	private void OnMarginChanged(SettingsDataSource.PanelsMarginEnum panelsMarginEnum, int newValue) {
 		switch (panelsMarginEnum) {
-			case SettingsArchive.PanelsMarginEnum.Left:
+			case SettingsDataSource.PanelsMarginEnum.Left:
 				this.AddThemeConstantOverride("margin_left", newValue);
 				break;
-			case SettingsArchive.PanelsMarginEnum.Right:
+			case SettingsDataSource.PanelsMarginEnum.Right:
 				this.AddThemeConstantOverride("margin_right", newValue);
 				break;
-			case SettingsArchive.PanelsMarginEnum.Top:
+			case SettingsDataSource.PanelsMarginEnum.Top:
 				this.AddThemeConstantOverride("margin_top", newValue);
 				break;
-			case SettingsArchive.PanelsMarginEnum.Bottom:
+			case SettingsDataSource.PanelsMarginEnum.Bottom:
 				this.AddThemeConstantOverride("margin_bottom", newValue);
 				break;
 			default:

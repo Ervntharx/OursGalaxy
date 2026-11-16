@@ -24,25 +24,25 @@ internal partial class AlliancePanel : MarginContainer {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
 		QuitButton.Pressed += () => PanelsStack.PopPanel(this);
-		SettingsArchive.Data.PanelsMarginChanged += OnSettingMarginChanged;
+		SettingsDataSource.PanelsMarginChanged += OnSettingMarginChanged;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta) {
 	}
 
-	private void OnSettingMarginChanged(SettingsArchive.PanelsMarginEnum panelsMarginEnum, int value) {
+	private void OnSettingMarginChanged(SettingsDataSource.PanelsMarginEnum panelsMarginEnum, int value) {
 		switch (panelsMarginEnum) {
-			case SettingsArchive.PanelsMarginEnum.Left:
+			case SettingsDataSource.PanelsMarginEnum.Left:
 				AddThemeConstantOverride("margin_left", value);
 				break;
-			case SettingsArchive.PanelsMarginEnum.Right:
+			case SettingsDataSource.PanelsMarginEnum.Right:
 				AddThemeConstantOverride("margin_right", value);
 				break;
-			case SettingsArchive.PanelsMarginEnum.Top:
+			case SettingsDataSource.PanelsMarginEnum.Top:
 				AddThemeConstantOverride("margin_top", value);
 				break;
-			case SettingsArchive.PanelsMarginEnum.Bottom:
+			case SettingsDataSource.PanelsMarginEnum.Bottom:
 				AddThemeConstantOverride("margin_buttom", value);
 				break;
 			default:

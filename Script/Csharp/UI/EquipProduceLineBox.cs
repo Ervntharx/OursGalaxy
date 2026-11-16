@@ -15,7 +15,7 @@ internal partial class EquipProduceLineBox : Button {
 	public enum StateEnum { Idle, Producing, Completed }
 	public StateEnum State {
 		get {
-			var taskDate = GlobalViewModel.GetEquipProduceLine(lineID);
+			var taskDate = GlobalDataSource.GetEquipProduceLine(lineID);
 			if (taskDate.IsEmpty) {
 				return StateEnum.Idle;
 			}
@@ -32,7 +32,7 @@ internal partial class EquipProduceLineBox : Button {
 	}
 
 	public void UpdateUI() {
-		var taskDate = GlobalViewModel.GetEquipProduceLine()[lineID];
+		var taskDate = GlobalDataSource.GetEquipProduceLine()[lineID];
 		switch (State) {
 			case StateEnum.Producing:
 				TitleLabel.Text = $"[color=green]{lineID}[/color] | [{taskDate.Target?.ToString() ?? "null"}] |进行中...";
@@ -96,7 +96,7 @@ internal partial class EquipProduceLineBox : Button {
 				// cancel
 				break;
 			case StateEnum.Completed:
-				GlobalViewModel.ClaimProduceTask(lineID, out EquipData data);
+				GlobalDataSource.ClaimProduceTask(lineID, out EquipData data);
 				break;
 		}
 	}

@@ -8,53 +8,57 @@ using System.Linq;
 namespace OursGalaxy;
 
 /// <summary>
-///游戏ViewModel
+///游戏ViewModel, 是AutoLoad的
 /// </summary>
-[Obsolete("delived into sub viewmodels")]
-internal partial class GlobalViewModel {
-	public static void Read(GameSavesData saves) => Data = saves;
-	public static GameSavesData Save() => Data;
+internal partial class GlobalDataSource : Node {
+	/// <summary>
+	/// 全局单例
+	/// </summary>
+	public static GlobalDataSource Source { get; private set; } = new();
+
+	public static void Read(GameSavesData saves) => Source.savesData = saves;
+	public static GameSavesData Save() => Source.savesData;
 
 	/// <summary>
 	/// 存档最后编辑时间
 	/// </summary>
-	[Export] public static DateTime LastSaveTime { get => new(Data.LastSaveDate); set => Data.LastSaveDate = value.ToUnix(); }
+	public static DateTime LastSaveTime { get => new(Source.savesData.LastSaveDate); set => Source.savesData.LastSaveDate = value.ToUnix(); }
 
 	#region User Profiles
 	[ExportGroup("User Profiles")]
 
-	[Export] public static GUID UserID { get => Data.UserID; set => Data.UserID = value; }
+	public static GUID UserID { get => Source.savesData.UserID; set => Source.savesData.UserID = value; }
 
 	/// <summary>
 	/// 用户名
 	/// </summary>
-	[Export] public static string UserName { get => Data.UserName; set => Data.UserName = value; }
+	public static string UserName { get => Source.savesData.UserName; set => Source.savesData.UserName = value; }
 
 	/// <summary>
 	/// 头像
 	/// </summary>
-	[Export]
+
 	public static ImageTexture Avatar {
 		get {
 			Image image = new();
-			var err = image.LoadWebpFromBuffer(Convert.FromBase64String(Data.AvaterBase64));
+			var err = image.LoadWebpFromBuffer(Convert.FromBase64String(Source.savesData.AvaterBase64));
 			if (err != Error.Ok) {
 				GD.PushError($"<GlobalViewModel> Fail to load avater: {err}");
 				return new();
 			}
 			return ImageTexture.CreateFromImage(image);
 		}
-		set => Data.AvaterBase64 = Convert.ToBase64String(value.GetImage().SaveWebpToBuffer(false));
+		set => Source.savesData.AvaterBase64 = Convert.ToBase64String(value.GetImage().SaveWebpToBuffer(false));
 	}
 
 	/// <summary>
 	/// 注册时间
 	/// </summary>
-	[Export] public static DateTime RegisterTime { get => new(Data.RegisterDate); set => Data.RegisterDate = value.ToUnix(); }
+	public static DateTime RegisterTime { get => new(Source.savesData.RegisterDate); set => Source.savesData.RegisterDate = value.ToUnix(); }
 
 	#endregion User Profiles
 
-	[Export] public Array<MessageData> Messages { get => Data.Messages; set => Data.Messages = value; }
+	public Array<MessageData> Messages { get => Source.savesData.Messages; set => Source.savesData.Messages = value; }
 
 	#region Base Resource
 	[ExportGroup("Base Resource")]
@@ -62,16 +66,16 @@ internal partial class GlobalViewModel {
 	/// <summary>
 	/// 固体资源
 	/// </summary>
-	[Export]
+
 	public static int Solids {
-		get => Data.BaseResource[(int)BaseResourceEnum.Solids];
+		get => Source.savesData.BaseResource[(int)BaseResourceEnum.Solids];
 		set {
-			Data.BaseResource[(int)BaseResourceEnum.Solids] = Math.Clamp(value, 0, SolidsLimit);
+			Source.savesData.BaseResource[(int)BaseResourceEnum.Solids] = Math.Clamp(value, 0, SolidsLimit);
 			BaseResourceUpdatedEvent?.Invoke();
 		}
 	}
 
-	[Export]
+
 	public static int SolidsLimit {
 		get => baseResourceLimit[(int)BaseResourceEnum.Solids];
 		set {
@@ -83,16 +87,16 @@ internal partial class GlobalViewModel {
 	/// <summary>
 	/// 液体资源
 	/// </summary>
-	[Export]
+
 	public static int Liquid {
-		get => Data.BaseResource[(int)BaseResourceEnum.Liquid];
+		get => Source.savesData.BaseResource[(int)BaseResourceEnum.Liquid];
 		set {
-			Data.BaseResource[(int)BaseResourceEnum.Liquid] = Math.Clamp(value, 0, LiquidLimit);
+			Source.savesData.BaseResource[(int)BaseResourceEnum.Liquid] = Math.Clamp(value, 0, LiquidLimit);
 			BaseResourceUpdatedEvent?.Invoke();
 		}
 	}
 
-	[Export]
+
 	public static int LiquidLimit {
 		get => baseResourceLimit[(int)BaseResourceEnum.Liquid];
 		set {
@@ -104,16 +108,16 @@ internal partial class GlobalViewModel {
 	/// <summary>
 	/// 工业品资源
 	/// </summary>
-	[Export]
+
 	public static int IndustrialProducts {
-		get => Data.BaseResource[(int)BaseResourceEnum.IndustralProducts];
+		get => Source.savesData.BaseResource[(int)BaseResourceEnum.IndustralProducts];
 		set {
-			Data.BaseResource[(int)BaseResourceEnum.IndustralProducts] = Math.Clamp(value, 0, IndustralProductsLimit);
+			Source.savesData.BaseResource[(int)BaseResourceEnum.IndustralProducts] = Math.Clamp(value, 0, IndustralProductsLimit);
 			BaseResourceUpdatedEvent?.Invoke();
 		}
 	}
 
-	[Export]
+
 	public static int IndustralProductsLimit {
 		get => baseResourceLimit[(int)BaseResourceEnum.IndustralProducts];
 		set {
@@ -125,16 +129,16 @@ internal partial class GlobalViewModel {
 	/// <summary>
 	/// 战勋资源
 	/// </summary>
-	[Export]
+
 	public static int Honors {
-		get => Data.BaseResource[(int)BaseResourceEnum.Honors];
+		get => Source.savesData.BaseResource[(int)BaseResourceEnum.Honors];
 		set {
-			Data.BaseResource[(int)BaseResourceEnum.Honors] = Math.Clamp(value, 0, HonorsLimit);
+			Source.savesData.BaseResource[(int)BaseResourceEnum.Honors] = Math.Clamp(value, 0, HonorsLimit);
 			BaseResourceUpdatedEvent?.Invoke();
 		}
 	}
 
-	[Export]
+
 	public static int HonorsLimit {
 		get => baseResourceLimit[(int)BaseResourceEnum.Honors];
 		set {
@@ -155,10 +159,10 @@ internal partial class GlobalViewModel {
 	/// <summary>
 	/// 体力点
 	/// </summary>
-	[Export]
+
 	public static int ActionPoints {
-		get => Data.ActionPoints; set {
-			Data.ActionPoints = Math.Clamp(value, 0, actionPointsLimit);
+		get => Source.savesData.ActionPoints; set {
+			Source.savesData.ActionPoints = Math.Clamp(value, 0, actionPointsLimit);
 			ActionPointsChangedEvent?.Invoke();
 		}
 	}
@@ -182,8 +186,8 @@ internal partial class GlobalViewModel {
 	#endregion Action Points
 
 	#region Produce Tasks
-	public static IReadOnlyList<ShipProduceTaskData> GetShipProduceLine() => Data.ShipsProduceLines;
-	public static IReadOnlyList<EquipProduceTaskData> GetEquipProduceLine() => Data.EquipsProduceLines;
+	public static IReadOnlyList<ShipProduceTaskData> GetShipProduceLine() => Source.savesData.ShipsProduceLines;
+	public static IReadOnlyList<EquipProduceTaskData> GetEquipProduceLine() => Source.savesData.EquipsProduceLines;
 	public static ShipProduceTaskData GetShipProduceLine(int idx) => GetShipProduceLine()[idx];
 	public static EquipProduceTaskData GetEquipProduceLine(int idx) => GetEquipProduceLine()[idx];
 	/// <summary>
@@ -194,9 +198,9 @@ internal partial class GlobalViewModel {
 	/// <exception cref="InvalidOperationException"></exception>
 	/// <exception cref="ArgumentOutOfRangeException"></exception>
 	public static void SubmitProduceTask(int idx, ShipProduceTaskData data) {
-		if (idx >= 0 && idx < Data.ShipsProduceLines.Count) {
-			if (Data.ShipsProduceLines[idx].IsEmpty) {
-				Data.ShipsProduceLines[idx] = data;
+		if (idx >= 0 && idx < Source.savesData.ShipsProduceLines.Count) {
+			if (Source.savesData.ShipsProduceLines[idx].IsEmpty) {
+				Source.savesData.ShipsProduceLines[idx] = data;
 				return;
 			}
 			throw new InvalidOperationException("<GlobalViewModel-ProduceTask> target produceline isnt empty");
@@ -212,11 +216,11 @@ internal partial class GlobalViewModel {
 	/// <exception cref="Exception"></exception>
 	/// <exception cref="ArgumentOutOfRangeException"></exception>
 	public static void ClaimProduceTask(int idx, out SpaceshipData data) {
-		if (idx >= 0 && idx < Data.ShipsProduceLines.Count) {
-			if (!Data.ShipsProduceLines[idx].IsEmpty) {
-				data = Data.ShipsProduceLines[idx].Target ?? throw new Exception("<GlobalViewModel-ProduceTask> target produceline is empty");
+		if (idx >= 0 && idx < Source.savesData.ShipsProduceLines.Count) {
+			if (!Source.savesData.ShipsProduceLines[idx].IsEmpty) {
+				data = Source.savesData.ShipsProduceLines[idx].Target ?? throw new Exception("<GlobalViewModel-ProduceTask> target produceline is empty");
 				MainRepository.Add(data);
-				Data.ShipsProduceLines[idx] = new();
+				Source.savesData.ShipsProduceLines[idx] = new();
 			}
 		}
 		throw new ArgumentOutOfRangeException("<GlobalViewModel-ProduceTask> Claim task index out of range");
@@ -230,9 +234,9 @@ internal partial class GlobalViewModel {
 	/// <exception cref="InvalidOperationException"></exception>
 	/// <exception cref="ArgumentOutOfRangeException"></exception>
 	public static void SubmitProduceTask(int idx, EquipProduceTaskData data) {
-		if (idx >= 0 && idx < Data.EquipsProduceLines.Count) {
-			if (Data.EquipsProduceLines[idx].IsEmpty) {
-				Data.EquipsProduceLines[idx] = data;
+		if (idx >= 0 && idx < Source.savesData.EquipsProduceLines.Count) {
+			if (Source.savesData.EquipsProduceLines[idx].IsEmpty) {
+				Source.savesData.EquipsProduceLines[idx] = data;
 				return;
 			}
 			throw new InvalidOperationException("<GlobalViewModel-ProduceTask> target produceline isnt empty");
@@ -247,11 +251,11 @@ internal partial class GlobalViewModel {
 	/// <param name="data"></param>
 	/// <exception cref="Exception"></exception>
 	public static void ClaimProduceTask(int idx, out EquipData data) {
-		if (idx >= 0 && idx < Data.EquipsProduceLines.Count) {
-			if (!Data.EquipsProduceLines[idx].IsEmpty) {
-				data = Data.EquipsProduceLines[idx].Target ?? throw new Exception("<GlobalViewModel-ProduceTask> target produceline is empty");
+		if (idx >= 0 && idx < Source.savesData.EquipsProduceLines.Count) {
+			if (!Source.savesData.EquipsProduceLines[idx].IsEmpty) {
+				data = Source.savesData.EquipsProduceLines[idx].Target ?? throw new Exception("<GlobalViewModel-ProduceTask> target produceline is empty");
 				MainRepository.Add(data);
-				Data.EquipsProduceLines[idx] = new();
+				Source.savesData.EquipsProduceLines[idx] = new();
 			}
 		}
 		throw new Exception("<GlobalViewModel-ProduceTask> Claim task index out of range");
@@ -260,43 +264,43 @@ internal partial class GlobalViewModel {
 	#endregion Produce Tasks
 
 	#region AssignedTask
-	public static IReadOnlyList<AssignedTaskData> GetAcceptedTasks() => Data.AcceptedTasks;
+	public static IReadOnlyList<AssignedTaskData> GetAcceptedTasks() => Source.savesData.AcceptedTasks;
 
 	public static void UpdateAcceptableTask() {
 		// 检查30分钟刷新
-		if (Data.LastUpdateAcceptableTasks?.To(DateTime.Now()).TotalMinutes >= 30) {
+		if (Source.savesData.LastUpdateAcceptableTasks?.To(DateTime.Now()).TotalMinutes >= 30) {
 			// TODO: 刷新任务算法
-			Data.AcceptableTasks.Clear();
+			Source.savesData.AcceptableTasks.Clear();
 			// 刷新6个任务
 			var tasksLs = ResourceLoader.ListDirectory("res://ResourceLib/Task/");
 			var randRating = (AssignedTaskConfig.RatingLevelEnum)GD.RandRange((int)AssignedTaskConfig.RatingLevelEnum.D, (int)AssignedTaskConfig.RatingLevelEnum.SS);
 			var randLevel = GD.RandRange(AssignedTaskConfig.MinLevel, AssignedTaskConfig.MaxLevel);
 			for (var i = 0; i < 6; i++) {
 				var randTaskName = tasksLs[GD.RandRange(0, tasksLs.Count() - 1)];
-				Data.AcceptableTasks.Add(new(randTaskName, randRating, randLevel));
+				Source.savesData.AcceptableTasks.Add(new(randTaskName, randRating, randLevel));
 			}
 		}
 	}
 
 	public static void AcceptTask(AssignedTaskData data) {
-		if (Data.AcceptableTasks.Contains(data)) {
+		if (Source.savesData.AcceptableTasks.Contains(data)) {
 			// 接受任务并启动时间记录
 			data.AcceptedTime = DateTime.Now();
 			data.LastEventUpdatedTime = DateTime.Now();
-			Data.AcceptedTasks.Add(data);
-			Data.AcceptableTasks.Remove(data);
+			Source.savesData.AcceptedTasks.Add(data);
+			Source.savesData.AcceptableTasks.Remove(data);
 			return;
 		}
 		throw new ArgumentOutOfRangeException("<GlobalViewModel-AssignedTask> Accepted task must be acceptable");
 	}
 
 	public static void ClaimTask(AssignedTaskData data) {
-		if (Data.AcceptedTasks.Contains(data) && data.AcceptedTime is not null) {
+		if (Source.savesData.AcceptedTasks.Contains(data) && data.AcceptedTime is not null) {
 			if (new DateTime(data.AcceptedTime.ToUnix() + data.Time).Over(data.AcceptedTime)) {
 				Solids += data.RewardSolids;
 				Liquid += data.RewardLiquids;
 				IndustrialProducts += data.RewardIndustrialProduct;
-				Data.AcceptedTasks.Remove(data);
+				Source.savesData.AcceptedTasks.Remove(data);
 				return;
 			}
 			throw new Exception("<GlobalViewModel-AssignedTask> Claim task failed, task isnt finished");
@@ -306,11 +310,11 @@ internal partial class GlobalViewModel {
 	#endregion AssignedTask
 
 	#region Battle and Combat
-	public static IReadOnlyList<CombatData> GetCombats() => Data.Combats;
-	public static IReadOnlyList<HuntData> GetHunts() => Data.Hunts;
+	public static IReadOnlyList<CombatData> GetCombats() => Source.savesData.Combats;
+	public static IReadOnlyList<HuntData> GetHunts() => Source.savesData.Hunts;
 
-	public static void CompleteComnbat(CombatData data) => Data.Combats.Remove(data);
-	public static void CompleteHunt(HuntData data) => Data.Hunts.Remove(data);
+	public static void CompleteComnbat(CombatData data) => Source.savesData.Combats.Remove(data);
+	public static void CompleteHunt(HuntData data) => Source.savesData.Hunts.Remove(data);
 
 	// 缓存的在FleetViewer选中的舰队
 	public static FleetData? CachedSelectFleet { get; set; }
@@ -330,11 +334,11 @@ internal partial class GlobalViewModel {
 	#endregion Battle and Combat
 
 	#region Repository
-	public static Array<FleetData> Fleets { get => Data.Fleets; set => Data.Fleets = value; }
-	public static SubRepository MainRepository { get => Data.Repository; set => Data.Repository = value; }
+	public static Array<FleetData> Fleets { get => Source.savesData.Fleets; set => Source.savesData.Fleets = value; }
+	public static SubRepository MainRepository { get => Source.savesData.Repository; set => Source.savesData.Repository = value; }
 
-	public static Array<GameItem> GameItems { get => Data.GameItems; set => Data.GameItems = value; }
+	public static Array<GameItem> GameItems { get => Source.savesData.GameItems; set => Source.savesData.GameItems = value; }
 	#endregion Repository
 
-	private static GameSavesData Data = new();
+	private GameSavesData savesData = new();
 }

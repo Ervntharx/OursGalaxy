@@ -33,6 +33,6 @@ internal partial class FleetBox : Button {
 	}
 
 	private void OnPressed() {
-		GlobalViewModel.CachedSelectFleet = Fleet;
+		GlobalDataSource.CachedSelectFleet = Fleet;
 	}
 }

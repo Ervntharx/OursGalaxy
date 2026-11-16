@@ -113,13 +113,13 @@ internal partial class CombatStage : Node3D {
 				touchingnScreen = mbEvent.Pressed;
 			}
 			else if (mbEvent.ButtonIndex == MouseButton.WheelUp) {
-				cameraDistance = Mathf.Clamp(cameraDistance + SettingsArchive.Data.Camera_Distance_ChangsStep, SettingsArchive.Data.Camera_Distance_Min, SettingsArchive.Data.Camera_Distance_Max);
+				cameraDistance = Mathf.Clamp(cameraDistance + SettingsDataSource.Camera_Distance_ChangsStep, SettingsDataSource.Camera_Distance_Min, SettingsDataSource.Camera_Distance_Max);
 				var pos = CameraArm.Position;
 				pos.Y = cameraDistance;
 				CameraArm.Position = pos;
 			}
 			else if (mbEvent.ButtonIndex == MouseButton.WheelDown) {
-				cameraDistance = Mathf.Clamp(cameraDistance - SettingsArchive.Data.Camera_Distance_ChangsStep, SettingsArchive.Data.Camera_Distance_Min, SettingsArchive.Data.Camera_Distance_Max);
+				cameraDistance = Mathf.Clamp(cameraDistance - SettingsDataSource.Camera_Distance_ChangsStep, SettingsDataSource.Camera_Distance_Min, SettingsDataSource.Camera_Distance_Max);
 				var pos = CameraArm.Position;
 				pos.Y = cameraDistance;
 				CameraArm.Position = pos;
@@ -128,7 +128,7 @@ internal partial class CombatStage : Node3D {
 		if (touchingnScreen && @event is InputEventMouseMotion mmotion) {
 			if (OverviewMode) {
 				var pos = CameraArm.Position;
-				pos = new Vector3(pos.X - mmotion.Relative.X * SettingsArchive.Data.Camera_Move_Velocity, 0, pos.Z - mmotion.Relative.Y * SettingsArchive.Data.Camera_Move_Velocity);
+				pos = new Vector3(pos.X - mmotion.Relative.X * SettingsDataSource.Camera_Move_Velocity, 0, pos.Z - mmotion.Relative.Y * SettingsDataSource.Camera_Move_Velocity);
 				CameraArm.Position = pos;
 			}
 		}
@@ -168,7 +168,7 @@ internal partial class CombatStage : Node3D {
 	// private const float CAMERA_DISTANCE_MAX = 50;
 	private float cameraYawAngle;
 	private float cameraPitchAngle;
-	private float cameraDistance = SettingsArchive.Data.Camera_Default_Distance;
+	private float cameraDistance = SettingsDataSource.Camera_Default_Distance;
 	private bool touchingnScreen;
 
 	private bool OverviewMode = true;

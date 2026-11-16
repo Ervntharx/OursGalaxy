@@ -137,13 +137,13 @@ internal partial class ReadyCombatPanel : MarginContainer {
 
 	private void OnEditLeftFleet() {
 		var editor = FleetEditorPanel.Load();
-		editor.Render(GlobalViewModel.GetReady2CombatFleet(CombatStage.TeamEnum.Left));
+		editor.Render(GlobalDataSource.GetReady2CombatFleet(CombatStage.TeamEnum.Left));
 		PanelsStack.PushPanel(editor);
 	}
 
 	private void OnEditRightFleet() {
 		var editor = FleetEditorPanel.Load();
-		editor.Render(GlobalViewModel.GetReady2CombatFleet(CombatStage.TeamEnum.Right));
+		editor.Render(GlobalDataSource.GetReady2CombatFleet(CombatStage.TeamEnum.Right));
 		PanelsStack.PushPanel(editor);
 	}
 

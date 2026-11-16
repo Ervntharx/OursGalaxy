@@ -11,10 +11,10 @@ internal partial class GameSavesDataMgr : Node {
 	public static void Read() {
 		if (FileAccess.FileExists(SAVE_PATH)) {
 			var data = ResourceLoader.Load<GameSavesData>(SAVE_PATH);
-			GlobalViewModel.Read(data);
+			GlobalDataSource.Read(data);
 		}
 		else {
-			GlobalViewModel.Read(InitSavesData());
+			GlobalDataSource.Read(InitSavesData());
 		}
 	}
 
@@ -24,7 +24,7 @@ internal partial class GameSavesDataMgr : Node {
 		if (err != Error.Ok) {
 			GD.PushError(err);
 		}
-		GD.Print(FileAccess.FileExists(SAVE_PATH) == true ? "save success." : "why?");
+		GD.Print(FileAccess.FileExists(SAVE_PATH) == true ? "<GameSavesDataMgr> save success." : "why?");
 	}
 
 	public static void Clear() {
