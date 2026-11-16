@@ -24,7 +24,8 @@ internal partial class GameItemBox : Button {
 		}
 	}
 
-	public void Render(GameItem item) {
+	public void Render(StorehouseVM vm, GameItem item) {
+		this.vm = vm;
 		Item = item;
 		var config = ResourceLib.GetConfig(item);
 		NameLabel.Text = config.DisplayName;
@@ -33,23 +34,23 @@ internal partial class GameItemBox : Button {
 	}
 
 	private void UpdateNum(GameItem _, int num) {
-		if (num > 0) {
-			NumLabel.Text = $"{num}";
-		}
-		else {
-			QueueFree();
-		}
+		NumLabel.Text = $"{num}";
 	}
 
 	private void OnPressed() {
-		if (StorehouseVM.SelectedItem?.Equals(Item) is true) {
-			StorehouseVM.SelectedItem = null;
-			return;
+		if (vm is not null) {
+			if (vm.SelectedItem?.Equals(Item) is true) {
+				vm.SelectedItem = null;
+				return;
+			}
+			vm.SelectedItem = Item;
 		}
-
-		StorehouseVM.SelectedItem = Item;
-
+		else {
+			GD.PushError("<GameItemBox> StorehouseVM is null");
+		}
 	}
+
+	private StorehouseVM? vm;
 
 	private GameItem? item;
 }

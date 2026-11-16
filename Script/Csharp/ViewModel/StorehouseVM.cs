@@ -8,26 +8,27 @@ namespace OursGalaxy.ViewModel;
 /// <summary>
 /// Item资产VM
 /// </summary>
+[GlobalClass]
 internal partial class StorehouseVM : Node {
 	/// <summary>
 	/// 新增元素
 	/// </summary>
-	public static event Action<GameItem>? ElementAppendEvent;
+	public event Action<GameItem>? ElementAppendEvent;
 
 	/// <summary>
 	/// 移除事件
 	/// </summary>
-	public static event Action<GameItem>? ELementRemovedEvent;
+	public event Action<GameItem>? ELementRemovedEvent;
 
 	/// <summary>
 	/// 选中物品事件
 	/// </summary>
-	public static event Action<GameItem?>? SelectElementEvent;
+	public event Action<GameItem?>? SelectElementEvent;
 
 	/// <summary>
 	/// 选中了物品
 	/// </summary>
-	public static GameItem? SelectedItem {
+	public GameItem? SelectedItem {
 		get => selectItem; set {
 			selectItem = value;
 			SelectElementEvent?.Invoke(selectItem);
@@ -38,26 +39,26 @@ internal partial class StorehouseVM : Node {
 	/// 取得所有GameItem
 	/// </summary>
 	/// <returns></returns>
-	public static IReadOnlyList<GameItem> GetGameItems() => items;
+	public IReadOnlyList<GameItem> GetGameItems() => items;
 
 	/// <summary>
 	/// 过滤的取得GameItem
 	/// </summary>
 	/// <param name="predict"></param>
 	/// <returns></returns>
-	public static IReadOnlyList<GameItem> GetGameItems(Func<GameItem, bool> predict) => [.. items.Where(predict)];
+	public IReadOnlyList<GameItem> GetGameItems(Func<GameItem, bool> predict) => [.. items.Where(predict)];
 
 	/// <summary>
 	/// 增加元素
 	/// </summary>
 	/// <param name="item"></param>
-	public static void Add(GameItem item) {
+	public void Add(GameItem item) {
 		var it = GameSavesDataMgr.Data.GameItems.FirstOrDefault(it => it.Equals(item));
 		if (it is not null) {
 			it.Num += item.Num;
 		}
 		else {
-			item.NumChangedEvent += OnItemElementChanged;
+			item.NumChangedEvent += OnElementNumChanged;
 			items.Add(item);
 			Save();
 		}
@@ -69,11 +70,12 @@ internal partial class StorehouseVM : Node {
 	/// </summary>
 	/// <param name="item"></param>
 	/// <exception cref="ArgumentOutOfRangeException"></exception>
-	public static void Remove(GameItem item) {
-		item.NumChangedEvent -= OnItemElementChanged;
-		if (!GameSavesDataMgr.Data.GameItems.Remove(item)) {
+	public void Remove(GameItem item) {
+		item.NumChangedEvent -= OnElementNumChanged;
+		if (!items.Remove(item)) {
 			throw new ArgumentOutOfRangeException("<ItemRepositoryVM> item not in gameitems");
 		}
+		Save();
 		ELementRemovedEvent?.Invoke(item);
 	}
 
@@ -81,33 +83,34 @@ internal partial class StorehouseVM : Node {
 		base._EnterTree();
 		// 从存档注入
 		foreach (var item in GameSavesDataMgr.Data.GameItems) {
-			item.NumChangedEvent += OnItemElementChanged;
+			item.NumChangedEvent += OnElementNumChanged;
 			items.Add(item);
 		}
 	}
 
 	public override void _ExitTree() {
 		foreach (var item in items) {
-			item.NumChangedEvent -= OnItemElementChanged;
+			item.NumChangedEvent -= OnElementNumChanged;
 		}
 	}
 
 	// 零数量检查
-	private static void OnItemElementChanged(GameItem item, int num) {
+	private void OnElementNumChanged(GameItem item, int num) {
 		if (num == 0) {
 			Remove(item);
 			if (item.Equals(SelectedItem)) {
 				SelectedItem = null;
 			}
+			GD.Print(string.Join(",", GetGameItems()));
 		}
 	}
 
-	private static void Save() {
+	private void Save() {
 		GameSavesDataMgr.Data.GameItems = [.. items];
 		GameSavesDataMgr.Save();
 	}
 
-	private static List<GameItem> items = [];
+	private List<GameItem> items = [];
 
-	private static GameItem? selectItem;
+	private GameItem? selectItem;
 }

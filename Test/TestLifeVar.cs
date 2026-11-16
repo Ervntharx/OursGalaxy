@@ -1,11 +1,13 @@
 ﻿using System.Linq;
 using Godot;
 using OursGalaxy.ResourceConfig;
+using OursGalaxy.UI;
 using OursGalaxy.ViewModel;
 namespace OursGalaxy;
 
 internal partial class TestLifeVar : Control {
 	[Export] Button here { get; set; } = null!;
+	[Export] Storehouse Storehouse { get; set; } = null!;
 	// // test Resourcelib
 	// public override void _Ready() {
 	// 	var shipData = new SpaceshipData(SpaceshipConfig.TEMPLATE_NAMECODE, ItemBaseConfig.QulityEnum.White);
@@ -42,12 +44,17 @@ internal partial class TestLifeVar : Control {
 	// 	GD.Print("}");
 	// }
 
-	public override void _EnterTree() {
-		base._EnterTree();
-		StorehouseVM.Add(new("WhiteCup", ItemBaseConfig.QulityEnum.White, 3));
-		StorehouseVM.Add(new("BlueCup", ItemBaseConfig.QulityEnum.Green, 4));
-		StorehouseVM.Add(new("GoldCup", ItemBaseConfig.QulityEnum.Gold, 5));
+	public override void _Ready() {
+		base._Ready();
+		GD.Print(Storehouse.IsNodeReady());
+		Storehouse.VM.Add(new("WhiteCup", ItemBaseConfig.QulityEnum.White, 3));
+		Storehouse.VM.Add(new("BlueCup", ItemBaseConfig.QulityEnum.Green, 4));
+		Storehouse.VM.Add(new("GoldCup", ItemBaseConfig.QulityEnum.Gold, 5));
 
-		here.Pressed += () => StorehouseVM.GetGameItems(item => item.NameCode == "WhiteCup").First().Num -= 1;
+		here.Pressed += () => Storehouse.VM.GetGameItems(item => item.NameCode == "WhiteCup").First().Num -= 1;
+
+		var config1 = ResourceLoader.Load<ItemBaseConfig>("res://ResourceLib/GameItem/GoldCup_3.tres");
+		var config2 = ResourceLoader.Load<ItemBaseConfig>("res://ResourceLib/GameItem/GoldCup_3.tres");
+		GD.Print(ReferenceEquals(config1, config2), config1.Equals(config2));
 	}
 }

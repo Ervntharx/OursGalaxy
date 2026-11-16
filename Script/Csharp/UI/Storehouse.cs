@@ -7,7 +7,7 @@ namespace OursGalaxy.UI;
 /// <summary>
 /// 主界面上的仓库界面. 设计该位置只展示GameItem这类可数物品
 /// </summary>
-internal partial class Storehouse : MarginContainer {
+internal sealed partial class Storehouse : MarginContainer {
 	public static Storehouse Load() => (Storehouse)ResourceLoader.Load<PackedScene>("res://Scene/Storehouse.tscn").Instantiate();
 
 	[Export] private Button QuitButton { get; set; } = null!;
@@ -17,30 +17,36 @@ internal partial class Storehouse : MarginContainer {
 	[Export] private RichTextLabel ItemNameLabel { get; set; } = null!;
 	[Export] private RichTextLabel ItemIntroLabel { get; set; } = null!;
 
+	[Export] public StorehouseVM VM { get; set; } = null!;
+
 	public override void _EnterTree() {
 		base._EnterTree();
 		QuitButton.Pressed += OnQuitPressed;
-		StorehouseVM.SelectElementEvent += RenderSelectedItem;
+		VM.SelectElementEvent += RenderSelectedItem;
+		VM.ElementAppendEvent += RenderAppend;
+		VM.ELementRemovedEvent += RenderRemoved;
 		Render();
 	}
 
 	public override void _ExitTree() {
 		QuitButton.Pressed -= OnQuitPressed;
-		StorehouseVM.SelectElementEvent -= RenderSelectedItem;
+		VM.SelectElementEvent -= RenderSelectedItem;
+		VM.ElementAppendEvent -= RenderAppend;
+		VM.ELementRemovedEvent -= RenderRemoved;
 		base._ExitTree();
 	}
 
 	private void Render() {
-		foreach (var item in StorehouseVM.GetGameItems()) {
+		foreach (var item in VM.GetGameItems()) {
 			var box = GameItemBox.Load();
-			box.Render(item);
+			box.Render(VM, item);
 			ItemsListPanel.AddChild(box);
 		}
 	}
 
 	private void RenderAppend(GameItem item) {
 		var box = GameItemBox.Load();
-		box.Render(item);
+		box.Render(VM, item);
 		ItemsListPanel.AddChild(box);
 	}
 
@@ -49,7 +55,6 @@ internal partial class Storehouse : MarginContainer {
 		?.QueueFree();
 
 	private void RenderSelectedItem(GameItem? item) {
-		GD.Print(item?.ToString() ?? "null");
 		ItemInfoPanel.Visible = item is not null;
 		if (item is not null) {
 			var config = ResourceLib.GetConfig(item);

@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dccfftx123o5m" path="res://Script/Csharp/UI/Storehouse.cs" id="1_vux73"]
 [ext_resource type="Texture2D" uid="uid://bojif7vl7pyxm" path="res://icon.svg" id="2_4m61v"]
+[ext_resource type="Script" uid="uid://dqj12an3ki60o" path="res://Script/Csharp/ViewModel/StorehouseVM.cs" id="3_j2ysa"]
 
-[node name="Storehouse" type="MarginContainer" unique_id=663373868 node_paths=PackedStringArray("QuitButton", "ItemsListPanel", "ItemInfoPanel", "TextureDisplayer", "ItemNameLabel", "ItemIntroLabel")]
+[node name="Storehouse" type="MarginContainer" unique_id=663373868 node_paths=PackedStringArray("QuitButton", "ItemsListPanel", "ItemInfoPanel", "TextureDisplayer", "ItemNameLabel", "ItemIntroLabel", "VM")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -20,6 +21,7 @@ ItemInfoPanel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/PanelCont
 TextureDisplayer = NodePath("PanelContainer/VBoxContainer/HSplitContainer/PanelContainer/VBoxContainer/TextureRect")
 ItemNameLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/PanelContainer/VBoxContainer/Title")
 ItemIntroLabel = NodePath("PanelContainer/VBoxContainer/HSplitContainer/PanelContainer/VBoxContainer/RichTextLabel")
+VM = NodePath("StorehouseVM")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=597951013]
 layout_mode = 2
@@ -79,3 +81,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 last_wrap_alignment = 1
+
+[node name="StorehouseVM" type="Node" parent="." unique_id=236150106]
+script = ExtResource("3_j2ysa")
+metadata/_custom_type_script = "uid://dqj12an3ki60o"
