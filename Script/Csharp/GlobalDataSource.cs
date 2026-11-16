@@ -5,6 +5,7 @@ using OursGalaxy.ResourceConfig;
 using OursGalaxy.UI;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 namespace OursGalaxy;
 
 /// <summary>
@@ -16,17 +17,12 @@ internal partial class GlobalDataSource : Node {
 	/// </summary>
 	public static GlobalDataSource Source { get; private set; } = new();
 
-	public static void Read(GameSavesData saves) => Source.savesData = saves;
-	public static GameSavesData Save() => Source.savesData;
-
 	/// <summary>
 	/// 存档最后编辑时间
 	/// </summary>
 	public static DateTime LastSaveTime { get => new(Source.savesData.LastSaveDate); set => Source.savesData.LastSaveDate = value.ToUnix(); }
 
 	#region User Profiles
-	[ExportGroup("User Profiles")]
-
 	public static GUID UserID { get => Source.savesData.UserID; set => Source.savesData.UserID = value; }
 
 	/// <summary>
@@ -61,12 +57,9 @@ internal partial class GlobalDataSource : Node {
 	public Array<MessageData> Messages { get => Source.savesData.Messages; set => Source.savesData.Messages = value; }
 
 	#region Base Resource
-	[ExportGroup("Base Resource")]
-
 	/// <summary>
 	/// 固体资源
 	/// </summary>
-
 	public static int Solids {
 		get => Source.savesData.BaseResource[(int)BaseResourceEnum.Solids];
 		set {
@@ -87,7 +80,6 @@ internal partial class GlobalDataSource : Node {
 	/// <summary>
 	/// 液体资源
 	/// </summary>
-
 	public static int Liquid {
 		get => Source.savesData.BaseResource[(int)BaseResourceEnum.Liquid];
 		set {
@@ -108,7 +100,6 @@ internal partial class GlobalDataSource : Node {
 	/// <summary>
 	/// 工业品资源
 	/// </summary>
-
 	public static int IndustrialProducts {
 		get => Source.savesData.BaseResource[(int)BaseResourceEnum.IndustralProducts];
 		set {
@@ -116,7 +107,6 @@ internal partial class GlobalDataSource : Node {
 			BaseResourceUpdatedEvent?.Invoke();
 		}
 	}
-
 
 	public static int IndustralProductsLimit {
 		get => baseResourceLimit[(int)BaseResourceEnum.IndustralProducts];
@@ -129,7 +119,6 @@ internal partial class GlobalDataSource : Node {
 	/// <summary>
 	/// 战勋资源
 	/// </summary>
-
 	public static int Honors {
 		get => Source.savesData.BaseResource[(int)BaseResourceEnum.Honors];
 		set {
@@ -137,7 +126,6 @@ internal partial class GlobalDataSource : Node {
 			BaseResourceUpdatedEvent?.Invoke();
 		}
 	}
-
 
 	public static int HonorsLimit {
 		get => baseResourceLimit[(int)BaseResourceEnum.Honors];
@@ -159,7 +147,6 @@ internal partial class GlobalDataSource : Node {
 	/// <summary>
 	/// 体力点
 	/// </summary>
-
 	public static int ActionPoints {
 		get => Source.savesData.ActionPoints; set {
 			Source.savesData.ActionPoints = Math.Clamp(value, 0, actionPointsLimit);
@@ -340,5 +327,146 @@ internal partial class GlobalDataSource : Node {
 	public static Array<GameItem> GameItems { get => Source.savesData.GameItems; set => Source.savesData.GameItems = value; }
 	#endregion Repository
 
+	#region GameItems
+	public event Action<GameItem>? GameItemAppendEvent;
+	public event Action<GameItem>? GameItemRemovedEvent;
+
+	public event Action<GameItem, int>? GameItemNumChangedEvent;
+
+	public IReadOnlyList<GameItem> GetGameItems() => Source.savesData.GameItems;
+	public IReadOnlyList<GameItem> GetGameItems(Func<GameItem, bool> predict) => [.. Source.savesData.GameItems.Where(predict)];
+
+	public void GameItemsAppend(GameItem item) {
+		// GD.Print("before append:" + string.Join(",", GetGameItems()));
+		GD.Print($"<GameDataSource-Test> Contains? {GetGameItems().Any(it => it.Equals(item))}");
+		if (GetGameItems().Any(it => it.Equals(item))) {
+			GD.Print("<GameDataSource-Test> GameItem already exist");
+			GameItemsChangeNum(item, item.Num);
+			return;
+		}
+		Source.savesData.GameItems.Add(item);
+		item.NumChangedEvent += CheckGameItemNum;
+		GameItemAppendEvent?.Invoke(item);
+		Save();
+	}
+
+	public void GameItemsRemove(GameItem item) {
+		Source.savesData.GameItems.Remove(item);
+		item.NumChangedEvent -= CheckGameItemNum;
+		GameItemRemovedEvent?.Invoke(item);
+		Save();
+	}
+
+	public void GameItemsChangeNum(GameItem item, int numChange) {
+		if (GetGameItems().Any(it => it.Equals(item))) {
+			var num = item.Num + numChange;
+			if (num < 0) {
+				GD.PushError("<GameDataSource> GameItem num can't less than 0");
+			}
+			GetGameItems().First(it => it.Equals(item)).Num += numChange;
+			GameItemNumChangedEvent?.Invoke(item, numChange);
+			Save();
+			return;
+		}
+		GD.PushError("<GameDataSource> GameItem not found in GameItems");
+	}
+
+	private void CheckGameItemNum(GameItem item, int num) {
+		if (num == 0) {
+			GameItemsRemove(item);
+		}
+	}
+
+	// private void InitGameItemSource() {
+	// 	foreach (var item in Source.savesData.GameItems) {
+	// 		item.NumChangedEvent += CheckGameItemNum;
+	// 	}
+	// }
+
+	#endregion Gameitems
+
+	#region IO
+	public event Action? SavedEvent;
+
+	public void Save() {
+		GD.Print(string.Join(",", Source.savesData.GameItems));
+		var err = ResourceSaver.Save(Source.savesData, SAVE_PATH);
+		if (err != Error.Ok) {
+			GD.PushError(err);
+		}
+		SavedEvent?.Invoke();
+	}
+
+	public void Clear() {
+		if (FileAccess.FileExists(SAVE_PATH)) {
+			var err = DirAccess.RemoveAbsolute(SAVE_PATH);
+			if (err != Error.Ok) {
+				GD.PushError(err);
+			}
+		}
+		GD.PushWarning("<GlobalDataSource> cant find saves data");
+	}
+
+	public override void _EnterTree() {
+		Source = this;
+		if (FileAccess.FileExists(SAVE_PATH)) {
+			Source.savesData = ResourceLoader.Load<GameSavesData>(SAVE_PATH);
+			GD.Print("<GlobalDataSource> load saves data from " + SAVE_PATH);
+		}
+		else {
+			GD.Print("<GlobalDataSource> can't find savs data file. new user, init saves data");
+			InitSavesData();
+			Save();
+		}
+		// InitGameItemSource();
+		base._EnterTree();
+	}
+
+
+	public override void _ExitTree() {
+		base._ExitTree();
+	}
+
+	// for test ; 初始化存档
+	private static GameSavesData InitSavesData() {
+		var data = new GameSavesData {
+			UserID = GUID.Generate(),
+			UserName = "user name0123",
+			RegisterDate = DateTime.Now().ToUnix(),
+			LastSaveDate = DateTime.Now().ToUnix(),
+			RankPoint = 100,
+
+			ActionPoints = 200,
+			BaseResource = [1000, 2000, 3000, 4000],
+
+		};
+
+		data.Messages.Add(new() {
+			MessageTabType = "Notice",
+			Head = "Welcome",
+			Content = "Welcome to OursGalaxy.\n*This Message's designed to test your message panel*"
+		});
+
+		data.Repository = new();
+
+		// idcard
+		data.GameItems.Add(new("IDCard", ResourceConfig.ItemBaseConfig.QulityEnum.Gold));
+
+		// 三条鱼
+		data.Repository.Add(new SpaceshipData("Fish", ResourceConfig.ItemBaseConfig.QulityEnum.White));
+		data.Repository.Add(new SpaceshipData("Fish", ResourceConfig.ItemBaseConfig.QulityEnum.White));
+		data.Repository.Add(new SpaceshipData("Fish", ResourceConfig.ItemBaseConfig.QulityEnum.White));
+
+		// 10*100炮
+		for (var i = 0; i < 10; i++) {
+			data.Repository.Add(new TurretData("Equip/Turret/Photon", "100Photon", ItemBaseConfig.QulityEnum.White));
+		}
+
+		return data;
+	}
+
 	private GameSavesData savesData = new();
+
+	private const string SAVE_PATH = "user://Saves.tres";
+	#endregion IO
 }

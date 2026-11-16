@@ -22,21 +22,21 @@ internal sealed partial class Storehouse : MarginContainer {
 		base._EnterTree();
 		QuitButton.Pressed += OnQuitPressed;
 		VM.SelectElementEvent += RenderSelectedItem;
-		VM.ElementAppendEvent += RenderAppend;
-		VM.ELementRemovedEvent += RenderRemoved;
+		GlobalDataSource.Source.GameItemAppendEvent += RenderAppend;
+		GlobalDataSource.Source.GameItemRemovedEvent += RenderRemoved;
 		Render();
 	}
 
 	public override void _ExitTree() {
 		QuitButton.Pressed -= OnQuitPressed;
 		VM.SelectElementEvent -= RenderSelectedItem;
-		VM.ElementAppendEvent -= RenderAppend;
-		VM.ELementRemovedEvent -= RenderRemoved;
+		GlobalDataSource.Source.GameItemAppendEvent -= RenderAppend;
+		GlobalDataSource.Source.GameItemRemovedEvent -= RenderRemoved;
 		base._ExitTree();
 	}
 
 	private void Render() {
-		foreach (var item in VM.GetGameItems()) {
+		foreach (var item in GlobalDataSource.Source.GetGameItems()) {
 			var box = GameItemBox.Load();
 			box.Render(VM, item);
 			ItemsListPanel.AddChild(box);

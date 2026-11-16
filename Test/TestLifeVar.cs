@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using OursGalaxy.ResourceConfig;
 using OursGalaxy.UI;
@@ -45,16 +46,17 @@ internal partial class TestLifeVar : Control {
 	// }
 
 	public override void _Ready() {
+		// var ls = new List<GameItem>();
+		// var a = new GameItem("WhiteCup", ItemBaseConfig.QulityEnum.White, 2);
+		// var b = new GameItem("WhiteCup", ItemBaseConfig.QulityEnum.White, 50);
+		// GD.Print(a.Equals(b));
+		// ls.Add(a);
+		// GD.Print(ls.Contains(b));
 		base._Ready();
-		GD.Print(Storehouse.IsNodeReady());
-		Storehouse.VM.Add(new("WhiteCup", ItemBaseConfig.QulityEnum.White, 3));
-		Storehouse.VM.Add(new("BlueCup", ItemBaseConfig.QulityEnum.Green, 4));
-		Storehouse.VM.Add(new("GoldCup", ItemBaseConfig.QulityEnum.Gold, 5));
+		GlobalDataSource.Source.GameItemsAppend(new("WhiteCup", ItemBaseConfig.QulityEnum.White, 3));
+		GlobalDataSource.Source.GameItemsAppend(new("BlueCup", ItemBaseConfig.QulityEnum.Green, 4));
+		GlobalDataSource.Source.GameItemsAppend(new("GoldCup", ItemBaseConfig.QulityEnum.Gold, 5));
 
-		here.Pressed += () => Storehouse.VM.GetGameItems(item => item.NameCode == "WhiteCup").First().Num -= 1;
-
-		var config1 = ResourceLoader.Load<ItemBaseConfig>("res://ResourceLib/GameItem/GoldCup_3.tres");
-		var config2 = ResourceLoader.Load<ItemBaseConfig>("res://ResourceLib/GameItem/GoldCup_3.tres");
-		GD.Print(ReferenceEquals(config1, config2), config1.Equals(config2));
+		here.Pressed += () => GlobalDataSource.Source.GameItemsChangeNum(GlobalDataSource.Source.GetGameItems(it => it.NameCode == "WhiteCup").First(), -1);
 	}
 }

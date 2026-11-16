@@ -8,7 +8,7 @@ namespace OursGalaxy;
 /// 游戏物品，不具唯一性的一类
 /// </summary>
 [GlobalClass]
-internal partial class GameItem : ItemBase {
+internal partial class GameItem : ItemBase, IEquatable<GameItem> {
 	/// <summary>
 	/// 数量
 	/// </summary>
@@ -37,6 +37,18 @@ internal partial class GameItem : ItemBase {
 	public bool IsTemp() => Num == 0;
 
 	public override string ToString() => base.ToString() + $":{Num}";
+
+	public bool Equals(GameItem? other) {
+		GD.Print($"test-Equals:{NameCode} and {other.NameCode} {base.Equals(other)}");
+		return base.Equals(other);
+	}
+
+	public override bool Equals(object? obj) {
+		GD.Print($"test-Equals:{NameCode} and {(obj is GameItem item ? item.NameCode : "null")} {base.Equals(obj as GameItem)}");
+		return Equals(obj as GameItem);
+	}
+
+	public override int GetHashCode() => base.GetHashCode();
 
 	private int num;
 }

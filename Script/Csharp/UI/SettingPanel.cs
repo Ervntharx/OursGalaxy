@@ -67,7 +67,7 @@ internal partial class SettingPanel : MarginContainer {
 		#endregion Sound
 
 		#region Advance
-		ClearSavesData.Pressed += () => GameSavesDataMgr.Clear();
+		ClearSavesData.Pressed += () => GlobalDataSource.Source.Clear();
 		#endregion Advance
 	}
 
