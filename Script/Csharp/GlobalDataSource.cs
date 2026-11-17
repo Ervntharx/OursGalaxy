@@ -5,8 +5,7 @@ using OursGalaxy.ResourceConfig;
 using OursGalaxy.UI;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 namespace OursGalaxy;
 
 /// <summary>
@@ -321,22 +320,103 @@ internal partial class GlobalDataSource : Node {
 	private static System.Collections.Generic.Dictionary<CombatStage.TeamEnum, FleetData> Ready2CombatFleets = [];
 	#endregion Battle and Combat
 
+	#region FleetEditor
+	public IReadOnlyList<FleetData> GetFleets() => Source.savesData.Fleets;
+
+	public event Action<FleetData>? NewFleetEvent;
+	public event Action<FleetData>? RemoveFleetEvent;
+
+	public event Action<FleetData, Spaceship>? FleetAddShipEvent;
+	public event Action<FleetData, SpaceshipData>? FleetRemoveShipEvenet;
+	public event Action<FleetData, SpaceshipData>? FleetShipTacticsChangedEvent;
+
+	public void FleetAddShip(FleetData fleet, SpaceshipData data) {
+		// TODO: 检查占用,然后移动到Fleet的本地资产
+	}
+
+	public void FleetRemoveShip(FleetData fleet, SpaceshipReference shipRefer) {
+		// TODO: 检查占用,然后移动出Fleet的本地资产,移动到主资产库
+	}
+
+	public void FleetSetShipTactics(FleetData fleet, SpaceshipReference shipRefer, TacticsSet tactics) {
+		// TODO: 设置tactics,这是可直接覆盖的
+	}
+
+	public void NewFleet(SpaceshipData flagship) {
+		// TODO: 新建舰队
+	}
+
+	public void RemoveFleet(FleetData fleet) {
+		// TODO: 解散舰队,移动每一个ship到主资产库
+	}
+	#endregion FleetEditor
+
+	#region ShipEditor
+	public IReadOnlyCollection<SpaceshipData> GetShips() => Source.savesData.Repository.Ships;
+	public IReadOnlyCollection<EquipData> GetEquips() => Source.savesData.Repository.Equips;
+
+	public event Action<SpaceshipData, EquipData>? ShipInstallEquipEvent;
+	public event Action<SpaceshipData, EquipData>? ShipUninstallEquipEvent;
+
+	public void ShipInstallEquip(SubRepository shipRepository, SpaceshipReference shipRefer, EquipData equip) {
+		// TODO: 安装装备,会检查equip是否和ship在相同repository,可能会移动
+	}
+
+	public void ShipUninstallEquip(SubRepository shipRepository, SpaceshipReference shipRefer, EquipReference equipRefer) {
+		// TODO: 卸载装备,可能会发生equip在FleetRepository和MainRepository之间移动
+	}
+	#endregion ShipEditor
+
 	#region Repository
+	[Obsolete]
 	public static Array<FleetData> Fleets { get => Source.savesData.Fleets; set => Source.savesData.Fleets = value; }
+	[Obsolete]
 	public static SubRepository MainRepository { get => Source.savesData.Repository; set => Source.savesData.Repository = value; }
 
-	public static Array<GameItem> GameItems { get => Source.savesData.GameItems; set => Source.savesData.GameItems = value; }
+	public event Action<SpaceshipData>? RepositoryAddShipEvent;
+	public event Action<EquipData>? RepositoryAddEquipEvent;
+	public event Action<SpaceshipData>? RepositoryRemoveShipEvent;
+	public event Action<EquipData>? RepositoryRemoveEquipEvent;
+
+	public void RepositoryAddShip(SpaceshipData ship) {
+		// TODO: 增加ship资产
+	}
+
+	public void RepositoryAddEquip(EquipData equip) {
+		// TODO: 增加equip资产
+	}
+
+	public void RepositoryRemoveShip(SpaceshipData ship) {
+		// TODO: 移除ship
+	}
+
+	public void RepositoryRemoveEquip(EquipData equip) {
+		// TODO: 移除equip
+	}
+
 	#endregion Repository
 
 	#region GameItems
+	/// <summary>
+	/// 新增物品了事件
+	/// </summary>
 	public event Action<GameItem>? GameItemAppendEvent;
+	/// <summary>
+	/// 物品被移除了事件
+	/// </summary>
 	public event Action<GameItem>? GameItemRemovedEvent;
-
+	/// <summary>
+	/// 物品数量变更事件
+	/// </summary>
 	public event Action<GameItem, int>? GameItemNumChangedEvent;
 
 	public IReadOnlyList<GameItem> GetGameItems() => Source.savesData.GameItems;
 	public IReadOnlyList<GameItem> GetGameItems(Func<GameItem, bool> predict) => [.. Source.savesData.GameItems.Where(predict)];
 
+	/// <summary>
+	/// 添加物品. 如果物品已存在, 则添加数量
+	/// </summary>
+	/// <param name="item"></param>
 	public void GameItemsAppend(GameItem item) {
 		if (GetGameItems().Any(it => it.Equals(item))) {
 			GameItemsChangeNum(item, item.Num);
@@ -347,6 +427,10 @@ internal partial class GlobalDataSource : Node {
 		Save();
 	}
 
+	/// <summary>
+	/// 移除物品
+	/// </summary>
+	/// <param name="item"></param>
 	public void GameItemsRemove(GameItem item) {
 		if (!Source.savesData.GameItems.Remove(item)) {
 			GD.PushError("<GlobalDataSource> Remove failed?");
@@ -356,6 +440,13 @@ internal partial class GlobalDataSource : Node {
 		Save();
 	}
 
+	/// <summary>
+	/// 更改数量. 物品列表中必须包含该数据. 
+	/// 必须提前检查数量合法性.
+	/// 会自动剔除空物品
+	/// </summary>
+	/// <param name="item"></param>
+	/// <param name="numChange"></param>
 	public void GameItemsChangeNum(GameItem item, int numChange) {
 		if (GetGameItems().Any(it => it.Equals(item))) {
 			var storedItem = GetGameItems().First(it => it.Equals(item));
@@ -374,7 +465,9 @@ internal partial class GlobalDataSource : Node {
 			Save();
 			return;
 		}
-		GameItemsAppend(new(item.NameCode, item.Qulity, numChange));
+		GD.PushError($"<GlobalDataSource-GameItems> Can't find item ");
+		// 如果需要兼容append则
+		// GameItemsAppend(new(item.NameCode, item.Qulity, numChange));
 	}
 
 	#endregion Gameitems
@@ -421,7 +514,7 @@ internal partial class GlobalDataSource : Node {
 	}
 
 	// for test ; 初始化存档
-	private static GameSavesData InitSavesData() {
+	private static void InitSavesData() {
 		var data = new GameSavesData {
 			UserID = GUID.Generate(),
 			UserName = "user name0123",
@@ -455,7 +548,7 @@ internal partial class GlobalDataSource : Node {
 			data.Repository.Add(new TurretData("Equip/Turret/Photon", "100Photon", ItemBaseConfig.QulityEnum.White));
 		}
 
-		return data;
+		Source.savesData = data;
 	}
 
 	private GameSavesData savesData = new();

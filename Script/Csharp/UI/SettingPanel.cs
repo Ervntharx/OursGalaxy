@@ -35,50 +35,82 @@ internal partial class SettingPanel : MarginContainer {
 	#endregion Advance
 
 	// Called when the node enters the scene tree for the first time.
-	public override void _Ready() {
-		base._Ready();
-		QuitButton.Pressed += () => PanelsStack.PopPanel(this);
-
+	public override void _EnterTree() {
+		base._EnterTree();
 		SettingsDataSource.PanelsMarginChanged += OnMarginChanged;
 
-
-		QuitButton.Pressed += QueueFree;
-		AboutPage.MetaClicked += OnAboutPageMetaClicked;
+		QuitButton.Pressed += OnQuitPressed;
 
 		#region Apperance
 		// camera
-		CameraDefaultDistanceEdit.ValueChanged += (newValue) => SettingsDataSource.Camera_Default_Distance = (float)newValue;
-		CameraDistanceMaxEdit.ValueChanged += (newValue) => SettingsDataSource.Camera_Distance_Max = (float)newValue;
-		CameraDistanceMinEdit.ValueChanged += (newValue) => SettingsDataSource.Camera_Distance_Min = (float)newValue;
-		CameraMoveVelocityEdit.ValueChanged += (newValue) => SettingsDataSource.Camera_Move_Velocity = (float)newValue;
-		CameraDistanceChangeVelocityEdit.ValueChanged += (newValue) => SettingsDataSource.Camera_Distance_ChangsStep = (float)newValue;
+		CameraDefaultDistanceEdit.Value = SettingsDataSource.Camera_Default_Distance;
+		CameraDistanceMaxEdit.Value = SettingsDataSource.Camera_Distance_Max;
+		CameraDistanceMinEdit.Value = SettingsDataSource.Camera_Distance_Min;
+		CameraMoveVelocityEdit.Value = SettingsDataSource.Camera_Move_Velocity;
+		CameraDistanceChangeVelocityEdit.Value = SettingsDataSource.Camera_Distance_ChangsStep;
+
+		CameraDefaultDistanceEdit.ValueChanged += SetCameraDefualtDistance;
+		CameraDistanceMaxEdit.ValueChanged += SetCameraDistanceMax;
+		CameraDistanceMinEdit.ValueChanged += SetCameraDistanceMin;
+		CameraMoveVelocityEdit.ValueChanged += SetCameraMoveVelocity;
+		CameraDistanceChangeVelocityEdit.ValueChanged += SetCameraDistanceChangeVelocity;
 
 		// panels margin
-		PanelsMarginLeftBox.ValueChanged += (newValue) => {
-			SettingsDataSource.Apperance_UI_Panels_Margin_Left = (int)newValue;
-		};
-		PanelsMarginRightBox.ValueChanged += (newValue) => { SettingsDataSource.Apperance_UI_Panels_Margin_Right = (int)newValue; };
-		PanelsMarginTopBox.ValueChanged += (newValue) => { SettingsDataSource.Apperance_UI_Panels_Margin_Top = (int)newValue; };
-		PanelsMarginBottomBox.ValueChanged += (newValue) => { SettingsDataSource.Apperance_UI_Panels_Margin_Bottom = (int)newValue; };
+		PanelsMarginLeftBox.Value = SettingsDataSource.Apperance_UI_Panels_Margin_Left;
+		PanelsMarginRightBox.Value = SettingsDataSource.Apperance_UI_Panels_Margin_Right;
+		PanelsMarginTopBox.Value = SettingsDataSource.Apperance_UI_Panels_Margin_Top;
+		PanelsMarginBottomBox.Value = SettingsDataSource.Apperance_UI_Panels_Margin_Bottom;
+
+		PanelsMarginLeftBox.ValueChanged += SetPanelsMariginLeft;
+		PanelsMarginRightBox.ValueChanged += SetPanelsMariginRight;
+		PanelsMarginTopBox.ValueChanged += SetPanelsMariginTop;
+		PanelsMarginBottomBox.ValueChanged += SetPanelsMariginBottom;
 		#endregion Apperance
 
 		#region Sound
-		SoundMainSwitchButton.Toggled += (toggle) => SettingsDataSource.SoundMainSwitch = toggle;
+		SoundMainSwitchButton.Toggled += SetSoundSwitch;
 		#endregion Sound
 
 		#region Advance
 		ClearSavesData.Pressed += () => GlobalDataSource.Source.Clear();
 		#endregion Advance
-	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta) {
+		AboutPage.MetaClicked += OnAboutPageMetaClicked;
 	}
 
 	public override void _ExitTree() {
-		QuitButton.Pressed -= QueueFree;
+		QuitButton.Pressed -= OnQuitPressed;
+
+		CameraDefaultDistanceEdit.ValueChanged -= SetCameraDefualtDistance;
+		CameraDistanceMaxEdit.ValueChanged -= SetCameraDistanceMax;
+		CameraDistanceMinEdit.ValueChanged -= SetCameraDistanceMin;
+		CameraMoveVelocityEdit.ValueChanged -= SetCameraMoveVelocity;
+		CameraDistanceChangeVelocityEdit.ValueChanged -= SetCameraDistanceChangeVelocity;
+
+		PanelsMarginLeftBox.ValueChanged -= SetPanelsMariginLeft;
+		PanelsMarginRightBox.ValueChanged -= SetPanelsMariginRight;
+		PanelsMarginTopBox.ValueChanged -= SetPanelsMariginTop;
+		PanelsMarginBottomBox.ValueChanged -= SetPanelsMariginBottom;
+
+		SoundMainSwitchButton.Toggled -= SetSoundSwitch;
+
+		SettingsDataSource.PanelsMarginChanged -= OnMarginChanged;
+		AboutPage.MetaClicked -= OnAboutPageMetaClicked;
 		base._ExitTree();
 	}
+
+	private void SetCameraDefualtDistance(double newValue) => SettingsDataSource.Camera_Default_Distance = (float)newValue;
+	private void SetCameraDistanceMax(double newValue) => SettingsDataSource.Camera_Distance_Max = (float)newValue;
+	private void SetCameraDistanceMin(double newValue) => SettingsDataSource.Camera_Distance_Min = (float)newValue;
+	private void SetCameraMoveVelocity(double newValue) => SettingsDataSource.Camera_Move_Velocity = (float)newValue;
+	private void SetCameraDistanceChangeVelocity(double newValue) => SettingsDataSource.Camera_Distance_ChangsStep = (float)newValue;
+
+	private void SetPanelsMariginRight(double newValue) => SettingsDataSource.Apperance_UI_Panels_Margin_Right = (int)newValue;
+	private void SetPanelsMariginLeft(double newValue) => SettingsDataSource.Apperance_UI_Panels_Margin_Left = (int)newValue;
+	private void SetPanelsMariginTop(double newValue) => SettingsDataSource.Apperance_UI_Panels_Margin_Top = (int)newValue;
+	private void SetPanelsMariginBottom(double newValue) => SettingsDataSource.Apperance_UI_Panels_Margin_Bottom = (int)newValue;
+
+	private void SetSoundSwitch(bool toggle) => SettingsDataSource.SoundMainSwitch = toggle;
 
 	private void OnMarginChanged(SettingsDataSource.PanelsMarginEnum panelsMarginEnum, int newValue) {
 		switch (panelsMarginEnum) {
@@ -106,5 +138,9 @@ internal partial class SettingPanel : MarginContainer {
 			GD.Print(url);
 			OS.ShellOpen(url);
 		}
+	}
+
+	private void OnQuitPressed() {
+		PanelsStack.PopPanel(this);
 	}
 }

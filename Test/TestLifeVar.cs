@@ -54,15 +54,23 @@ internal partial class TestLifeVar : Control {
 		// GD.Print(a.Equals(b));
 		// ls.Add(a);
 		// GD.Print(ls.Contains(b));
-		base._Ready();
-		var w = new GameItem("WhiteCup", ItemBaseConfig.QulityEnum.White, 2);
-		var b = new GameItem("BlueCup", ItemBaseConfig.QulityEnum.Green, 1);
-		var g = new GameItem("GoldCup", ItemBaseConfig.QulityEnum.Gold, 1);
-		GlobalDataSource.Source.GameItemsAppend(w);
-		GlobalDataSource.Source.GameItemsAppend(b);
-		GlobalDataSource.Source.GameItemsAppend(g);
 
-		increaseA.Pressed += () => GlobalDataSource.Source.GameItemsChangeNum(w, 2);
-		reduceA.Pressed += () => GlobalDataSource.Source.GameItemsChangeNum(w, -1);
+
+		// base._Ready();
+		// var w = new GameItem("WhiteCup", ItemBaseConfig.QulityEnum.White, 2);
+		// var b = new GameItem("BlueCup", ItemBaseConfig.QulityEnum.Green, 1);
+		// var g = new GameItem("GoldCup", ItemBaseConfig.QulityEnum.Gold, 1);
+		// GlobalDataSource.Source.GameItemsAppend(w);
+		// GlobalDataSource.Source.GameItemsAppend(b);
+		// GlobalDataSource.Source.GameItemsAppend(g);
+
+		// increaseA.Pressed += () => GlobalDataSource.Source.GameItemsChangeNum(w, 2);
+		// reduceA.Pressed += () => GlobalDataSource.Source.GameItemsChangeNum(w, -1);
+
+
+		// var err = ResourceSaver.Save(new SpaceshipData("Fish", ItemBaseConfig.QulityEnum.White), "user://Test_fd3cg.tres");
+		// GD.Print(err);
+		// var data = ResourceLoader.Load<SpaceshipData>("user://Test_fd3cg.tres");
+		// GD.Print("read\t", data);
 	}
 }

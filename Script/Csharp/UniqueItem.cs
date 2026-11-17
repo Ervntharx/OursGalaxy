@@ -42,10 +42,10 @@ internal partial class UniqueItem : ItemBase, IEquatable<UniqueItem> {
 	}
 
 	/// <summary>
-	/// 回收引用关系
+	/// 回收引用关系,refer会因此操作改变
 	/// </summary>
 	/// <param name="refer"></param>
-	public virtual void RecycleReference(in UniqueItemReference refer) {
+	public virtual void RecycleReference(UniqueItemReference refer) {
 		refer.IDReference = GUID.Empty;
 		ItemLocation = null;
 	}

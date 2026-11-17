@@ -1,5 +1,6 @@
 ﻿using Godot;
 using System;
+using System.Collections.Generic;
 namespace OursGalaxy;
 
 /// <summary>
@@ -14,10 +15,14 @@ internal sealed partial class SettingsDataSource : Node {
 	public static event Action<float>? CameraDistanceChangeStepChanged;
 
 	public static float Camera_Distance_Max {
-		get => (float)config.GetValue("Camera", "Distance_Max").AsDouble();
+		get {
+			return (float)config.GetValue("Camera", "Distance_Max").AsDouble();
+		}
+
 		set {
 			config.SetValue("Camera", "Distance_Max", value);
 			CameraDistanceMaxChanged?.Invoke(Camera_Distance_Max);
+			Save();
 		}
 	}
 
@@ -26,6 +31,7 @@ internal sealed partial class SettingsDataSource : Node {
 		set {
 			config.SetValue("Camera", "Distance_Min", value);
 			CameraDistanceMinChanged?.Invoke(Camera_Distance_Min);
+			Save();
 		}
 	}
 
@@ -34,6 +40,7 @@ internal sealed partial class SettingsDataSource : Node {
 		set {
 			config.SetValue("Camera", "Distance_Default", value);
 			CameraDefaultDistanceChanged?.Invoke(Camera_Default_Distance);
+			Save();
 		}
 	}
 
@@ -42,6 +49,7 @@ internal sealed partial class SettingsDataSource : Node {
 		set {
 			config.SetValue("Camera", "Move_Velocity", value);
 			CameraMoveVelocityChanged?.Invoke(Camera_Move_Velocity);
+			Save();
 		}
 	}
 
@@ -50,6 +58,7 @@ internal sealed partial class SettingsDataSource : Node {
 		set {
 			config.SetValue("Camera", "Distance_Move_Velocity", value);
 			CameraDistanceChangeStepChanged?.Invoke(Camera_Distance_ChangsStep);
+			Save();
 		}
 	}
 	#endregion Camera
@@ -70,6 +79,7 @@ internal sealed partial class SettingsDataSource : Node {
 		set {
 			config.SetValue("UI", "Panels_Margin_Left", value);
 			PanelsMarginChanged?.Invoke(PanelsMarginEnum.Left, value);
+			Save();
 		}
 	}
 
@@ -81,6 +91,7 @@ internal sealed partial class SettingsDataSource : Node {
 		set {
 			config.SetValue("UI", "Panels_Margin_Right", value);
 			PanelsMarginChanged?.Invoke(PanelsMarginEnum.Right, value);
+			Save();
 		}
 	}
 
@@ -92,6 +103,7 @@ internal sealed partial class SettingsDataSource : Node {
 		set {
 			config.SetValue("UI", "Panels_Margin_Top", value);
 			PanelsMarginChanged?.Invoke(PanelsMarginEnum.Top, value);
+			Save();
 		}
 	}
 
@@ -103,6 +115,7 @@ internal sealed partial class SettingsDataSource : Node {
 		set {
 			config.SetValue("UI", "Panels_Margin_Bottom", value);
 			PanelsMarginChanged?.Invoke(PanelsMarginEnum.Bottom, value);
+			Save();
 		}
 	}
 	#endregion Apperance UI
@@ -113,6 +126,7 @@ internal sealed partial class SettingsDataSource : Node {
 		set {
 			config.SetValue("Sound", "MainSwitch", value);
 			SoundMainToggledEvent?.Invoke(value);
+			Save();
 		}
 	}
 	public static event Action<bool>? SoundMainToggledEvent;
@@ -124,6 +138,7 @@ internal sealed partial class SettingsDataSource : Node {
 
 	public override void _EnterTree() {
 		base._EnterTree();
+		// TODO: config文件初始化: 字典转写config
 		if (FileAccess.FileExists(SAVE_PATH)) {
 			var err = config.Load(SAVE_PATH);
 			if (err != Error.Ok) {

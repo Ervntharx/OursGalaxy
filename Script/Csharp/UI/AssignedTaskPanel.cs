@@ -3,18 +3,17 @@ using System;
 namespace OursGalaxy.UI;
 
 internal partial class AssignedTaskPanel : MarginContainer {
-	public static AssignedTaskPanel Load() => (AssignedTaskPanel)ResourceLoader.Load<PackedScene>("res://Scene/MissionPanel.tscn").Instantiate();
+	public static AssignedTaskPanel Load() => (AssignedTaskPanel)ResourceLoader.Load<PackedScene>("res://Scene/AssignedTaskPanel.tscn").Instantiate();
 
-	[Export] protected Button QuitButton { get; set; } = null!;
-	[Export] protected HFlowContainer? AcceptableTaskList { get; set; }
-	[Export] protected HFlowContainer? AcceptedTaskList { get; set; }
+	[Export] private Button QuitButton { get; set; } = null!;
+	[Export] private HFlowContainer AcceptableTaskList { get; set; } = null!;
+	[Export] private HFlowContainer AcceptedTaskList { get; set; } = null!;
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready() {
-		QuitButton.Pressed += () => PanelsStack.PopPanel(this);
+	public override void _EnterTree() {
+		base._EnterTree();
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta) {
+	public override void _ExitTree() {
+		base._ExitTree();
 	}
 }

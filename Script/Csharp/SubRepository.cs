@@ -43,16 +43,65 @@ internal sealed partial class SubRepository : Resource {
 		ElementsChangedEvent?.Invoke(this, data);
 	}
 
+	/// <summary>
+	/// 非占用物的移动
+	/// </summary>
+	/// <param name="data"></param>
+	/// <param name="to"></param>
 	public void Move(SpaceshipData data, SubRepository to) {
 		ThrowIfOccupied(data);
 		Remove(data);
 		to.Add(data);
 	}
 
+	/// <summary>
+	/// 针对非占用物的移动
+	/// </summary>
+	/// <param name="data"></param>
+	/// <param name="to"></param>
 	public void Move(EquipData data, SubRepository to) {
 		ThrowIfOccupied(data);
 		Remove(data);
 		to.Add(data);
+	}
+
+	/// <summary>
+	/// 对占用物的移动,shipRefer会失效. 因为Spaceship包含EquipReference,这里唯一包含少量Occuyied的EquipData的危险移动
+	/// 如果from中不包含任何Equip会抛出异常,不会发生移动.
+	/// </summary>
+	/// <param name="shipRefer"></param>
+	/// <param name="from"></param>
+	/// <param name="to"></param>
+	public void Move(SpaceshipReference shipRefer, SubRepository from, SubRepository to) {
+		// 统计所有需要移动的equip. 如果任何reference不在from的Repository内则在该阶段报错并退出,则不会发生移动行为
+		var moveEquipLs = new List<EquipData>();
+		foreach (var equipRefer in from[shipRefer].EquipsLs.Values) {
+			moveEquipLs.Add(from[equipRefer]);
+		}
+
+		// 直接带Reference的EquipData移动
+		foreach (var moveEquip in moveEquipLs) {
+			from.Remove(moveEquip);
+			to.Add(moveEquip);
+		}
+		// 安全移动ship
+		var shipData = from[shipRefer];
+		shipData.RecycleReference(shipRefer);
+		from.Remove(shipData);
+		to.Add(shipData);
+	}
+
+	/// <summary>
+	/// 对占用物的移动,equipRefer会失效
+	/// </summary>
+	/// <param name="equipRefer"></param>
+	/// <param name="from"></param>
+	/// <param name="to"></param>
+	public void Move(EquipReference equipRefer, SubRepository from, SubRepository to) {
+		var equipData = from[equipRefer];
+		equipData.RecycleReference(equipRefer);
+		from.Remove(equipData);
+		to.Add(equipData);
 	}
 
 	public void Remove(SpaceshipData data) {

@@ -1,5 +1,6 @@
 using Godot;
 using OursGalaxy.ResourceConfig;
+using OursGalaxy.ViewModel;
 using System;
 namespace OursGalaxy.UI;
 
@@ -9,24 +10,39 @@ internal partial class SpaceshipBox : Button {
 	[Export] protected RichTextLabel NameLabel { get; set; } = null!;
 	[Export] protected TextureRect Avater { get; set; } = null!;
 
-	public event Action<SpaceshipData>? Selected;
+	public SpaceshipData? Ship;
 
-	public override void _Ready() {
-		base._Ready();
-		Pressed += OnPressed;
-	}
-
-	public void Make(SpaceshipData data) {
-		dataRefer = data;
+	/// <summary>
+	/// 无点击行为的渲染
+	/// </summary>
+	/// <param name="data"></param>
+	public void Render(SpaceshipData data) {
+		Ship = data;
 		var config = SpaceshipLib.GetConfig(data);
 		NameLabel.Text = config.DisplayName;
 	}
 
+	/// <summary>
+	/// 渲染,并向vm中注册选中
+	/// </summary>
+	/// <param name="vm"></param>
+	/// <param name="ship"></param>
+	public void Render(SpaceshipOverviewVM vm, SpaceshipData ship) {
+		Render(ship);
+		this.vm = vm;
+		Pressed += OnPressed;
+	}
+
+	public override void _ExitTree() {
+		Pressed -= OnPressed;
+		base._ExitTree();
+	}
+
 	private void OnPressed() {
-		if (dataRefer is not null) {
-			Selected?.Invoke(dataRefer);
+		if (vm is not null) {
+			vm.SelectShip = Ship;
 		}
 	}
 
-	private SpaceshipData? dataRefer;
+	private SpaceshipOverviewVM? vm;
 }
