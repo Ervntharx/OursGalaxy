@@ -1,5 +1,6 @@
 ﻿using Godot;
 using OursGalaxy.ResourceConfig;
+using OursGalaxy.ViewModel;
 using System;
 using System.Linq;
 namespace OursGalaxy.UI;
@@ -7,8 +8,8 @@ namespace OursGalaxy.UI;
 /// <summary>
 /// 飞船装配编辑面板
 /// </summary>
-internal partial class ShipConfigPanel : MarginContainer {
-	public static ShipConfigPanel Load() => (ShipConfigPanel)ResourceLoader.Load<PackedScene>("res://Scene/ShipConfigPanel.tscn").Instantiate();
+internal partial class ShipEditorPanel : MarginContainer {
+	public static ShipEditorPanel Load() => (ShipEditorPanel)ResourceLoader.Load<PackedScene>("res://Scene/ShipEditorPanel.tscn").Instantiate();
 
 	[Export] private Button QuitButton { get; set; } = null!;
 	[Export] private SubViewport ShipOverview { get; set; } = null!;
@@ -18,11 +19,7 @@ internal partial class ShipConfigPanel : MarginContainer {
 	[Export] private TabContainer EquipsTabs { get; set; } = null!;
 	[Export] private VBoxContainer PickEquipsPanel { get; set; } = null!;
 
-	public ShipConfigViewModel ViewModel { get; }
-
-	public ShipConfigPanel() {
-		ViewModel = new(this);
-	}
+	[Export] public SpaceshipEditorVM VM { get; set; } = null!;
 
 	public void Render(SpaceshipReference shipReference, SubRepository subRepository) {
 		var shipData = subRepository[shipReference];
@@ -32,7 +29,8 @@ internal partial class ShipConfigPanel : MarginContainer {
 			outletUI.Render(outletSet.Key, outletSet.Value, shipData.EquipsLs.ContainsKey(outletSet.Key) ? subRepository[shipData.EquipsLs[outletSet.Key]] : null);
 		}
 
-		ViewModel.Load(subRepository, shipReference);
+		VM.LocalRepository = subRepository;
+		VM.EditedShip = subRepository[shipReference];
 	}
 
 
@@ -40,21 +38,18 @@ internal partial class ShipConfigPanel : MarginContainer {
 	public override void _EnterTree() {
 		base._EnterTree();
 		QuitButton.Pressed += () => PanelsStack.PopPanel(this);
-		ViewModel.PushPendingEditOutletEvent += OnPushPendingEditOutletEvent;
-		ViewModel.OutletUPdatedEvent += OnOutletUpdatedEvent;
 	}
 
 	public override void _ExitTree() {
-		ViewModel.PushPendingEditOutletEvent -= OnPushPendingEditOutletEvent;
 		base._ExitTree();
 	}
 
 	// 加载可装备的装备
 	private void OnPushPendingEditOutletEvent(OutletSizeType size) {
-		EquipsTabs.TabsVisible = true;
+		// EquipsTabs.TabsVisible = true;
 		foreach (var equip in GlobalDataSource.MainRepository.Equips.Where(equip => ResourceLib.GetConfig<EquipConfig>(equip).SizeType == size)) {
 			var equipUI = PickEquipBox.Load();
-			equipUI.Render(equip, ViewModel);
+			equipUI.Render(VM, equip);
 			PickEquipsPanel.AddChild(equipUI);
 		}
 	}

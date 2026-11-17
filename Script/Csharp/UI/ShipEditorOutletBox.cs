@@ -1,10 +1,11 @@
 using Godot;
 using OursGalaxy.ResourceConfig;
+using OursGalaxy.ViewModel;
 using System;
 namespace OursGalaxy.UI;
 
 internal partial class ShipConfigOutletBox : Button {
-	public static ShipConfigOutletBox Load() => (ShipConfigOutletBox)ResourceLoader.Load<PackedScene>("res://Scene/ShipConfigOutletBox.tscn").Instantiate();
+	public static ShipConfigOutletBox Load() => (ShipConfigOutletBox)ResourceLoader.Load<PackedScene>("res://Scene/ShipEditorOutletBox.tscn").Instantiate();
 
 	[Export] private MarginContainer EquipContainer { get; set; } = null!;
 	[Export] private RichTextLabel OutletLabel { get; set; } = null!;
@@ -31,7 +32,7 @@ internal partial class ShipConfigOutletBox : Button {
 	public void RenderEquip(EquipData? equip = null) {
 		EquipContainer.GetNode(EQUIP_BOX_NODE_NAME).QueueFree();
 		if (equip is not null) {
-			var equipUI = ShipConfigEquipBox.Load();
+			var equipUI = ShipEditorEquipBox.Load();
 			equipUI.Name = EQUIP_BOX_NODE_NAME;
 			equipUI.Render(vm!, OutletName, equip);
 			EquipContainer.AddChild(equipUI, true);
@@ -50,10 +51,10 @@ internal partial class ShipConfigOutletBox : Button {
 	}
 
 	private void OnInstallPressed() {
-		vm?.PushOutletIntoPending(OutletName);
+		// vm?.PushOutletIntoPending(OutletName);
 	}
 
 	private const string EQUIP_BOX_NODE_NAME = "EquipBox";
 
-	private ShipConfigViewModel? vm;
+	private SpaceshipEditorVM? vm;
 }

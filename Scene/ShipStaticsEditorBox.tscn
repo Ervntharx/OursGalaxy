@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b7whhhgiygpma"]
 
-[ext_resource type="Script" uid="uid://3tictt2ad8y8" path="res://Script/Csharp/UI/ShipEditorBox.cs" id="1_ihkwo"]
+[ext_resource type="Script" uid="uid://3tictt2ad8y8" path="res://Script/Csharp/UI/ShipStaticsEditorBox.cs" id="1_ihkwo"]
 
 [node name="PanelContainer" type="PanelContainer" unique_id=2103141270 node_paths=PackedStringArray("FlagSignLabel", "ShipNameEditor", "ShipTypeNameLabel", "SetAsFlagShip", "EditAssemble", "Remove", "TacticsModeOpt", "RoundabotDirOpt", "ProtectedOpt", "TargetingOpt", "VilliangeOpt", "RoundabotLine", "ProtectLine")]
 offset_right = 310.0

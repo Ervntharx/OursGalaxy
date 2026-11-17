@@ -1,5 +1,6 @@
 using Godot;
 using OursGalaxy.ResourceConfig;
+using OursGalaxy.ViewModel;
 using System;
 using System.Diagnostics.Tracing;
 namespace OursGalaxy.UI;
@@ -16,7 +17,7 @@ internal partial class PickEquipBox : Button {
 
 	public EquipData? Equip { get; private set; }
 
-	public void Render(EquipData data, ShipConfigViewModel VM) {
+	public void Render(SpaceshipEditorVM VM, EquipData data) {
 		var config = ResourceLib.GetConfig<EquipConfig>(data);
 		avaterRect.Texture = config.Texture;
 		nameLabel.Text = config.DisplayName;
@@ -37,12 +38,12 @@ internal partial class PickEquipBox : Button {
 
 	private void OnPickPressed() {
 		if (vm is not null && Equip is not null) {
-			vm.Install(Equip);
+			vm.InstallEquip(Equip);
 		}
 		else {
 			GD.PushError("<PickEquipBox> null reference");
 		}
 	}
 
-	private ShipConfigViewModel? vm;
+	private SpaceshipEditorVM? vm;
 }

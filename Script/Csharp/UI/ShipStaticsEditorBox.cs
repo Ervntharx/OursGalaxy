@@ -42,7 +42,7 @@ internal partial class ShipEditorBox : Button {
 		};
 
 		EditAssemble.Pressed += () => {
-			var configPanel = ShipConfigPanel.Load();
+			var configPanel = ShipEditorPanel.Load();
 			PanelsStack.PushPanel(configPanel);
 			configPanel.Render(shipRefer, fleet.Repository);
 		};

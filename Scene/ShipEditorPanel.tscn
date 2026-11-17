@@ -1,9 +1,9 @@
-[gd_scene format=3 uid="uid://750feo7ocfb0"]
+[gd_scene format=3 uid="uid://cimwa581xhxk7"]
 
-[ext_resource type="Script" uid="uid://cdeuid74b1xse" path="res://Script/Csharp/UI/ShipConfigPanel.cs" id="1_cti5s"]
-[ext_resource type="PackedScene" uid="uid://bto3wngljf3fb" path="res://Scene/Spaceship/TemplateShip.tscn" id="2_3ekwn"]
+[ext_resource type="Script" uid="uid://dnlt1rev26lkc" path="res://Script/Csharp/UI/ShipEditorPanel.cs" id="1_j8xro"]
+[ext_resource type="PackedScene" uid="uid://bto3wngljf3fb" path="res://Scene/Spaceship/TemplateShip.tscn" id="2_3nd7w"]
 
-[node name="ShipConfigPanel" type="MarginContainer" unique_id=2131798070 node_paths=PackedStringArray("QuitButton", "ShipOverview", "ShipStage")]
+[node name="ShipEditorPanel" type="MarginContainer" unique_id=2131798070]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -13,10 +13,7 @@ theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
-script = ExtResource("1_cti5s")
-QuitButton = NodePath("PanelContainer/VBoxContainer/TopBar/Quit")
-ShipOverview = NodePath("PanelContainer/VBoxContainer/HSplitContainer/Control/SubViewportContainer/SubViewport")
-ShipStage = NodePath("PanelContainer/VBoxContainer/HSplitContainer/Control/SubViewportContainer/SubViewport/ShipStage")
+script = ExtResource("1_j8xro")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1717783387]
 layout_mode = 2
@@ -73,7 +70,7 @@ transform = Transform3D(-0.6965293, 0, 0.7175284, 0, 1, 0, -0.7175284, 0, -0.696
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="PanelContainer/VBoxContainer/HSplitContainer/Control/SubViewportContainer/SubViewport/ShipStage/CameraArm/CameraArm/Camera3D" unique_id=1854738292]
 
-[node name="TemplateShip" parent="PanelContainer/VBoxContainer/HSplitContainer/Control/SubViewportContainer/SubViewport/ShipStage" unique_id=760973978 instance=ExtResource("2_3ekwn")]
+[node name="TemplateShip" parent="PanelContainer/VBoxContainer/HSplitContainer/Control/SubViewportContainer/SubViewport/ShipStage" unique_id=760973978 instance=ExtResource("2_3nd7w")]
 
 [node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/Control" unique_id=450690341]
 layout_mode = 1
@@ -92,6 +89,7 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 current_tab = 0
+tabs_visible = false
 
 [node name="InstalledEquips" type="ScrollContainer" parent="PanelContainer/VBoxContainer/HSplitContainer/TabContainer" unique_id=250718719]
 layout_mode = 2
