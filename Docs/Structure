@@ -1,0 +1,99 @@
+该文件描述项目设计结构
+
+这是一个godot csharp游戏项目工程.项目目标出于学习目的模仿复刻一个商业游戏,实现技术简单直白.
+游戏玩法内容为两个预设战术行为(可一定程度参考见TacticsSet类)的舰队Fleet擂台对战比拼剩余血量.并在局外养成舰队,通过远征获取基础资源,通过远征事件获得讨伐战斗,通过讨伐战斗获得更难奖励更好的猎杀战斗,通过生产玩法生产飞船和装备.
+
+# 项目文件结构
+
+/Asset: 放置一切美术美术资源
+/Docs: 放置各种工程附带说明性文件,包括临时写的TODO
+/ResourceLib: 游戏内部基于Resource实现的数据库
+/Scene: 所有godot场景文件
+/Script: 所有代码文件
+/Script/Csharp/UI: 所有UI场景类型所需要的代码文件
+/Script/Csharp/ViewModel: 所有交互UI场景所需的ViewModel. ViewModel全部挂载在UI场景节点内
+/Script/Csharp/API: 一切接口类型,但正在废弃使用
+/Test: 一切测试代码和场景都存放到这里
+
+# 程序设计说明
+
+存档依赖Godot Resource进行序列化,持久化和反序列化
+GameSavesData为纯DTO类型
+GlobalDataSource提供全局对存档数据读写接口, 可通过它监听数据变化. 是AutoLoad的
+*GlobalDataSource的大量static属性来自I上个版本的静态类设计.当前设计更改为autoload读Source,正在逐步更改为非static属性.*
+
+设置数据依赖godot configfile进行序列化,持久化和反序列化
+SettingDataSource提供全局对设置数据读写接口, 可通过它监听设置数据变化, 是autoload的
+*SettingDataSource暂没有完成其序列化和反序列化功能,当前缺乏初始化*
+
+使用ItemBase作为物品基类,ItemBase只提供类型性
+GameItem作为可堆叠的非唯一性游戏物品
+UniqueItem作为不可堆叠的具有唯一性游戏物品, 唯一性依赖GUID保证.
+EquipData, TurretData, SpaceshipData都是其派生的纯用于序列化DTO类型
+
+程序中对UniqueItem的所有权占用依赖UniqueItemReferece, UniqueItem.MakeReference和RecycleReference控制构造和回收Reference.
+SubRepository对UniqueItem进行数据池化, 主要解决FleetData所需的局部数据池化需求. 一切UniqueItem都在Repository内.故SubRepository主要提供对SpaceshipData和EquipData两种UniqueItem的重载
+游戏主要存在主SubRepository(位于GlobalDataSource), 每个FleetData都分别具有自己的局部SubRepository.
+SubRepository之间移动UniqueItem使用SubRepository.Move.
+*其中Move SpaceshipData的操作被迫不能"先解除Reference占用后移动"*
+*注意Reference目标是表达占用关系而不是引用.需要引用语义的地方应该写原Data类型.*
+主SubRepository是唯一允许存在闲置UniqueItem的资产库. 每个Fleet的SubRepository只持有该舰队正在使用的舰船以及这些舰船已安装的装备.
+因此可安装装备总是从主库查询; 安装装备时从主库Move进舰船当前所在的资产库, 卸载时Move回主库. 舰队资产库不应存在闲置装备.
+
+ResourceLib, ItemBaseConfig提供基于Resource的数据库方案.不需要持久化的游戏数据配置都存池在Config系列类型内,运行时根据DTO,或者ItemBase的物品逻辑类型标注取得Config系列类型
+为了保持ResourceLib基于路径直接查询Config配置数据, ItemBase.TypeCode和ResourceLib的对应配置文件目录一般是一致的
+
+对部分需要结合DTO和配置进行实例化的类型,例如Spaceship, Equip, 均通过Factory进行构造.但Factory不具有自动从路径查询实例化的场景的能力,记录实例化场景的文件路径数据在Config上
+Spaceship.BaseState.Display用于编辑器中的展示预览: 不启动自动作战和索敌计时器, 允许通过Spaceship.InstallEquip/UninstallEquip在运行时更新已装装备的外观实例
+
+UI场景中一切Panel结尾的类型都是可独立弹出的界面UI,依靠PanelsStack的push/pop管理
+UI场景中一切Box结尾的类型都是预测会频繁创建的单个UI组件
+
+MVVC结构:
+GameSavesData在GlobalDataSource.Source.savesData上作为纯数据
+GlobalDataSource作为全局监听和修改存档的唯一通道
+UI层和VM层都位于同一个场景内.UI的交互数据都在VM上
+-因为GlobalDataSource能完整监听存档数据变化,GlobalDataSource必完整抛出存档行为事件.相应的,UI层也应当只在EnterTree初始化时加载重绘全部并开始监听,监听到变更时只刷新变更部分,ExitTree时终止监听
+
+CombatStage是战斗台,一切战斗场景都在依赖它运行
+SpaceshipSnapshot:舰船快照.为运行时Spaceship记录瞬间状态.主要提供给CombatStage和Statics使用
+
+# 风格和约定
+
+UI类型都实现static Load()方法,使外部快速实例化
+UI场景使用Render()进行初始化渲染.
+*旧版本使用Make进行初始化渲染*
+Editor类Panel的Render约定在节点入树之前调用; 入树后在_EnterTree中完成信号连接, 并根据Render写入VM的状态完成首次绘制.
+交互UI都挂载[Export] VM
+UI场景上一切要操作的固定节点都使用[Export] private xx=null!保存到.tscn.原则上不主动通过NodePath进行节点导航
+
+默认UI场景可能离开场景树再返回(当前暂没有这种具体实现),故在EnterTree, ExitTree中实现信号连接/清理,资源清理
+
+一切类的API对外保持简单.实现行为单一明确,不额外处理异常实施恢复行为.
+
+# 命名和功能实现关系
+
+Spaceship: 飞船.其他代码中常缩写Ship
+Equip:  装备.一般是基类,目标几乎不存在裸Equip,都是Equip派生类型
+Fleet:  舰队.战斗的队伍单位
+Combat:  战斗.
+Hunt:  猎杀,战斗的一种
+PunitiveCombat: 讨伐,战斗的一种
+ShipEditor: 飞船编辑器I,主要针对飞船装配的装备进行编辑
+FleetEditor: 舰队编辑器,主要针对舰队中每个成员都Tactics数据进行编辑
+AssignedTask: 远征任务.一种依赖事件驱动的资源生产玩法
+ProduceLine/ProduceTask: 生产线和生产任务
+TaskEvent: 远征事件
+Statics: Combat上的统计器
+Tactics: 战术设置.决定了Spaceship在战斗时的行为
+Technology: 科技.决定资源上限,舰队规模上限,资源刷新质量
+Promote: 一切Buff类.暂时没有实现
+
+Outlet:  装备插槽
+OutletSizeType: 插槽/装备尺寸. 顺序为 Air < S < M < L < XL; Air是防空尺寸, 是最狭窄的尺寸
+Turret:  武器基类
+Missile: 导弹武器
+Photon:  光子炮武器
+Laser:  激光武器
+Shield:  护盾.只防御Laser
+DamageControl: 损控装备.回血和减Debuff状态

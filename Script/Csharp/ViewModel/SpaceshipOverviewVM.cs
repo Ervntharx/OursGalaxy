@@ -15,12 +15,12 @@ internal partial class SpaceshipOverviewVM : Node {
 	}
 
 	public override void _EnterTree() {
-		GlobalDataSource.Source.RepositoryAddShipEvent += CheckSelectShipHasRemoved;
+		GlobalDataSource.Source.RepositoryRemoveShipEvent += CheckSelectShipHasRemoved;
 		base._EnterTree();
 	}
 
 	public override void _ExitTree() {
-		GlobalDataSource.Source.RepositoryAddShipEvent -= CheckSelectShipHasRemoved;
+		GlobalDataSource.Source.RepositoryRemoveShipEvent -= CheckSelectShipHasRemoved;
 		base._ExitTree();
 	}
 

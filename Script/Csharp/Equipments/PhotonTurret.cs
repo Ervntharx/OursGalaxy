@@ -94,7 +94,7 @@ internal partial class PhotonTurret : TurretBase {
 
 		// 构造目标旋转：先算目标 Quaternion
 		if (GodotObject.IsInstanceValid(Target?.AsNode3D())) {
-			var lookQ = new Quaternion(Basis.LookingAt(Target.AsNode3D().GlobalTransform.Inverse() * Target.AsNode3D().GlobalPosition, Vector3.Up));
+			var lookQ = new Quaternion(Basis.LookingAt(GlobalTransform.Inverse() * Target.AsNode3D().GlobalPosition, Vector3.Up));
 
 			// 限制俯仰：把目标四元数转欧拉角，夹住 Pitch
 			Vector3 euler = lookQ.GetEuler();

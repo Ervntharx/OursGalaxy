@@ -5,7 +5,7 @@
 
 [sub_resource type="Resource" id="Resource_hxhdo"]
 script = ExtResource("1_s5qrx")
-Type = "M"
+Type = "S"
 
 [resource]
 script = ExtResource("2_xp3y7")
@@ -19,7 +19,7 @@ Corrosion = 5
 Electromagnetic = 5
 InstanceResourcePath = "uid://dwillt1djrxxl"
 SizeType = SubResource("Resource_hxhdo")
-TypeCode = "Equp/Turret/Photon"
+TypeCode = "Equip/Turret/Photon"
 NameCode = "Template"
 DisplayName = "模板光子炮"
 Introductuon = "木板"

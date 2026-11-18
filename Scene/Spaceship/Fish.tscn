@@ -11,10 +11,11 @@ size = Vector3(2.4, 2.792, 10.914)
 height = 3.779
 radius = 7.071
 
-[node name="Fish" type="CharacterBody3D" unique_id=2042811061 node_paths=PackedStringArray("Outlets", "AttackableArea")]
+[node name="Fish" type="CharacterBody3D" unique_id=2042811061 node_paths=PackedStringArray("Outlets", "AttackableArea", "TacticsTargetProberTimer")]
 script = ExtResource("1_hlq67")
-Outlets = [NodePath("S_0"), NodePath("S_1"), NodePath("S_2"), NodePath("S_3"), NodePath("S_4"), NodePath("S_5")]
+Outlets = [NodePath("S_0"), NodePath("S_1"), NodePath("S_2"), NodePath("S_3"), NodePath("S_4"), NodePath("M_0")]
 AttackableArea = NodePath("Area3D")
+TacticsTargetProberTimer = NodePath("TacticsTimer")
 
 [node name="Fish" parent="." unique_id=159122589 instance=ExtResource("1_ghqk5")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
@@ -47,14 +48,7 @@ UpPitchClampAngle = 10.0
 DownPitchClampAngle = 10.0
 metadata/_custom_type_script = "uid://ccgefu38lpmc7"
 
-[node name="S_3" type="Marker3D" parent="." unique_id=1199443135]
-transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, -0.24910808, -0.6184371, -0.15917647)
-script = ExtResource("4_bu0i0")
-UpPitchClampAngle = 15.0
-DownPitchClampAngle = 15.0
-metadata/_custom_type_script = "uid://ccgefu38lpmc7"
-
-[node name="S_4" type="Marker3D" parent="." unique_id=1397376751]
+[node name="S_3" type="Marker3D" parent="." unique_id=1397376751]
 transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.663, -0.145, -0.766)
 script = ExtResource("4_bu0i0")
 LeftYawClampAngle = 90.0
@@ -63,13 +57,20 @@ UpPitchClampAngle = 8.0
 DownPitchClampAngle = 8.0
 metadata/_custom_type_script = "uid://ccgefu38lpmc7"
 
-[node name="S_5" type="Marker3D" parent="." unique_id=1187773778]
+[node name="S_4" type="Marker3D" parent="." unique_id=1187773778]
 transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.793, 0.711, 1.696)
 script = ExtResource("4_bu0i0")
 LeftYawClampAngle = 150.0
 RightYawClampAngle = 150.0
 UpPitchClampAngle = 10.0
 DownPitchClampAngle = 10.0
+metadata/_custom_type_script = "uid://ccgefu38lpmc7"
+
+[node name="M_0" type="Marker3D" parent="." unique_id=1199443135]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, -0.24910808, -0.6184371, -0.15917647)
+script = ExtResource("4_bu0i0")
+UpPitchClampAngle = 15.0
+DownPitchClampAngle = 15.0
 metadata/_custom_type_script = "uid://ccgefu38lpmc7"
 
 [node name="Area3D" type="Area3D" parent="." unique_id=1198623045]
@@ -79,3 +80,5 @@ shape = SubResource("BoxShape3D_f227l")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=412163463]
 shape = SubResource("CylinderShape3D_f227l")
+
+[node name="TacticsTimer" type="Timer" parent="." unique_id=1713509568]

@@ -5,7 +5,9 @@ namespace OursGalaxy.UI;
 /// <summary>
 /// 单个飞船的编辑UI.该UI设计用于快速操作
 /// </summary>
-internal partial class ShipEditorBox : Button {
+internal partial class ShipTacticsEditorBox : Button {
+	public static ShipTacticsEditorBox Load() => (ShipTacticsEditorBox)ResourceLoader.Load<PackedScene>("res://Scene/ShipStaticsEditorBox.tscn").Instantiate();
+
 	[Export] private Label FlagSignLabel { get; set; } = null!;
 	[Export] private LineEdit ShipNameEditor { get; set; } = null!;
 	[Export] private RichTextLabel ShipTypeNameLabel { get; set; } = null!;
@@ -52,7 +54,7 @@ internal partial class ShipEditorBox : Button {
 			fleet.Ships.Remove(shipRefer);
 			var data = fleet.Repository[shipRefer];
 			data.RecycleReference(shipRefer);
-			fleet.Repository.Move(data, GlobalDataSource.MainRepository);
+			fleet.Repository.Move(data, GlobalDataSource.Source.GetMainRepository());
 		};
 
 		var tactics = fleet.Ships[shipRefer];

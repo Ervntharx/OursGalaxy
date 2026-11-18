@@ -17,20 +17,24 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 	public SpaceshipConfig.ScaleSizeEnum ScaleSize { get; set; } = SpaceshipConfig.ScaleSizeEnum.FF;
 
 	/// <summary>
-	/// 总开关
+	/// 基状态机.Stop停止一切行为;Active时启动自动作战.Display时仅启动可变装备加载
 	/// </summary>
-	public enum BaseStateEnum { Stop, Active }
+	public enum BaseStateEnum { Stop, Active, Display }
 	public BaseStateEnum BaseState {
 		get => baseState;
 		set {
 			baseState = value;
-			switch (BaseState) {
+			switch (value) {
 				case BaseStateEnum.Active:
 					ProbeTurret();
 					// 激活瞬间进行索敌
 					ProbeTarget();
+					TacticsTargetProberTimer.Start();
 					break;
 				case BaseStateEnum.Stop:
+				case BaseStateEnum.Display:
+					TacticsTargetProberTimer.Stop();
+					TargetEntity = null;
 					break;
 				default:
 					break;
@@ -352,6 +356,7 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	// 探测船上可用的Turret
 	private void ProbeTurret() {
+		Turrets.Clear();
 		foreach (var equip in Outlets.Select<Outlet, EquipBase?>(outlet => outlet.GetEquipOrNull())) {
 			if (equip is not null && equip is TurretBase turret) {
 				Turrets.Add(turret);
@@ -367,13 +372,47 @@ internal partial class Spaceship : CharacterBody3D, IBattleEntity {
 
 	#endregion Turret
 
+	#region Display State
+	public bool OutletHasInstall(string outletName)
+		=> Outlets.FirstOrDefault(outlet => outlet.Name == outletName)?.GetEquipOrNull() is not null;
+
+	public void InstallEquip(string outletName, EquipData equip) {
+		var outlet = Outlets.FirstOrDefault(outlet => outlet.Name == outletName);
+		if (outlet is null) {
+			GD.PushError($"<Spaceship-Display> No such outlet: {outletName}");
+			return;
+		}
+
+		var equipBase = EquipFactory.Make(equip);
+		equipBase.From = ID;
+		outlet.Install(equipBase);
+	}
+
+	public void UninstallEquip(string outletName) {
+		var outlet = Outlets.FirstOrDefault(outlet => outlet.Name == outletName);
+		if (outlet is null) {
+			GD.PushError($"<Spaceship-Display> No such outlet: {outletName}");
+			return;
+		}
+
+		var equip = outlet.GetEquipOrNull();
+		if (equip is null) {
+			return;
+		}
+		outlet.RemoveChild(equip);
+		equip.QueueFree();
+	}
+	#endregion Display State
+
 	public override void _Ready() {
 		base._Ready();
 		Name = $"{ShipTypeName}_{CustomName}";
 		TacticsTargetProberTimer.OneShot = false;
-		TacticsTargetProberTimer.Start();
 		TacticsTargetProberTimer.Timeout += ProbeTarget;
 		AttackableArea.AreaEntered += OnAttakableAreaAreaEntered;
+		if (baseState == BaseStateEnum.Active) {
+			TacticsTargetProberTimer.Start();
+		}
 		// TODO:	RotateCapability, PowerCapability换算为物理值
 		// AccelMap.MaxVelocity = PowerCapability;
 	}

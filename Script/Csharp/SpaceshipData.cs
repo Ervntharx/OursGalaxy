@@ -19,7 +19,7 @@ internal partial class SpaceshipData : UniqueItem {
 	/// </summary>
 	protected SpaceshipData() : base() { }
 
-	public SpaceshipData(string typeName, ItemBaseConfig.QulityEnum qulity, GUID? ID = null, ItemLocationInf? loc = null) :
+	public SpaceshipData(string typeName, ItemBaseConfig.QulityEnum qulity, GUID? ID = null, ItemLocation? loc = null) :
 		base("Spaceship", typeName, qulity, ID, loc) { }
 
 	public string GetShipTypeName() => NameCode;

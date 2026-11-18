@@ -206,7 +206,7 @@ internal partial class GlobalDataSource : Node {
 		if (idx >= 0 && idx < Source.savesData.ShipsProduceLines.Count) {
 			if (!Source.savesData.ShipsProduceLines[idx].IsEmpty) {
 				data = Source.savesData.ShipsProduceLines[idx].Target ?? throw new Exception("<GlobalViewModel-ProduceTask> target produceline is empty");
-				MainRepository.Add(data);
+				Source.GetMainRepository().Add(data);
 				Source.savesData.ShipsProduceLines[idx] = new();
 			}
 		}
@@ -241,7 +241,7 @@ internal partial class GlobalDataSource : Node {
 		if (idx >= 0 && idx < Source.savesData.EquipsProduceLines.Count) {
 			if (!Source.savesData.EquipsProduceLines[idx].IsEmpty) {
 				data = Source.savesData.EquipsProduceLines[idx].Target ?? throw new Exception("<GlobalViewModel-ProduceTask> target produceline is empty");
-				MainRepository.Add(data);
+				Source.GetMainRepository().Add(data);
 				Source.savesData.EquipsProduceLines[idx] = new();
 			}
 		}
@@ -352,46 +352,129 @@ internal partial class GlobalDataSource : Node {
 	#endregion FleetEditor
 
 	#region ShipEditor
-	public IReadOnlyCollection<SpaceshipData> GetShips() => Source.savesData.Repository.Ships;
-	public IReadOnlyCollection<EquipData> GetEquips() => Source.savesData.Repository.Equips;
+	/// <summary>
+	/// 存档主资产库
+	/// </summary>
+	public SubRepository GetMainRepository() => Source.savesData.Repository;
 
-	public event Action<SpaceshipData, EquipData>? ShipInstallEquipEvent;
-	public event Action<SpaceshipData, EquipData>? ShipUninstallEquipEvent;
+	public IReadOnlyCollection<SpaceshipData> GetShips() => GetMainRepository().Ships;
+	public IReadOnlyCollection<EquipData> GetEquips() => GetMainRepository().Equips;
 
-	public void ShipInstallEquip(SubRepository shipRepository, SpaceshipReference shipRefer, EquipData equip) {
-		// TODO: 安装装备,会检查equip是否和ship在相同repository,可能会移动
+	public event Action<SpaceshipData, string, EquipData>? ShipInstallEquipEvent;
+	public event Action<SpaceshipData, string, EquipData>? ShipUninstallEquipEvent;
+
+	/// <summary>
+	/// 取得主资产库中可安装到指定尺寸插槽的未占用装备. 舰队资产库不持有闲置装备.
+	/// </summary>
+	public IReadOnlyList<EquipData> GetInstallableEquips(OutletSizeType outletSize)
+		=> [.. GetMainRepository().Equips
+			.Where(equip => !equip.IsOccupied() && ResourceLib.GetConfig<EquipConfig>(equip).SizeType.CanFitTo(outletSize))];
+
+	/// <summary>
+	/// 将装备安装到飞船的指定槽位. 只负责安装, 槽位必须为空.
+	/// </summary>
+	public void ShipInstallEquip(SubRepository shipRepository, SpaceshipData shipData, string outletName, EquipData equip) {
+		if (!shipRepository.Ships.Contains(shipData)) {
+			throw new ArgumentException("<GlobalDataSource-ShipEditor> Ship isn't in target repository");
+		}
+		var shipConfig = SpaceshipLib.GetConfig(shipData);
+		if (!shipConfig.OutletSet.ContainsKey(outletName)) {
+			throw new ArgumentException($"<GlobalDataSource-ShipEditor> No such outlet: {outletName}");
+		}
+		if (shipData.EquipsLs.ContainsKey(outletName)) {
+			throw new InvalidOperationException($"<GlobalDataSource-ShipEditor> Outlet is occupied: {outletName}");
+		}
+		var equipConfig = ResourceLib.GetConfig<EquipConfig>(equip);
+		if (!equipConfig.SizeType.CanFitTo(shipConfig.OutletSet[outletName])) {
+			throw new ArgumentException($"<GlobalDataSource-ShipEditor> Equip size can't fit outlet: {outletName}");
+		}
+		if (equip.IsOccupied()) {
+			throw new InvalidOperationException($"<GlobalDataSource-ShipEditor> Equip is occupied: {equip.ID}");
+		}
+
+		var mainRepository = GetMainRepository();
+		if (!mainRepository.Equips.Contains(equip)) {
+			throw new ArgumentException("<GlobalDataSource-ShipEditor> Equip isn't in main repository");
+		}
+		if (!ReferenceEquals(shipRepository, mainRepository)) {
+			mainRepository.Move(equip, shipRepository);
+		}
+
+		shipData.EquipsLs[outletName] = equip.MakeReference();
+		ShipInstallEquipEvent?.Invoke(shipData, outletName, equip);
+		Save();
 	}
 
-	public void ShipUninstallEquip(SubRepository shipRepository, SpaceshipReference shipRefer, EquipReference equipRefer) {
-		// TODO: 卸载装备,可能会发生equip在FleetRepository和MainRepository之间移动
+	/// <summary>
+	/// 从飞船的指定槽位卸载装备. 卸下的装备会移回主资产库.
+	/// </summary>
+	public void ShipUninstallEquip(SubRepository shipRepository, SpaceshipData shipData, string outletName) {
+		if (!shipRepository.Ships.Contains(shipData)) {
+			throw new ArgumentException("<GlobalDataSource-ShipEditor> Ship isn't in target repository");
+		}
+		if (!shipData.EquipsLs.ContainsKey(outletName)) {
+			throw new ArgumentException($"<GlobalDataSource-ShipEditor> No equip installed in outlet: {outletName}");
+		}
+
+		var equipReference = shipData.EquipsLs[outletName];
+		var equipData = shipRepository[equipReference];
+		shipData.EquipsLs.Remove(outletName);
+		equipData.RecycleReference(equipReference);
+
+		var mainRepository = GetMainRepository();
+		if (!ReferenceEquals(shipRepository, mainRepository)) {
+			shipRepository.Move(equipData, mainRepository);
+		}
+
+		ShipUninstallEquipEvent?.Invoke(shipData, outletName, equipData);
+		Save();
 	}
 	#endregion ShipEditor
 
 	#region Repository
-	[Obsolete]
-	public static Array<FleetData> Fleets { get => Source.savesData.Fleets; set => Source.savesData.Fleets = value; }
-	[Obsolete]
-	public static SubRepository MainRepository { get => Source.savesData.Repository; set => Source.savesData.Repository = value; }
-
 	public event Action<SpaceshipData>? RepositoryAddShipEvent;
 	public event Action<EquipData>? RepositoryAddEquipEvent;
 	public event Action<SpaceshipData>? RepositoryRemoveShipEvent;
 	public event Action<EquipData>? RepositoryRemoveEquipEvent;
 
 	public void RepositoryAddShip(SpaceshipData ship) {
-		// TODO: 增加ship资产
+		if (Source.GetMainRepository().Ships.Any(s => s.ID == ship.ID)) {
+			throw new ArgumentException($"<GlobalDataSource-Repository> Spaceship has been added in repository: {ship.ID}");
+		}
+		Source.GetMainRepository().Add(ship);
+		RepositoryAddShipEvent?.Invoke(ship);
+		Save();
 	}
 
 	public void RepositoryAddEquip(EquipData equip) {
-		// TODO: 增加equip资产
+		if (Source.GetMainRepository().Equips.Any(e => e.ID == equip.ID)) {
+			throw new ArgumentException($"<GlobalDataSource-Repository> Equip has been added in repository: {equip.ID}");
+		}
+		Source.GetMainRepository().Add(equip);
+		RepositoryAddEquipEvent?.Invoke(equip);
+		Save();
 	}
 
 	public void RepositoryRemoveShip(SpaceshipData ship) {
-		// TODO: 移除ship
+		var repository = Source.GetMainRepository();
+		if (repository.Ships.Any(s => s.ID == ship.ID)) {
+			repository.Remove(ship);
+			RepositoryRemoveShipEvent?.Invoke(ship);
+			Save();
+			return;
+		}
+		throw new ArgumentException($"<GlobalDataSource-Repository> Spaceship not found in repository: {ship.ID}");
 	}
 
 	public void RepositoryRemoveEquip(EquipData equip) {
-		// TODO: 移除equip
+		var repository = Source.GetMainRepository();
+		if (repository.Equips.Any(e => e.ID == equip.ID)) {
+			repository.Remove(equip);
+			RepositoryRemoveEquipEvent?.Invoke(equip);
+			Save();
+			return;
+		}
+		throw new ArgumentException($"<GlobalDataSource-Repository> Equip not found in repository: {equip.ID}");
 	}
 
 	#endregion Repository
@@ -543,9 +626,19 @@ internal partial class GlobalDataSource : Node {
 		data.Repository.Add(new SpaceshipData("Fish", ResourceConfig.ItemBaseConfig.QulityEnum.White));
 		data.Repository.Add(new SpaceshipData("Fish", ResourceConfig.ItemBaseConfig.QulityEnum.White));
 
-		// 10*100炮
-		for (var i = 0; i < 10; i++) {
+		// 4*100炮
+		for (var i = 0; i < 4; i++) {
 			data.Repository.Add(new TurretData("Equip/Turret/Photon", "100Photon", ItemBaseConfig.QulityEnum.White));
+		}
+
+		// 3*256炮
+		for (var i = 0; i < 3; i++) {
+			data.Repository.Add(new TurretData("Equip/Turret/Photon", "256Photon", ItemBaseConfig.QulityEnum.White));
+		}
+
+		// 2*127炮
+		for (var i = 0; i < 2; i++) {
+			data.Repository.Add(new TurretData("Equip/Turret/Photon", "127Photon", ItemBaseConfig.QulityEnum.White));
 		}
 
 		Source.savesData = data;

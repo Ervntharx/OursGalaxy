@@ -1,6 +1,5 @@
 using Godot;
 using OursGalaxy.ViewModel;
-using System;
 using System.Linq;
 namespace OursGalaxy.UI;
 
@@ -14,18 +13,24 @@ internal partial class HangerPanel : MarginContainer {
 	public override void _EnterTree() {
 		base._EnterTree();
 		QuitButton.Pressed += OnQuitPressed;
-		foreach (var ship in GlobalDataSource.Source.GetShips()) {
-			var shipBox = SpaceshipBox.Load();
-			shipBox.Render(ship);
-			ShipsPanel.AddChild(shipBox);
-		}
-
+		VM.SelectShipEvent += OnSelectShip;
 		GlobalDataSource.Source.RepositoryAddShipEvent += OnShipAdd;
 		GlobalDataSource.Source.RepositoryRemoveShipEvent += OnShipRemove;
+		RefreshShips();
+	}
 
-		// 初始绘制
-		foreach (var box in ShipsPanel.GetChildren().OfType<SpaceshipBox>()) {
-			box.QueueFree();
+	public override void _ExitTree() {
+		QuitButton.Pressed -= OnQuitPressed;
+		VM.SelectShipEvent -= OnSelectShip;
+		GlobalDataSource.Source.RepositoryAddShipEvent -= OnShipAdd;
+		GlobalDataSource.Source.RepositoryRemoveShipEvent -= OnShipRemove;
+		base._ExitTree();
+	}
+
+	private void RefreshShips() {
+		foreach (var child in ShipsPanel.GetChildren()) {
+			ShipsPanel.RemoveChild(child);
+			child.QueueFree();
 		}
 		foreach (var ship in GlobalDataSource.Source.GetShips()) {
 			var box = SpaceshipBox.Load();
@@ -34,27 +39,29 @@ internal partial class HangerPanel : MarginContainer {
 		}
 	}
 
-	public override void _ExitTree() {
-		GlobalDataSource.Source.RepositoryAddShipEvent -= OnShipAdd;
-		GlobalDataSource.Source.RepositoryRemoveShipEvent -= OnShipRemove;
-		base._ExitTree();
+	private void OnSelectShip(SpaceshipData? ship) {
+		if (ship is null) {
+			return;
+		}
+		var editor = ShipEditorPanel.Load();
+		editor.Render(ship, GlobalDataSource.Source.GetMainRepository());
+		PanelsStack.PushPanel(editor);
 	}
 
 	private void OnShipAdd(SpaceshipData ship) {
-		var shipBox = SpaceshipBox.Load();
-		shipBox.Render(VM, ship);
-		ShipsPanel.AddChild(shipBox, true);
+		var box = SpaceshipBox.Load();
+		box.Render(VM, ship);
+		ShipsPanel.AddChild(box, true);
 	}
 
 	private void OnShipRemove(SpaceshipData ship) {
-		foreach (var shipBox in ShipsPanel.GetChildren().OfType<SpaceshipBox>()) {
-			if (shipBox.Ship?.Equals(ship) is true) {
-				shipBox.RemoveChild(shipBox);
+		foreach (var box in ShipsPanel.GetChildren().OfType<SpaceshipBox>()) {
+			if (box.Ship?.Equals(ship) is true) {
+				ShipsPanel.RemoveChild(box);
+				box.QueueFree();
 			}
 		}
 	}
 
-	private void OnQuitPressed() {
-		PanelsStack.PopPanel(this);
-	}
+	private void OnQuitPressed() => PanelsStack.PopPanel(this);
 }

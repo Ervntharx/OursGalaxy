@@ -5,6 +5,7 @@
 
 [sub_resource type="Resource" id="Resource_foe72"]
 script = ExtResource("1_foe72")
+Type = "M"
 
 [resource]
 script = ExtResource("2_dxde5")

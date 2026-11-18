@@ -58,8 +58,8 @@ internal sealed partial class MainPanel : MarginContainer {
 		UpdateActionPointsLabel();
 		GlobalDataSource.ActionPointsChangedEvent += UpdateActionPointsLabel;
 		// Repository statics
-		UpdateRepositoryStatics(GlobalDataSource.MainRepository);
-		GlobalDataSource.MainRepository.ElementsChangedEvent += UpdateRepositoryStatics;
+		UpdateRepositoryStatics(GlobalDataSource.Source.GetMainRepository());
+		GlobalDataSource.Source.GetMainRepository().ElementsChangedEvent += UpdateRepositoryStatics;
 	}
 
 	public override void _EnterTree() {

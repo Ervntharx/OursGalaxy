@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://ci6x4yre1huej"]
 
 [ext_resource type="Script" uid="uid://bgwppvxyc0qwr" path="res://Script/Csharp/UI/HangerPanel.cs" id="1_raxgg"]
+[ext_resource type="Script" uid="uid://dbkwkhlm52shv" path="res://Script/Csharp/ViewModel/SpaceshipOverviewVM.cs" id="2_hvm"]
 
-[node name="HangerPanel" type="MarginContainer" unique_id=75995070 node_paths=PackedStringArray("QuitButton", "ShipsPanel")]
+[node name="HangerPanel" type="MarginContainer" unique_id=75995070 node_paths=PackedStringArray("QuitButton", "ShipsPanel", "VM")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -15,6 +16,7 @@ theme_override_constants/margin_bottom = 5
 script = ExtResource("1_raxgg")
 QuitButton = NodePath("PanelContainer/VBoxContainer/TopBar/Quit")
 ShipsPanel = NodePath("PanelContainer/VBoxContainer/ScrollContainer/ShipsPanel")
+VM = NodePath("SpaceshipOverviewVM")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=970544363]
 layout_mode = 2
@@ -41,3 +43,7 @@ size_flags_vertical = 3
 
 [node name="ShipsPanel" type="HFlowContainer" parent="PanelContainer/VBoxContainer/ScrollContainer" unique_id=13450823]
 layout_mode = 2
+
+[node name="SpaceshipOverviewVM" type="Node" parent="." unique_id=1772355144]
+script = ExtResource("2_hvm")
+metadata/_custom_type_script = "uid://dbkwkhlm52shv"

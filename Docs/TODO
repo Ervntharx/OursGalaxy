@@ -1,7 +1,5 @@
 基础：
 
-GameItemContains封装,使用Any
-
 GlobalViewModel的Fleets封装,添加FleetsChangedEvent并留给FleetViewerPanel订阅
 GlobalViewModel直接添加操作步骤的上下文信息,例如一个枚举量
 

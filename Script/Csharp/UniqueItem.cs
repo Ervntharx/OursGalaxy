@@ -19,14 +19,14 @@ internal partial class UniqueItem : ItemBase, IEquatable<UniqueItem> {
 	/// 物品位置占位.如果被reference则此不为null
 	/// </summary>
 	[Export]
-	public ItemLocationInf? ItemLocation { get; set; }
+	public ItemLocation? ItemLocation { get; set; }
 
 	/// <summary>
 	/// ⚠️予Godot设施提供的构造函数。继承类型中应包含，但不应主动使用以产生空值
 	/// </summary>
 	protected UniqueItem() : base() { ID = GUID.Empty; }
 
-	public UniqueItem(string typeCode, string nameCode, ItemBaseConfig.QulityEnum qulity, GUID? id = null, ItemLocationInf? loc = null) : base(typeCode, nameCode, qulity) {
+	public UniqueItem(string typeCode, string nameCode, ItemBaseConfig.QulityEnum qulity, GUID? id = null, ItemLocation? loc = null) : base(typeCode, nameCode, qulity) {
 		ID = id ?? GUID.Generate();
 		ItemLocation = loc;
 	}
