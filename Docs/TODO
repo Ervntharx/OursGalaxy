@@ -32,10 +32,10 @@ CombatStage引入战场半径，限制尺寸
 		第三机动阶段:	朝向目标位置前进,和forward一致
 		第四机动阶段:	直接推进直到距离拉开2倍射程，方向朝向目标侧向（迂回方向的侧向）
 
+SettingsData的回归默认能力.即直接删除SettingsData中字典的键即可
 
 UI:
 	FleetEditor，实现MemShips摆放，Tactics配置
-	SpaceshipConfigPanel对Spaceship装配的编辑能力
 	TasksPanel接入存档
 	FleetEditor接入存档
 
@@ -43,7 +43,6 @@ UI:
 	在TestMovement单独测试迂回机动行为
 
 	AssignedTask
-	Ship Config装配行为
 	FleetEditor行为
 
 问题：

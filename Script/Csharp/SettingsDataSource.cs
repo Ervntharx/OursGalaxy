@@ -1,12 +1,13 @@
 ﻿using Godot;
 using System;
-using System.Collections.Generic;
 namespace OursGalaxy;
 
 /// <summary>
 /// 设置配置数据源. 需要AutoLoad
 /// </summary>
 internal sealed partial class SettingsDataSource : Node {
+	public static SettingsDataSource Source { get; private set; } = new();
+
 	#region Camera
 	public static event Action<float>? CameraDistanceMaxChanged;
 	public static event Action<float>? CameraDistanceMinChanged;
@@ -16,47 +17,47 @@ internal sealed partial class SettingsDataSource : Node {
 
 	public static float Camera_Distance_Max {
 		get {
-			return (float)config.GetValue("Camera", "Distance_Max").AsDouble();
+			return (float)Source.config.GetValue("Camera", "Distance_Max", 50).AsDouble();
 		}
 
 		set {
-			config.SetValue("Camera", "Distance_Max", value);
+			Source.config.SetValue("Camera", "Distance_Max", value);
 			CameraDistanceMaxChanged?.Invoke(Camera_Distance_Max);
 			Save();
 		}
 	}
 
 	public static float Camera_Distance_Min {
-		get => (float)config.GetValue("Camera", "Distance_Min").AsDouble();
+		get => (float)Source.config.GetValue("Camera", "Distance_Min", 2).AsDouble();
 		set {
-			config.SetValue("Camera", "Distance_Min", value);
+			Source.config.SetValue("Camera", "Distance_Min", value);
 			CameraDistanceMinChanged?.Invoke(Camera_Distance_Min);
 			Save();
 		}
 	}
 
 	public static float Camera_Default_Distance {
-		get => (float)config.GetValue("Camera", "Distance_Default").AsDouble();
+		get => (float)Source.config.GetValue("Camera", "Distance_Default", 4).AsDouble();
 		set {
-			config.SetValue("Camera", "Distance_Default", value);
+			Source.config.SetValue("Camera", "Distance_Default", value);
 			CameraDefaultDistanceChanged?.Invoke(Camera_Default_Distance);
 			Save();
 		}
 	}
 
 	public static float Camera_Move_Velocity {
-		get => (float)config.GetValue("Camera", "Move_Velocity").AsDouble();
+		get => (float)Source.config.GetValue("Camera", "Move_Velocity", 1.2).AsDouble();
 		set {
-			config.SetValue("Camera", "Move_Velocity", value);
+			Source.config.SetValue("Camera", "Move_Velocity", value);
 			CameraMoveVelocityChanged?.Invoke(Camera_Move_Velocity);
 			Save();
 		}
 	}
 
 	public static float Camera_Distance_ChangsStep {
-		get => (float)config.GetValue("Camera", "Distance_Move_Velocity").AsDouble();
+		get => (float)Source.config.GetValue("Camera", "Distance_Move_Velocity", 1).AsDouble();
 		set {
-			config.SetValue("Camera", "Distance_Move_Velocity", value);
+			Source.config.SetValue("Camera", "Distance_Move_Velocity", value);
 			CameraDistanceChangeStepChanged?.Invoke(Camera_Distance_ChangsStep);
 			Save();
 		}
@@ -75,9 +76,9 @@ internal sealed partial class SettingsDataSource : Node {
 	/// 左边距
 	/// </summary>
 	public static int Apperance_UI_Panels_Margin_Left {
-		get => config.GetValue("UI", "Panels_Margin_Left").AsInt32();
+		get => Source.config.GetValue("UI", "Panels_Margin_Left", 5).AsInt32();
 		set {
-			config.SetValue("UI", "Panels_Margin_Left", value);
+			Source.config.SetValue("UI", "Panels_Margin_Left", value);
 			PanelsMarginChanged?.Invoke(PanelsMarginEnum.Left, value);
 			Save();
 		}
@@ -87,9 +88,9 @@ internal sealed partial class SettingsDataSource : Node {
 	/// 右边距
 	/// </summary>
 	public static int Apperance_UI_Panels_Margin_Right {
-		get => config.GetValue("UI", "Panels_Margin_Right").AsInt32();
+		get => Source.config.GetValue("UI", "Panels_Margin_Right", 5).AsInt32();
 		set {
-			config.SetValue("UI", "Panels_Margin_Right", value);
+			Source.config.SetValue("UI", "Panels_Margin_Right", value);
 			PanelsMarginChanged?.Invoke(PanelsMarginEnum.Right, value);
 			Save();
 		}
@@ -99,9 +100,9 @@ internal sealed partial class SettingsDataSource : Node {
 	/// 上边距
 	/// </summary>
 	public static int Apperance_UI_Panels_Margin_Top {
-		get => config.GetValue("UI", "Panels_Margin_Top").AsInt32();
+		get => Source.config.GetValue("UI", "Panels_Margin_Top", 5).AsInt32();
 		set {
-			config.SetValue("UI", "Panels_Margin_Top", value);
+			Source.config.SetValue("UI", "Panels_Margin_Top", value);
 			PanelsMarginChanged?.Invoke(PanelsMarginEnum.Top, value);
 			Save();
 		}
@@ -111,9 +112,9 @@ internal sealed partial class SettingsDataSource : Node {
 	/// 下边距
 	/// </summary>
 	public static int Apperance_UI_Panels_Margin_Bottom {
-		get => config.GetValue("UI", "Panels_Margin_Bottom").AsInt32();
+		get => Source.config.GetValue("UI", "Panels_Margin_Bottom", 5).AsInt32();
 		set {
-			config.SetValue("UI", "Panels_Margin_Bottom", value);
+			Source.config.SetValue("UI", "Panels_Margin_Bottom", value);
 			PanelsMarginChanged?.Invoke(PanelsMarginEnum.Bottom, value);
 			Save();
 		}
@@ -122,9 +123,9 @@ internal sealed partial class SettingsDataSource : Node {
 
 	#region Sound
 	public static bool SoundMainSwitch {
-		get => config.GetValue("Sound", "MainSwitch").AsBool();
+		get => Source.config.GetValue("Sound", "MainSwitch", true).AsBool();
 		set {
-			config.SetValue("Sound", "MainSwitch", value);
+			Source.config.SetValue("Sound", "MainSwitch", value);
 			SoundMainToggledEvent?.Invoke(value);
 			Save();
 		}
@@ -132,20 +133,27 @@ internal sealed partial class SettingsDataSource : Node {
 	public static event Action<bool>? SoundMainToggledEvent;
 	#endregion Sound
 
+	#region IO
+	public event Action? SavedEvent;
+
 	public static void Save() {
-		config.Save(SAVE_PATH);
+		var err = ResourceSaver.Save(Source.config, SAVE_PATH);
+		if (err != Error.Ok) {
+			GD.PushError($"<SettingsDataSource> Save settings data failed with error: {err}");
+			return;
+		}
+		GD.Print($"<SettingsDataSource> Save settings data at {Godot.ProjectSettings.GlobalizePath(SAVE_PATH)}");
+		Source.SavedEvent?.Invoke();
 	}
 
 	public override void _EnterTree() {
 		base._EnterTree();
-		// TODO: config文件初始化: 字典转写config
 		if (FileAccess.FileExists(SAVE_PATH)) {
-			var err = config.Load(SAVE_PATH);
-			if (err != Error.Ok) {
-				GD.PushError(err);
-			}
+			GD.Print($"<SettingsDataSource> Load settings data at {Godot.ProjectSettings.GlobalizePath(SAVE_PATH)}");
+			config = ResourceLoader.Load<SettingsData>(SAVE_PATH);
 		}
 		else {
+			GD.Print($"<SettingsDataSource> No settings data found at {Godot.ProjectSettings.GlobalizePath(SAVE_PATH)}, creating new one.");
 			Save();
 		}
 	}
@@ -155,7 +163,8 @@ internal sealed partial class SettingsDataSource : Node {
 		base._ExitTree();
 	}
 
-	private static ConfigFile config = new();
+	private const string SAVE_PATH = "user://settings.res";
+	#endregion IO
 
-	private const string SAVE_PATH = "user://settings.cfg";
+	private SettingsData config = new();
 }

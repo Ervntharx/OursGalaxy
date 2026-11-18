@@ -563,6 +563,9 @@ internal partial class GlobalDataSource : Node {
 		if (err != Error.Ok) {
 			GD.PushError(err);
 		}
+		else {
+			GD.Print($"<GlobalDataSource> Save saves data at {Godot.ProjectSettings.GlobalizePath(SAVE_PATH)}");
+		}
 		SavedEvent?.Invoke();
 	}
 
@@ -580,14 +583,13 @@ internal partial class GlobalDataSource : Node {
 		Source = this;
 		if (FileAccess.FileExists(SAVE_PATH)) {
 			Source.savesData = ResourceLoader.Load<GameSavesData>(SAVE_PATH);
-			GD.Print("<GlobalDataSource> load saves data from " + SAVE_PATH);
+			GD.Print($"<GlobalDataSource> load saves data from {Godot.ProjectSettings.GlobalizePath(SAVE_PATH)}");
 		}
 		else {
-			GD.Print("<GlobalDataSource> can't find savs data file. new user, init saves data");
+			GD.Print($"<GlobalDataSource> can't find savs data file at{Godot.ProjectSettings.GlobalizePath(SAVE_PATH)}. new user, init saves data");
 			InitSavesData();
 			Save();
 		}
-		// InitGameItemSource();
 		base._EnterTree();
 	}
 

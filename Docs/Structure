@@ -24,7 +24,7 @@ GlobalDataSource提供全局对存档数据读写接口, 可通过它监听数�
 
 设置数据依赖godot configfile进行序列化,持久化和反序列化
 SettingDataSource提供全局对设置数据读写接口, 可通过它监听设置数据变化, 是autoload的
-*SettingDataSource暂没有完成其序列化和反序列化功能,当前缺乏初始化*
+SettingsData作为设置数据的纯DTO类,是纯Dictionary的最简封装
 
 使用ItemBase作为物品基类,ItemBase只提供类型性
 GameItem作为可堆叠的非唯一性游戏物品
